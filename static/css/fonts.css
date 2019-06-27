@@ -17,19 +17,19 @@
   font-style: normal;
 }
 @font-face {
-  font-family: 'GARAMOND';
+  font-family: 'GARAM';
   src: url('https://raw.githubusercontent.com/asinerum/project/master/static/fonts/GARA.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 }
 @font-face {
-  font-family: 'GARAMOND';
+  font-family: 'GARAM';
   src: url('https://raw.githubusercontent.com/asinerum/project/master/static/fonts/GARABD.woff') format('woff');
   font-weight: bold;
   font-style: normal;
 }
 @font-face {
-  font-family: 'GARAMOND';
+  font-family: 'GARAM';
   src: url('https://raw.githubusercontent.com/asinerum/project/master/static/fonts/GARAIT.woff') format('woff');
   font-weight: normal;
   font-style: italic;
