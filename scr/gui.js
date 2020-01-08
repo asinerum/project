@@ -39,6 +39,7 @@ const oldAccount=function(pw,divOA,divOP,divKS,t){if(!loRegex.test(pw))return(al
 const gettextkey=function(pw,t){t=gv(_keystore);if(!t)return(getv3key(pw,0));t=web3.eth.accounts.decrypt(JSON.parse(t),pw);if(!t[_address])return(0);password=pw;return(t);};
 ////////////////////////////////////////////////////////////
 const showDefault=function(){showNetwork(0);showAccount(0);showMaxGas(0);showTxGwei(0);showRole(0);showTick(0);showDTyp(0);showAccs();};
+const stopSession=function(mis){setInterval(function(){senderPte=SYMBOL;password=SYMBOL;dv(_password,SYMBOL);},mis);};
 const statsXuteng=function(mis){setInterval(function(){getData(sender,getDType(0));},mis);};
 const startXuteng=function(nid){web3=new Web3(new Web3.providers.HttpProvider(XUTENG[nid][_rpcs]));xuteng=new web3.eth.Contract(ABIXUTENG,XUTENG[nid][_addr]);};
 ////////////////////////////////////////////////////////////
