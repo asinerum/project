@@ -6,8 +6,8 @@ const setStyle=function(d,s){$(d).removeClass().addClass(s);};
 const ww=function(d,w){dw(d,'<span\tclass="textwarn">'+w+'</span>');};
 ////////////////////////////////////////////////////////////
 const gv=function(d){return($('#'+d).val());};
-const gc=function(d){return($('#'+d).prop('checked'));};
 const gr=function(d){return($('#'+d).prop('href'));};
+const gc=function(d){return($('#'+d).prop('checked'));};
 const gh=function(d){return($('#'+d).html());};
 const gt=function(d){return($('#'+d).text());};
 const g2=function(d){return(s2n(gv(d)));};
@@ -16,16 +16,18 @@ const gw=function(d){return(s2w(gt(d)));};
 ////////////////////////////////////////////////////////////
 const mr=function(d,r){$('.'+d).prop('href',r);};
 const mc=function(d,c){$('.'+d).prop('checked',c);};
+const mx=function(d,v){$('.'+d).val(v).change();};
 const mv=function(d,v){$('.'+d).val(v);};
 const mw=function(d,w){$('.'+d).html(w);};
 const mt=function(d,t){$('.'+d).text(t);};
 ////////////////////////////////////////////////////////////
-const db=function(d,s){dw(d,s);dv(d,s);};
+const dr=function(d,r){$('#'+d).prop('href',r);};
 const dc=function(d,c){$('#'+d).prop('checked',c);};
 const dx=function(d,v){$('#'+d).val(v).change();};
 const dv=function(d,v){$('#'+d).val(v);};
 const dw=function(d,w){$('#'+d).html(w);};
-const dt=function(d,s){$('#'+d).text(s);};
+const dt=function(d,t){$('#'+d).text(t);};
+const db=function(d,s){dw(d,s);dv(d,s);};
 ////////////////////////////////////////////////////////////
 const wrong=function(chk,msg){if(!chk){alert(msg);return(true);}return(false);};
 const reask=function(chk,msg){if(chk)return(confirm(msg));return(true);};
