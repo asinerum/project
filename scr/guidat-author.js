@@ -9,6 +9,6 @@ const author_userSetBuy=function(){if(disable()||userBan()||noneReg()||notBuys()
 const author_userSetSell=function(){if(disable()||userBan()||noneReg()||notSell()||badXuts(gv(_xut2sell))||badNumb(gv(_eth2recv)))return;;userSetSell(gv(_xut2sell),gv(_sellrate));send(null,'_tosell_hash','_tosell_status');};
 ////////////////////////////////////////////////////////////
 const author_setFee=function(){do_setFee('_personal_status');};
-const author_regs2sys=function(){do_register(XUTENG[network][_addr],gv(_reglev),'_register_status');};
+const author_regs2sys=function(){do_register(contractAddress,gv(_reglev),'_register_status');};
 const author_regs2usr=function(){do_register(gv(_user),gv(_regmem),'_personal_user_status');};
 ////////////////////////////////////////////////////////////

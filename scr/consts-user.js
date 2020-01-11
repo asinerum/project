@@ -1,0 +1,12 @@
+////////////////////////////////////////////////////////////
+const AND='&';
+const ASK='?';
+const BACK='\\';
+const COLON=':';
+const COMMA=',';
+const DOT='.';
+const EQUAL='=';
+const HASH='#';
+const SEMI=';';
+const SLASH='/';
+////////////////////////////////////////////////////////////
