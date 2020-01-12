@@ -18,22 +18,42 @@ const M='m';
 const R='r';
 const S='s';
 const T='t';
-const REFEXC='EXC';
-const REFREG='REG';
+////////////////////////////////////////////////////////////
+const AND='&';
+const ASK='?';
+const BACK='\\';
+const COLON=':';
+const COMMA=',';
+const DOT='.';
+const EQUAL='=';
+const HASH='#';
+const HYPHEN='-';
+const SEMI=';';
+const SLASH='/';
+const STAR='*';
 ////////////////////////////////////////////////////////////
 const BLANK='';
-const HYPHEN='-';
+const EMPTY='';
 const NBSP='&nbsp;';
 const NEWLINE='\n';
 const RETURN='\r';
 const SPACE='\u0020';
 const TAB='\t';
+////////////////////////////////////////////////////////////
 const OxOO='0x00';
+const REFEXC='EXC';
+const REFREG='REG';
+const ZERO='0';
 const ZEROADDR='0x0000000000000000000000000000000000000000';
 ////////////////////////////////////////////////////////////
 const CANCELED='CANCELED\t';
 const ERROR='ERROR\t';
 const OK='OK\t';
+////////////////////////////////////////////////////////////
+const INPUTSTART='dat:';
+const INPUTSTOP=':xut';
+const DATASTART='6461743a7b';
+const DATASTOP='7d';
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
 const MAXGASES={
