@@ -1,7 +1,9 @@
 ////////////////////////////////////////////////////////////
 const showLoad=function(div){dw(div,'<img\tsrc="loading.gif"/>');};
 const accepted=function(divS){if(confirm(hi_prompt_fee+NEWLINE+gasfee+SPACE+COIN))return(true);dw(divS,CANCELED);return(false);};
-const bodyStyle=function(nid){network=nid;changeNet();startXuteng(network);setStyle('body',networkStyle);};
+////////////////////////////////////////////////////////////
+const launchNet=function(nid){if(!nid)nid=hashParam('n');if(XUTENG[nid])network=nid;selectNet(network);};
+const selectNet=function(nid){network=nid;changeNet();startXuteng(network);setStyle('body',networkStyle);};
 const changeNet=function(){contractAddress=XUTENG[network].addr;networkChainId=XUTENG[network].ncid;networkStyle=XUTENG[network].bcls;contractScanner=XUTENG[network].scan+contractAddress;mr('bgxutengscan',contractScanner);};
 ////////////////////////////////////////////////////////////
 const wrdExpt=function(v){userExpt=v;if(!v||v==0)return(HYPHEN);return(fromDate(v));};
@@ -13,7 +15,7 @@ const wrdType=function(v){contType=v;v=wrd(TYPES,contType);if(!v)return(contType
 const showMaxGas=function(t){t=BLANK;Object.keys(MAXGASES).forEach(function(key){t+='<option\tvalue="'+MAXGASES[key]+'">'+key+':&nbsp;'+n2s(MAXGASES[key])+'</option>';});dw(_maxgas,t);};
 const showTxGwei=function(t){t=BLANK;Object.keys(TXGWEIS).forEach(function(key){t+='<option\tvalue="'+TXGWEIS[key]+'">'+key+':&nbsp;'+TXGWEIS[key]+'&nbsp;GWEI</option>';});dw(_txgwei,t);};
 ////////////////////////////////////////////////////////////
-const showNetwork=function(t){t=BLANK;Object.keys(XUTENG).forEach(function(key){t+='<option\tvalue="'+key+'">'+key+'</option>';});dw(_network,t);};
+const showNetwork=function(t){t=BLANK;Object.keys(XUTENG).forEach(function(key){t+='<option'+((network==key)?'\tselected':BLANK)+'\tvalue="'+key+'">'+key+'</option>';});dw(_network,t);};
 const showAccount=function(t){t=BLANK;Object.keys(ADDRESSES).forEach(function(key){t+='<option\tvalue="'+key+'">'+key+'</option>';});dw(_account,t);};
 const optnAccount=function(t){t=BLANK;Object.keys(ADDRESSES).forEach(function(key){t+='<option\tvalue="'+ADDRESSES[key]+'">'+key+':&nbsp;'+ADDRESSES[key]+'</option>';});return(t);};
 const retrAccount=function(t){network=gv(_network);senderId=gv(_account);try{t=getv3key(gv(_password),0);}catch(err){dw('_keystore_status',err.message);alert(hi_alert_data);return(0);};sender=t.address;senderPte=t.privateKey.substr(2);};

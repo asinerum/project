@@ -2,6 +2,10 @@
 const tcopy=function(e,s){e=document.getElementById(e);if(!e.value)return;e.select();e.setSelectionRange(0,99999);document.execCommand('copy');alert(s);};
 const docdups=function(es,is,e,i,n,d){es=document.getElementsByTagName(STAR);is=[];for(i=0,n=es.length;i<n;++i){e=es[i];if(e.id){is.push(e.id);}}d=arr=>arr.filter((item,index)=>arr.indexOf(item)!=index);return(d(is));};
 const setStyle=function(d,s){$(d).removeClass().addClass(s);};
+const hashParam=function(p,t){if(!t)t=document.location.hash;if(!t)return(BLANK);p=RegExp('[#?&]'+p.replace(/[\[\]]/g,'\\$&')+'(=([^&#]*)|&|#|$)');p=p.exec(t);if(!p)return(BLANK);if(!p[2])return(BLANK);return(decodeURIComponent(p[2].replace(/\+/g,SPACE)));};
+////////////////////////////////////////////////////////////
+const getCookie=function(cn,t){if(!t)t=document;try{return(t.cookie.match('(^|;)\s?'+cn+'=([^;]*)(;|$)')[2]);}catch(err){return(BLANK);}};
+const setCookie=function(cn,cv,dd,t){if(!dd)dd=365;dd=(new Date(nowDate()*1000+dd*24*60*60*1000)).toUTCString();if(!t)t=document;return(t.cookie=cn+EQUAL+cv+SEMI+'expires'+EQUAL+dd+SEMI+'path'+EQUAL+SLASH);};
 ////////////////////////////////////////////////////////////
 const ww=function(d,w){dw(d,'<span\tclass="textwarn">'+w+'</span>');};
 ////////////////////////////////////////////////////////////
@@ -32,11 +36,13 @@ const dt=function(d,t,ob){if(!ob)ob=HASH;$(ob+d).text(t);};
 const wrong=function(chk,msg){if(!chk){alert(msg);return(true);}return(false);};
 const reask=function(chk,msg){if(chk)return(confirm(msg));return(true);};
 ////////////////////////////////////////////////////////////
+const hvalid=function(h){return(hashRegex.test(h));};
 const avalid=function(a){return(web3.utils.isAddress(a));};
 const nvalid=function(n,b){n=s2n(n);b=s2n(b);return(n>0&&n<=b);};
+////////////////////////////////////////////////////////////
 const nsmall=function(n,b){return(nvalid(n,b));};
-const nlarge=function(n,s){n=s2n(n);s=s2n(s);return(n>s&&s>=0);};
 const nmidle=function(n,b){n=s2n(n);b=s2n(b);return(n>0&&n<b);};
+const nlarge=function(n,s){n=s2n(n);s=s2n(s);return(n>s&&s>=0);};
 ////////////////////////////////////////////////////////////
 const wrd=function(o,v){return(Object.keys(o).find(key=>o[key]==v));};
 const prt=function(q,a,t){t=prompt(q);return(t==a);};
@@ -62,6 +68,7 @@ const toDate=function(y,m,d){return(parseInt((new Date(Date.UTC(y,m-1,d,0,0,0,0)
 const nowDate=function(){return(parseInt((new Date()).getTime()/1000,10));};
 const fromDate=function(n){return((new Date(n*1000)).toString());};
 ////////////////////////////////////////////////////////////
+const hashRegex=(new RegExp('^0x([A-Fa-f0-9]{64})$'));
 const hiRegex=(new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})'));
 const loRegex=(new RegExp('^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})'));
 ////////////////////////////////////////////////////////////
