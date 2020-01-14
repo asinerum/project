@@ -7,9 +7,10 @@
 <link href="./gui/fonts.css" rel="stylesheet" type="text/css"/>
 <link href="./gui/style.css" rel="stylesheet" type="text/css"/>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.6/angular.min.js"></script>
 <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js@1.0.0-beta.34/dist/web3.min.js"></script>
 <script src="https://cdn.jsdelivr.net/gh/ethereumjs/browser-builds/dist/ethereumjs-tx/ethereumjs-tx-1.3.3.min.js"></script>
-<script src="./scr/require.js"></script>
+<script src="./require.js"></script>
 </head>
 <body class="private">
 <div class="body" id="body">
@@ -21,7 +22,7 @@
 <hr class="cp"/>
 <div>
 <table class="cover">
-<tr><td class="buttoner"><span class="trlab" id="_label_network">NETWORK</span></td><td><select class="long" onchange="bodyStyle(this.value);" id="network"></select></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_network">NETWORK</span></td><td><select class="long" onchange="selectNet(this.value);" id="network"></select></td></tr>
 <tr><td class="buttoner"><span class="trlab" id="_label_password">PASSWORD</span></td><td><input type="password" class="address" value="xxx" id="password"/></td></tr>
 <tr><td class="buttoner"><span class="trlab" id="_label_keystore">KEYSTORE</span></td><td><textarea class="longfat" id="keystore"></textarea><br/><a class="link" onclick="tcopy(_keystore,hi_alert_kstcopy);" id="copy_keystore">COPY THIS KEYSTORE</a></td></tr>
 <tr><td class="buttoner"><a class="button" onclick="author_getAccount();" id="_button_getAccount">UNLOCK</a></td><td></td></tr>
@@ -369,7 +370,8 @@
 <hr class="cp"/>
 <br/>
 <div class="footer" id="_footer_copyright">(C)2019 ASINERUM INTERNATIONAL PROJECT</div>
-<script src="./scr/show.js"></script>
+<script src="./show.js"></script>
+<script src="./show-author.js"></script>
 </div>
 </body>
 </html>
