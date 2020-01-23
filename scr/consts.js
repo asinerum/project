@@ -12,6 +12,12 @@ const MESSAGE='message';
 const RECEIPT='receipt';
 const SIGNATURE='signature';
 ////////////////////////////////////////////////////////////
+const MAINNET='mainnet';
+const LOCALHOST='localhost';
+const ARGADDR='a';
+const ARGEXEC='e';
+const ARGWNET='n';
+////////////////////////////////////////////////////////////
 const B='b';
 const E='e';
 const M='m';

@@ -1,13 +1,14 @@
 ////////////////////////////////////////////////////////////
-var web3;
-var xuteng;
+/// window.web3;
+/// window.xuteng;
+/// window.rpcServer;
+/// window.network='mainnet';
 ////////////////////////////////////////////////////////////
 var contractAddress;
 var contractScanner;
 var networkChainId;
 var networkStyle;
 ////////////////////////////////////////////////////////////
-var network='mainnet';
 var sestime=900000;
 var refresh=4000;
 var maxgas=600000;
@@ -52,4 +53,8 @@ var buyAllowed=false;
 var sellAllowed=false;
 var transferAllowed=false;
 var exchangeAllowed=false;
+////////////////////////////////////////////////////////////
+var lastTxHash={};
+var lastTxHashId='_txhash';
+var lastTxHashClass='class_txhash';
 ////////////////////////////////////////////////////////////

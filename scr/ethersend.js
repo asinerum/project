@@ -42,13 +42,13 @@ const pennyTransfer=function(to,xut){pennyPayout(to,contractAddress,xut);};
 const setSending=function(func,eth){sendingFunc=func;sendingAbi=sendingFunc.encodeABI();sendingEth=eth?eth:0;};
 ////////////////////////////////////////////////////////////
 const send=function(divG,divH,divS){showLoad(divS);txsend(divG,divH,divS);};
-const txsend=function(divG,divH,divS){sendingFunc.estimateGas({from:sender,value:s2wHex(sendingEth)}).then((gas)=>{estgas=gas;gasfee=fromGwei(estgas*txgwei);if(!accepted(divS))return;console.log('gas:'+gas.toString(16));web3.eth.getTransactionCount(sender).then(nonce=>{nonce=nonce.toString(16);console.log('nonce:'+nonce);web3.eth.sendSignedTransaction(txraw(sendingAbi,nonce,sendingEth,0)).on(RECEIPT,receipt=>{txreceipt=receipt;console.log(txreceipt);dw(divG,txreceipt[_gasUsed]);dw(divH,txreceipt[_transactionHash]);dw(divS,txreceipt[_status]);}).then((res)=>{dw(divS,OK);}).catch((err)=>{dw(divG,BLANK);dw(divH,BLANK);dw(divS,ERROR+errCode(err));});});});};
-const sendeth=function(to,eth,divH,divS){showLoad(divS);estgas=BASEGAS;gasfee=fromGwei(estgas*txgwei);if(!accepted(divS))return;web3.eth.getTransactionCount(sender).then(nonce=>{nonce=nonce.toString(16);web3.eth.sendSignedTransaction(txraw(OxOO,nonce,eth,to)).on(RECEIPT,receipt=>{txreceipt=receipt;dw(divH,txreceipt[_transactionHash]);}).then((res)=>{dw(divS,OK);}).catch((err)=>{dw(divS,ERROR+errCode(err));});});};
+const txsend=function(divG,divH,divS){sendingFunc.estimateGas({from:sender,value:s2wHex(sendingEth)}).then((gas)=>{estgas=gas;gasfee=fromGwei(estgas*txgwei);if(!accepted(divS))return;console.log('gas:'+gas.toString(16));web3.eth.getTransactionCount(sender).then(nonce=>{nonce=nonce.toString(16);console.log('nonce:'+nonce);web3.eth.sendSignedTransaction(txraw(sendingAbi,nonce,sendingEth,0)).on(RECEIPT,receipt=>{txreceipt=receipt;console.log(txreceipt);dw(divG,txreceipt.gasUsed);dw(divH,txreceipt.transactionHash);dw(divS,txreceipt.status);}).then((res)=>{dw(divS,OK);}).catch((err)=>{dw(divG,BLANK);dw(divH,BLANK);dw(divS,ERROR+errCode(err));});});});};
+const sendeth=function(to,eth,divH,divS){showLoad(divS);estgas=BASEGAS;gasfee=fromGwei(estgas*txgwei);if(!accepted(divS))return;web3.eth.getTransactionCount(sender).then(nonce=>{nonce=nonce.toString(16);web3.eth.sendSignedTransaction(txraw(OxOO,nonce,eth,to)).on(RECEIPT,receipt=>{txreceipt=receipt;dw(divH,txreceipt.transactionHash);}).then((res)=>{dw(divS,OK);}).catch((err)=>{dw(divS,ERROR+errCode(err));});});};
 const sendeth2sys=function(eth,divH,divS){sendeth(contractAddress,eth,divH,divS);};
 ////////////////////////////////////////////////////////////
 const txraw=function(abi,nonce,eth,to){
-let dk={nonce:HEXINIT+nonce,value:s2wHex(eth),gasPrice:g2wHex(txgwei),gasLimit:toHex(maxgas),from:sender,to:(to?to:contractAddress),chainId:networkChainId};if(abi!=OxOO)dk['data']=abi;
-let pk=new ethereumjs.Buffer.Buffer(senderPte,HEX);
-let tx=new ethereumjs.Tx(dk);console.log(dk);tx.sign(pk);
+let dk={nonce:HEXINIT+nonce,value:s2wHex(eth),gasPrice:g2wHex(txgwei),gasLimit:toHex(maxgas),from:sender,to:(to?to:contractAddress),chainId:networkChainId};if(abi!=OxOO)dk.data=abi;
+let pk=(new ethereumjs.Buffer.Buffer(senderPte,HEX));
+let tx=(new ethereumjs.Tx(dk));console.log(dk);tx.sign(pk);
 let rx=HEXINIT+tx.serialize().toString(HEX);console.log(rx);return(rx);};
 ////////////////////////////////////////////////////////////

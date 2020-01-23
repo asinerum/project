@@ -1,11 +1,28 @@
 ////////////////////////////////////////////////////////////
+const funcName=function(){return(funcName.caller.name);};
+////////////////////////////////////////////////////////////
+const getCheck=function(name){return($('input[name="'+name+'"]:checked').val());};
+const setCheck=function(option,button){$(HASH+button).on('click',function(){dc(option,true);return(false);});};
+const setClick=function(d,ha,sa){$(document).ready(function(){$(DOT+ha).click(function(){hide(d);});$(DOT+sa).click(function(){show(d);});});};
+////////////////////////////////////////////////////////////
+const hide=function(d,ob){if(!ob)ob=HASH;$(ob+d).hide();};
+const show=function(d,ob){if(!ob)ob=HASH;$(ob+d).show();};
+////////////////////////////////////////////////////////////
+const mattr=function(d,a,v){dattr(d,a,v,DOT);};
+const dattr=function(d,a,v,ob){if(!ob)ob=HASH;$(ob+d).attr(a,v);};
+////////////////////////////////////////////////////////////
+const mgets=function(d,html){dgets(d,html,DOT);};
+const mload=function(d,html){dload(d,html,DOT);};
+const dgets=function(d,html,ob){if(!ob)ob=HASH;$.get(html,function(data){$(ob+d).html(data);htmlData.get=data;});};
+const dload=function(d,html,ob){if(!ob)ob=HASH;$(ob+d).load(html);};
+////////////////////////////////////////////////////////////
+const hashParam=function(p,t){if(!t)t=document.location.hash;if(!t)return(BLANK);p=RegExp('[#?&]'+p.replace(/[\[\]]/g,'\\$&')+'(=([^&#]*)|&|#|$)');p=p.exec(t);if(!p)return(BLANK);if(!p[2])return(BLANK);return(decodeURIComponent(p[2].replace(/\+/g,SPACE)));};
+const getCookie=function(cn,t){if(!t)t=document;try{return(t.cookie.match('(^|;)\s?'+cn+'=([^;]*)(;|$)')[2]);}catch(err){return(BLANK);}};
+const setCookie=function(cn,cv,dd,t){if(!dd)dd=365;dd=(new Date(nowDate()*1000+dd*24*60*60*1000)).toUTCString();if(!t)t=document;return(t.cookie=cn+EQUAL+cv+SEMI+'expires'+EQUAL+dd+SEMI+'path'+EQUAL+SLASH);};
+////////////////////////////////////////////////////////////
 const tcopy=function(e,s){e=document.getElementById(e);if(!e.value)return;e.select();e.setSelectionRange(0,99999);document.execCommand('copy');alert(s);};
 const docdups=function(es,is,e,i,n,d){es=document.getElementsByTagName(STAR);is=[];for(i=0,n=es.length;i<n;++i){e=es[i];if(e.id){is.push(e.id);}}d=arr=>arr.filter((item,index)=>arr.indexOf(item)!=index);return(d(is));};
 const setStyle=function(d,s){$(d).removeClass().addClass(s);};
-const hashParam=function(p,t){if(!t)t=document.location.hash;if(!t)return(BLANK);p=RegExp('[#?&]'+p.replace(/[\[\]]/g,'\\$&')+'(=([^&#]*)|&|#|$)');p=p.exec(t);if(!p)return(BLANK);if(!p[2])return(BLANK);return(decodeURIComponent(p[2].replace(/\+/g,SPACE)));};
-////////////////////////////////////////////////////////////
-const getCookie=function(cn,t){if(!t)t=document;try{return(t.cookie.match('(^|;)\s?'+cn+'=([^;]*)(;|$)')[2]);}catch(err){return(BLANK);}};
-const setCookie=function(cn,cv,dd,t){if(!dd)dd=365;dd=(new Date(nowDate()*1000+dd*24*60*60*1000)).toUTCString();if(!t)t=document;return(t.cookie=cn+EQUAL+cv+SEMI+'expires'+EQUAL+dd+SEMI+'path'+EQUAL+SLASH);};
 ////////////////////////////////////////////////////////////
 const ww=function(d,w){dw(d,'<span\tclass="textwarn">'+w+'</span>');};
 ////////////////////////////////////////////////////////////
@@ -62,7 +79,7 @@ const g2wHex=function(g){return(toHex(gtoWei(g)));};
 ////////////////////////////////////////////////////////////
 const errCode=function(e){if(e!=null){e=e.toString();if(e.indexOf(RECEIPT)>0)return(hi_prompt_rct);e=(e.substring(e.lastIndexOf(HASH)));if(e){return(e);}else{return(0);}}return(null);};
 const setInput=function(j){j.lt=nowDate();return(INPUTSTART+JSON.stringify(j)+INPUTSTOP);};
-const getInput=function(tx,key,div,t){web3.eth.getTransaction(tx,function(err,result){t=result.input;t=t.substring(t.indexOf(DATASTART)+8);t=t.substr(0,t.lastIndexOf(DATASTOP)+2);t=web3.utils.toUtf8(HEXINIT+t);t=JSON.parse(t);console.log(t);dw(div,t[key]);});};
+const getInput=function(tx,key,div,t){web3.eth.getTransaction(tx,function(err,result){t=result.input;t=t.substring(t.indexOf(DATASTART)+DATASTART.length-2);t=t.substr(0,t.lastIndexOf(DATASTOP)+DATASTOP.length);t=web3.utils.toUtf8(HEXINIT+t);t=JSON.parse(t);console.log(t);dw(div,t[key]);});};
 ////////////////////////////////////////////////////////////
 const toDate=function(y,m,d){return(parseInt((new Date(Date.UTC(y,m-1,d,0,0,0,0))).getTime()/1000,10));};
 const nowDate=function(){return(parseInt((new Date()).getTime()/1000,10));};
