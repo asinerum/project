@@ -1,0 +1,378 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+<title>XUTENG ASINERUM SHARE</title>
+<link href="./favicon.ico" rel="icon" type="image/x-icon"/>
+<link href="./gui/fonts.css" rel="stylesheet" type="text/css"/>
+<link href="./gui/style.css" rel="stylesheet" type="text/css"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.6/angular.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js@1.0.0-beta.34/dist/web3.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/ethereumjs/browser-builds/dist/ethereumjs-tx/ethereumjs-tx-1.3.3.min.js"></script>
+<script src="./require.js"></script>
+</head>
+<body class="private">
+<div class="body" id="body">
+<img class="banner" src="./gui/logo_asinerum.jpg" id="_img_banner"/>
+<br/>
+<br/>
+<a name="KEYS"></a>
+<div class="header" id="_header_keystore">SELECT NETWORK AND UNLOCK YOUR KEYSTORE</div>
+<hr class="cp"/>
+<div>
+<table class="cover">
+<tr><td class="buttoner"><span class="trlab" id="_label_network">NETWORK</span></td><td><select class="long" onchange="selectNet(this.value);" id="network"></select></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_rpcsrvr"><a href="https://www.google.com/search?q=free+ethereum+rpc" target="_blank">RPC SERVER</a></span></td><td><input class="address" onchange="selectNet(network);" value="" id="rpcs"/></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_password">PASSWORD</span></td><td><input type="password" class="address" value="xxx" id="password"/></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_keystore">KEYSTORE</span></td><td><textarea class="longfat" id="keystore"></textarea><br/><a class="link" onclick="tcopy(_keystore,hi_alert_kstcopy);" id="copy_keystore">COPY THIS KEYSTORE</a></td></tr>
+<tr><td class="buttoner"><a class="button" onclick="author_getAccount();" id="_button_getAccount">UNLOCK</a></td><td></td></tr>
+</table>
+<div class="result" id="_keystore_status"></div>
+<div class="textnotice" id="_help_keystore"></div>
+</div>
+<hr class="cp"/>
+<br/>
+<a name="ACCOUNT"></a>
+<div class="header" id="_header_account">CREATE NEW OR IMPORT EXISTING PRIVATE KEY</div>
+<hr class="cp"/>
+<div>
+<table class="cover">
+<tr><td class="buttoner"><a class="button" onclick="author_newAccount();" id="_button_newAccount">CREATE NEW</a></td><td><span id="new_address"></span></td></tr>
+<tr><td class="buttoner"><span class="label" id="_label_new_private">NEW PRIVATE KEY</span></td><td><input type="text" class="long" value="" id="new_private"/><br/><a class="link" onclick="tcopy(_newprivate,hi_alert_kstcopy);" id="copy_new_private">COPY THIS KEY</a></td></tr>
+<tr><td class="buttoner"><a class="button" onclick="author_oldAccount();" id="_button_oldAccount">IMPORT PRIVATE KEY</a></td><td><input type="text" class="copy" value="" id="old_private"/></td></tr>
+<tr><td class="buttoner"><a class="button" onclick="author_PrivateKey();" id="_button_PrivateKey">EXPORT PRIVATE KEY</a></td><td><input type="text" class="long" value="" id="exp_private"/><br/><a class="link" onclick="tcopy(_expprivate,hi_alert_kstcopy);" id="copy_exp_private">COPY THIS KEY</a></td></tr>
+</table>
+<div class="result" id="_account_status"></div>
+<div class="textnotice" id="_help_account"></div>
+</div>
+<hr class="cp"/>
+<br/>
+<a name="COST"></a>
+<div class="header" id="_header_cost">ETHEREUM TRANSACTION COST</div>
+<hr class="cp"/>
+<div>
+<table class="cover">
+<tr><td class="buttoner"><span class="label" id="_label_txgwei">GAS PRICE</span></td><td><select class="address" onchange="txgwei=this.value;" id="txgwei"></select></td></tr>
+<tr><td class="buttoner"><span class="label" id="_label_maxgas">GAS LIMIT</span></td><td><select class="address" onchange="maxgas=this.value;" id="maxgas"></select></td></tr>
+</table>
+<div class="result" id="_cost_status"></div>
+<div class="textnotice" id="_help_cost"></div>
+</div>
+<hr class="cp"/>
+<br/>
+<a name="SYSTEM"></a>
+<div class="header" id="_header_system">XUTENG TOKEN SYSTEM OVERVIEW</div>
+<hr class="cp"/>
+<div>
+<table class="cover">
+<tr><td class="buttoner"><span class="trlab" id="_label_name">NAME</span></td><td><a class="bgxutengscan" href="" target="_blank"><span id="_name"></span></a></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_symbol">SYMBOL</span></td><td><span id="_symbol"></span></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_totalSupply">TOTAL SUPPLY</span></td><td><span id="_totalSupply"></span></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_xutengOfXut">TOKENS FOR SALE</span></td><td><span class="class_xutengOfXut"></span></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_ethersOfXut">ETHEREUM BALANCE</span></td><td><span class="class_ethersOfXut"></span></td></tr>
+</table>
+<div class="result" id="_system_status"></div>
+<div class="textnotice" id="_help_system"></div>
+</div>
+<hr class="cp"/>
+<br/>
+<a name="RATE"></a>
+<div class="header" id="_header_rate">XUTENG TOKEN OFFICIAL EXCHANGE RATE</div>
+<hr class="cp"/>
+<div>
+<table class="cover">
+<tr><td class="buttoner"><span class="trlab" id="_label_sellAtTpe">SELLING RATE</span></td><td><span id="_sellAtTpe"></span>&nbsp;ETH/XUT</td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_buyAtTpe">BUYING RATE</span></td><td><span id="_buyAtTpe"></span>&nbsp;ETH/XUT</td></tr>
+</table>
+<div class="result" id="_rate_status"></div>
+<div class="textnotice" id="_help_rate"></div>
+</div>
+<hr class="cp"/>
+<br/>
+<a name="ALLOW"></a>
+<div class="header" id="_header_allow">XUTENG TOKEN TRANSFER ALLOWANCE</div>
+<hr class="cp"/>
+<div>
+<table class="cover">
+<tr><td class="buttoner"><span class="trlab" id="_label_buyAllowed">USER CAN BUY</span></td><td><input type="checkbox" id="_buyAllowed"/></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_sellAllowed">USER CAN SELL</span></td><td><input type="checkbox" id="_sellAllowed"/></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_transferAllowed">USER TRANSFER</span></td><td><input type="checkbox" id="_transferAllowed"/></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_exchangeAllowed">USER EXCHANGE</span></td><td><input type="checkbox" id="_exchangeAllowed"/></td></tr>
+</table>
+<div class="result" id="_allow_status"></div>
+<div class="textnotice" id="_help_allow"></div>
+</div>
+<hr class="cp"/>
+<br/>
+<a name="STATS"></a>
+<div class="header" id="_header_stats">XUTENG TOKEN MARKETPLACE STATS</div>
+<hr class="cp"/>
+<div>
+<table class="cover">
+<tr><td class="buttoner"><span class="trlab" id="_label_buyingCount">REQUESTS TO BUY</span></td><td><span id="_buyingCount"></span></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_sellingCount">OFFERS TO SELL</span></td><td><span id="_sellingCount"></span></td></tr>
+</table>
+<div class="result" id="_stats_status"></div>
+<div class="textnotice" id="_help_stats"></div>
+</div>
+<hr class="cp"/>
+<br/>
+<a name="PERSON"></a>
+<div class="header" id="_header_personal">PERSONAL INFORMATION AND STATS</div>
+<hr class="cp"/>
+<div>
+<table class="cover">
+<tr><td class="buttoner"><span class="trlab" id="_label_pteBuys">REQUESTS TO BUY</span></td><td><span id="_pteBuys"></span></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_pteSell">OFFERS TO SELL</span></td><td><span id="_pteSell"></span></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_pteMsgs">MESSAGES</span></td><td><span id="bgnote"><msg><span id="_pteMsgs"></span></msg></span></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_pteRole">ROLE</span></td><td><span id="_pteRole"></span></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_pteTick">RANK</span></td><td><span id="_pteTick"></span></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_pteLevl">LEVEL</span></td><td><span id="_pteLevl"></span></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_pteRegCount">MEMBERS</span></td><td><span id="_pteRegCount"></span></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_pteFee">MEMBER FEE</span></td><td><span class="class_pteFee"></span>&nbsp;XUT/YEAR</td></tr>
+<tr><td class="buttoner"><a class="button" onclick="author_setFee();" id="_button_setFee">SET MEMBER FEE</a></td><td><input type="text" class="long" value="" id="levels"/></td></tr>
+</table>
+<div class="result" id="_personal_status"></div>
+<div class="textnotice" id="_help_personal"></div>
+</div>
+<hr class="cp"/>
+<br/>
+<a name="XUT"></a>
+<div class="header" id="_header_transfer">PERSONAL XUTENG BALANCE</div>
+<hr class="cp"/>
+<div>
+<table class="cover">
+<tr><td class="buttoner"><span class="trlab" id="_label_xuteng">BALANCE</span></td><td><span id="bgxuteng"><xut><span id="_xuteng"></span></xut></span></td></tr>
+<tr><td class="buttoner"><a class="button" onclick="do_transfer();" id="_button_transfer">SEND XUT</a></td><td><input type="text" class="long" value="0x00" id="xutTo"/></td></tr>
+<tr><td class="buttoner"></td><td><input type="text" class="money" value="0" id="xut"/>&nbsp;XUT</td></tr>
+</table>
+<div class="result" id="_transfer_status"></div>
+<div class="result" id="_transfer_hash"></div>
+</div>
+<hr class="cp"/>
+<br/>
+<a name="ETH"></a>
+<div class="header" id="_header_sendeth">PERSONAL ETHEREUM BALANCE</div>
+<hr class="cp"/>
+<div>
+<table class="cover">
+<tr><td class="buttoner"><span class="trlab" id="_label_ethers">BALANCE</span></td><td><span id="bgether"><eth><span id="_ethers"></span></eth></span></td></tr>
+<tr><td class="buttoner"><a class="button" onclick="do_sendeth();" id="_button_sendeth">SEND ETH</a></td><td><input type="text" class="long" value="0x00" id="to"/></td></tr>
+<tr><td class="buttoner"></td><td><input type="text" class="money" value="0" id="eth"/>&nbsp;ETH</td></tr>
+</table>
+<div class="result" id="_sendeth_status"></div>
+<div class="result" id="_sendeth_hash"></div>
+</div>
+<hr class="cp"/>
+<br/>
+<a name="BUY"></a>
+<div class="header" id="_header_sendeth2xut">DIRECTLY BUY XUTENG TOKENS FROM SYSTEM FUND</div>
+<hr class="cp"/>
+<div>
+<table class="cover">
+<tr><td class="buttoner"><span class="trlab" id="_label_xuteng_buyer">YOUR XUT BALANCE</span></td><td><span class="class_xuteng"></span></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_ethers_buyer">YOUR ETH BALANCE</span></td><td><span class="class_ethers"></span></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_sellAtTpe_buyer">EXCHANGE RATE</span></td><td><span class="class_sellAtTpe"></span>&nbsp;ETH/XUT</td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_xutengOfXut_buyer">XUT MAX BUY</span></td><td><span class="class_xutengOfXut"></span>&nbsp;XUT</td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_xut2get">XUT TO BUY</span></td><td><input type="text" class="money" onchange="dv(_sendThis,s2n(this.value)/s2n(sellTpe));" value="" id="xut2get"/>&nbsp;XUT</td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_eth2xut">ETH TO PAY</span></td><td><input disabled type="text" class="money" value="" id="eth2xut"/>&nbsp;ETH</td></tr>
+<tr><td class="buttoner"><a class="button" onclick="do_sendeth2xut();" id="_button_sendeth2xut">BUY NOW</a></td><td><span class="textnotice" id="_note_sendeth2xut">EXCLUDING GAS FEE</span></td></tr>
+</table>
+<div class="result" id="_sendeth2xut_status"></div>
+<div class="result" id="_sendeth2xut_hash"></div>
+</div>
+<hr class="cp"/>
+<br/>
+<a name="SELL"></a>
+<div class="header" id="_header_transfer2xut">DIRECTLY SELL XUTENG TOKENS TO SYSTEM FUND</div>
+<hr class="cp"/>
+<div>
+<table class="cover">
+<tr><td class="buttoner"><span class="trlab" id="_label_xuteng_seller">YOUR XUT BALANCE</span></td><td><span class="class_xuteng"></span></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_ethers_seller">YOUR ETH BALANCE</span></td><td><span class="class_ethers"></span></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_buyAtTpe_seller">EXCHANGE RATE</span></td><td><span class="class_buyAtTpe"></span>&nbsp;ETH/XUT</td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_ethersOfXut_seller">ETH PAY FUND</span></td><td><span class="class_ethersOfXut"></span>&nbsp;ETH</td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_xut2xut">XUT TO SELL</span></td><td><input type="text" class="money" onchange="dv(_ethThis,s2n(this.value)/s2n(buyTpe));" value="" id="xut2xut"/>&nbsp;XUT</td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_eth2get">ETH TO GET</span></td><td><input disabled type="text" class="money" value="" id="eth2get"/>&nbsp;ETH</td></tr>
+<tr><td class="buttoner"><a class="button" onclick="do_transfer2xut();" id="_button_transfer2xut">SELL NOW</a></td><td><span class="textnotice" id="_note_transfer2xut">EXCLUDING GAS FEE</span></td></tr>
+</table>
+<div class="result" id="_transfer2xut_status"></div>
+<div class="result" id="_transfer2xut_hash"></div>
+</div>
+<hr class="cp"/>
+<br/>
+<a name="REGISTER"></a>
+<div class="header" id="_header_register">REGISTER AS A LEVELED USER</div>
+<hr class="cp"/>
+<div>
+<table class="cover">
+<tr><td class="buttoner"><span class="trlab" id="_label_xuteng_member">YOUR XUT BALANCE</span></td><td><span class="class_xuteng"></span></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_ethers_member">YOUR ETH BALANCE</span></td><td><span class="class_ethers"></span></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_pteLevl_member">YOUR CURRENT LEVEL</span></td><td><span class="class_pteLevl"></span></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_pteExpt">EXPIRATION TIME</span></td><td><span id="_pteExpt"></span></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_sysFee">REGISTER FEE</span></td><td><span id="_sysFee"></span>&nbsp;XUT/YEAR</td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_reglev">REGISTER AMOUNT</span></td><td><input type="text" class="money" value="" id="reglev"/>&nbsp;XUT</td></tr>
+<tr><td class="buttoner"><a class="button" onclick="author_regs2sys();" id="_button_regs2sys">PAY TO REGISTER</a></td><td><span class="textnotice" id="_note_regs2sys">EXCLUDING GAS FEE</span></td></tr>
+</table>
+<div class="result" id="_register_status"></div>
+<div class="textnotice" id="_help_register"></div>
+</div>
+<hr class="cp"/>
+<br/>
+<a name="TOBUY"></a>
+<div class="header" id="_header_tobuy">REQUEST TO BUY XUTENG TOKENS</div>
+<hr class="cp"/>
+<div>
+<table class="cover">
+<tr><td class="buttoner"><span class="trlab" id="_label_xuteng_tobuy">YOUR XUT BALANCE</span></td><td><span class="class_xuteng"></span></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_ethers_tobuy">YOUR ETH BALANCE</span></td><td><span class="class_ethers"></span></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_pteBuys_post">POSTED REQUESTS</span></td><td><span class="class_pteBuys"></span></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_typePIE_post">POSTING FEE</span></td><td><span class="class_typePIE"></span>&nbsp;ETH</td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_buyrate">EXPECTED RATE</span></td><td><input type="text" class="money" onchange="dv(_eth2pay,g2(_xut2buy)/s2n(this.value)+s2n(typePriceEth));" value="" id="buyrate"/>&nbsp;ETH/XUT</td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_xut2buy">XUT TO RECEIVE</span></td><td><input type="text" class="money" onchange="dv(_eth2pay,s2n(this.value)/g2(_buyrate)+s2n(typePriceEth));" value="" id="xut2buy"/>&nbsp;XUT</td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_eth2pay">ETH TO DEPOSIT</span></td><td><input disabled type="text" class="money" value="" id="eth2pay"/>&nbsp;ETH</td></tr>
+<tr><td class="buttoner"><a class="button" onclick="author_userSetBuy();" id="_button_userSetBuy">POST THIS REQUEST</a></td><td><span class="textnotice" id="_note_userSetBuy">EXCLUDING GAS FEE</span></td></tr>
+</table>
+<div class="result" id="_tobuy_status"></div>
+<div class="result" id="_tobuy_hash"></div>
+<div class="textnotice" id="_help_tobuy"></div>
+</div>
+<hr class="cp"/>
+<br/>
+<a name="BUYING"></a>
+<div class="header" id="_header_buying">REVIEW BUYING REQUEST</div>
+<hr class="cp"/>
+<div>
+<table class="cover">
+<tr><td class="buttoner"><a class="button" onclick="getOwnRequest(g2(_buyPostNum));" id="_button_getOwnRequest">BUYING REQUEST#</a></td><td><input type="text" class="money" onchange="getOwnRequest(s2n(this.value));" value="" id="_buyPostNum"/></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_buyTpe">EXCHANGE RATE</span></td><td><span id="_buyTpe"></span>&nbsp;ETH/XUT</td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_buyVol">ETH DEPOSITED</span></td><td><span id="_buyVol"></span>&nbsp;ETH</td></tr>
+<tr><td class="buttoner"><a class="button" onclick="author_userStopBuy(0);" id="_button_userStopBuy">STOP THIS REQUEST</a></td><td><span class="textnotice" id="_note_userStopBuy">EXCLUDING GAS FEE</span></td></tr>
+</table>
+<div class="result" id="_buying_status"></div>
+<div class="result" id="_buying_hash"></div>
+<div class="textnotice" id="_help_buying"></div>
+</div>
+<hr class="cp"/>
+<br/>
+<a name="TOSELL"></a>
+<div class="header" id="_header_tosell">OFFER TO SELL XUTENG TOKENS</div>
+<hr class="cp"/>
+<div>
+<table class="cover">
+<tr><td class="buttoner"><span class="trlab" id="_label_xuteng_tosell">YOUR XUT BALANCE</span></td><td><span class="class_xuteng"></span></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_ethers_tosell">YOUR ETH BALANCE</span></td><td><span class="class_ethers"></span></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_pteSell_post">POSTED OFFERS</span></td><td><span class="class_pteSell"></span></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_typePIT_post">POSTING FEE</span></td><td><span class="class_typePIT"></span>&nbsp;XUT</td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_sellrate">EXPECTED RATE</span></td><td><input type="text" class="money" onchange="dv(_eth2recv,(g2(_xut2sell)-s2n(typePriceXut))/s2n(this.value));" value="" id="sellrate"/>&nbsp;ETH/XUT</td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_xut2sell">XUT TO DEPOSIT</span></td><td><input type="text" class="money" onchange="dv(_eth2recv,(s2n(this.value)-s2n(typePriceXut))/g2(_sellrate));" value="" id="xut2sell"/>&nbsp;XUT</td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_eth2recv">ETH TO RECEIVE</span></td><td><input disabled type="text" class="money" value="" id="eth2recv"/>&nbsp;ETH</td></tr>
+<tr><td class="buttoner"><a class="button" onclick="author_userSetSell();" id="_button_userSetSell">POST THIS OFFER</a></td><td><span class="textnotice" id="_note_userSetSell">EXCLUDING GAS FEE</span></td></tr>
+</table>
+<div class="result" id="_tosell_status"></div>
+<div class="result" id="_tosell_hash"></div>
+<div class="textnotice" id="_help_tosell"></div>
+</div>
+<hr class="cp"/>
+<br/>
+<a name="SELLING"></a>
+<div class="header" id="_header_selling">REVIEW SELLING OFFER</div>
+<hr class="cp"/>
+<div>
+<table class="cover">
+<tr><td class="buttoner"><a class="button" onclick="getOwnOffer(g2(_sellPostNum));" id="_button_getOwnOffer">SELLING OFFER#</a></td><td><input type="text" class="money" onchange="getOwnOffer(s2n(this.value));" value="" id="_sellPostNum"/></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_sellTpe">EXCHANGE RATE</span></td><td><span id="_sellTpe"></span>&nbsp;ETH/XUT</td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_sellVol">XUT DEPOSITED</span></td><td><span id="_sellVol"></span>&nbsp;XUT</td></tr>
+<tr><td class="buttoner"><a class="button" onclick="author_userStopSell(0);" id="_button_userStopSell">STOP THIS OFFER</a></td><td><span class="textnotice" id="_note_userStopSell">EXCLUDING GAS FEE</span></td></tr>
+</table>
+<div class="result" id="_selling_status"></div>
+<div class="result" id="_selling_hash"></div>
+<div class="textnotice" id="_help_selling"></div>
+</div>
+<hr class="cp"/>
+<br/>
+<a name="SIGN"></a>
+<div class="header" id="_header_sign">SIGN AND VERIFY TEXT MESSAGE</div>
+<hr class="cp"/>
+<div>
+<table class="cover">
+<tr><td class="buttoner"><span class="label" id="_label_message">MESSAGE</span><br/><a class="button" onclick="do_signmess(0);" id="_button_signmess">SIGN</a></td><td><textarea class="longwide" id="message"></textarea></td></tr>
+<tr><td class="buttoner"><span class="label" id="_label_signature">SIGNATURE</span></td><td><input type="text" class="long" value="" id="signature"/><br/><a class="link" onclick="tcopy(_signature,hi_alert_kstcopy);" id="copy_signature">COPY THIS SIGNATURE</a></td></tr>
+<tr><td class="buttoner"><span class="label" id="_label_signatory">SIGNATORY ADDRESS</span></td><td><input type="text" class="long" value="0x00" id="signatory"/></td></tr>
+<tr><td class="buttoner"><a class="button" onclick="do_smverify(0);" id="_button_smverify">VERIFY</a></td><td><span class="result" id="verify"></span></td></tr>
+</table>
+<div class="result" id="_sign_status"></div>
+<div class="textnotice" id="_help_sign"></div>
+</div>
+<hr class="cp"/>
+<br/>
+<a name="USER"></a>
+<div class="header" id="_header_personal_user">ANOTHER USER INFORMATION AND STATS</div>
+<hr class="cp"/>
+<div>
+<table class="cover">
+<tr><td class="buttoner"><a class="button" onclick="getUserData(gv(_user),getDType(0));" id="_button_getUserData">USER ADDRESS</a></td><td><input type="text" class="long" onchange="getUserData(this.value,getDType(0));" value="0x00" id="user"/></td></tr>
+<tr><td class="buttoner"><span class="label" id="_label_xuteng_user">XUT BALANCE</span></td><td><span id="_xuteng_user"></span>&nbsp;XUT</td></tr>
+<tr><td class="buttoner"><span class="label" id="_label_ethers_user">ETH BALANCE</span></td><td><span id="_ethers_user"></span>&nbsp;ETH</td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_pteBuys_user">REQUESTS TO BUY</span></td><td><span id="_pteBuys_user"></span></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_pteSell_user">OFFERS TO SELL</span></td><td><span id="_pteSell_user"></span></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_pteRole_user">ROLE</span></td><td><span id="_pteRole_user"></span></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_pteTick_user">RANK</span></td><td><span id="_pteTick_user"></span></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_pteLevl_user">LEVEL</span></td><td><span id="_pteLevl_user"></span></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_pteRegCount_user">MEMBERS</span></td><td><span id="_pteRegCount_user"></span></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_pteFee_user">MEMBER FEE</span></td><td><span id="_pteFee_user"></span>&nbsp;XUT/YEAR</td></tr>
+</table>
+<div class="result" id="_personal_user_status"></div>
+<div class="textnotice" id="_help_personal_user"></div>
+</div>
+<hr class="cp"/>
+<br/>
+<a name="BUY1"></a>
+<div class="header" id="_header_buy1">BUY XUTENG TOKENS FROM ANOTHER USER</div>
+<hr class="cp"/>
+<div>
+<table class="cover">
+<tr><td class="buttoner"><span class="trlab" id="_label_xuteng_buyer1">YOUR XUT BALANCE</span></td><td><span class="class_xuteng"></span></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_ethers_buyer1">YOUR ETH BALANCE</span></td><td><span class="class_ethers"></span></td></tr>
+<tr><td class="buttoner"><a class="button" onclick="getUserOffer(gv(_sellerAddress),g2(_sellerPostNum));" id="_button_getUserOffer4Addr">SELLER ADDRESS</a></td><td><input type="text" class="long" onchange="getUserOffer(this.value,g2(_sellerPostNum));" value="0x00" id="sellerAddress"/></td></tr>
+<tr><td class="buttoner"><a class="button" onclick="getUserOffer(gv(_sellerAddress),g2(_sellerPostNum));" id="_button_getUserOffer4Post">SELLER OFFER#</a></td><td><input type="text" class="address" onchange="getUserOffer(gv(_sellerAddress),s2n(this.value));" value="1" id="sellerPostNum"/></td></tr>
+<tr><td class="buttoner"><span class="label" id="_label_sellingTpe">EXCHANGE RATE</span></td><td><span id="_sellingTpe"></span>&nbsp;ETH/XUT</td></tr>
+<tr><td class="buttoner"><span class="label" id="_label_sellingVol">SELLER DEPOSIT</span></td><td><span id="_sellingVol"></span>&nbsp;XUT</td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_sellingNum">SYSTEM COUNT</span></td><td><span id="_sellingNum"></span></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_xut2gain">XUT TO BUY</span></td><td><input type="text" class="money" onchange="dv(_eth2send,s2n(this.value)/gn(_sellingTpe));" value="" id="xut2gain"/>&nbsp;XUT</td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_eth2send">ETH TO PAY</span></td><td><input disabled type="text" class="money" value="" id="eth2send"/>&nbsp;ETH</td></tr>
+<tr><td class="buttoner"><a class="button" onclick="author_buyFromSeller();" id="_button_buyFromSeller">BUY NOW</a></td><td><span class="textnotice" id="_note_buyFromSeller">EXCLUDING GAS FEE</span></td></tr>
+</table>
+<div class="result" id="_buy1_status"></div>
+<div class="result" id="_buy1_hash"></div>
+</div>
+<hr class="cp"/>
+<br/>
+<a name="SELL1"></a>
+<div class="header" id="_header_sell1">SELL XUTENG TOKENS TO ANOTHER USER</div>
+<hr class="cp"/>
+<div>
+<table class="cover">
+<tr><td class="buttoner"><span class="trlab" id="_label_xuteng_seller1">YOUR XUT BALANCE</span></td><td><span class="class_xuteng"></span></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_ethers_seller1">YOUR ETH BALANCE</span></td><td><span class="class_ethers"></span></td></tr>
+<tr><td class="buttoner"><a class="button" onclick="getUserRequest(gv(_buyerAddress),g2(_buyerPostNum));" id="_button_getUserRequest4Addr">BUYER ADDRESS</a></td><td><input type="text" class="long" onchange="getUserRequest(this.value,g2(_buyerPostNum));" value="0x00" id="buyerAddress"/></td></tr>
+<tr><td class="buttoner"><a class="button" onclick="getUserRequest(gv(_buyerAddress),g2(_buyerPostNum));" id="_button_getUserRequest4Post">BUYER REQUEST#</a></td><td><input type="text" class="address" onchange="getUserRequest(gv(_buyerAddress),s2n(this.value));" value="1" id="buyerPostNum"/></td></tr>
+<tr><td class="buttoner"><span class="label" id="_label_buyingTpe">EXCHANGE RATE</span></td><td><span id="_buyingTpe"></span>&nbsp;ETH/XUT</td></tr>
+<tr><td class="buttoner"><span class="label" id="_label_buyingVol">BUYER DEPOSIT</span></td><td><span id="_buyingVol"></span>&nbsp;ETH</td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_buyingNum">SYSTEM COUNT</span></td><td><span id="_buyingNum"></span></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_xut2send">XUT TO SELL</span></td><td><input type="text" class="money" onchange="dv(_eth2gain,s2n(this.value)/gn(_buyingTpe));" value="" id="xut2send"/>&nbsp;XUT</td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_eth2gain">ETH TO GET</span></td><td><input disabled type="text" class="money" value="" id="eth2gain"/>&nbsp;ETH</td></tr>
+<tr><td class="buttoner"><a class="button" onclick="author_sellToBuyer();" id="_button_sellToBuyer">SELL NOW</a></td><td><span class="textnotice" id="_note_sellToBuyer">EXCLUDING GAS FEE</span></td></tr>
+</table>
+<div class="result" id="_sell1_status"></div>
+<div class="result" id="_sell1_hash"></div>
+</div>
+<hr class="cp"/>
+<br/>
+<div class="footer" id="_footer_copyright">(C)2019 ASINERUM INTERNATIONAL PROJECT</div>
+<script src="./show.js"></script>
+<script src="./show-author.js"></script>
+</div>
+</body>
+</html>

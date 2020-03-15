@@ -1,6 +1,9 @@
 ////////////////////////////////////////////////////////////
 require('./scr/consts-user.js');
+require('./scr/consts-userdat.js');
+require('./scr/dconsts-user.js');
 require('./scr/ethercall-user.js');
 require('./scr/gui-user.js');
+require('./scr/help-user.js');
 require('./scr/hi-user.js');
 ////////////////////////////////////////////////////////////
