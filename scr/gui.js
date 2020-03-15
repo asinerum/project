@@ -18,20 +18,21 @@ const wrdType=function(v){contType=v;v=wrd(TYPES,contType);if(!v)return(contType
 const showMaxGas=function(t){t=BLANK;Object.keys(MAXGASES).forEach(function(key){t+='<option\tvalue="'+MAXGASES[key]+'">'+key+':&nbsp;'+n2s(MAXGASES[key])+'</option>';});dw(_maxgas,t);};
 const showTxGwei=function(t){t=BLANK;Object.keys(TXGWEIS).forEach(function(key){t+='<option\tvalue="'+TXGWEIS[key]+'">'+key+':&nbsp;'+TXGWEIS[key]+'&nbsp;GWEI</option>';});dw(_txgwei,t);};
 ////////////////////////////////////////////////////////////
+const getDType=function(t){t=gv(_setType);return(t?t:TYPES.token_trading);};
 const networkById=function(ncid){Object.keys(XUTENG).forEach(function(key){if(XUTENG[key].ncid==ncid)return(ncid=key);});if(ncid>0)return(LOCALHOST);return(ncid);};
+////////////////////////////////////////////////////////////
 const showNetwork=function(t){t=BLANK;Object.keys(XUTENG).forEach(function(key){t+='<option'+((network==key)?'\tselected':BLANK)+'\tvalue="'+key+'">'+key+'</option>';});dw(_network,t);};
 const showDsModel=function(t){t=BLANK;Object.keys(MODELS).forEach(function(key){t+='<option\tvalue="'+key+'">'+MODELS[key].name+'</option>';});dw(_model,t);};
 const showAccount=function(t){t=BLANK;Object.keys(ADDRESSES).forEach(function(key){t+='<option\tvalue="'+key+'">'+key+'</option>';});dw(_account,t);};
 const optnAccount=function(t){t=BLANK;Object.keys(ADDRESSES).forEach(function(key){t+='<option\tvalue="'+ADDRESSES[key]+'">'+key+':&nbsp;'+ADDRESSES[key]+'</option>';});return(t);};
-const retrAccount=function(t){switchNet(gv(_network));senderId=gv(_account);try{t=getv3key(gv(_password),0);}catch(err){dw('_keystore_status',err.message);alert(hi_alert_data);return(0);};sender=t.address;senderPte=t.privateKey.substr(2);};
-const takeAccount=function(){showLoad('_keystore_status');setTimeout(function(){retrAccount(0);dw('_keystore_status',senderId+COLON+NBSP+sender);},2000);};
 ////////////////////////////////////////////////////////////
 const showRole=function(t){t=BLANK;Object.keys(ROLES).forEach(function(key){t+='<option\tvalue="'+ROLES[key]+'">'+key+'</option>';});dw(_roleVal,t);};
 const showTick=function(t){t=BLANK;Object.keys(TICKS).forEach(function(key){t+='<option\tvalue="'+TICKS[key]+'">'+key+'</option>';});dw(_tickVal,t);};
 const showDTyp=function(t){t=BLANK;Object.keys(TYPES).forEach(function(key){t+='<option\tvalue="'+TYPES[key]+'">'+key+'</option>';});dw(_refType,t);};
 const showAccs=function(){dw(_ethTo,accountOptions);dw(_xutTo,accountOptions);dw(_owner,accountOptions);dw(_sendToAdmin,accountOptions);dw(_transToAdmin,accountOptions);};
 ////////////////////////////////////////////////////////////
-const getDType=function(t){t=gv(_setType);return(t?t:TYPES.token_trading);};
+const retrAccount=function(t){switchNet(gv(_network));senderId=gv(_account);try{t=getv3key(gv(_password),0);}catch(err){dw('_keystore_status',err.message);alert(hi_alert_data);return(0);};sender=t.address;senderPte=t.privateKey.substr(2);};
+const takeAccount=function(){showLoad('_keystore_status');setTimeout(function(){retrAccount(0);dw('_keystore_status',senderId+COLON+NBSP+sender);},2000);};
 ////////////////////////////////////////////////////////////
 const jrecover=function(j){return(srecover(j.message,j.signature));};
 const srecover=function(tm,s){try{tm=web3.eth.accounts.recover(tm,s);}catch(err){alert(err.message);return(0);};return(tm);};
@@ -46,7 +47,7 @@ const newAccount=function(pw,divNA,divNP,divKS,t){if(!loRegex.test(pw))return(al
 const oldAccount=function(pw,divOA,divOP,divKS,t){if(!loRegex.test(pw))return(alert(hi_prompt_chk));try{t=web3.eth.accounts.encrypt(gv(divOP),pw);db(divOA,web3.eth.accounts.decrypt(t,pw).address);}catch(err){alert(hi_alert_data);return(0);}dv(divOP,BLANK);dv(divKS,JSON.stringify(t).replace(/\s/g,BLANK));return(t);};
 const gettextkey=function(pw,t){t=gv(_keystore);if(!t)return(getv3key(pw,0));t=web3.eth.accounts.decrypt(JSON.parse(t),pw);if(!t.address)return(0);password=pw;return(t);};
 ////////////////////////////////////////////////////////////
-const showDefault=function(){showNetwork(0);showAccount(0);showMaxGas(0);showTxGwei(0);showRole(0);showTick(0);showDTyp(0);showAccs();};
+const showDefault=function(){$(document).ready(function(){showNetwork(0);showAccount(0);showMaxGas(0);showTxGwei(0);showRole(0);showTick(0);showDTyp(0);showAccs();});};
 const stopSession=function(mis){setInterval(function(){senderPte=BLANK;password=BLANK;dv(_password,SYMBOL);},mis);};
 const statsXuteng=function(mis){setInterval(function(){getData(sender,getDType(0));},mis);};
 const statsSender=function(mis){setInterval(function(){getSenderData();},mis);};
