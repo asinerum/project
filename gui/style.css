@@ -226,7 +226,7 @@ iframe{
  border-radius:6px;
  background:#73AD21;
  padding:1px;}
- msg::before{content:"* ";}
+msg::before{content:"* ";}
 msg::after{content:" *";}
 eth::before{content:"* ETH ";}
 eth::after{content:" *";}
@@ -236,5 +236,4 @@ input,select,textarea{
 -webkit-box-sizing:border-box;
 -moz-box-sizing:border-box;
 -ms-box-sizing:border-box;
-box-sizing:border-box;
-}
+box-sizing:border-box;}
