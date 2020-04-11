@@ -2,6 +2,8 @@
 const MODAUTHDOC='doc';
 const MODPUBNOTE='pub';
 const MODDOMNAME='nam';
+const MODPROFILE='txd';
+const MODDBDRAFT='raw';
 ////////////////////////////////////////////////////////////
 const HEADDOC='hdd';
 const DLETTER='don';

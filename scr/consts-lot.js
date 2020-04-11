@@ -1,0 +1,6 @@
+////////////////////////////////////////////////////////////
+const STRUCTTRANSFER=['address','uint256'];
+const STRUCTTRANSFERFOR=['address','uint256','string'];
+const FUNCIDTRANSFER='a9059cbb';
+const FUNCIDTRANSFERFOR='5ce437aa';
+////////////////////////////////////////////////////////////

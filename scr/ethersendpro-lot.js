@@ -1,0 +1,11 @@
+////////////////////////////////////////////////////////////[1]
+const Transfer=function(to,amt,cbf,scid='usdt',eth=0){var sc=Contract(scid),sca=EXTOKENS[scid].addr,scd=EXTOKENS[scid].dec,dat={data:sc.methods.transfer(to,(amt*(10**scd)).toString()).encodeABI(),from:sender,to:sca,value:(eth?s2w(eth):0),gasPrice:gtoWei(txgwei),gas:maxgas};console.log(dat);web3.eth.sendTransaction(dat,function(err,hash){if(err)return(cbf(err,null));return(cbf(null,hash));});};
+////////////////////////////////////////////////////////////[2]
+const submitRe=function(to,xutinput,ref,div='mm_transferFor',x){x=g2(xutinput);betValid(to,x,0,function(err,result){if(err||!result)return(dw(div,ERROR+'input:invalid'));return(mm_transferFor(to,x,(avalid(ref)?setInput({ref}):BLANK)));});};
+const submitto=function(to,xutinput,div='mm_transfer',x){x=g2(xutinput);betValid(to,x,0,function(err,result){if(err||!result)return(dw(div,ERROR+'input:invalid'));return(mm_transfer(to,x));});};
+////////////////////////////////////////////////////////////[2]
+const createMyProfile=function(name,text,style='#000000'){return(createSimpleDoc('profile',ethnow()+10,-1,-1,TYPES.personal_profile,{name,text,style}));};//Delay10Seconds;
+const createSimpleDoc=function(frm,uts,min,max,typ,dat,odd,hdiv,adiv){if(!frm)frm='lo1x99';if(!hdiv)hdiv='hash'+frm;if(!adiv)adiv='addr'+frm;if(!uts)uts=lotnow().lotstamp;if(!min)min=1;if(!max)max=100000;if(!typ)typ=TYPES.gaming;if(!dat)dat={};typ=Number(typ);uts=Number(uts);min=Number(min);max=Number(max);if(!Array.isArray(odd))odd=[70];if(uts<ethnow())return(dw(hdiv,ERROR+'time:invalid'));showLoad(hdiv);
+;xuteng.methods.transferFor(ZEROADDR,0,setInput({typ,frm,uts,min,max,odd,dat})).send(mmsender(),function(err,hash){if(err)return(dw(hdiv,ERROR+'document.creation:invalid'));dw(hdiv,hash);console.log(hash);lastTxHashId=hdiv;lastTxHash[lastTxHashId]=hash;showLoad(adiv);/*GAS25K*/
+;xuteng.methods.ping(hash,typ).send(mmsender(),function(err,hash){if(err)return(dw(adiv,ERROR+'document.registration:invalid'));return(divAddrFromHash(lastTxHash[lastTxHashId],adiv));});});};/*GAS180K*/
+////////////////////////////////////////////////////////////
