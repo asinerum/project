@@ -184,6 +184,7 @@ iframe{
  color:white;
  padding:5px;
  text-align:left;
+ text-decoration:none;
  font-family:GARAMOND;
  display:inline-block;
  margin:1px;}
@@ -195,6 +196,7 @@ iframe{
  color:black;
  padding:5px;
  text-align:left;
+ text-decoration:none;
  font-family:GARAMOND;
  display:inline-block;
  margin:1px;}
@@ -202,6 +204,7 @@ iframe{
  color:black;
  padding:5px;
  text-align:left;
+ text-decoration:none;
  font-family:GARAMOND;
  margin:1px;}
 .note{
