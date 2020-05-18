@@ -1,10 +1,8 @@
 ////////////////////////////////////////////////////////////
-const require=function(js){document.write('<script\tsrc="'+js+'"></script>');};
 const restyle=function(ss){document.write('<link\thref="'+ss+'"\trel="stylesheet"\ttype="text/css"/>');};
+const require=function(js){document.write('<script\tsrc="'+js+'"></script>');};
 ////////////////////////////////////////////////////////////
 restyle('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css');
-restyle('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css');
-restyle('https://fonts.googleapis.com/css?family=Garamond:400,700');
 restyle('https://asinerum.github.io/project/gui/fonts.css');
 restyle('https://asinerum.github.io/project/gui/style.css');
 ////////////////////////////////////////////////////////////
