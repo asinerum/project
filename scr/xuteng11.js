@@ -926,7 +926,7 @@ const showLoad=function(div){dw(div,'<img\tsrc="loading.gif"/>');};
 const accepted=function(divS){if(confirm(hi_prompt_fee+NEWLINE+gasfee+SPACE+COIN))return(true);dw(divS,CANCELED);return(false);};
 ////////////////////////////////////////////////////////////
 const launchNet=function(nid){if(!nid)nid=hashParam(ARGWNET);selectNet(switchNet(nid));};
-const selectNet=function(nid){switchNet(nid);changeNet();startXuteng(network);setStyle('body',networkStyle);};
+const selectNet=function(nid){switchNet(nid);changeNet();startXuteng(network);setStyle('body',networkStyle);setPGwei();};
 const switchNet=function(nid,dnid){if(!dnid)dnid=MAINNET;if(XUTENG[nid]){window.network=nid}else{window.network=dnid};return(network);};
 const changeNet=function(){contractAddress=XUTENG[network].addr;networkChainId=XUTENG[network].ncid;networkStyle=XUTENG[network].bcls;contractScanner=XUTENG[network].scan+contractAddress;mr('bgxutengscan',contractScanner);};
 const getRpcNet=function(){window.rpcServer=gv(_rpcs);if(!window.rpcServer)window.rpcServer=XUTENG[network].rpcs;return(rpcServer);};
