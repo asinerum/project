@@ -1,6 +1,5 @@
-////////////////////////////////////////////////////////////[4]
-const getPGwei=function(){gasPGwei(function(err,result){if(err)return;console.log('GASFEE',result,'GWEI');});};
-const setPGwei=function(){gasPGwei(function(err,result){if(err)return;/*if(result>TXGWEIS.lowest)*/;document.getElementById(_txgwei).options[0]=(new Option('PROPOSE',result));});};
+////////////////////////////////////////////////////////////[3]
+const setPGwei=function(){gasPGwei((e,gwei)=>{if(e)return;console.log('GWEI:',gwei);try{document.getElementById(_txgwei).options[0]=(new Option('GWEI:'+gwei,gwei));}catch(e){}});};
 const gasPGwei=function(cbf){web3.eth.getGasPrice().then((resolve,reject)=>{if(reject)return(cbf(reject,null));window.txgwei=gfromWei(resolve);return(cbf(null,window.txgwei));});};
 const betValid=function(to,xut,uts,cbf){txaddr(to,function(err,result){if(err)return(cbf(err,null));if(!result)return(cbf(null,undefined));if(!uts)uts=ethnow();if(xut<result.min||xut>result.max)return(cbf(null,0));if(uts<result.txUts||uts>result.uts)return(cbf(null,false));return(cbf(null,result.txBlock));});};
 ////////////////////////////////////////////////////////////[3]

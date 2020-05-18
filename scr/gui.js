@@ -3,7 +3,7 @@ const showLoad=function(div){dw(div,'<img\tsrc="loading.gif"/>');};
 const accepted=function(divS){if(confirm(hi_prompt_fee+NEWLINE+gasfee+SPACE+COIN))return(true);dw(divS,CANCELED);return(false);};
 ////////////////////////////////////////////////////////////
 const launchNet=function(nid){if(!nid)nid=hashParam(ARGWNET);selectNet(switchNet(nid));};
-const selectNet=function(nid){switchNet(nid);changeNet();startXuteng(network);setStyle('body',networkStyle);setPGwei();};
+const selectNet=function(nid){switchNet(nid);changeNet();startXuteng(network);setStyle('body',networkStyle);};
 const switchNet=function(nid,dnid){if(!dnid)dnid=MAINNET;if(XUTENG[nid]){window.network=nid}else{window.network=dnid};return(network);};
 const changeNet=function(){contractAddress=XUTENG[network].addr;networkChainId=XUTENG[network].ncid;networkStyle=XUTENG[network].bcls;contractScanner=XUTENG[network].scan+contractAddress;mr('bgxutengscan',contractScanner);};
 const getRpcNet=function(){window.rpcServer=gv(_rpcs);if(!window.rpcServer)window.rpcServer=XUTENG[network].rpcs;return(rpcServer);};
@@ -52,7 +52,7 @@ const stopSession=function(mis){setInterval(function(){senderPte=BLANK;password=
 const statsXuteng=function(mis){setInterval(function(){getData(sender,getDType(0));},mis);};
 const statsSender=function(mis){setInterval(function(){getSenderData();},mis);};
 ////////////////////////////////////////////////////////////
-const resetXuteng=function(){contractAddress=XUTENG[network].addr;window.xuteng=(new web3.eth.Contract(ABIXUTENG,contractAddress));getPGwei();};
+const resetXuteng=function(){contractAddress=XUTENG[network].addr;window.xuteng=(new web3.eth.Contract(ABIXUTENG,contractAddress));setPGwei();};
 const web3Mainnet=function(){web3.eth.net.getNetworkType().then(function(net){if(net=='main'){switchNet(MAINNET);alert(hi_alert_ismainnet);}else{switchNet(net,LOCALHOST);alert(hi_alert_nomainnet);}networkChainId=XUTENG[network].ncid;resetXuteng();});getSender();};
 const metaMainnet=function(){ethereum.autoRefreshOnNetworkChange=false;sender=ethereum.selectedAddress;if(!sender)getSender();if(ethereum.networkVersion!=1)alert(hi_alert_nomainnet);switchNet(networkById(ethereum.networkVersion));;;ethereum.on('networkChanged',function(ncid){console.log(ncid);switchNet(networkById(ncid));resetXuteng();console.log(network);networkChainId=ncid;if(ncid!=1)alert(hi_alert_nomainnet);});ethereum.on('accountsChanged',function(accounts){sender=accounts[0];});window.addEventListener('load',async()=>{try{await(ethereum.enable());}catch(err){alert(hi_alert_accdenied);}});};
 const getProvider=function(){if(window.ethereum){window.web3=(new Web3(ethereum));metaMainnet();}else{if(window.web3){window.web3=(new Web3(web3.currentProvider));web3Mainnet();}else{startXuteng(MAINNET);return(alert(hi_alert_metamasks));}};resetXuteng();};
