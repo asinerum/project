@@ -109,8 +109,8 @@ xutEth=w2s(result.xutdat[ETHBALANCEOFXUT]);
 xutXut=w2s(result.xutdat[BALANCEOFXUT]);};
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
-const ethersOf=function(ua,div){web3.eth.getBalance(ua,function(err,result){if(err)return;mw(div,w2s(result));});};
-const xutengOf=function(ua,div){xuteng.methods.balanceOf(ua).call(function(err,result){if(err)return;mw(div,w2s(result));});};
-const incomeOf=function(ua,div){xuteng.methods.incomeOf(ua).call(function(err,result){if(err)return;mw(div,w2s(result));});};
-const mintedOf=function(ua,div){xuteng.methods.mintedOf(ua).call(function(err,result){if(err)return;mw(div,w2s(result));});};
+const ethersOf=function(ua,div=TEST){web3.eth.getBalance(ua,function(err,result){if(err)return;result=w2s(result);console.log(result);mw(div,result);});};
+const xutengOf=function(ua,div=TEST){xuteng.methods.balanceOf(ua).call(function(err,result){if(err)return;result=w2s(result);console.log(result);mw(div,result);});};
+const incomeOf=function(ua,div=TEST){xuteng.methods.incomeOf(ua).call(function(err,result){if(err)return;result=w2s(result);console.log(result);mw(div,result);});};
+const mintedOf=function(ua,div=TEST){xuteng.methods.mintedOf(ua).call(function(err,result){if(err)return;result=w2s(result);console.log(result);mw(div,result);});};
 ////////////////////////////////////////////////////////////

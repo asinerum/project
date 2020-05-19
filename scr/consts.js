@@ -12,6 +12,7 @@ const MESSAGE='message';
 const RECEIPT='receipt';
 const SIGNATURE='signature';
 ////////////////////////////////////////////////////////////
+const TEST='test';
 const MAINNET='mainnet';
 const LOCALHOST='localhost';
 const ARGADDR='a';

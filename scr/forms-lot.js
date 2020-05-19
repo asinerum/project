@@ -13,6 +13,7 @@ const arrdup=function(arr,m,i){if(!Array.isArray(arr))return(null);if(arr.length
 ////////////////////////////////////////////////////////////[3]
 const ethnow=function(){return(parseInt(Date.now()/1000,10));};//~forms.nowDate();//CurrentEthereumTime;
 const estamp=function(yy,mo,dd,hh=12,mi=0){return(parseInt((new Date(Date.UTC(yy,mo-1,dd,hh,mi,0))).getTime()/1000,10));};//EthereumTime;
+const trange=function(begin,end,max=30,t){try{begin=estamp(begin[0],begin[1],begin[2],0);end=estamp(end[0],end[1],end[2],0);t=(end-begin)/60/60/24;if(t<=0||t>max)return(0);return({begin,end});}catch(e){return(null);}};
 const lotnow=function(){window.now=(new Date(1000*ethnow()));window.lottime=[window.now.getFullYear(),window.now.getMonth()+1,window.now.getDate(),12,0];window.lotstamp=estamp(window.lottime[0],window.lottime[1],window.lottime[2],window.lottime[3],window.lottime[4],0);return({lotstamp:window.lotstamp,lottime:window.lottime});};
 ////////////////////////////////////////////////////////////[4]
 const hexCut=function(str){return(hexUtf(strCut(str,'7b226f626a22','7d7d')));};

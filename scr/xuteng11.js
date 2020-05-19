@@ -39,6 +39,7 @@ const MESSAGE='message';
 const RECEIPT='receipt';
 const SIGNATURE='signature';
 ////////////////////////////////////////////////////////////
+const TEST='test';
 const MAINNET='mainnet';
 const LOCALHOST='localhost';
 const ARGADDR='a';
@@ -559,10 +560,10 @@ xutEth=w2s(result.xutdat[ETHBALANCEOFXUT]);
 xutXut=w2s(result.xutdat[BALANCEOFXUT]);};
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
-const ethersOf=function(ua,div){web3.eth.getBalance(ua,function(err,result){if(err)return;mw(div,w2s(result));});};
-const xutengOf=function(ua,div){xuteng.methods.balanceOf(ua).call(function(err,result){if(err)return;mw(div,w2s(result));});};
-const incomeOf=function(ua,div){xuteng.methods.incomeOf(ua).call(function(err,result){if(err)return;mw(div,w2s(result));});};
-const mintedOf=function(ua,div){xuteng.methods.mintedOf(ua).call(function(err,result){if(err)return;mw(div,w2s(result));});};
+const ethersOf=function(ua,div=TEST){web3.eth.getBalance(ua,function(err,result){if(err)return;result=w2s(result);console.log(result);mw(div,result);});};
+const xutengOf=function(ua,div=TEST){xuteng.methods.balanceOf(ua).call(function(err,result){if(err)return;result=w2s(result);console.log(result);mw(div,result);});};
+const incomeOf=function(ua,div=TEST){xuteng.methods.incomeOf(ua).call(function(err,result){if(err)return;result=w2s(result);console.log(result);mw(div,result);});};
+const mintedOf=function(ua,div=TEST){xuteng.methods.mintedOf(ua).call(function(err,result){if(err)return;result=w2s(result);console.log(result);mw(div,result);});};
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
 const getUserOffer=function(ua,n){if(badAddr(ua))return;;userSelling(ua,n,_sellingDone,_sellingTpe,_sellingVol,_sellingNum);};
@@ -610,6 +611,10 @@ const deaddrLottoGame=function(a,div,cbf){txaddr(a,function(err,result){if(err)r
 const dehashMyProfile=function(h,div,cbf){dehash(h,function(err,result){if(err)return(dw(div,ERROR));if(cbf)return(cbf(null,result));window.txforDocDat=result;dwMyAddrProfile(div,result);});};
 const deaddrMyProfile=function(a,div,cbf){deaddr(a,function(err,result){if(err)return(dw(div,ERROR));if(cbf)return(cbf(null,result));window.txforDocDat=result;dwMyAddrProfile(div,result);});};
 ////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////[3]
+const xutengTxBlocks=async(begin,end,t)=>{t=trange(begin,end);if(!t)return(t);await(getBStop(0,t.begin));begin=window.blocknum;if(!begin)return(null);await(getBStop(0,t.end));end=window.blocknum;if(!end)return(null);return({begin,end});};
+const xutengReceived=async(address,begin,end,cbf,t,i,j=[])=>{t=await(xutengTxBlocks(begin,end));if(!t)return(t);xuteng.getPastEvents('Transfer',{filter:{toAddress:address},fromBlock:t.begin,toBlock:t.end},function(err,result){if(err)return(null);for(i=0;i<result.length;i++){j.push({xut:fromWei(result[i].returnValues.txPenny),tx:result[i].transactionHash,from:result[i].returnValues.fromAddress});}if(cbf)cbf(null,j);console.log(j);return(j);});};
+const xutengSentAway=async(address,begin,end,cbf,t,i,j=[])=>{t=await(xutengTxBlocks(begin,end));if(!t)return(t);xuteng.getPastEvents('Transfer',{filter:{fromAddress:address},fromBlock:t.begin,toBlock:t.end},function(err,result){if(err)return(null);for(i=0;i<result.length;i++){j.push({xut:fromWei(result[i].returnValues.txPenny),tx:result[i].transactionHash,to:result[i].returnValues.toAddress});}if(cbf)cbf(null,j);console.log(j);return(j);});};
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
 const getSenderData=function(){
@@ -825,6 +830,7 @@ const arrdup=function(arr,m,i){if(!Array.isArray(arr))return(null);if(arr.length
 ////////////////////////////////////////////////////////////[3]
 const ethnow=function(){return(parseInt(Date.now()/1000,10));};//~forms.nowDate();//CurrentEthereumTime;
 const estamp=function(yy,mo,dd,hh=12,mi=0){return(parseInt((new Date(Date.UTC(yy,mo-1,dd,hh,mi,0))).getTime()/1000,10));};//EthereumTime;
+const trange=function(begin,end,max=30,t){try{begin=estamp(begin[0],begin[1],begin[2],0);end=estamp(end[0],end[1],end[2],0);t=(end-begin)/60/60/24;if(t<=0||t>max)return(0);return({begin,end});}catch(e){return(null);}};
 const lotnow=function(){window.now=(new Date(1000*ethnow()));window.lottime=[window.now.getFullYear(),window.now.getMonth()+1,window.now.getDate(),12,0];window.lotstamp=estamp(window.lottime[0],window.lottime[1],window.lottime[2],window.lottime[3],window.lottime[4],0);return({lotstamp:window.lotstamp,lottime:window.lottime});};
 ////////////////////////////////////////////////////////////[4]
 const hexCut=function(str){return(hexUtf(strCut(str,'7b226f626a22','7d7d')));};
@@ -939,21 +945,21 @@ const wrdRole=function(v){userRole=v;v=wrd(ROLES,userRole);if(!v)return(HYPHEN);
 const wrdTick=function(v){userTick=v;v=wrd(TICKS,userTick);if(!v)return(HYPHEN);return(v);};
 const wrdType=function(v){contType=v;v=wrd(TYPES,contType);if(!v)return(contType);return(v);};
 ////////////////////////////////////////////////////////////
-const showMaxGas=function(t){t=BLANK;Object.keys(MAXGASES).forEach(function(key){t+='<option\tvalue="'+MAXGASES[key]+'">'+key+':&nbsp;'+n2s(MAXGASES[key])+'</option>';});dw(_maxgas,t);};
-const showTxGwei=function(t){t=BLANK;Object.keys(TXGWEIS).forEach(function(key){t+='<option\tvalue="'+TXGWEIS[key]+'">'+key+':&nbsp;'+TXGWEIS[key]+'&nbsp;GWEI</option>';});dw(_txgwei,t);};
+const showMaxGas=function(t){t=BLANK;Object.keys(MAXGASES).forEach(function(key){t+='<option\tvalue="'+MAXGASES[key]+'">'+key+':&nbsp;'+n2s(MAXGASES[key])+'</option>';});console.log(t);dw(_maxgas,t);};
+const showTxGwei=function(t){t=BLANK;Object.keys(TXGWEIS).forEach(function(key){t+='<option\tvalue="'+TXGWEIS[key]+'">'+key+':&nbsp;'+TXGWEIS[key]+'&nbsp;GWEI</option>';});console.log(t);dw(_txgwei,t);};
 ////////////////////////////////////////////////////////////
 const getDType=function(t){t=gv(_setType);return(t?t:TYPES.token_trading);};
 const networkById=function(ncid){Object.keys(XUTENG).forEach(function(key){if(XUTENG[key].ncid==ncid)return(ncid=key);});if(ncid>0)return(LOCALHOST);return(ncid);};
 ////////////////////////////////////////////////////////////
-const showNetwork=function(t){t=BLANK;Object.keys(XUTENG).forEach(function(key){t+='<option'+((network==key)?'\tselected':BLANK)+'\tvalue="'+key+'">'+key+'</option>';});dw(_network,t);};
-const showDsModel=function(t){t=BLANK;Object.keys(MODELS).forEach(function(key){t+='<option\tvalue="'+key+'">'+MODELS[key].name+'</option>';});dw(_model,t);};
-const showAccount=function(t){t=BLANK;Object.keys(ADDRESSES).forEach(function(key){t+='<option\tvalue="'+key+'">'+key+'</option>';});dw(_account,t);};
+const showNetwork=function(t){t=BLANK;Object.keys(XUTENG).forEach(function(key){t+='<option'+((network==key)?'\tselected':BLANK)+'\tvalue="'+key+'">'+key+'</option>';});console.log(t);dw(_network,t);};
+const showDsModel=function(t){t=BLANK;Object.keys(MODELS).forEach(function(key){t+='<option\tvalue="'+key+'">'+MODELS[key].name+'</option>';});console.log(t);dw(_model,t);};
+const showAccount=function(t){t=BLANK;Object.keys(ADDRESSES).forEach(function(key){t+='<option\tvalue="'+key+'">'+key+'</option>';});console.log(t);dw(_account,t);};
 const optnAccount=function(t){t=BLANK;Object.keys(ADDRESSES).forEach(function(key){t+='<option\tvalue="'+ADDRESSES[key]+'">'+key+':&nbsp;'+ADDRESSES[key]+'</option>';});return(t);};
 ////////////////////////////////////////////////////////////
-const showRole=function(t){t=BLANK;Object.keys(ROLES).forEach(function(key){t+='<option\tvalue="'+ROLES[key]+'">'+key+'</option>';});dw(_roleVal,t);};
-const showTick=function(t){t=BLANK;Object.keys(TICKS).forEach(function(key){t+='<option\tvalue="'+TICKS[key]+'">'+key+'</option>';});dw(_tickVal,t);};
-const showDTyp=function(t){t=BLANK;Object.keys(TYPES).forEach(function(key){t+='<option\tvalue="'+TYPES[key]+'">'+key+'</option>';});dw(_refType,t);};
-const showAccs=function(){dw(_ethTo,accountOptions);dw(_xutTo,accountOptions);dw(_owner,accountOptions);dw(_sendToAdmin,accountOptions);dw(_transToAdmin,accountOptions);};
+const showRole=function(t){t=BLANK;Object.keys(ROLES).forEach(function(key){t+='<option\tvalue="'+ROLES[key]+'">'+key+'</option>';});console.log(t);dw(_roleVal,t);};
+const showTick=function(t){t=BLANK;Object.keys(TICKS).forEach(function(key){t+='<option\tvalue="'+TICKS[key]+'">'+key+'</option>';});console.log(t);dw(_tickVal,t);};
+const showDTyp=function(t){t=BLANK;Object.keys(TYPES).forEach(function(key){t+='<option\tvalue="'+TYPES[key]+'">'+key+'</option>';});console.log(t);dw(_refType,t);};
+const showAccs=function(){dw(_ethTo,accountOptions);dw(_xutTo,accountOptions);dw(_owner,accountOptions);dw(_sendToAdmin,accountOptions);dw(_transToAdmin,accountOptions);console.log(accountOptions);};
 ////////////////////////////////////////////////////////////
 const retrAccount=function(t){switchNet(gv(_network));senderId=gv(_account);try{t=getv3key(gv(_password),0);}catch(err){dw('_keystore_status',err.message);alert(hi_alert_data);return(0);};sender=t.address;senderPte=t.privateKey.substr(2);};
 const takeAccount=function(){showLoad('_keystore_status');setTimeout(function(){retrAccount(0);dw('_keystore_status',senderId+COLON+NBSP+sender);},2000);};
@@ -962,14 +968,19 @@ const jrecover=function(j){return(srecover(j.message,j.signature));};
 const srecover=function(tm,s){try{tm=web3.eth.accounts.recover(tm,s);}catch(err){alert(err.message);return(0);};return(tm);};
 const signmess=function(tm,k){try{tm=web3.eth.accounts.sign(tm,HEXINIT+k);}catch(err){alert(err.message);return(0);};return({message:tm.message,signature:tm.signature});};
 const signMMsg=function(msg,div,cbf){if(!div)div=funcName();/*signMMsg*/;web3.eth.getAccounts().then((accounts)=>{sender=accounts[0];console.log('message'+COLON+SPACE+msg);console.log('account'+COLON+SPACE+sender);web3.eth.personal.sign(msg,sender,function(err,hexSign){console.log('signature'+COLON+SPACE+hexSign);dv(div,hexSign);if(cbf)cbf(msg,sender,hexSign);});});};
+const keyparam=function(pw){netkeys=keystore(pw,0);Object.keys(netkeys).forEach(function(key){accounts[key]=netkeys[key].address;keypairs[netkeys[key].address]=netkeys[key].privateKey.substr(2);});};
 const keystore=function(pw,t){t=Object.assign({},V3KEYSTORE);Object.keys(V3KEYSTORE).forEach(function(key){t[key]=web3.eth.accounts.decrypt(V3KEYSTORE[key],pw);});return(t);};
 const getv3key=function(pw,t){t=web3.eth.accounts.decrypt(V3KEYSTORE[senderId],pw);if(t)password=pw;return(t);};
-const keyparam=function(pw){netkeys=keystore(pw,0);Object.keys(netkeys).forEach(function(key){accounts[key]=netkeys[key].address;keypairs[netkeys[key].address]=netkeys[key].privateKey.substr(2);});};
+const messageVerify=function(message,signature,wallet){return(wallet.toLowerCase()===srecover(message,signature).toLowerCase());};
+const messageDoSign=function(message,privatekey){if(!privatekey)privatekey=senderPte;if(privatekey.indexOf(HEXINIT)===0)privatekey=privatekey.slice(2);return(signmess(message,privatekey));};
 ////////////////////////////////////////////////////////////
 const getAccount=function(t){switchNet(gv(_network));senderId=gv(_account);try{t=gettextkey(gv(_password),0);}catch(err){dw('_keystore_status',err.message);alert(hi_alert_data);return(0);};sender=t.address;senderPte=t.privateKey.substr(2);dw('_keystore_status','Address'+COLON+NBSP+sender);return(t);};
-const newAccount=function(pw,divNA,divNP,divKS,t){if(!loRegex.test(pw))return(alert(hi_prompt_chk));t=web3.eth.accounts.create(web3.utils.randomHex(32));db(divNA,t.address);db(divNP,t.privateKey.substr(2));try{dv(divKS,JSON.stringify(web3.eth.accounts.encrypt(t.privateKey,pw)).replace(/\s/g,BLANK));}catch(err){alert(hi_alert_data);return(0);}return(t);};
-const oldAccount=function(pw,divOA,divOP,divKS,t){if(!loRegex.test(pw))return(alert(hi_prompt_chk));try{t=web3.eth.accounts.encrypt(gv(divOP),pw);db(divOA,web3.eth.accounts.decrypt(t,pw).address);}catch(err){alert(hi_alert_data);return(0);}dv(divOP,BLANK);dv(divKS,JSON.stringify(t).replace(/\s/g,BLANK));return(t);};
-const gettextkey=function(pw,t){t=gv(_keystore);if(!t)return(getv3key(pw,0));t=web3.eth.accounts.decrypt(JSON.parse(t),pw);if(!t.address)return(0);password=pw;return(t);};
+const newAccount=function(pw,divNA,divNP,divKS,t,k){if(!loRegex.test(pw))return(alert(hi_prompt_chk));t=web3.eth.accounts.create(web3.utils.randomHex(32));db(divNA,t.address);db(divNP,t.privateKey.substr(2));try{k=JSON.stringify(web3.eth.accounts.encrypt(t.privateKey,pw)).replace(/\s/g,BLANK);dv(divKS,k);}catch(err){alert(hi_alert_data);return(0);};window.newAccount={ACCOUNT:{address:t.address,privateKey:t.privateKey,keyStore:k}};console.log(window.newAccount);return(t);};
+const oldAccount=function(pw,divOA,divOP,divKS,t,a,k){if(!loRegex.test(pw))return(alert(hi_prompt_chk));if(!t)t=gv(divOP);try{t=web3.eth.accounts.encrypt(t,pw);a=web3.eth.accounts.decrypt(t,pw).address;k=JSON.stringify(t).replace(/\s/g,BLANK);}catch(err){alert(hi_alert_data);return(0);}db(divOA,a);dv(divOP,BLANK);dv(divKS,k);console.log({IMPORT:{address:a,keyStore:k}});return(t);};
+const gettextkey=function(pw,t){if(!t)t=gv(_keystore);if(!t)return(getv3key(pw,0));t=web3.eth.accounts.decrypt(JSON.parse(t),pw);if(!t.address)return(0);password=pw;console.log('UNLOCKED',t.address);return(t);};
+const userUnlock=function(passCode,keyStore,t){t=gettextkey(passCode,keyStore);if(!t)return;senderId=BLANK;sender=t.address;senderPte=t.privateKey.substr(2);};
+const userImport=function(passCode,privKey){oldAccount(passCode,0,0,0,privKey);};
+const userCreate=function(passCode){newAccount(passCode);};
 ////////////////////////////////////////////////////////////
 const showDefault=function(){$(document).ready(function(){showNetwork(0);showAccount(0);showMaxGas(0);showTxGwei(0);showRole(0);showTick(0);showDTyp(0);showAccs();});};
 const stopSession=function(mis){setInterval(function(){senderPte=BLANK;password=BLANK;dv(_password,SYMBOL);},mis);};
