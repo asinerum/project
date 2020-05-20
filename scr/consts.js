@@ -12,6 +12,8 @@ const MESSAGE='message';
 const RECEIPT='receipt';
 const SIGNATURE='signature';
 ////////////////////////////////////////////////////////////
+const OBJ='obj';
+const REF='ref';
 const TEST='test';
 const MAINNET='mainnet';
 const LOCALHOST='localhost';
