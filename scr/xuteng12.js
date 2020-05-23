@@ -682,7 +682,7 @@ const setSending=function(func,eth){sendingFunc=func;sendingAbi=sendingFunc.enco
 ////////////////////////////////////////////////////////////
 const send=function(divG,divH,divS,cbf){showLoad(divS);txsend(divG,divH,divS,cbf);};
 const txsend=function(divG,divH,divS,cbf){sendingFunc.estimateGas({from:sender,value:s2wHex(sendingEth)}).then((gas)=>{estgas=gas;gasfee=fromGwei(estgas*txgwei);if(!accepted(divS))return;console.log('gas:'+gas.toString(16));web3.eth.getTransactionCount(sender).then(nonce=>{nonce=nonce.toString(16);console.log('nonce:'+nonce);web3.eth.sendSignedTransaction(txraw(sendingAbi,nonce,sendingEth,0)).on(RECEIPT,receipt=>{txreceipt=receipt;if(cbf)cbf(null,txreceipt);console.log(txreceipt);dw(divG,txreceipt.gasUsed);dw(divH,txreceipt.transactionHash);dw(divS,txreceipt.status);}).then((res)=>{dw(divS,OK);}).catch((err)=>{if(cbf)cbf(err,null);dw(divG,BLANK);dw(divH,BLANK);dw(divS,ERROR+errCode(err));});});});};
-const sendeth=function(to,eth,divH,divS,cbf){showLoad(divS);estgas=BASEGAS;gasfee=fromGwei(estgas*txgwei);if(!accepted(divS))return;web3.eth.getTransactionCount(sender).then(nonce=>{nonce=nonce.toString(16);web3.eth.sendSignedTransaction(txraw(OxOO,nonce,eth,to)).on(RECEIPT,receipt=>{txreceipt=receipt;if(cbf)cbf(null,txreceipt);dw(divH,txreceipt.transactionHash);}).then((res)=>{dw(divS,OK);}).catch((err)=>{if(cbf)cbf(err,null);dw(divS,ERROR+errCode(err));});});};
+const sendeth=function(to,eth,divH,divS,cbf,abi=OxOO){if(abi!=OxOO)abi=toHex(abi);showLoad(divS);estgas=BASEGAS;gasfee=fromGwei(estgas*txgwei);if(!accepted(divS))return;web3.eth.getTransactionCount(sender).then(nonce=>{nonce=nonce.toString(16);web3.eth.sendSignedTransaction(txraw(abi,nonce,eth,to)).on(RECEIPT,receipt=>{txreceipt=receipt;if(cbf)cbf(null,txreceipt);dw(divH,txreceipt.transactionHash);}).then((res)=>{dw(divS,OK);}).catch((err)=>{if(cbf)cbf(err,null);dw(divS,ERROR+errCode(err));});});};
 const sendeth2sys=function(eth,divH,divS,cbf){sendeth(contractAddress,eth,divH,divS,cbf);};
 ////////////////////////////////////////////////////////////
 const txraw=function(abi,nonce,eth,to){
@@ -698,8 +698,13 @@ const xutengSetDomainName=function(domain,ref,eth,cbf,status=TEST){domain=domain
 const xutengSendEthForXut=function(eth,cbf,status=TEST){buy(eth);send(0,0,status,cbf);};
 const xutengSendXutForEth=function(xut,cbf,status=TEST){sell(xut);send(0,0,status,cbf);};
 ////////////////////////////////////////////////////////////[2]
-const xutengTransfer=function(to,xut,cbf,status=TEST){transfer(to,xut);send(0,0,status,cbf);};
-const xutengRemitFor=function(to,xut,ref,cbf,status=TEST){transferFor(to,xut,setInput({ref}));send(0,0,status,cbf);};
+const ethereumTransfer=function(to,eth,cbf,status=TEST){if(avalid(to))return(sendeth(to,eth,0,status,cbf));xutengDomainStatus(to,function(err,result){if(err||!result||result.user==ZEROADDR)return(cbf(err,null));to=result.user;return(sendeth(to,eth,0,status,cbf));});};
+const ethereumRemitFor=function(to,eth,ref,cbf,status=TEST){ref=setInput({ref});if(avalid(to))return(sendeth(to,eth,0,status,cbf,ref));xutengDomainStatus(to,function(err,result){if(err||!result||result.user==ZEROADDR)return(cbf(err,null));to=result.user;return(sendeth(to,eth,0,status,cbf,ref));});};
+////////////////////////////////////////////////////////////[4]
+const xutengTransfer=function(to,xut,cbf,status=TEST){if(avalid(to))return(xutengDirectTransfer(to,xut,cbf,status));xutengDomainStatus(to,function(err,result){if(err||!result||result.user==ZEROADDR)return(cbf(err,null));to=result.user;return(xutengDirectTransfer(to,xut,cbf,status));});};
+const xutengRemitFor=function(to,xut,ref,cbf,status=TEST){if(avalid(to))return(xutengDirectRemitFor(to,xut,ref,cbf,status));xutengDomainStatus(to,function(err,result){if(err||!result||result.user==ZEROADDR)return(cbf(err,null));to=result.user;return(xutengDirectRemitFor(to,xut,ref,cbf,status));});};
+const xutengDirectTransfer=function(to,xut,cbf,status=TEST){transfer(to,xut);send(0,0,status,cbf);};
+const xutengDirectRemitFor=function(to,xut,ref,cbf,status=TEST){transferFor(to,xut,setInput({ref}));send(0,0,status,cbf);};
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
 const mmresult=function(err,hash,fname){if(err){err=ERROR+errCode(err);lastTxHash[fname]=BLANK;}else{err=OK+hash;lastTxHash[fname]=hash;};mw(lastTxHashClass,err);dw(fname,err);};
@@ -1199,9 +1204,11 @@ const loadILB64=function(b64,s,a,i){s=window.atob(b64);a=(new Uint8Array(s.lengt
 const wasmILB64=function(b64,memory){if(!memory)memory=wasmCache();window.wasmInstance=(new WebAssembly.Instance((new WebAssembly.Module(loadILB64(b64))),{env:{memory}}));return(window.wasmInstance);};
 const wasmCache=function(ini=256,max=256){window.wasmMemory=(new WebAssembly.Memory({initial:ini,maximum:max}));return(window.wasmMemory);};
 const getBuffer=function(){window.wasmBuffer=(new Uint8Array(window.wasmInstance.exports.memory.buffer));return(window.wasmBuffer);};
-////////////////////////////////////////////////////////////[7]
+////////////////////////////////////////////////////////////[9]
 const setCbinWasmString=function(str,pos=0,ins,b,i){if(!ins)ins=window.wasmInstance;b=(new Uint8Array(ins.exports.memory.buffer));for(i=pos;i<pos+str.length;i++)b[i]=str.charCodeAt(i);b[i]='\0';return(pos);};
 const getCbinWasmString=function(pointer,ins,b,i,s){if(!ins)ins=window.wasmInstance;b=(new Uint8Array(ins.exports.memory.buffer));s='';for(i=pointer;b[i];i++)s+=String.fromCharCode(b[i]);return(s);};
+const setCWasmNewStr=function(str,exports,e,b,l,m,p,i){if(!exports)exports=window.wasmInstance.exports;e=(new TextEncoder('UTF-8'));b=e.encode(str);l=b.length;p=exports.strAlloc(l+1);m=(new Uint8Array(exports.memory.buffer));for(i=0;i<l;i++){m[p+i]=b[i];}m[p+l]=0;/**NULL**/;return(p);};
+const getCWasmMemStr=function(ptr,exports,o,b,c,d,m,u){if(!exports)exports=window.wasmInstance.exports;o=ptr;c=function*(){m=(new Uint8Array(exports.memory.buffer));while(m[ptr]!==0){if(m[ptr]===undefined){throw(Error('MEMORY'))};yield(m[ptr]);ptr++;}};b=(new Uint8Array(c()));d=(new TextDecoder('UTF-8'));u=d.decode(b);exports.strFree();return(u);};
 const setWasmNewStr=function(str,exports,e,b,l,m,p,i){/**RUST**/;if(!exports)exports=window.wasmInstance.exports;e=(new TextEncoder('UTF-8'));b=e.encode(str);l=b.length;p=exports.alloc(l+1);m=(new Uint8Array(exports.memory.buffer));for(i=0;i<l;i++){m[p+i]=b[i];}m[p+l]=0;/**NULL**/;return(p);};
 const getWasmMemStr=function(ptr,exports,o,b,c,d,m,u){/**RUST**/;if(!exports)exports=window.wasmInstance.exports;o=ptr;c=function*(){m=(new Uint8Array(exports.memory.buffer));while(m[ptr]!==0){if(m[ptr]===undefined){throw(Error('MEMORY'))};yield(m[ptr]);ptr++;}};b=(new Uint8Array(c()));d=(new TextDecoder('UTF-8'));u=d.decode(b);exports.dealloc_str(o);return(u);};
 const setWasmString=function(str,pointer=0,ins,b,i){if(!ins)ins=window.wasmInstance;b=(new Uint8Array(ins.exports.memory.buffer));for(i=pointer;i<pointer+str.length;i++)b[i]=str.charCodeAt(i);b[i]='\0';return(str.length);};
