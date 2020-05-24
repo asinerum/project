@@ -35,12 +35,14 @@
   <i class="fa fa-caret-right"></i> launchRpc(`https://ropsten-rpc.linkpool.io`,`ropsten`);
   <br/>
   <br/>
-  CREATE NEW WALLET IF YOU HAVE NONE
+  CREATE YOUR NEW WALLET IF YOU HAVE NONE
   <br/>
   <i class="fa fa-caret-right"></i> userCreate(`your_secret_passcode`);
   <br/>
+  <i class="fa fa-caret-right"></i> userImport(`new_secret_passcode`, `existing_private_key`);
   <br/>
-  UNLOCK YOUR KEYSTORE WITH SECRET PASSCODE
+  <br/>
+  UNLOCK YOUR WALLET WITH SECRET PASSCODE
   <br/>
   <i class="fa fa-caret-right"></i> userUnlock(`your_secret_passcode`, `your_keystore`);
   <br/>
@@ -48,6 +50,8 @@
   START YOUR WORKING SESSION
   <br/>
   <i class="fa fa-caret-right"></i> getData(`your_ethereum_wallet`, 1);
+  <br/>
+  <i class="fa fa-caret-right"></i> getData(sender, 1);
   <br/>
   <br/>
   </div>
