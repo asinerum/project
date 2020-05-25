@@ -26,7 +26,7 @@ const g2wHex=function(g){return(toHex(gtoWei(g)));};
 ////////////////////////////////////////////////////////////
 const errCode=function(e){if(e!=null){e=e.toString();if(e.indexOf(RECEIPT)>0)return(hi_prompt_rct);e=(e.substring(e.lastIndexOf(HASH)));if(e){return(e);}else{return(0);}}return(null);};
 const setInput=function(obj){return(JSON.stringify({obj:obj}));};
-const getInput=function(tx,cbf){web3.eth.getTransaction(tx,function(err,result){if(err)return(cbf(err,null));tx=web3.utils.toUtf8(result.input);tx=tx.substring(tx.indexOf('{"obj":'));tx=tx.substr(0,tx.lastIndexOf('}}')+2);try{tx=JSON.parse(tx);}catch(e){return(cbf(e,null));}cbf(null,tx.obj);});};
+const getInput=function(tx,cbf=console.log){web3.eth.getTransaction(tx,function(err,result){if(err)return(cbf(err,null));tx=web3.utils.toUtf8(result.input);tx=tx.substring(tx.indexOf('{"obj":'));tx=tx.substr(0,tx.lastIndexOf('}}')+2);try{tx=JSON.parse(tx);}catch(e){return(cbf(e,null));}cbf(null,tx.obj);});};
 ////////////////////////////////////////////////////////////
 const toDate=function(y,m,d){return(parseInt((new Date(Date.UTC(y,m-1,d,0,0,0,0))).getTime()/1000,10));};
 const nowDate=function(){return(parseInt((new Date()).getTime()/1000,10));};
