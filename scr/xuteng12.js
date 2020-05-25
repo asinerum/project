@@ -613,8 +613,9 @@ const deaddrLottoGame=function(a,div,cbf=console.log){txaddr(a,function(err,resu
 const dehashMyProfile=function(h,div,cbf=console.log){dehash(h,function(err,result){if(err)return(dw(div,ERROR));if(cbf)return(cbf(null,result));window.txforDocDat=result;dwMyAddrProfile(div,result);});};
 const deaddrMyProfile=function(a,div,cbf=console.log){deaddr(a,function(err,result){if(err)return(dw(div,ERROR));if(cbf)return(cbf(null,result));window.txforDocDat=result;dwMyAddrProfile(div,result);});};
 ////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////[2]
+////////////////////////////////////////////////////////////[4]
 const xutengMemberStatus=async(wallet,cbf=console.log)=>{return new Promise(resolve=>{xuteng.methods.getData(wallet,1).call((e,r)=>{if(e){if(cbf)cbf(e,null);resolve(null);}else{r=wrdExpt(r.admlen[MEMBERSHIPOF]);if(cbf)cbf(null,r);resolve(r);}});});};
+const xutengWalletDetail=async(wallet,cbf=console.log)=>{return new Promise(resolve=>{xuteng.methods.contents(wallet).call((e,r)=>{if(e){if(cbf)cbf(e,null);resolve(null);}else{r={data:JSON.parse(r.json).obj,time:wrdExpt(r.time)};if(cbf)cbf(null,r);resolve(r);}});});};
 const xutengDomainStatus=async(domain,cbf=console.log)=>{return new Promise(resolve=>{xuteng.methods.retDomain(domain.toLowerCase()).call((e,r)=>{if(e){if(cbf)cbf(e,null);resolve(null);}else{r={user:r.user,ref:r.json,exp:wrdExpt(r.time)};if(cbf)cbf(null,r);resolve(r);}});});};
 const xutengDomainsOwner=async(domain,cbf=console.log)=>{return new Promise(resolve=>{xuteng.methods.downerOf(toHash(domain.toLowerCase())).call((e,r)=>{if(e){if(cbf)cbf(e,null);resolve(null);}else{if(cbf)cbf(null,r);resolve(r);}});});};
 ////////////////////////////////////////////////////////////[2]
@@ -776,7 +777,7 @@ const g2wHex=function(g){return(toHex(gtoWei(g)));};
 ////////////////////////////////////////////////////////////
 const errCode=function(e){if(e!=null){e=e.toString();if(e.indexOf(RECEIPT)>0)return(hi_prompt_rct);e=(e.substring(e.lastIndexOf(HASH)));if(e){return(e);}else{return(0);}}return(null);};
 const setInput=function(obj){return(JSON.stringify({obj:obj}));};
-const getInput=function(tx,cbf=console.log){web3.eth.getTransaction(tx,function(err,result){if(err)return(cbf(err,null));tx=web3.utils.toUtf8(result.input);tx=tx.substring(tx.indexOf('{"obj":'));tx=tx.substr(0,tx.lastIndexOf('}}')+2);try{tx=JSON.parse(tx);}catch(e){return(cbf(e,null));}cbf(null,tx.obj);});};
+const getInput=function(tx,cbf=console.log){web3.eth.getTransaction(tx,function(err,result){if(err)return(cbf(err,null));try{tx=web3.utils.toUtf8(result.input);tx=tx.substring(tx.indexOf('{"obj":'));tx=tx.substr(0,tx.lastIndexOf('}}')+2);tx=JSON.parse(tx);}catch(e){return(cbf(hi_alert_data,null));}cbf(null,tx.obj);});};
 ////////////////////////////////////////////////////////////
 const toDate=function(y,m,d){return(parseInt((new Date(Date.UTC(y,m-1,d,0,0,0,0))).getTime()/1000,10));};
 const nowDate=function(){return(parseInt((new Date()).getTime()/1000,10));};

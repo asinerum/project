@@ -1,5 +1,6 @@
-////////////////////////////////////////////////////////////[2]
+////////////////////////////////////////////////////////////[4]
 const xutengMemberStatus=async(wallet,cbf=console.log)=>{return new Promise(resolve=>{xuteng.methods.getData(wallet,1).call((e,r)=>{if(e){if(cbf)cbf(e,null);resolve(null);}else{r=wrdExpt(r.admlen[MEMBERSHIPOF]);if(cbf)cbf(null,r);resolve(r);}});});};
+const xutengWalletDetail=async(wallet,cbf=console.log)=>{return new Promise(resolve=>{xuteng.methods.contents(wallet).call((e,r)=>{if(e){if(cbf)cbf(e,null);resolve(null);}else{r={data:JSON.parse(r.json).obj,time:wrdExpt(r.time)};if(cbf)cbf(null,r);resolve(r);}});});};
 const xutengDomainStatus=async(domain,cbf=console.log)=>{return new Promise(resolve=>{xuteng.methods.retDomain(domain.toLowerCase()).call((e,r)=>{if(e){if(cbf)cbf(e,null);resolve(null);}else{r={user:r.user,ref:r.json,exp:wrdExpt(r.time)};if(cbf)cbf(null,r);resolve(r);}});});};
 const xutengDomainsOwner=async(domain,cbf=console.log)=>{return new Promise(resolve=>{xuteng.methods.downerOf(toHash(domain.toLowerCase())).call((e,r)=>{if(e){if(cbf)cbf(e,null);resolve(null);}else{if(cbf)cbf(null,r);resolve(r);}});});};
 ////////////////////////////////////////////////////////////[2]
