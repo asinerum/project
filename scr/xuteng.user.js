@@ -13,4 +13,5 @@ require('https://cdn.jsdelivr.net/gh/ethereumjs/browser-builds/dist/ethereumjs-t
 require('https://asinerum.github.io/project/scr/xuteng12.js');
 require('https://asinerum.github.io/project/scr/xutmsg12.js');
 require('https://asinerum.github.io/project/scr/xbutton.js');
+require('https://asinerum.github.io/project/scr/xdomain.js');
 ////////////////////////////////////////////////////////////
