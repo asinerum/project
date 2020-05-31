@@ -14,12 +14,19 @@ const SIGNATURE='signature';
 ////////////////////////////////////////////////////////////
 const OBJ='obj';
 const REF='ref';
+const BODY='body';
 const TEST='test';
 const MAINNET='mainnet';
 const LOCALHOST='localhost';
 const ARGADDR='a';
 const ARGEXEC='e';
 const ARGWNET='n';
+////////////////////////////////////////////////////////////
+const ACTION='data-action';
+const CHANGE='data-change';
+const ACTDIV='body';
+const BUTACT='on';
+const DATACT='go';
 ////////////////////////////////////////////////////////////
 const B='b';
 const E='e';
@@ -63,6 +70,7 @@ const OK='OK\t';
 const MAXGASES={
 high:600000,
 medium:300000,
+safe:200000,
 low:100000};
 ////////////////////////////////////////////////////////////
 const TXGWEIS={
@@ -70,8 +78,10 @@ lowest:1,
 lower:3,
 low:5,
 medium:10,
-high:20,
-highest:40};
+safe:20,
+high:30,
+rapid:50,
+highest:80};
 ////////////////////////////////////////////////////////////
 const REGIS={
 none:0,
