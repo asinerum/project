@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////
-const bad_register=function(to,xut,div){if(disable()||badAddr(to)||badXuts(xut)||notTran()||stopReg())return(true);return(false);};
-const bad_setFee=function(div){if(disable()||noAUser())return(true);return(false);};
+const bad_register=function(to,xut){if(disable()||badAddr(to)||badXuts(xut)||notTran()||stopReg())return(true);return(false);};
+const bad_setFee=function(){if(disable()||noAUser())return(true);return(false);};
 ////////////////////////////////////////////////////////////
 const bad_userStopBuy=function(t){if(disable()||userBan()||noIBuys(t))return(true);return(false);};
 const bad_userStopSell=function(t){if(disable()||userBan()||noISell(t))return(true);return(false);};

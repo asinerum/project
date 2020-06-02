@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////
-const xutengCall=function(method,args=[],status=TEST,cbf=console.log){showLoad(status);xuteng.methods[method].apply(this,args).call().then(data=>{showOkay(status);cbf(null,data)}).catch(err=>{showError(status);cbf(err,null)});};
-const xutengRaws=function(method,args=[],status=TEST,cbf=console.log,eth=0){showLoad(status);sendingFunc=xuteng.methods[method].apply(this,args);sendingAbi=sendingFunc.encodeABI();sendingEth=eth?eth:0;txsend(0,status,status,cbf);};
-const xutengSend=function(method,args=[],status=TEST,cbf=console.log,eth=0){showLoad(status);xuteng.methods[method].apply(this,args).send(mmsender(eth)).then(data=>{showOkay(status);cbf(null,data)}).catch(err=>{showError(status);cbf(err,null)});};
+const xutengCall=function(method,args=[],status=TEST,out=TEST,cbf=console.log,cbo=dw){showLoad(status);xuteng.methods[method].apply(this,args).call().then(data=>{showOkay(status);cbo(out,data);cbf(null,data)}).catch(err=>{showError(status);cbf(err,null)});};
+const xutengSend=function(method,args=[],eth=0,status=TEST,out=TEST,cbf=console.log,cbo=dw){showLoad(status);xuteng.methods[method].apply(this,args).send(mmsender(eth)).then(data=>{showOkay(status);cbo(out,data);cbf(null,data)}).catch(err=>{showError(status);cbf(err,null)});};
+const xutengRaws=function(method,args=[],eth=0,status=TEST,out=TEST,cbf=console.log){showLoad(status);sendingFunc=xuteng.methods[method].apply(this,args);sendingAbi=sendingFunc.encodeABI();sendingEth=eth?eth:0;txsend(0,out,status,cbf);};
 ////////////////////////////////////////////////////////////
 const getData=function(ua,dt){contType=dt;;xuteng.methods.getData(ua,dt).call((err,result)=>{if(err)return;showData(result);cloneData(result);cloneBalance(result);})};
 const getUserData=function(ua,dt){if(badAddr(ua))return;;xuteng.methods.getData(ua,dt).call((err,result)=>{if(err)return;showUserData(result);})};

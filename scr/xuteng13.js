@@ -462,9 +462,9 @@ stop:-4,
 dead:-8};
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
-const xutengCall=function(method,args=[],status=TEST,cbf=console.log){showLoad(status);xuteng.methods[method].apply(this,args).call().then(data=>{showOkay(status);cbf(null,data)}).catch(err=>{showError(status);cbf(err,null)});};
-const xutengRaws=function(method,args=[],status=TEST,cbf=console.log,eth=0){showLoad(status);sendingFunc=xuteng.methods[method].apply(this,args);sendingAbi=sendingFunc.encodeABI();sendingEth=eth?eth:0;txsend(0,status,status,cbf);};
-const xutengSend=function(method,args=[],status=TEST,cbf=console.log,eth=0){showLoad(status);xuteng.methods[method].apply(this,args).send(mmsender(eth)).then(data=>{showOkay(status);cbf(null,data)}).catch(err=>{showError(status);cbf(err,null)});};
+const xutengCall=function(method,args=[],status=TEST,out=TEST,cbf=console.log,cbo=dw){showLoad(status);xuteng.methods[method].apply(this,args).call().then(data=>{showOkay(status);cbo(out,data);cbf(null,data)}).catch(err=>{showError(status);cbf(err,null)});};
+const xutengSend=function(method,args=[],eth=0,status=TEST,out=TEST,cbf=console.log,cbo=dw){showLoad(status);xuteng.methods[method].apply(this,args).send(mmsender(eth)).then(data=>{showOkay(status);cbo(out,data);cbf(null,data)}).catch(err=>{showError(status);cbf(err,null)});};
+const xutengRaws=function(method,args=[],eth=0,status=TEST,out=TEST,cbf=console.log){showLoad(status);sendingFunc=xuteng.methods[method].apply(this,args);sendingAbi=sendingFunc.encodeABI();sendingEth=eth?eth:0;txsend(0,out,status,cbf);};
 ////////////////////////////////////////////////////////////
 const getData=function(ua,dt){contType=dt;;xuteng.methods.getData(ua,dt).call((err,result)=>{if(err)return;showData(result);cloneData(result);cloneBalance(result);})};
 const getUserData=function(ua,dt){if(badAddr(ua))return;;xuteng.methods.getData(ua,dt).call((err,result)=>{if(err)return;showUserData(result);})};
@@ -809,7 +809,7 @@ const dupid=function(es,is,e,i,n,d){es=document.getElementsByTagName(STAR);is=[]
 const idcap=function(es,is,e,i,n,d=['_label','_header','_button','_note']){es=document.getElementsByTagName(STAR);is={};for(i=0,n=es.length;i<n;++i){e=es[i];if(e.id&&e.innerHTML&&d.some(s=>e.id.includes(s)))is[e.id]=e.innerHTML;};return(is);};
 ////////////////////////////////////////////////////////////
 const hashParam=function(p,t){if(!t)t=document.location.hash;if(!t)return(BLANK);p=RegExp('[#?&]'+p.replace(/[\[\]]/g,'\\$&')+'(=([^&#]*)|&|#|$)');p=p.exec(t);if(!p)return(BLANK);if(!p[2])return(BLANK);return(decodeURIComponent(p[2].replace(/\+/g,SPACE)));};
-const setCookie=function(cn,cv,dd,t){if(!dd)dd=365;dd=(new Date(nowDate()*1000+dd*24*60*60*1000)).toUTCString();if(!t)t=document;return(t.cookie=cn+EQUAL+cv+SEMI+'expires'+EQUAL+dd+SEMI+'path'+EQUAL+SLASH);};
+const setCookie=function(cn,cv,dd,t){if(!dd)dd=365;dd=(new Date(nowDate()*1000+dd*24*60*60*1000)).toUTCString();if(!t)t=document;return(t.cookie=cn+EQUAL+cv+';expires='+dd+';path=/');};
 const getCookie=function(cn,t){if(!t)t=document;try{return(t.cookie.match('(^|;)\s?'+cn+'=([^;]*)(;|$)')[2]);}catch(err){return(BLANK);}};
 const setAction=function(e,self,attribute,actionid){e=(e&&e.target).getAttribute(attribute);if(e){self[actionid+e]()}};
 ////////////////////////////////////////////////////////////
@@ -888,8 +888,8 @@ const gfromWei=function(w){return(web3.utils.fromWei(w.toString(),GWEI));};
 const reLottoArray=function(dad,son,n,i){n=arrdup(dad);if(n==null||n)return(0);n=arrdup(son);if(n==null||n)return(0);if(dad.length<son.length)return(0);n=0;for(i=0;i<dad.length;i++){if(son.includes(dad[i]))n++;}return(n);};
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
-const bad_register=function(to,xut,div){if(disable()||badAddr(to)||badXuts(xut)||notTran()||stopReg())return(true);return(false);};
-const bad_setFee=function(div){if(disable()||noAUser())return(true);return(false);};
+const bad_register=function(to,xut){if(disable()||badAddr(to)||badXuts(xut)||notTran()||stopReg())return(true);return(false);};
+const bad_setFee=function(){if(disable()||noAUser())return(true);return(false);};
 ////////////////////////////////////////////////////////////
 const bad_userStopBuy=function(t){if(disable()||userBan()||noIBuys(t))return(true);return(false);};
 const bad_userStopSell=function(t){if(disable()||userBan()||noISell(t))return(true);return(false);};
@@ -1021,7 +1021,7 @@ const messageVerify=function(message,signature,wallet){return(wallet.toLowerCase
 const messageDoSign=function(message,privatekey){if(!privatekey)privatekey=senderPte;if(privatekey.indexOf(HEXINIT)===0)privatekey=privatekey.slice(2);return(signmess(message,privatekey));};
 ////////////////////////////////////////////////////////////
 const warnNewAcc=function(newacc){console.warn('WALLET\n',newacc.ACCOUNT.address);console.warn('PRIVATE.KEY\n',newacc.ACCOUNT.privateKey.slice(2));console.warn('V3.KEYSTORE\n',newacc.ACCOUNT.keyStore);dw(TEST,newacc.ACCOUNT.keyStore);};
-const getAccount=function(t){switchNet(gv(_network));senderId=gv(_account);try{t=gettextkey(gv(_password),0);}catch(err){dw('_keystore_status',err.message);alert(hi_alert_data);return(0);};sender=t.address;senderPte=t.privateKey.substr(2);dw('_keystore_status','Address'+COLON+NBSP+sender);return(t);};
+const getAccount=function(t){switchNet(gv(_network));senderId=gv(_account);t=gettextkey(gv(_password),0);if(!t){dw('_keystore_status',hi_alert_data);return;};sender=t.address;senderPte=t.privateKey.substr(2);dw('_keystore_status','Address'+COLON+NBSP+sender);return(t);};
 const oldAccount=function(pw,divOA,divOP,divKS,t,a,k){if(!loRegex.test(pw))return(alert(hi_prompt_chk));if(!t)t=gv(divOP);try{t=web3.eth.accounts.encrypt(t,pw);a=web3.eth.accounts.decrypt(t,pw).address;k=JSON.stringify(t).replace(/\s/g,BLANK);}catch(err){alert(hi_alert_data);return(0);}db(divOA,a);dv(divOP,BLANK);dv(divKS,k);console.log({IMPORT:{address:a,keyStore:k}});return(t);};
 const newAccount=function(pw,divNA,divNP,divKS,t,k){if(!loRegex.test(pw))return(alert(hi_prompt_chk));t=web3.eth.accounts.create(web3.utils.randomHex(32));db(divNA,t.address);db(divNP,t.privateKey.substr(2));try{k=JSON.stringify(web3.eth.accounts.encrypt(t.privateKey,pw)).replace(/\s/g,BLANK);dv(divKS,k);}catch(err){alert(hi_alert_data);return(0);};window.newAccount={ACCOUNT:{address:t.address,privateKey:t.privateKey,keyStore:k}};warnNewAcc(window.newAccount);return(t);};
 const gettextkey=function(pw,t){if(!t)t=gv(_keystore);if(!t)return(getv3key(pw,0));try{t=web3.eth.accounts.decrypt(t.crypto?t:JSON.parse(t),pw);}catch(e){return(console.error(hi_alert_data,'KEYSTORE'))}if(!t.address)return(0);password=pw;console.log('UNLOCKED',t.address);return(t);};
@@ -1076,47 +1076,47 @@ const do_signmess=function(t){if(noLogin())return;;dv(_signature,BLANK);t=signme
 const do_smverify=function(t){if(badAddr(gv(_signatory)))return;;t=srecover(gv(_smessage),gv(_signature));if(t==gv(_signatory)){dw(_accverify,OK);}else{ww(_accverify,ERROR);}};
 const do_srecover=function(t){dw(_accverify,BLANK);t=srecover(gv(_smessage),gv(_signature));if(!t)return;dw(_accverify,t);};
 ////////////////////////////////////////////////////////////
-const do_register=function(to,xut,div){if(bad_register(to,xut,div))return;;;transferFor(to,xut,REFREG);send(null,null,div);};
-const do_setFee=function(div){if(bad_setFee(div))return;;;setFee(gv(_levels));if(!div)div='_setRegisterLevel_status';send(null,null,div);};
+const do_register=function(to,xut,div='_register_status'){if(bad_register(to,xut))return;;;transferFor(to,xut,REFREG);send(null,null,div);};
+const do_setFee=function(div='_setRegisterLevel_status'){if(bad_setFee())return;;;setFee(gv(_levels));send(null,null,div);};
 ////////////////////////////////////////////////////////////
-const do_setPenny=function(){if(bad_setPenny())return;;;setPenny(gv(_tpeSell),gv(_tpeBuy));send(null,null,'_setPenny_status');};
-const do_setAllow=function(){if(bad_setAllow())return;;;setAllow(gc(_setBA),gc(_setSA),gc(_setTA),gc(_setEA));send(null,null,'_setAllow_status');};
-const do_setRole=function(){if(bad_setRole())return;;;setRole(gv(_roleTo),gv(_roleVal));send(null,null,'_setRegisterLevel_status');};
-const do_setTick=function(){if(bad_setTick())return;;;setTick(gv(_tickTo),gv(_tickVal));send(null,null,'_setRegisterLevel_status');};
-const do_setType=function(){if(bad_setType())return;;;setType(getDType(0),gc(_setTR),gc(_setTB),gc(_setTP));send(null,null,'_setType_status');};
-const do_setTypePrice=function(){if(bad_setTypePrice())return;;;setTypePrice(getDType(0),gv(_setPT),gv(_setPE));send(null,null,'_setType_status');};
+const do_setPenny=function(div='_setPenny_status'){if(bad_setPenny())return;;;setPenny(gv(_tpeSell),gv(_tpeBuy));send(null,null,div);};
+const do_setAllow=function(div='_setAllow_status'){if(bad_setAllow())return;;;setAllow(gc(_setBA),gc(_setSA),gc(_setTA),gc(_setEA));send(null,null,div);};
+const do_setRole=function(div='_setRegisterLevel_status'){if(bad_setRole())return;;;setRole(gv(_roleTo),gv(_roleVal));send(null,null,div);};
+const do_setTick=function(div='_setRegisterLevel_status'){if(bad_setTick())return;;;setTick(gv(_tickTo),gv(_tickVal));send(null,null,div);};
+const do_setType=function(div='_setType_status'){if(bad_setType())return;;;setType(getDType(0),gc(_setTR),gc(_setTB),gc(_setTP));send(null,null,div);};
+const do_setTypePrice=function(div='_setType_status'){if(bad_setTypePrice())return;;;setTypePrice(getDType(0),gv(_setPT),gv(_setPE));send(null,null,div);};
 ////////////////////////////////////////////////////////////
-const do_setName=function(){if(bad_setName())return;;;setName(gv(_name));send(null,null,'_setName_status');dv(_name,BLANK);};
-const do_setOwner=function(){if(bad_setOwner())return;;;setOwner(gv(_refex));send(null,null,'_setOwner_status');};
-const do_changeOwner=function(){if(bad_changeOwner())return;;;changeOwner(gv(_owner));send(null,null,'_setOwner_status');};
-const do_mintPenny=function(){if(bad_mintPenny())return;;;mintPenny(gv(_mintTo),gv(_mintVal));send(null,null,'_setup_status');dv(_mintTo,OxOO);;};
-const do_pennyPush=function(){if(bad_pennyPush())return;;;pennyPush(gv(_pushVal));send(null,null,'_setup_status');dv(_pushVal,0);};
-const do_pennyTransfer=function(){if(bad_pennyTransfer())return;;;pennyTransfer(gv(_xutTo),gv(_xutVal));send(null,null,'_revenue_status');dv(_xutVal,0);};
-const do_weiTransfer=function(){if(bad_weiTransfer())return;;;weiTransfer(gv(_ethTo),gv(_ethVal));send(null,null,'_revenue_status');dv(_ethVal,0);};
+const do_setName=function(div='_setName_status'){if(bad_setName())return;;;setName(gv(_name));send(null,null,div);dv(_name,BLANK);};
+const do_setOwner=function(div='_setOwner_status'){if(bad_setOwner())return;;;setOwner(gv(_refex));send(null,null,div);};
+const do_changeOwner=function(div='_setOwner_status'){if(bad_changeOwner())return;;;changeOwner(gv(_owner));send(null,null,div);};
+const do_mintPenny=function(div='_setup_status'){if(bad_mintPenny())return;;;mintPenny(gv(_mintTo),gv(_mintVal));send(null,null,div);dv(_mintTo,OxOO);;};
+const do_pennyPush=function(div='_setup_status'){if(bad_pennyPush())return;;;pennyPush(gv(_pushVal));send(null,null,div);dv(_pushVal,0);};
+const do_pennyTransfer=function(div='_revenue_status'){if(bad_pennyTransfer())return;;;pennyTransfer(gv(_xutTo),gv(_xutVal));send(null,null,div);dv(_xutVal,0);};
+const do_weiTransfer=function(div='_revenue_status'){if(bad_weiTransfer())return;;;weiTransfer(gv(_ethTo),gv(_ethVal));send(null,null,div);dv(_ethVal,0);};
 ////////////////////////////////////////////////////////////
-const do_transfer=function(){if(bad_transfer())return;;;transfer(gv(_transTo),gv(_transVal));send(null,'_transfer_hash','_transfer_status');dv(_transTo,OxOO);;};
-const do_transfer2xut=function(){if(bad_transfer2xut())return;;;sell(gv(_transThis));send(null,'_transfer2xut_hash','_transfer2xut_status');dv(_transThis,0);};
-const do_transfer2admin=function(){if(bad_transfer2admin())return;;;transfer(gv(_transToAdmin),gv(_transVal));send(null,'_transfer_hash','_transfer_status');};
+const do_transfer=function(out='_transfer_hash',status='_transfer_status'){if(bad_transfer())return;;;transfer(gv(_transTo),gv(_transVal));send(null,out,status);dv(_transTo,OxOO);;};
+const do_transfer2xut=function(out='_transfer2xut_hash',status='_transfer2xut_status'){if(bad_transfer2xut())return;;;sell(gv(_transThis));send(null,out,status);dv(_transThis,0);};
+const do_transfer2admin=function(out='_transfer_hash',status='_transfer_status'){if(bad_transfer2admin())return;;;transfer(gv(_transToAdmin),gv(_transVal));send(null,out,status);};
 ////////////////////////////////////////////////////////////
-const do_sendeth=function(){if(bad_sendeth())return;;;sendeth(gv(_sendTo),gv(_sendVal),'_sendeth_hash','_sendeth_status');dv(_sendTo,OxOO);;};
-const do_sendeth2xut=function(){if(bad_sendeth2xut())return;;;buy(gv(_sendThis));send(null,'_sendeth2xut_hash','_sendeth2xut_status');dv(_sendThis,0);};
-const do_sendeth2sys=function(){if(bad_sendeth2sys())return;;;sendeth2sys(gv(_sendThis),'_sendeth2xut_hash','_sendeth2xut_status');dv(_sendThis,0);};
-const do_sendeth2admin=function(){if(bad_sendeth2admin())return;;;sendeth(gv(_sendToAdmin),gv(_sendVal),'_sendeth_hash','_sendeth_status');};
+const do_sendeth=function(out='_sendeth_hash',status='_sendeth_status'){if(bad_sendeth())return;;;sendeth(gv(_sendTo),gv(_sendVal),out,status);dv(_sendTo,OxOO);;};
+const do_sendeth2admin=function(out='_sendeth_hash',status='_sendeth_status'){if(bad_sendeth2admin())return;;;sendeth(gv(_sendToAdmin),gv(_sendVal),out,status);};
 ////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////
-const author_buyFromSeller=function(){if(bad_buyFromSeller())return;;;buyFromSeller(gv(_sellerAddress),g2(_sellerPostNum)-1,gn(_sellingNum),gv(_eth2send));send(null,'_buyfrom_hash','_buyfrom_status');};
-const author_sellToBuyer=function(){if(bad_sellToBuyer())return;;;sellToBuyer(gv(_buyerAddress),g2(_buyerPostNum)-1,gn(_buyingNum),gv(_xut2send));send(null,'_sellto_hash','_sellto_status');};
-////////////////////////////////////////////////////////////
-const author_userStopBuy=function(t){t=g2(_buyPostNum);if(bad_userStopBuy(t))return;;;userStopBuy(t-1);send(null,null,'_buying_status');};
-const author_userStopSell=function(t){t=g2(_sellPostNum);if(bad_userStopSell(t))return;;;userStopSell(t-1);send(null,null,'_selling_status');};
-////////////////////////////////////////////////////////////
-const author_userSetBuy=function(){if(bad_userSetBuy())return;;;userSetBuy(gv(_buyrate),gv(_eth2pay));send(null,'_tobuy_hash','_tobuy_status');};
-const author_userSetSell=function(){if(bad_userSetSell())return;;;userSetSell(gv(_xut2sell),gv(_sellrate));send(null,'_tosell_hash','_tosell_status');};
+const do_sendeth2xut=function(out='_sendeth2xut_hash',status='_sendeth2xut_status'){if(bad_sendeth2xut())return;;;buy(gv(_sendThis));send(null,out,status);dv(_sendThis,0);};
+const do_sendeth2sys=function(out='_sendeth2xut_hash',status='_sendeth2xut_status'){if(bad_sendeth2sys())return;;;sendeth2sys(gv(_sendThis),out,status);dv(_sendThis,0);};
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
-const author_setFee=function(){do_setFee('_personal_status');};
-const author_regs2sys=function(){do_register(contractAddress,gv(_reglev),'_register_status');};
-const author_regs2usr=function(){do_register(gv(_user),gv(_regmem),'_user_status');};
+const author_buyFromSeller=function(out='_buyfrom_hash',status='_buyfrom_status'){if(bad_buyFromSeller())return;;;buyFromSeller(gv(_sellerAddress),g2(_sellerPostNum)-1,gn(_sellingNum),gv(_eth2send));send(null,out,status);};
+const author_sellToBuyer=function(out='_sellto_hash',status='_sellto_status'){if(bad_sellToBuyer())return;;;sellToBuyer(gv(_buyerAddress),g2(_buyerPostNum)-1,gn(_buyingNum),gv(_xut2send));send(null,out,status);};
+////////////////////////////////////////////////////////////
+const author_userStopBuy=function(out='_hash',status='_buying_status',t=0){t=g2(_buyPostNum);if(bad_userStopBuy(t))return;;;userStopBuy(t-1);send(null,out,status);};
+const author_userStopSell=function(out='_hash',status='_selling_status',t=0){t=g2(_sellPostNum);if(bad_userStopSell(t))return;;;userStopSell(t-1);send(null,out,status);};
+////////////////////////////////////////////////////////////
+const author_userSetBuy=function(out='_tobuy_hash',status='_tobuy_status'){if(bad_userSetBuy())return;;;userSetBuy(gv(_buyrate),gv(_eth2pay));send(null,out,status);};
+const author_userSetSell=function(out='_tosell_hash',status='_tosell_status'){if(bad_userSetSell())return;;;userSetSell(gv(_xut2sell),gv(_sellrate));send(null,out,status);};
+////////////////////////////////////////////////////////////
+const author_setFee=function(status='_personal_status'){do_setFee(status);};
+const author_regs2sys=function(status='_register_status'){do_register(contractAddress,gv(_reglev),status);};
+const author_regs2usr=function(status='_user_status'){do_register(gv(_user),gv(_regmem),status);};
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
 const promm_sendeth2xut=function(){if(bad_sendeth2xut())return;;;mm_buy(gv(_sendThis));;dv(_sendThis,0);};
