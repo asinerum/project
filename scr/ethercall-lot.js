@@ -29,8 +29,8 @@ const loNxNNwinner=function(detable,winobj,cbf=console.log,i){table=Object.assig
 ////////////////////////////////////////////////////////////[6]
 const getAddrFromHash=function(h,cbf=console.log){xuteng.methods.addressOf(h).call((err,result)=>{cbf(err,result);});};
 const divAddrFromHash=function(h,div){getAddrFromHash(h,function(err,result){if(err)return(dw(div,ERROR));dw(div,result);});};
-const dehashLottoGame=function(h,div,cbf=console.log){dehash(h,function(err,result){if(err)return(dw(div,ERROR));if(cbf)return(cbf(null,result));window.txforDocDat=result;dwMyGameProfile(div,result);});};
-const deaddrLottoGame=function(a,div,cbf=console.log){txaddr(a,function(err,result){if(err)return(dw(div,ERROR));if(cbf)return(cbf(null,result));window.txforDocDat=result;dwMyGameProfile(div,result);});};
-const dehashMyProfile=function(h,div,cbf=console.log){dehash(h,function(err,result){if(err)return(dw(div,ERROR));if(cbf)return(cbf(null,result));window.txforDocDat=result;dwMyAddrProfile(div,result);});};
-const deaddrMyProfile=function(a,div,cbf=console.log){deaddr(a,function(err,result){if(err)return(dw(div,ERROR));if(cbf)return(cbf(null,result));window.txforDocDat=result;dwMyAddrProfile(div,result);});};
+const dehashLottoGame=function(h,div,cbf=console.log){dehash(h,function(err,result){if(err)return(dw(div,ERROR));if(cbf)cbf(null,result);window.txforDocDat=result;dwMyGameProfile(div,result);});};
+const deaddrLottoGame=function(a,div,cbf=console.log){txaddr(a,function(err,result){if(err)return(dw(div,ERROR));if(cbf)cbf(null,result);window.txforDocDat=result;dwMyGameProfile(div,result);});};
+const dehashMyProfile=function(h,div,cbf=console.log){dehash(h,function(err,result){if(err)return(dw(div,ERROR));if(cbf)cbf(null,result);window.txforDocDat=result;dwMyAddrProfile(div,result);});};
+const deaddrMyProfile=function(a,div,cbf=console.log){deaddr(a,function(err,result){if(err)return(dw(div,ERROR));if(cbf)cbf(null,result);window.txforDocDat=result;dwMyAddrProfile(div,result);});};
 ////////////////////////////////////////////////////////////
