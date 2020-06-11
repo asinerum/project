@@ -23,6 +23,7 @@ const Menu=function(element){self=this;
  self.goXutSet=function(){dv(_eth2recv,((g2(_xut2sell)-s2n(typePriceXut))/g2(_sellrate)));}
  self.goXutBuy=function(){dv(_eth2send,(g2(_xut2gain)/gn(_sellingTpe)));}
  self.goXutSel=function(){dv(_eth2gain,(g2(_xut2send)/gn(_buyingTpe)));}
+ self.goUtcGet=function(){getUts('year','month','day','hour','minute','_uts','_utstring');}
  self.onAuthKstDec=function(){author_getAccount();}
  self.onAuthAccNew=function(){author_newAccount();}
  self.onAuthAccImp=function(){author_oldAccount();}
@@ -52,6 +53,15 @@ const Menu=function(element){self=this;
  self.goAuthNetFix=function(){selectNet(network);}
  self.goAuthGasWei=function(){txgwei=gv(_txgwei);}
  self.goAuthGasMax=function(){maxgas=gv(_maxgas);}
+ self.onUserGetPro=function(){deaddrMyProfile(sender,'_profile');}
+ self.onUserGetDom=function(){dwDomainWithFee(sender,'_domain','_domfee');}
+ self.onUserSetPro=function(){createMyProfile(gv('proname'),gv('protext'),gv('prostyle'));}
+ self.onUserSetDom=function(){createOneDomain(gv('domname'),{ip:gv('domip'),note:gv('domref')},g2('dometh'),function(e,r){if(e)dw('mm_setDomain',ERROR+e)},'mm_setDomain');}
+ self.onUserGoUser=function(){self.onGoUser();deaddrMyProfile(gv(_user),'_userProfile');deaddrMyDomains(gv(_user),'_userDomain');}
+ self.onUserPayXut=function(){xutengRemitFor(gv('xutTo'),g2('xut'),gv('xutNote'),console.log,'_userxut_status',false);}
+ self.onUserPayEth=function(){ethereumRemitFor(gv('to'),g2('eth'),gv('ethNote'),console.log,'_usereth_status',false);}
+ self.onUserTxView=function(){dwTxHashContent(gv('txhash'),'_txaddress','_txnote','_txdata');};
+ self.onUserDocSet=function(){createSimpleDoc(gv('docform'),gn('_uts'),g2('xutMin'),g2('xutMax'),g2('doctype'),{name:gv('docdat')},gv('rewards').split(COMMA),'_doc_hash','_doc_status');}
  self.onAuthGoUser=self.onGoUser;
  self.onAuthGetBuy=self.onGetBuy;
  self.onAuthGetSel=self.onGetSel;
@@ -59,5 +69,6 @@ const Menu=function(element){self=this;
  self.onAuthGetReq=self.onGetReq;
 }
 new Menu(document.getElementById(ACTDIV));
+lottimePicker('year','month','day','hour','minute','_uts','_utstring');
 showCaps();
 ////////////////////////////////////////////////////////////
