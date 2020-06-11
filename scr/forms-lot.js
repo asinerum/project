@@ -10,10 +10,11 @@ const xut2de=function(xut,a,x){xut=xut.toString();x=xut.split(DOT)[1];if(!x)retu
 const xut2lo=function(xut,a,x){xut=xut.toString();x=xut.split(DOT)[1];if(!x)return({xut:parseInt(xut),lo:[0]});if(x.length>14)x=x.substr(0,14);if(x.length%2>0)x=x+ZERO;a=[];while(x.length>0){a.push(Number(x.substr(0,2)));x=x.slice(2);};return({xut:Number(xut),lo:a});};//XutToLottoNums;
 const de2win=function(win,pen,mul,x,i,s){win=Number(win);x=pen2de(pen);if(!mul)mul=70;if(!x.de.includes(win))return(0);s=0;for(i=0;i<x.de.length;i++){if(x.de[i]==win)s+=mul*x.xut;}return(s);};//CalculateWinningAmount;
 const arrdup=function(arr,m,i){if(!Array.isArray(arr))return(null);if(arr.length<=1)return(false);m={};for(i=0;i<arr.length;i++){if(m[arr[i]])return(true);m[arr[i]]=true;}return(false);};
-////////////////////////////////////////////////////////////[4]
+////////////////////////////////////////////////////////////[5]
 const ethnow=function(){return(parseInt(Date.now()/1000,10));};//~forms.nowDate();//CurrentEthereumTime;
 const estamp=function(yy,mo,dd,hh=12,mi=0){return(parseInt((new Date(Date.UTC(yy,mo-1,dd,hh,mi,0))).getTime()/1000,10));};//EthereumTime;
 const trange=function(begin,end,max=30,t){try{begin=estamp(begin[0],begin[1],begin[2],0);end=estamp(end[0],end[1],end[2],0);t=(end-begin)/60/60/24;if(t<=0||t>max)return(0);return({begin,end});}catch(e){return(null);}};
+const getUts=function(year,month,day,hour,min,stamp,time,t){t=estamp(gv(year),gv(month),gv(day),gv(hour),gv(min));window.timestamp=t;dw(stamp,window.timestamp);dw(time,STAR+fromDate(window.timestamp));return(window.timestamp);};
 const lotnow=function(){window.now=(new Date(1000*ethnow()));window.lottime=[window.now.getFullYear(),window.now.getMonth()+1,window.now.getDate(),12,0];window.lotstamp=estamp(window.lottime[0],window.lottime[1],window.lottime[2],window.lottime[3],window.lottime[4],0);return({lotstamp:window.lotstamp,lottime:window.lottime});};
 ////////////////////////////////////////////////////////////[4]
 const hexCut=function(str){return(hexUtf(strCut(str,'7b226f626a22','7d7d')));};

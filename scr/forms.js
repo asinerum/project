@@ -1,4 +1,5 @@
 ////////////////////////////////////////////////////////////
+const errCode=function(e){if(e!=null){e=e.toString();if(e.indexOf(']')>0)return(hi_alert_data);if(e.indexOf(OxOO)>0)return(hi_prompt_err);if(e.indexOf(RECEIPT)>0)return(hi_prompt_rct);e=(e.substring(e.lastIndexOf(HASH)));if(e){return(e);}else{return(0);}}return(null);};
 const funcName=function(){return(funcName.caller.name);};
 ////////////////////////////////////////////////////////////
 const hvalid=function(h){return(hashRegex.test(h));};
@@ -24,9 +25,8 @@ const fromGwei=function(g){return(fromWei(gtoWei(g)));};
 const s2wHex=function(s){return(toHex(s2w(s)));};
 const g2wHex=function(g){return(toHex(gtoWei(g)));};
 ////////////////////////////////////////////////////////////
-const errCode=function(e){if(e!=null){e=e.toString();if(e.indexOf(RECEIPT)>0)return(hi_prompt_rct);e=(e.substring(e.lastIndexOf(HASH)));if(e){return(e);}else{return(0);}}return(null);};
 const setInput=function(obj){return(JSON.stringify({obj:obj}));};
-const getInput=function(tx,cbf=console.log){web3.eth.getTransaction(tx,function(err,result){if(err)return(cbf(err,null));try{tx=web3.utils.toUtf8(result.input);tx=tx.substring(tx.indexOf('{"obj":'));tx=tx.substr(0,tx.lastIndexOf('}}')+2);tx=JSON.parse(tx);}catch(e){return(cbf(hi_alert_data,null));}cbf(null,tx.obj);});};
+const getInput=function(tx,cbf=console.log){if(!hvalid(tx))return(cbf(ERROR,null));web3.eth.getTransaction(tx,function(err,result){if(err||!result||!result.input)return(cbf(err,null));cbf(null,hexObj(result.input).obj);});};
 ////////////////////////////////////////////////////////////
 const toDate=function(y,m,d){return(parseInt((new Date(Date.UTC(y,m-1,d,0,0,0,0))).getTime()/1000,10));};
 const nowDate=function(){return(parseInt((new Date()).getTime()/1000,10));};

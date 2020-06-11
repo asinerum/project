@@ -594,10 +594,11 @@ const userSelling=function(ua,n,divD,divP,divV,divN){xuteng.methods.userSelling(
 const setPGwei=function(){gasPGwei((e,gwei)=>{if(e)return;console.log('GWEI:',gwei);try{document.getElementById(_txgwei).options[0]=(new Option('GWEI:'+gwei,gwei));}catch(e){}});};
 const gasPGwei=function(cbf=console.log){web3.eth.getGasPrice().then((resolve,reject)=>{if(reject)return(cbf(reject,null));window.txgwei=gfromWei(resolve);return(cbf(null,window.txgwei));});};
 const betValid=function(to,xut,uts,cbf=console.log){txaddr(to,function(err,result){if(err)return(cbf(err,null));if(!result)return(cbf(null,undefined));if(!uts)uts=ethnow();if(xut<result.min||xut>result.max)return(cbf(null,0));if(uts<result.txUts||uts>result.uts)return(cbf(null,false));return(cbf(null,result.txBlock));});};
-////////////////////////////////////////////////////////////[3]
+////////////////////////////////////////////////////////////[4]
+const tcoLen=function(uaw,cbf=console.log,dt=TYPES.personal_profile,dti=TYPEDCONTENTSOF){xuteng.methods.getData(uaw,dt).call((err,result)=>{if(err)return(cbf(err,null));cbf(null,result.objlen[dti]);});};
 const txaddr=function(txa,cbf=console.log,idx=0){xuteng.methods.hashesOf(txa,idx).call((err,result)=>{if(err)return(cbf(err,null));dehash(result,function(err,result){if(err)return(cbf(err,null));cbf(null,result);});});};
 const deaddr=function(uaw,cbf=console.log,idx=0){xuteng.methods.typedContentsOf(uaw,TYPES.personal_profile,idx).call((err,result)=>{if(err)return(cbf(err,null));xuteng.methods.hashesOf(result,0).call((err,result)=>{if(err)return(cbf(err,null));dehash(result,function(err,result){if(err)return(cbf(err,null));cbf(null,result);});});});};
-const dehash=function(txh,cbf=console.log){web3.eth.getTransaction(txh,function(err,result){if(err)return(cbf(err,null));console.log(result.input);txh=hexObj(result.input);if(!txh.obj)txh={obj:{raw:result.input}};Object.assign(txh.obj,{txBlock:Number(result.blockNumber),txAuthor:result.from,txWei:result.value});web3.eth.getBlock(result.blockNumber).then(result=>{txh.obj.txUts=result.timestamp;cbf(null,txh.obj);}).catch(err=>{txh.obj.txUts=0;cbf(null,txh.obj);});});};//#forms.getInput();
+const dehash=function(txh,cbf=console.log){web3.eth.getTransaction(txh,function(err,result){if(err||!result)return(cbf(err,null));console.log(result.input);txh=hexObj(result.input);if(!txh.obj)txh={obj:{raw:result.input}};Object.assign(txh.obj,{txBlock:Number(result.blockNumber),txAuthor:result.from,txWei:result.value});web3.eth.getBlock(result.blockNumber).then(result=>{txh.obj.txUts=result.timestamp;cbf(null,txh.obj);}).catch(err=>{txh.obj.txUts=0;cbf(null,txh.obj);});});};//#forms.getInput();
 ////////////////////////////////////////////////////////////[2]
 const lotter=async(timestamp,digits,maxdig,cbf=console.log)=>{if(timestamp>lotnow().lotstamp)return(cbf(null,[-4]));if(!timestamp)timestamp=lotnow().lotstamp;if(!digits)digits=1;if(!maxdig)maxdig=99;window.lotstamp=Number(timestamp);window.lotdigits=Number(digits);window.lotmaxdig=Number(maxdig);window.blocknum=0;await(getBStop(0,window.lotstamp));if(!window.blocknum)return(cbf(null,[-1]));getlot(window.blocknum,cbf);};//GenerateWinningNumbers;
 const getlot=function(block,cbf=console.log,skip=0,maxpage=99,i){if(window.lotdigits>7)return(cbf(null,[-3]));if(!skip)window.eventpicks=[];xuteng.getPastEvents('Transfer',{fromBlock:block-999,toBlock:block},function(err,result){if(err)return(cbf(err,null));if(skip>maxpage)return(cbf(null,[-2]));if(!result||!result.length)return(getlot(block-999-1,cbf,++skip));for(i=result.length-1;result[i]&&window.eventpicks.length<10;i--){window.eventpicks.push(result[i]);}if(window.eventpicks.length<10)return(getlot(block-999-1,cbf,++skip));
@@ -618,13 +619,17 @@ const lo1x99winner=function(detable,win,mul,cbf=console.log,i){table=Object.assi
 ////////////////////////////////////////////////////////////[2]
 const loNxNNresult=function(desubmits,wins,cbf=console.log,i,j){if(!wins.length||wins.length<2)return(cbf(ERROR,null));submits=Object.assign([],desubmits);for(i=1;i<=wins.length;i++){if(i==1)window.numresults={};window.numresults[i]=[];}if(!submits||!submits.length)return(cbf(null,window.numresults));for(i=1;i<=wins.length;i++){for(j=0;j<submits.length;j++){if(submits[j]&&submits[j].from&&submits[j].xut){if(reLottoArray(wins,xut2lo(submits[j].xut).lo)==i)window.numresults[i].push({from:submits[j].from,xut:submits[j].xut,tx:submits[j].tx,lotto:i});}}}return(cbf(null,window.numresults));};//desubmits[]<=>window.lotsubmits[];
 const loNxNNwinner=function(detable,winobj,cbf=console.log,i){table=Object.assign({},detable);Object.keys(winobj).forEach(function(key){if(table[key]&&table[key].length){for(i=0;i<table[key].length;i++){if(table[key][i].lotto==key&&Number(winobj[key])>0)table[key][i].win=winobj[key]*table[key][i].xut;}}});return(cbf(null,{wins:table}));};//detable{}<=>window.numresults{};//winobj{}={1:N,2:NN,,,7:NNN};
-////////////////////////////////////////////////////////////[6]
-const getAddrFromHash=function(h,cbf=console.log){xuteng.methods.addressOf(h).call((err,result)=>{cbf(err,result);});};
-const divAddrFromHash=function(h,div){getAddrFromHash(h,function(err,result){if(err)return(dw(div,ERROR));dw(div,result);});};
-const dehashLottoGame=function(h,div,cbf=console.log){dehash(h,function(err,result){if(err)return(dw(div,ERROR));if(cbf)cbf(null,result);window.txforDocDat=result;dwMyGameProfile(div,result);});};
-const deaddrLottoGame=function(a,div,cbf=console.log){txaddr(a,function(err,result){if(err)return(dw(div,ERROR));if(cbf)cbf(null,result);window.txforDocDat=result;dwMyGameProfile(div,result);});};
-const dehashMyProfile=function(h,div,cbf=console.log){dehash(h,function(err,result){if(err)return(dw(div,ERROR));if(cbf)cbf(null,result);window.txforDocDat=result;dwMyAddrProfile(div,result);});};
-const deaddrMyProfile=function(a,div,cbf=console.log){deaddr(a,function(err,result){if(err)return(dw(div,ERROR));if(cbf)cbf(null,result);window.txforDocDat=result;dwMyAddrProfile(div,result);});};
+////////////////////////////////////////////////////////////[4]
+const getHashFromAddr=function(a,cbf=console.log,idx=0){xuteng.methods.hashesOf(a,idx).call(function(err,result){cbf(err,result);});};
+const getAddrFromHash=function(h,cbf=console.log){xuteng.methods.addressOf(h).call(function(err,result){cbf(err,result);});};
+const divHashFromAddr=function(a,div=TEST){getHashFromAddr(a,function(err,result){if(err)return(dw(div,HYPHEN));dw(div,result);});};
+const divAddrFromHash=function(h,div=TEST){getAddrFromHash(h,function(err,result){if(err)return(dw(div,HYPHEN));dw(div,result);});};
+////////////////////////////////////////////////////////////[5]
+const dehashLottoGame=function(h,div=TEST,cbf=console.log){showLoad(div);dehash(h,function(err,result){if(err)return(dw(div,ERROR));if(cbf)cbf(null,result);window.txforDocDat=result;dwMyGameProfile(div,result);});};
+const deaddrLottoGame=function(a,div=TEST,cbf=console.log){showLoad(div);txaddr(a,function(err,result){if(err)return(dw(div,ERROR));if(cbf)cbf(null,result);window.txforDocDat=result;dwMyGameProfile(div,result);});};
+const dehashMyProfile=function(h,div=TEST,cbf=console.log){showLoad(div);dehash(h,function(err,result){if(err)return(dw(div,ERROR));if(cbf)cbf(null,result);window.txforDocDat=result;dwMyAddrProfile(div,result);});};
+const deaddrMyDomains=function(a,div=TEST,cbf=console.log){showLoad(div);xutengWalletDetail(a,function(err,result){if(err)return(dw(div,ERROR));if(cbf)cbf(null,result);window.txforDocDat=result;dwWalletsDomain(div,result);});};
+const deaddrMyProfile=function(a,div=TEST,cbf=console.log){showLoad(div);tcoLen(a,(e,len)=>{if(e)return(dw(div,ERROR));if(!len)return(dw(div,HYPHEN));deaddr(a,function(err,result){if(err)return(dw(div,CANCELED));if(cbf)cbf(null,result);window.txforDocDat=result;dwMyAddrProfile(div,result);},len-1);});};
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////[4]
 const xutengMemberStatus=async(wallet,cbf=console.log)=>{if(!avalid(wallet))return(cbf(hi_alert_address,null));return new Promise(resolve=>{xuteng.methods.getData(wallet,1).call((e,r)=>{if(e){if(cbf)cbf(e,null);resolve(null);}else{r=wrdExpt(r.admlen[MEMBERSHIPOF]);if(cbf)cbf(null,r);resolve(r);}});});};
@@ -708,22 +713,23 @@ let rx=HEXINIT+tx.serialize().toString(HEX);console.log(rx);return(rx);};
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////[2]
 const xutengUsageRegister=function(xut=0,status=TEST){do_register(contractAddress,xut,status);};
-const xutengSetDomainName=function(domain=BLANK,ref=BLANK,eth=0,cbf=console.log,status=TEST){domain=domain.toLowerCase();xuteng.methods.retDomain(domain).call((e,info)=>{if(e)return(cbf(e,null));if(info.user!=sender&&info.time>ethnow())return(cbf('OWNER',null));xuteng.methods.contents(sender).call((e,info)=>{if(e)return(cbf(e,null));if(info.json){try{info.json=JSON.parse(info.json)}catch(e){info.json={obj:{}}};if(info.json.obj.domain!=domain)return(cbf('NAME',null));}ref=setInput({domain,ref});setDomain(domain,ref,eth);send(0,0,status,cbf);});});};
+const xutengSetDomainName=function(domain=BLANK,ref=BLANK,eth=0,cbf=console.log,status=TEST,raw=true){showLoad(status);domain=domain.toLowerCase();xuteng.methods.retDomain(domain).call((e,info)=>{if(e)return(cbf(e,null));if(info.user.toLowerCase()!=sender.toLowerCase()&&info.time>ethnow())return(cbf('OWNER',null));xuteng.methods.contents(sender).call((e,info)=>{if(e)return(cbf(e,null));if(info.json){try{info.json=JSON.parse(info.json)}catch(e){info.json={obj:{}}};if(info.json.obj.domain!=domain)return(cbf('NAME',null));}ref=setInput({domain,ref});if(raw){setDomain(domain,ref,eth);send(0,0,status,cbf);}else{mm_setDomain(domain,ref,eth);}});});};
 ////////////////////////////////////////////////////////////[2]
 const xutengSendEthForXut=function(eth=0,cbf=console.log,status=TEST){buy(eth);send(0,0,status,cbf);};
 const xutengSendXutForEth=function(xut=0,cbf=console.log,status=TEST){sell(xut);send(0,0,status,cbf);};
 ////////////////////////////////////////////////////////////[2]
 const ethereumTransfer=function(to=BLANK,eth=0,cbf=console.log,status=TEST){if(avalid(to))return(sendeth(to,eth,0,status,cbf));xutengDomainStatus(to,function(err,result){if(err||!result||result.user==ZEROADDR)return(cbf(err,null));to=result.user;return(sendeth(to,eth,0,status,cbf));});};
-const ethereumRemitFor=function(to=BLANK,eth=0,ref=BLANK,cbf=console.log,status=TEST){ref=setInput({ref});if(avalid(to))return(sendeth(to,eth,0,status,cbf,ref));xutengDomainStatus(to,function(err,result){if(err||!result||result.user==ZEROADDR)return(cbf(err,null));to=result.user;return(sendeth(to,eth,0,status,cbf,ref));});};
+const ethereumRemitFor=function(to=BLANK,eth=0,ref=BLANK,cbf=console.log,status=TEST,raw=true){ref=setInput({ref});if(avalid(to))if(raw){return(sendeth(to,eth,0,status,cbf,ref));}else{return(mm_sendeth(to,eth,ref));}xutengDomainStatus(to,function(err,result){if(err||!result||result.user==ZEROADDR)return(cbf(err,null));to=result.user;if(raw){return(sendeth(to,eth,0,status,cbf,ref));}else{return(mm_sendeth(to,eth,ref));}});};
 ////////////////////////////////////////////////////////////[4]
 const xutengTransfer=function(to=BLANK,xut=0,cbf=console.log,status=TEST){if(avalid(to))return(xutengDirectTransfer(to,xut,cbf,status));xutengDomainStatus(to,function(err,result){if(err||!result||result.user==ZEROADDR)return(cbf(err,null));to=result.user;return(xutengDirectTransfer(to,xut,cbf,status));});};
-const xutengRemitFor=function(to=BLANK,xut=0,ref=BLANK,cbf=console.log,status=TEST){if(avalid(to))return(xutengDirectRemitFor(to,xut,ref,cbf,status));xutengDomainStatus(to,function(err,result){if(err||!result||result.user==ZEROADDR)return(cbf(err,null));to=result.user;return(xutengDirectRemitFor(to,xut,ref,cbf,status));});};
+const xutengRemitFor=function(to=BLANK,xut=0,ref=BLANK,cbf=console.log,status=TEST,raw=true){if(avalid(to))return(xutengDirectRemitFor(to,xut,ref,cbf,status,raw));xutengDomainStatus(to,function(err,result){if(err||!result||result.user==ZEROADDR)return(cbf(err,null));to=result.user;return(xutengDirectRemitFor(to,xut,ref,cbf,status,raw));});};
 const xutengDirectTransfer=function(to=BLANK,xut=0,cbf=console.log,status=TEST){transfer(to,xut);send(0,0,status,cbf);};
-const xutengDirectRemitFor=function(to=BLANK,xut=0,ref=BLANK,cbf=console.log,status=TEST){transferFor(to,xut,setInput({ref}));send(0,0,status,cbf);};
+const xutengDirectRemitFor=function(to=BLANK,xut=0,ref=BLANK,cbf=console.log,status=TEST,raw=true){if(raw){transferFor(to,xut,setInput({ref}));send(0,0,status,cbf);}else{mm_transferFor(to,xut,setInput({ref}));}};
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
 const mmresult=function(err,hash,fname){if(err){err=ERROR+errCode(err);lastTxHash[fname]=BLANK;}else{err=OK+hash;lastTxHash[fname]=hash;};mw(lastTxHashClass,err);dw(fname,err);};
-const mmsender=function(eth){return({from:sender,to:contractAddress,value:(eth?s2w(eth):0),gasPrice:gtoWei(txgwei),gas:maxgas});};
+const mmsender=function(eth,to=contractAddress,ref=null){if(ref){ref=toHex(ref);}else{ref=OxOO;};return({from:sender,to:to,value:(eth?s2w(eth):0),gasPrice:gtoWei(txgwei),gas:maxgas,data:ref});};
+const mm_sendeth=function(to,eth,ref=null,n){;;n=funcName();web3.eth.sendTransaction(mmsender(eth,to,ref),function(err,hash){mmresult(err,hash,n);});};
 ////////////////////////////////////////////////////////////
 const mm_buy=function(eth,n){;;n=funcName();xuteng.methods.buy().send(mmsender(eth),function(err,hash){mmresult(err,hash,n);});};
 const mm_sell=function(xut,n){;;n=funcName();xuteng.methods.sell(s2w(xut)).send(mmsender(),function(err,hash){mmresult(err,hash,n);});};
@@ -756,13 +762,15 @@ const Transfer=function(to,amt,cbf=console.log,scid='usdt',eth=0){var sc=Contrac
 ////////////////////////////////////////////////////////////[2]
 const submitRe=function(to,xutinput,ref,div='mm_transferFor',x){x=g2(xutinput);betValid(to,x,0,function(err,result){if(err||!result)return(dw(div,ERROR+'input:invalid'));return(mm_transferFor(to,x,(avalid(ref)?setInput({ref}):BLANK)));});};
 const submitto=function(to,xutinput,div='mm_transfer',x){x=g2(xutinput);betValid(to,x,0,function(err,result){if(err||!result)return(dw(div,ERROR+'input:invalid'));return(mm_transfer(to,x));});};
-////////////////////////////////////////////////////////////[2]
+////////////////////////////////////////////////////////////[3]
+const createOneDomain=function(domain=BLANK,ref=BLANK,eth=0,cbf=console.log,status=TEST){return(xutengSetDomainName(domain,ref,eth,cbf,status,false))};
 const createMyProfile=function(name,text,style='#000000'){return(createSimpleDoc('profile',ethnow()+10,-1,-1,TYPES.personal_profile,{name,text,style}));};//Delay10Seconds;
 const createSimpleDoc=function(frm,uts,min,max,typ,dat,odd,hdiv,adiv){if(!frm)frm='lo1x99';if(!hdiv)hdiv='hash'+frm;if(!adiv)adiv='addr'+frm;if(!uts)uts=lotnow().lotstamp;if(!min)min=1;if(!max)max=100000;if(!typ)typ=TYPES.gaming;if(!dat)dat={};typ=Number(typ);uts=Number(uts);min=Number(min);max=Number(max);if(!Array.isArray(odd))odd=[70];if(uts<ethnow())return(dw(hdiv,ERROR+'time:invalid'));showLoad(hdiv);
 ;xuteng.methods.transferFor(ZEROADDR,0,setInput({typ,frm,uts,min,max,odd,dat})).send(mmsender(),function(err,hash){if(err)return(dw(hdiv,ERROR+'document.creation:invalid'));dw(hdiv,hash);console.log(hash);lastTxHashId=hdiv;lastTxHash[lastTxHashId]=hash;showLoad(adiv);/*GAS25K*/
 ;xuteng.methods.ping(hash,typ).send(mmsender(),function(err,hash){if(err)return(dw(adiv,ERROR+'document.registration:invalid'));return(divAddrFromHash(lastTxHash[lastTxHashId],adiv));});});};/*GAS180K*/
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
+const errCode=function(e){if(e!=null){e=e.toString();if(e.indexOf(']')>0)return(hi_alert_data);if(e.indexOf(OxOO)>0)return(hi_prompt_err);if(e.indexOf(RECEIPT)>0)return(hi_prompt_rct);e=(e.substring(e.lastIndexOf(HASH)));if(e){return(e);}else{return(0);}}return(null);};
 const funcName=function(){return(funcName.caller.name);};
 ////////////////////////////////////////////////////////////
 const hvalid=function(h){return(hashRegex.test(h));};
@@ -788,9 +796,8 @@ const fromGwei=function(g){return(fromWei(gtoWei(g)));};
 const s2wHex=function(s){return(toHex(s2w(s)));};
 const g2wHex=function(g){return(toHex(gtoWei(g)));};
 ////////////////////////////////////////////////////////////
-const errCode=function(e){if(e!=null){e=e.toString();if(e.indexOf(RECEIPT)>0)return(hi_prompt_rct);e=(e.substring(e.lastIndexOf(HASH)));if(e){return(e);}else{return(0);}}return(null);};
 const setInput=function(obj){return(JSON.stringify({obj:obj}));};
-const getInput=function(tx,cbf=console.log){web3.eth.getTransaction(tx,function(err,result){if(err)return(cbf(err,null));try{tx=web3.utils.toUtf8(result.input);tx=tx.substring(tx.indexOf('{"obj":'));tx=tx.substr(0,tx.lastIndexOf('}}')+2);tx=JSON.parse(tx);}catch(e){return(cbf(hi_alert_data,null));}cbf(null,tx.obj);});};
+const getInput=function(tx,cbf=console.log){if(!hvalid(tx))return(cbf(ERROR,null));web3.eth.getTransaction(tx,function(err,result){if(err||!result||!result.input)return(cbf(err,null));cbf(null,hexObj(result.input).obj);});};
 ////////////////////////////////////////////////////////////
 const toDate=function(y,m,d){return(parseInt((new Date(Date.UTC(y,m-1,d,0,0,0,0))).getTime()/1000,10));};
 const nowDate=function(){return(parseInt((new Date()).getTime()/1000,10));};
@@ -807,6 +814,7 @@ const warn=function(d,w){dw(d,'<span\tclass="textwarn">'+w+'</span>');};
 const tcopy=function(e,s){e=document.getElementById(e);if(!e.value)return;e.select();e.setSelectionRange(0,99999);document.execCommand('copy');alert(s);};
 const dupid=function(es,is,e,i,n,d){es=document.getElementsByTagName(STAR);is=[];for(i=0,n=es.length;i<n;++i){e=es[i];if(e.id)is.push(e.id);}d=arr=>arr.filter((item,index)=>arr.indexOf(item)!=index);return(d(is));};
 const idcap=function(es,is,e,i,n,d=['_label','_header','_button','_note']){es=document.getElementsByTagName(STAR);is={};for(i=0,n=es.length;i<n;++i){e=es[i];if(e.id&&e.innerHTML&&d.some(s=>e.id.includes(s)))is[e.id]=e.innerHTML;};return(is);};
+const chcap=function(caps){if(!caps)caps=idcap();Object.keys(caps).forEach(function(key){if(!LABELS.en[key])console.log(key+COLON,'"'+caps[key]+'",');});};
 ////////////////////////////////////////////////////////////
 const hashParam=function(p,t){if(!t)t=document.location.hash;if(!t)return(BLANK);p=RegExp('[#?&]'+p.replace(/[\[\]]/g,'\\$&')+'(=([^&#]*)|&|#|$)');p=p.exec(t);if(!p)return(BLANK);if(!p[2])return(BLANK);return(decodeURIComponent(p[2].replace(/\+/g,SPACE)));};
 const setCookie=function(cn,cv,dd,t){if(!dd)dd=365;dd=(new Date(nowDate()*1000+dd*24*60*60*1000)).toUTCString();if(!t)t=document;return(t.cookie=cn+EQUAL+cv+';expires='+dd+';path=/');};
@@ -868,10 +876,11 @@ const xut2de=function(xut,a,x){xut=xut.toString();x=xut.split(DOT)[1];if(!x)retu
 const xut2lo=function(xut,a,x){xut=xut.toString();x=xut.split(DOT)[1];if(!x)return({xut:parseInt(xut),lo:[0]});if(x.length>14)x=x.substr(0,14);if(x.length%2>0)x=x+ZERO;a=[];while(x.length>0){a.push(Number(x.substr(0,2)));x=x.slice(2);};return({xut:Number(xut),lo:a});};//XutToLottoNums;
 const de2win=function(win,pen,mul,x,i,s){win=Number(win);x=pen2de(pen);if(!mul)mul=70;if(!x.de.includes(win))return(0);s=0;for(i=0;i<x.de.length;i++){if(x.de[i]==win)s+=mul*x.xut;}return(s);};//CalculateWinningAmount;
 const arrdup=function(arr,m,i){if(!Array.isArray(arr))return(null);if(arr.length<=1)return(false);m={};for(i=0;i<arr.length;i++){if(m[arr[i]])return(true);m[arr[i]]=true;}return(false);};
-////////////////////////////////////////////////////////////[4]
+////////////////////////////////////////////////////////////[5]
 const ethnow=function(){return(parseInt(Date.now()/1000,10));};//~forms.nowDate();//CurrentEthereumTime;
 const estamp=function(yy,mo,dd,hh=12,mi=0){return(parseInt((new Date(Date.UTC(yy,mo-1,dd,hh,mi,0))).getTime()/1000,10));};//EthereumTime;
 const trange=function(begin,end,max=30,t){try{begin=estamp(begin[0],begin[1],begin[2],0);end=estamp(end[0],end[1],end[2],0);t=(end-begin)/60/60/24;if(t<=0||t>max)return(0);return({begin,end});}catch(e){return(null);}};
+const getUts=function(year,month,day,hour,min,stamp,time,t){t=estamp(gv(year),gv(month),gv(day),gv(hour),gv(min));window.timestamp=t;dw(stamp,window.timestamp);dw(time,STAR+fromDate(window.timestamp));return(window.timestamp);};
 const lotnow=function(){window.now=(new Date(1000*ethnow()));window.lottime=[window.now.getFullYear(),window.now.getMonth()+1,window.now.getDate(),12,0];window.lotstamp=estamp(window.lottime[0],window.lottime[1],window.lottime[2],window.lottime[3],window.lottime[4],0);return({lotstamp:window.lotstamp,lottime:window.lottime});};
 ////////////////////////////////////////////////////////////[4]
 const hexCut=function(str){return(hexUtf(strCut(str,'7b226f626a22','7d7d')));};
@@ -1049,22 +1058,45 @@ const author_oldAccount=function(){if(!confirm(hi_prompt_setpwd))return;;netkeys
 const author_PrivateKey=function(){author_ClrPrivate();setTimeout(function(){getAccount(null);dv(_expprivate,senderPte);},2000);alert(hi_alert_savepwd);};
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////[1]
-const dwMyGameProfile=function(div,dat){dw(div,
-'<br/>FORMAT:&nbsp;'+dat.frm+
-'<br/>MIN BET:&nbsp;'+dat.min+
-'<br/>MAX BET:&nbsp;'+dat.max+
-'<br/>FINISH:&nbsp;'+fromDate(dat.uts)+
-'<br/>START:&nbsp;'+fromDate(dat.txUts)+
-'<br/>OWNER:&nbsp;'+dat.txAuthor+
-'<br/>ODDS:&nbsp;'+dat.odd+
-'<br/>NAME:&nbsp;'+(dat.dat?dat.dat.name:undefined));};
+const lottimePicker=function(year,month,day,hour,min,stamp,time,yi=10,is=5,t,y,m,d,h,i,j){t=lotnow().lottime;[y,m,d,h,i]=t;
+;t=BLANK;for(j=y-yi;j<=y+yi;j++)t+='<option\t'+(j==y?'selected':BLANK)+'\tvalue="'+j+'">'+j+'</option>';dw(year,t);
+;t=BLANK;for(j=1;j<=12;j++)t+='<option\t'+(j==m?'selected':BLANK)+'\tvalue="'+j+'">'+j+'</option>';dw(month,t);
+;t=BLANK;for(j=1;j<=31;j++)t+='<option\t'+(j==d?'selected':BLANK)+'\tvalue="'+j+'">'+j+'</option>';dw(day,t);
+;t=BLANK;for(j=0;j<=23;j++)t+='<option\t'+(j==h?'selected':BLANK)+'\tvalue="'+j+'">'+j+'</option>';dw(hour,t);
+;t=BLANK;for(j=0;j<=60-is;j+=is)t+='<option\t'+(j==i?'selected':BLANK)+'\tvalue="'+j+'">'+j+'</option>';dw(min,t);
+;t=getUts(year,month,day,hour,min,stamp,time);};
 ////////////////////////////////////////////////////////////[1]
-const dwMyAddrProfile=function(div,dat){dw(div,
+const dwMyGameProfile=function(div,dat){if(!dat)return(dw(div,HYPHEN));dw(div,
+'<br/>NAME:&nbsp;'+(dat.dat?dat.dat.name:BLANK)+
+'<br/>OWNER:&nbsp;'+dat.txAuthor+
+'<br/>FORMAT:&nbsp;'+dat.frm+
+'<br/>OPENING:&nbsp;'+fromDate(dat.txUts)+
+'<br/>CLOSING:&nbsp;'+fromDate(dat.uts)+
+'<br/>MIN DEPOSIT:&nbsp;'+dat.min+
+'<br/>MAX DEPOSIT:&nbsp;'+dat.max+
+'<br/>REWARDS:&nbsp;'+dat.odd);};
+////////////////////////////////////////////////////////////[1]
+const dwMyAddrProfile=function(div,dat){if(!dat)return(dw(div,HYPHEN));dw(div,
 '<br/>WALLET:&nbsp;'+dat.txAuthor+
 '<br/>SIGNUP:&nbsp;'+fromDate(dat.txUts)+
 '<br/>NAME:&nbsp;'+(dat.dat?dat.dat.name:undefined)+
 '<br/>FILE:&nbsp;'+(dat.dat?dat.dat.text:undefined)+
-'<br/>STYLE:&nbsp;'+(dat.dat?dat.dat.style:undefined));};
+'<br/>STYLE:&nbsp;'+(dat.dat?dat.dat.style:undefined));
+dv('proname',dat.dat?dat.dat.name:BLANK);
+dv('protext',dat.dat?dat.dat.text:BLANK);
+dv('prostyle',dat.dat?dat.dat.style:BLANK);};
+////////////////////////////////////////////////////////////[1]
+const dwWalletsDomain=function(div,dat){if(!dat)return(dw(div,HYPHEN));dw(div,
+'<br/>DOMAIN:&nbsp;'+(dat.json?dat.json.obj.domain:BLANK)+
+'<br/>IP:&nbsp;'+(dat.json?dat.json.obj.ref.ip:undefined)+
+'<br/>EXPIRATION:&nbsp;'+dat.time+
+'<br/>NOTE:&nbsp;'+(dat.json?dat.json.obj.ref.note:BLANK));
+dv('domname',dat.json?dat.json.obj.domain:BLANK);
+dv('domip',dat.json?dat.json.obj.ref.ip:BLANK);
+dv('domref',dat.json?dat.json.obj.ref.note:BLANK);};
+////////////////////////////////////////////////////////////[2]
+const dwDomainWithFee=function(ua,divDom,divFee){deaddrMyDomains(ua,divDom);xutengDomainAnnualETH(function(e,fee){dw(divFee,'FEE&nbsp;'+fee+'&nbsp;ETH/YEAR')})};
+const dwTxHashContent=function(txh,divAddr,divNote,divData){dw(divAddr,HYPHEN);dw(divNote,HYPHEN);dw(divData,HYPHEN);if(avalid(txh)){divHashFromAddr(txh,divAddr);deaddrLottoGame(txh,divData);}if(hvalid(txh)){divAddrFromHash(txh,divAddr);dehashLottoGame(txh,divData);getInput(txh,function(e,obj){dw(divNote,obj?obj.ref:HYPHEN)});}};
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
 const user_delCookie=function(){setCookie(_keystore,BLANK);alert(hi_alert_cookiedel);};
