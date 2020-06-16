@@ -34,6 +34,23 @@
 </div>
 <hr class="cp"/>
 <br/>
+<a name="ALIAS"></a>
+<div class="header" id="_header_alias">ASSIGN AN ADDRESS ALIAS</div>
+<hr class="cp"/>
+<div>
+<table class="cover">
+<tr><td class="buttoner"><a class="button" data-action="UserAAlias" id="_button_UserAAlias">ADDRESS ALIAS</a></td><td><input type="text" class="long" data-change="UserAAlias" value="" id="alias"/></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_UserAaType">ADDRESS TYPE</span></td><td><input type="text" class="address" value="211" id="atype"/></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_UserAaHash">HASH</span></td><td><input disabled type="text" class="address" value="-" id="_ahash"/></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_UserAaUser">OWNER</span></td><td><input disabled type="text" class="address" value="-" id="_aowner"/></td></tr>
+<tr><td class="buttoner"><a class="button" data-action="UserAaAddr" id="_button_UserAaAddr">STORE ALIAS</a></td><td><span id="_address"></span></td></tr>
+</table>
+<div class="result" id="mm_ping"></div>
+<div class="result" id="_alias_status"></div>
+<div class="result" id="_alias_hash"></div>
+</div>
+<hr class="cp"/>
+<br/>
 <a name="SENDER"></a>
 <div class="header" id="_header_sender">PERSONAL INFORMATION AND STATS</div>
 <hr class="cp"/>
@@ -60,7 +77,8 @@
 <div>
 <table class="cover">
 <tr><td class="buttoner"><span class="trlab" id="_label_AuthSumXut">XUT BALANCE</span></td><td><span id="bgxuteng"><xut><span id="_xuteng"></span></xut></span></td></tr>
-<tr><td class="buttoner"><span class="trlab" id="_label_AuthAdrXut">XUT RECEIVER</span></td><td><input type="text" class="address" value="0x00" id="xutTo"/></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_AuthAdrXut">XUT RECEIVER</span></td><td><input type="text" class="address" data-change="UserRedXut" value="0x00" id="xutTo"/></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_UserTgtXut">RECEIVER WALLET</span></td><td><input disabled type="text" class="address" value="0x00" id="xutTarget"/></td></tr>
 <tr><td class="buttoner"><span class="trlab" id="_label_UserRefXut">NOTE TO RECEIVER</span></td><td><input type="text" class="long" value="0x00" id="xutNote"/></td></tr>
 <tr><td class="buttoner"><a class="button" data-action="UserPayXut" id="_button_UserPayXut">SEND XUT</a></td><td><input type="text" class="money" value="0" id="xut"/>&nbsp;XUT</td></tr>
 </table>
@@ -76,7 +94,8 @@
 <div>
 <table class="cover">
 <tr><td class="buttoner"><span class="trlab" id="_label_AuthSumEth">ETH BALANCE</span></td><td><span id="bgether"><eth><span id="_ethers"></span></eth></span></td></tr>
-<tr><td class="buttoner"><span class="trlab" id="_label_AuthAdrEth">ETH RECEIVER</span></td><td><input type="text" class="address" value="0x00" id="to"/></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_AuthAdrEth">ETH RECEIVER</span></td><td><input type="text" class="address" data-change="UserRedEth" value="0x00" id="to"/></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_UserTgtEth">RECEIVER WALLET</span></td><td><input disabled type="text" class="address" value="0x00" id="ethTarget"/></td></tr>
 <tr><td class="buttoner"><span class="trlab" id="_label_UserRefEth">NOTE TO RECEIVER</span></td><td><input type="text" class="long" value="0x00" id="ethNote"/></td></tr>
 <tr><td class="buttoner"><a class="button" data-action="UserPayEth" id="_button_UserPayEth">SEND ETH</a></td><td><input type="text" class="money" value="0" id="eth"/>&nbsp;ETH</td></tr>
 </table>
@@ -131,7 +150,8 @@
 <hr class="cp"/>
 <div>
 <table class="cover">
-<tr><td class="buttoner"><a class="button" data-action="UserGoUser" id="_button_GoUser">USER ADDRESS</a></td><td><input type="text" class="long" value="0x00" id="user"/></td></tr>
+<tr><td class="buttoner"><a class="button" data-action="UserGoUser" id="_button_UserGoUser">ADDRESS OR ALIAS</a></td><td><input type="text" class="long" data-change="UserGoUser" value="0x00" id="user"/></td></tr>
+<tr><td class="buttoner"><span class="label" id="_label_UserExAddr">OWNER WALLET</span></td><td><span id="_userWallet"></span></td></tr>
 <tr><td class="buttoner"><span class="label" id="_label_Wallet1Xut">XUT BALANCE</span></td><td><span id="_xuteng_user"></span>&nbsp;XUT</td></tr>
 <tr><td class="buttoner"><span class="label" id="_label_Wallet2Eth">ETH BALANCE</span></td><td><span id="_ethers_user"></span>&nbsp;ETH</td></tr>
 <tr><td class="buttoner"><span class="trlab" id="_label_Wallet3Req">REQUESTS TO BUY</span></td><td><span id="_pteBuys_user"></span></td></tr>
