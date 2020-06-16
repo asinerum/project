@@ -28,7 +28,7 @@ const mload=function(d,html){dload(d,html,DOT);};
 const dgets=function(d,html,ob){if(!ob)ob=HASH;$.get(html,function(data){$(ob+d).html(data);htmlData.get=data;});};
 const dload=function(d,html,ob){if(!ob)ob=HASH;$(ob+d).load(html);};
 ////////////////////////////////////////////////////////////
-const gv=function(d){return($(HASH+d).val());};
+const gv=function(d){return(trim($(HASH+d).val()));};
 const gr=function(d){return($(HASH+d).prop('href'));};
 const gc=function(d){return($(HASH+d).prop('checked'));};
 const gh=function(d){return($(HASH+d).html());};

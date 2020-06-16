@@ -467,7 +467,8 @@ const xutengSend=function(method,args=[],eth=0,status=TEST,out=TEST,cbf=console.
 const xutengRaws=function(method,args=[],eth=0,status=TEST,out=TEST,cbf=console.log){showLoad(status);sendingFunc=xuteng.methods[method].apply(this,args);sendingAbi=sendingFunc.encodeABI();sendingEth=eth?eth:0;txsend(0,out,status,cbf);};
 ////////////////////////////////////////////////////////////
 const getData=function(ua,dt){contType=dt;;xuteng.methods.getData(ua,dt).call((err,result)=>{if(err)return;showData(result);cloneData(result);cloneBalance(result);})};
-const getUserData=function(ua,dt){if(badAddr(ua))return;;xuteng.methods.getData(ua,dt).call((err,result)=>{if(err)return;showUserData(result);})};
+const getUserData=function(ua,dt,cbf){if(badAddr(ua))return;;xuteng.methods.getData(ua,dt).call((err,result)=>{if(result)showUserData(result);if(cbf)cbf(err,result);})};
+const getAliasData=function(ua,dt,cb1){if(avalid(ua)){getUserData(ua,dt);return(cb1(ua));}xutengUserRedirect(ua).then(ua=>{if(ua!=ZEROADDR)getUserData(ua,dt);cb1(ua);});};
 ////////////////////////////////////////////////////////////
 const showData=function(result){
 dw('_symbol',(SYMBOL));
@@ -631,11 +632,13 @@ const dehashMyProfile=function(h,div=TEST,cbf=console.log){showLoad(div);dehash(
 const deaddrMyDomains=function(a,div=TEST,cbf=console.log){showLoad(div);xutengWalletDetail(a,function(err,result){if(err)return(dw(div,ERROR));if(cbf)cbf(null,result);window.txforDocDat=result;dwWalletsDomain(div,result);});};
 const deaddrMyProfile=function(a,div=TEST,cbf=console.log){showLoad(div);tcoLen(a,(e,len)=>{if(e)return(dw(div,ERROR));if(!len)return(dw(div,HYPHEN));deaddr(a,function(err,result){if(err)return(dw(div,CANCELED));if(cbf)cbf(null,result);window.txforDocDat=result;dwMyAddrProfile(div,result);},len-1);});};
 ////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////[4]
+////////////////////////////////////////////////////////////[6]
 const xutengMemberStatus=async(wallet,cbf=console.log)=>{if(!avalid(wallet))return(cbf(hi_alert_address,null));return new Promise(resolve=>{xuteng.methods.getData(wallet,1).call((e,r)=>{if(e){if(cbf)cbf(e,null);resolve(null);}else{r=wrdExpt(r.admlen[MEMBERSHIPOF]);if(cbf)cbf(null,r);resolve(r);}});});};
 const xutengWalletDetail=async(wallet,cbf=console.log)=>{if(!avalid(wallet))return(cbf(hi_alert_address,null));return new Promise(resolve=>{xuteng.methods.contents(wallet).call((e,r)=>{if(e){if(cbf)cbf(e,null);resolve(null);}else{r={json:r.json?JSON.parse(r.json):BLANK,time:wrdExpt(r.time)};if(cbf)cbf(null,r);resolve(r);}});});};
 const xutengDomainStatus=async(domain=BLANK,cbf=console.log)=>{domain=domain.toLowerCase();return new Promise(resolve=>{xuteng.methods.retDomain(domain).call((e,r)=>{if(e){if(cbf)cbf(e,null);resolve(null);}else{r={user:r.user,json:r.json?JSON.parse(r.json):BLANK,time:wrdExpt(r.time)};if(cbf)cbf(null,r);resolve(r);}});});};
 const xutengDomainsOwner=async(domain=BLANK,cbf=console.log)=>{domain=toHash(domain.toLowerCase());return new Promise(resolve=>{xuteng.methods.downerOf(domain?domain:OxOO).call((e,r)=>{if(e){if(cbf)cbf(e,null);resolve(null);}else{if(cbf)cbf(null,r);resolve(r);}});});};
+const xutengAliasesOwner=async(alias=BLANK,cbf=console.log)=>{alias=toHash(alias.toLowerCase());return new Promise(resolve=>{xuteng.methods.addressOf(alias).call((e,addr)=>{if(e||addr==ZEROADDR){if(cbf)cbf(e,ZEROADDR);resolve(ZEROADDR);}else{xuteng.methods.holderOf(addr).call((e,user)=>{if(e||user==ZEROADDR){if(cbf)cbf(e,ZEROADDR);resolve(ZEROADDR);}else{if(cbf)cbf(null,user);resolve(user);}});}});});};
+const xutengUserRedirect=async(name=BLANK,cbf=console.log)=>{return new Promise(resolve=>{xutengDomainsOwner(name,function(e,addr){if(e){if(cbf)cbf(e,null);resolve(null);}else{if(addr==ZEROADDR){xutengAliasesOwner(name,function(e,addr){if(e){if(cbf)cbf(e,null);resolve(null);}else{if(cbf)cbf(null,addr);resolve(addr);}});}else{if(cbf)cbf(null,addr);resolve(addr);}}});});};/*Returns:NULL,ZEROADDR,Address*/
 ////////////////////////////////////////////////////////////[2]
 const xutengDomainAnnualETH=async(cbf=console.log)=>{return new Promise(resolve=>{xuteng.methods.getData(contractAddress,TYPES.domain).call((e,r)=>{if(e){if(cbf)cbf(e,null);resolve(null);}else{r=fromWei(r.prices[TYPEPIW]);if(cbf)cbf(null,r);resolve(r);}});});};
 const xutengMemberAnnualXUT=async(cbf=console.log)=>{return new Promise(resolve=>{xuteng.methods.getData(contractAddress,TYPES.domain).call((e,r)=>{if(e){if(cbf)cbf(e,null);resolve(null);}else{r=fromWei(r.prices[MEMBERFEEOFXUT]);if(cbf)cbf(null,r);resolve(r);}});});};
@@ -718,44 +721,44 @@ const xutengSetDomainName=function(domain=BLANK,ref=BLANK,eth=0,cbf=console.log,
 const xutengSendEthForXut=function(eth=0,cbf=console.log,status=TEST){buy(eth);send(0,0,status,cbf);};
 const xutengSendXutForEth=function(xut=0,cbf=console.log,status=TEST){sell(xut);send(0,0,status,cbf);};
 ////////////////////////////////////////////////////////////[2]
-const ethereumTransfer=function(to=BLANK,eth=0,cbf=console.log,status=TEST){if(avalid(to))return(sendeth(to,eth,0,status,cbf));xutengDomainStatus(to,function(err,result){if(err||!result||result.user==ZEROADDR)return(cbf(err,null));to=result.user;return(sendeth(to,eth,0,status,cbf));});};
-const ethereumRemitFor=function(to=BLANK,eth=0,ref=BLANK,cbf=console.log,status=TEST,raw=true){ref=setInput({ref});if(avalid(to))if(raw){return(sendeth(to,eth,0,status,cbf,ref));}else{return(mm_sendeth(to,eth,ref));}xutengDomainStatus(to,function(err,result){if(err||!result||result.user==ZEROADDR)return(cbf(err,null));to=result.user;if(raw){return(sendeth(to,eth,0,status,cbf,ref));}else{return(mm_sendeth(to,eth,ref));}});};
+const ethereumTransfer=function(to=BLANK,eth=0,cbf=console.log,status=TEST){if(avalid(to))return(sendeth(to,eth,0,status,cbf));xutengUserRedirect(to,function(err,result){if(err||!result||result==ZEROADDR)return(cbf(err,null));to=result;return(sendeth(to,eth,0,status,cbf));});};
+const ethereumRemitFor=function(to=BLANK,eth=0,ref=BLANK,cbf=console.log,status=TEST,raw=true){ref=setInput({ref});if(avalid(to))if(raw){return(sendeth(to,eth,0,status,cbf,ref));}else{return(mm_sendeth(to,eth,ref));}xutengUserRedirect(to,function(err,result){if(err||!result||result==ZEROADDR)return(cbf(err,null));to=result;if(raw){return(sendeth(to,eth,0,status,cbf,ref));}else{return(mm_sendeth(to,eth,ref));}});};
 ////////////////////////////////////////////////////////////[4]
-const xutengTransfer=function(to=BLANK,xut=0,cbf=console.log,status=TEST){if(avalid(to))return(xutengDirectTransfer(to,xut,cbf,status));xutengDomainStatus(to,function(err,result){if(err||!result||result.user==ZEROADDR)return(cbf(err,null));to=result.user;return(xutengDirectTransfer(to,xut,cbf,status));});};
-const xutengRemitFor=function(to=BLANK,xut=0,ref=BLANK,cbf=console.log,status=TEST,raw=true){if(avalid(to))return(xutengDirectRemitFor(to,xut,ref,cbf,status,raw));xutengDomainStatus(to,function(err,result){if(err||!result||result.user==ZEROADDR)return(cbf(err,null));to=result.user;return(xutengDirectRemitFor(to,xut,ref,cbf,status,raw));});};
+const xutengTransfer=function(to=BLANK,xut=0,cbf=console.log,status=TEST){if(avalid(to))return(xutengDirectTransfer(to,xut,cbf,status));xutengUserRedirect(to,function(err,result){if(err||!result||result==ZEROADDR)return(cbf(err,null));to=result;return(xutengDirectTransfer(to,xut,cbf,status));});};
+const xutengRemitFor=function(to=BLANK,xut=0,ref=BLANK,cbf=console.log,status=TEST,raw=true){if(avalid(to))return(xutengDirectRemitFor(to,xut,ref,cbf,status,raw));xutengUserRedirect(to,function(err,result){if(err||!result||result==ZEROADDR)return(cbf(err,null));to=result;return(xutengDirectRemitFor(to,xut,ref,cbf,status,raw));});};
 const xutengDirectTransfer=function(to=BLANK,xut=0,cbf=console.log,status=TEST){transfer(to,xut);send(0,0,status,cbf);};
 const xutengDirectRemitFor=function(to=BLANK,xut=0,ref=BLANK,cbf=console.log,status=TEST,raw=true){if(raw){transferFor(to,xut,setInput({ref}));send(0,0,status,cbf);}else{mm_transferFor(to,xut,setInput({ref}));}};
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
-const mmresult=function(err,hash,fname){if(err){err=ERROR+errCode(err);lastTxHash[fname]=BLANK;}else{err=OK+hash;lastTxHash[fname]=hash;};mw(lastTxHashClass,err);dw(fname,err);};
+const mmresult=function(err,hash,fname){if(err){err=ERROR+errCode(err);lastTxHash[fname]=BLANK;}else{err=hash;lastTxHash[fname]=hash;};mw(lastTxHashClass,err);dw(fname,err);};
 const mmsender=function(eth,to=contractAddress,ref=null){if(ref){ref=toHex(ref);}else{ref=OxOO;};return({from:sender,to:to,value:(eth?s2w(eth):0),gasPrice:gtoWei(txgwei),gas:maxgas,data:ref});};
-const mm_sendeth=function(to,eth,ref=null,n){;;n=funcName();web3.eth.sendTransaction(mmsender(eth,to,ref),function(err,hash){mmresult(err,hash,n);});};
+const mm_sendeth=function(to,eth,ref=null,n){;;if(!n)n=funcName();web3.eth.sendTransaction(mmsender(eth,to,ref),function(err,hash){mmresult(err,hash,n);});};
 ////////////////////////////////////////////////////////////
-const mm_buy=function(eth,n){;;n=funcName();xuteng.methods.buy().send(mmsender(eth),function(err,hash){mmresult(err,hash,n);});};
-const mm_sell=function(xut,n){;;n=funcName();xuteng.methods.sell(s2w(xut)).send(mmsender(),function(err,hash){mmresult(err,hash,n);});};
-const mm_transfer=function(ua,xut,n){;;n=funcName();xuteng.methods.transfer(ua,s2w(xut)).send(mmsender(),function(err,hash){mmresult(err,hash,n);});};
+const mm_buy=function(eth,n){;;if(!n)n=funcName();xuteng.methods.buy().send(mmsender(eth),function(err,hash){mmresult(err,hash,n);});};
+const mm_sell=function(xut,n){;;if(!n)n=funcName();xuteng.methods.sell(s2w(xut)).send(mmsender(),function(err,hash){mmresult(err,hash,n);});};
+const mm_transfer=function(ua,xut,n){;;if(!n)n=funcName();xuteng.methods.transfer(ua,s2w(xut)).send(mmsender(),function(err,hash){mmresult(err,hash,n);});};
 ////////////////////////////////////////////////////////////
-const mm_setFee=function(xut,n){;;n=funcName();xuteng.methods.setFee(s2w(xut)).send(mmsender(),function(err,hash){mmresult(err,hash,n);});};
-const mm_setUser=function(ua,num,n){;;n=funcName();xuteng.methods.setUser(ua,num).send(mmsender(),function(err,hash){mmresult(err,hash,n);});};
-const mm_setHolder=function(oa,ua,n){;;n=funcName();xuteng.methods.setHolder(oa,ua).send(mmsender(),function(err,hash){mmresult(err,hash,n);});};
-const mm_setDomain=function(d,j,eth,n){;;n=funcName();xuteng.methods.setDomain(d,j).send(mmsender(eth),function(err,hash){mmresult(err,hash,n);});};
-const mm_transferFor=function(to,xut,re,n){;;n=funcName();xuteng.methods.transferFor(to,s2w(xut),re).send(mmsender(),function(err,hash){mmresult(err,hash,n);});};
-const mm_pennyPayout=function(to,oa,xut,n){;;n=funcName();xuteng.methods.pennyPayout(to,oa,s2w(xut)).send(mmsender(),function(err,hash){mmresult(err,hash,n);});};
+const mm_setFee=function(xut,n){;;if(!n)n=funcName();xuteng.methods.setFee(s2w(xut)).send(mmsender(),function(err,hash){mmresult(err,hash,n);});};
+const mm_setUser=function(ua,num,n){;;if(!n)n=funcName();xuteng.methods.setUser(ua,num).send(mmsender(),function(err,hash){mmresult(err,hash,n);});};
+const mm_setHolder=function(oa,ua,n){;;if(!n)n=funcName();xuteng.methods.setHolder(oa,ua).send(mmsender(),function(err,hash){mmresult(err,hash,n);});};
+const mm_setDomain=function(d,j,eth,n){;;if(!n)n=funcName();xuteng.methods.setDomain(d,j).send(mmsender(eth),function(err,hash){mmresult(err,hash,n);});};
+const mm_transferFor=function(to,xut,re,n){;;if(!n)n=funcName();xuteng.methods.transferFor(to,s2w(xut),re).send(mmsender(),function(err,hash){mmresult(err,hash,n);});};
+const mm_pennyPayout=function(to,oa,xut,n){;;if(!n)n=funcName();xuteng.methods.pennyPayout(to,oa,s2w(xut)).send(mmsender(),function(err,hash){mmresult(err,hash,n);});};
 ////////////////////////////////////////////////////////////
-const mm_postContent=function(j,co,to,exp,pip,bid,typ,n){;;n=funcName();xuteng.methods.postContent(j,co,to,exp,s2w(pip),s2w(bid),typ).send(mmsender(),function(err,hash){mmresult(err,hash,n);});};
-const mm_pub=function(oa,typ,n){;;n=funcName();xuteng.methods.pub(oa,typ).send(mmsender(),function(err,hash){mmresult(err,hash,n);});};
-const mm_ping=function(h,typ,n){;;n=funcName();xuteng.methods.ping(h,typ).send(mmsender(),function(err,hash){mmresult(err,hash,n);});};
-const mm_notify=function(h,to,n){;;n=funcName();xuteng.methods.notify(h,to).send(mmsender(),function(err,hash){mmresult(err,hash,n);});};
-const mm_txjoin=function(oa,h,typ,xut,n){;;n=funcName();xuteng.methods.txjoin(oa,h,typ,s2w(xut)).send(mmsender(),function(err,hash){mmresult(err,hash,n);});};
-const mm_conjoin=function(oa,j,xut,n){;;n=funcName();xuteng.methods.conjoin(oa,j,s2w(xut)).send(mmsender(),function(err,hash){mmresult(err,hash,n);});};
-const mm_releaseCoholding=function(oa,x,n){;;n=funcName();xuteng.methods.releaseCoholding(oa,x).send(mmsender(),function(err,hash){mmresult(err,hash,n);});};
+const mm_postContent=function(j,co,to,exp,pip,bid,typ,n){;;if(!n)n=funcName();xuteng.methods.postContent(j,co,to,exp,s2w(pip),s2w(bid),typ).send(mmsender(),function(err,hash){mmresult(err,hash,n);});};
+const mm_pub=function(oa,typ,n){;;if(!n)n=funcName();xuteng.methods.pub(oa,typ).send(mmsender(),function(err,hash){mmresult(err,hash,n);});};
+const mm_ping=function(h,typ,n){;;if(!n)n=funcName();xuteng.methods.ping(h,typ).send(mmsender(),function(err,hash){mmresult(err,hash,n);});};
+const mm_notify=function(h,to,n){;;if(!n)n=funcName();xuteng.methods.notify(h,to).send(mmsender(),function(err,hash){mmresult(err,hash,n);});};
+const mm_txjoin=function(oa,h,typ,xut,n){;;if(!n)n=funcName();xuteng.methods.txjoin(oa,h,typ,s2w(xut)).send(mmsender(),function(err,hash){mmresult(err,hash,n);});};
+const mm_conjoin=function(oa,j,xut,n){;;if(!n)n=funcName();xuteng.methods.conjoin(oa,j,s2w(xut)).send(mmsender(),function(err,hash){mmresult(err,hash,n);});};
+const mm_releaseCoholding=function(oa,x,n){;;if(!n)n=funcName();xuteng.methods.releaseCoholding(oa,x).send(mmsender(),function(err,hash){mmresult(err,hash,n);});};
 ////////////////////////////////////////////////////////////
-const mm_userSetSell=function(xut,tpe,n){;;n=funcName();xuteng.methods.userSetSell(s2w(xut),s2w(tpe)).send(mmsender(),function(err,hash){mmresult(err,hash,n);});};
-const mm_userSetBuy=function(tpe,eth,n){;;n=funcName();xuteng.methods.userSetBuy(s2w(tpe)).send(mmsender(eth),function(err,hash){mmresult(err,hash,n);});};
-const mm_userStopSell=function(i,n){;;n=funcName();xuteng.methods.userStopSell(i).send(mmsender(),function(err,hash){mmresult(err,hash,n);});};
-const mm_userStopBuy=function(i,n){;;n=funcName();xuteng.methods.userStopBuy(i).send(mmsender(),function(err,hash){mmresult(err,hash,n);});};
-const mm_buyFromSeller=function(ua,i,c,eth,n){;;n=funcName();xuteng.methods.buyFromSeller(ua,i,c).send(mmsender(eth),function(err,hash){mmresult(err,hash,n);});};
-const mm_sellToBuyer=function(ua,i,c,xut,n){;;n=funcName();xuteng.methods.sellToBuyer(ua,i,c,s2w(xut)).send(mmsender(),function(err,hash){mmresult(err,hash,n);});};
+const mm_userSetSell=function(xut,tpe,n){;;if(!n)n=funcName();xuteng.methods.userSetSell(s2w(xut),s2w(tpe)).send(mmsender(),function(err,hash){mmresult(err,hash,n);});};
+const mm_userSetBuy=function(tpe,eth,n){;;if(!n)n=funcName();xuteng.methods.userSetBuy(s2w(tpe)).send(mmsender(eth),function(err,hash){mmresult(err,hash,n);});};
+const mm_userStopSell=function(i,n){;;if(!n)n=funcName();xuteng.methods.userStopSell(i).send(mmsender(),function(err,hash){mmresult(err,hash,n);});};
+const mm_userStopBuy=function(i,n){;;if(!n)n=funcName();xuteng.methods.userStopBuy(i).send(mmsender(),function(err,hash){mmresult(err,hash,n);});};
+const mm_buyFromSeller=function(ua,i,c,eth,n){;;if(!n)n=funcName();xuteng.methods.buyFromSeller(ua,i,c).send(mmsender(eth),function(err,hash){mmresult(err,hash,n);});};
+const mm_sellToBuyer=function(ua,i,c,xut,n){;;if(!n)n=funcName();xuteng.methods.sellToBuyer(ua,i,c,s2w(xut)).send(mmsender(),function(err,hash){mmresult(err,hash,n);});};
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////[1]
 const Transfer=function(to,amt,cbf=console.log,scid='usdt',eth=0){var sc=Contract(scid),sca=EXTOKENS[scid].addr,scd=EXTOKENS[scid].dec,dat={data:sc.methods.transfer(to,(amt*(10**scd)).toString()).encodeABI(),from:sender,to:sca,value:(eth?s2w(eth):0),gasPrice:gtoWei(txgwei),gas:maxgas};console.log(dat);web3.eth.sendTransaction(dat,function(err,hash){if(err)return(cbf(err,null));return(cbf(null,hash));});};
@@ -770,6 +773,7 @@ const createSimpleDoc=function(frm,uts,min,max,typ,dat,odd,hdiv,adiv){if(!frm)fr
 ;xuteng.methods.ping(hash,typ).send(mmsender(),function(err,hash){if(err)return(dw(adiv,ERROR+'document.registration:invalid'));return(divAddrFromHash(lastTxHash[lastTxHashId],adiv));});});};/*GAS180K*/
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
+const trim=function(s){if(s)return(s.replace(/^\s+|\s+$/g,BLANK));return(BLANK);};
 const errCode=function(e){if(e!=null){e=e.toString();if(e.indexOf(']')>0)return(hi_alert_data);if(e.indexOf(OxOO)>0)return(hi_prompt_err);if(e.indexOf(RECEIPT)>0)return(hi_prompt_rct);e=(e.substring(e.lastIndexOf(HASH)));if(e){return(e);}else{return(0);}}return(null);};
 const funcName=function(){return(funcName.caller.name);};
 ////////////////////////////////////////////////////////////
@@ -837,7 +841,7 @@ const mload=function(d,html){dload(d,html,DOT);};
 const dgets=function(d,html,ob){if(!ob)ob=HASH;$.get(html,function(data){$(ob+d).html(data);htmlData.get=data;});};
 const dload=function(d,html,ob){if(!ob)ob=HASH;$(ob+d).load(html);};
 ////////////////////////////////////////////////////////////
-const gv=function(d){return($(HASH+d).val());};
+const gv=function(d){return(trim($(HASH+d).val()));};
 const gr=function(d){return($(HASH+d).prop('href'));};
 const gc=function(d){return($(HASH+d).prop('checked'));};
 const gh=function(d){return($(HASH+d).html());};

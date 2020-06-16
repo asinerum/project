@@ -4,7 +4,8 @@ const xutengSend=function(method,args=[],eth=0,status=TEST,out=TEST,cbf=console.
 const xutengRaws=function(method,args=[],eth=0,status=TEST,out=TEST,cbf=console.log){showLoad(status);sendingFunc=xuteng.methods[method].apply(this,args);sendingAbi=sendingFunc.encodeABI();sendingEth=eth?eth:0;txsend(0,out,status,cbf);};
 ////////////////////////////////////////////////////////////
 const getData=function(ua,dt){contType=dt;;xuteng.methods.getData(ua,dt).call((err,result)=>{if(err)return;showData(result);cloneData(result);cloneBalance(result);})};
-const getUserData=function(ua,dt){if(badAddr(ua))return;;xuteng.methods.getData(ua,dt).call((err,result)=>{if(err)return;showUserData(result);})};
+const getUserData=function(ua,dt,cbf){if(badAddr(ua))return;;xuteng.methods.getData(ua,dt).call((err,result)=>{if(result)showUserData(result);if(cbf)cbf(err,result);})};
+const getAliasData=function(ua,dt,cb1){if(avalid(ua)){getUserData(ua,dt);return(cb1(ua));}xutengUserRedirect(ua).then(ua=>{if(ua!=ZEROADDR)getUserData(ua,dt);cb1(ua);});};
 ////////////////////////////////////////////////////////////
 const showData=function(result){
 dw('_symbol',(SYMBOL));
