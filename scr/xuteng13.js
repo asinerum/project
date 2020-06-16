@@ -714,8 +714,9 @@ let pk=(new ethereumjs.Buffer.Buffer(senderPte,HEX));
 let tx=(new ethereumjs.Tx(dk));console.log(dk);tx.sign(pk);
 let rx=HEXINIT+tx.serialize().toString(HEX);console.log(rx);return(rx);};
 ////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////[2]
+////////////////////////////////////////////////////////////[3]
 const xutengUsageRegister=function(xut=0,status=TEST){do_register(contractAddress,xut,status);};
+const xutengSetUsersAlias=function(alias=DOT,dt=TYPES.personal_profile,cbf=console.log,status=TEST,raw=true){showLoad(status);xutengAliasesOwner(alias).then(ua=>{if(ua!=ZEROADDR){dw(status,ERROR);return(cbf(null,null))};alias=toHash(alias.toLowerCase());if(raw){ping(alias,dt);send(0,0,status,cbf);}else{mm_ping(alias,dt);}});};
 const xutengSetDomainName=function(domain=BLANK,ref=BLANK,eth=0,cbf=console.log,status=TEST,raw=true){showLoad(status);domain=domain.toLowerCase();xuteng.methods.retDomain(domain).call((e,info)=>{if(e)return(cbf(e,null));if(info.user.toLowerCase()!=sender.toLowerCase()&&info.time>ethnow())return(cbf('OWNER',null));xuteng.methods.contents(sender).call((e,info)=>{if(e)return(cbf(e,null));if(info.json){try{info.json=JSON.parse(info.json)}catch(e){info.json={obj:{}}};if(info.json.obj.domain!=domain)return(cbf('NAME',null));}ref=setInput({domain,ref});if(raw){setDomain(domain,ref,eth);send(0,0,status,cbf);}else{mm_setDomain(domain,ref,eth);}});});};
 ////////////////////////////////////////////////////////////[2]
 const xutengSendEthForXut=function(eth=0,cbf=console.log,status=TEST){buy(eth);send(0,0,status,cbf);};
