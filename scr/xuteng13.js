@@ -717,7 +717,7 @@ let rx=HEXINIT+tx.serialize().toString(HEX);console.log(rx);return(rx);};
 ////////////////////////////////////////////////////////////[3]
 const xutengUsageRegister=function(xut=0,status=TEST){do_register(contractAddress,xut,status);};
 const xutengSetUsersAlias=function(alias=DOT,dt=TYPES.personal_profile,cbf=console.log,status=TEST,raw=true){showLoad(status);xutengAliasesOwner(alias).then(ua=>{if(ua!=ZEROADDR){dw(status,ERROR);return(cbf(null,null))};alias=toHash(alias.toLowerCase());if(raw){ping(alias,dt);send(0,0,status,cbf);}else{mm_ping(alias,dt);}});};
-const xutengSetDomainName=function(domain=BLANK,ref=BLANK,eth=0,cbf=console.log,status=TEST,raw=true){showLoad(status);domain=domain.toLowerCase();xuteng.methods.retDomain(domain).call((e,info)=>{if(e)return(cbf(e,null));if(info.user.toLowerCase()!=sender.toLowerCase()&&info.time>ethnow())return(cbf('OWNER',null));xuteng.methods.contents(sender).call((e,info)=>{if(e)return(cbf(e,null));if(info.json){try{info.json=JSON.parse(info.json)}catch(e){info.json={obj:{}}};if(info.json.obj.domain!=domain)return(cbf('NAME',null));}ref=setInput({domain,ref});if(raw){setDomain(domain,ref,eth);send(0,0,status,cbf);}else{mm_setDomain(domain,ref,eth);}});});};
+const xutengSetDomainName=function(domain=BLANK,ref=BLANK,eth=0,cbf=console.log,status=TEST,raw=true){showLoad(status);domain=domain.toLowerCase();xuteng.methods.retDomain(domain).call((e,info)=>{if(e)return(cbf(e,null));if(info.user.toLowerCase()!=sender.toLowerCase()&&info.time>ethnow())return(cbf('OWNER',null));xuteng.methods.contents(sender).call((e,info)=>{if(e)return(cbf(e,null));if(info.json){try{info.json=JSON.parse(info.json)}catch(e){info.json={obj:{}}};if(info.json.obj.domain!=domain)return(cbf('NAME',null));}ref=setInput({domain,ref});if(raw){setDomain(domain,ref,eth);send(0,0,status,cbf);}else{mm_setDomain(domain,ref,eth,status);}});});};
 ////////////////////////////////////////////////////////////[2]
 const xutengSendEthForXut=function(eth=0,cbf=console.log,status=TEST){buy(eth);send(0,0,status,cbf);};
 const xutengSendXutForEth=function(xut=0,cbf=console.log,status=TEST){sell(xut);send(0,0,status,cbf);};
@@ -1099,8 +1099,9 @@ const dwWalletsDomain=function(div,dat){if(!dat)return(dw(div,HYPHEN));dw(div,
 dv('domname',dat.json?dat.json.obj.domain:BLANK);
 dv('domip',dat.json?dat.json.obj.ref.ip:BLANK);
 dv('domref',dat.json?dat.json.obj.ref.note:BLANK);};
-////////////////////////////////////////////////////////////[2]
+////////////////////////////////////////////////////////////[3]
 const dwDomainWithFee=function(ua,divDom,divFee){deaddrMyDomains(ua,divDom);xutengDomainAnnualETH(function(e,fee){dw(divFee,'FEE&nbsp;'+fee+'&nbsp;ETH/YEAR')})};
+const dwDomainRegInfo=function(dn,divUser,divTime,divIp,divNote){xutengDomainStatus(dn).then(data=>{if(!data)data={};db(divUser,data.user);db(divTime,data.time);db(divIp,data.json&&data.json.obj?data.json.obj.ref.ip:HYPHEN);db(divNote,data.json&&data.json.obj?data.json.obj.ref.note:HYPHEN);});};
 const dwTxHashContent=function(txh,divAddr,divNote,divData){dw(divAddr,HYPHEN);dw(divNote,HYPHEN);dw(divData,HYPHEN);if(avalid(txh)){divHashFromAddr(txh,divAddr);deaddrLottoGame(txh,divData);}if(hvalid(txh)){divAddrFromHash(txh,divAddr);dehashLottoGame(txh,divData);getInput(txh,function(e,obj){dw(divNote,obj?obj.ref:HYPHEN)});}};
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////

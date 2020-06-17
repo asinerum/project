@@ -35,7 +35,8 @@ const dwWalletsDomain=function(div,dat){if(!dat)return(dw(div,HYPHEN));dw(div,
 dv('domname',dat.json?dat.json.obj.domain:BLANK);
 dv('domip',dat.json?dat.json.obj.ref.ip:BLANK);
 dv('domref',dat.json?dat.json.obj.ref.note:BLANK);};
-////////////////////////////////////////////////////////////[2]
+////////////////////////////////////////////////////////////[3]
 const dwDomainWithFee=function(ua,divDom,divFee){deaddrMyDomains(ua,divDom);xutengDomainAnnualETH(function(e,fee){dw(divFee,'FEE&nbsp;'+fee+'&nbsp;ETH/YEAR')})};
+const dwDomainRegInfo=function(dn,divUser,divTime,divIp,divNote){xutengDomainStatus(dn).then(data=>{if(!data)data={};db(divUser,data.user);db(divTime,data.time);db(divIp,data.json&&data.json.obj?data.json.obj.ref.ip:HYPHEN);db(divNote,data.json&&data.json.obj?data.json.obj.ref.note:HYPHEN);});};
 const dwTxHashContent=function(txh,divAddr,divNote,divData){dw(divAddr,HYPHEN);dw(divNote,HYPHEN);dw(divData,HYPHEN);if(avalid(txh)){divHashFromAddr(txh,divAddr);deaddrLottoGame(txh,divData);}if(hvalid(txh)){divAddrFromHash(txh,divAddr);dehashLottoGame(txh,divData);getInput(txh,function(e,obj){dw(divNote,obj?obj.ref:HYPHEN)});}};
 ////////////////////////////////////////////////////////////
