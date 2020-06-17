@@ -63,14 +63,14 @@ const Menu=function(element){self=this;
  self.onUserPayEth=function(){ethereumRemitFor(gv('to'),g2('eth'),gv('ethNote'),console.log,'_usereth_status',false);}
  self.onUserTxView=function(){dwTxHashContent(gv('txhash'),'_txaddress','_txnote','_txdata');};
  self.onUserGoUser=function(){getAliasData(gv(_user),1,function(addr){dw('_userWallet',addr);deaddrMyProfile(addr,'_userProfile');deaddrMyDomains(addr,'_userDomain');});}
- self.onUserAAlias=function(){self.goUserAAlias();xuteng.methods.addressOf(gv('_ahash')).call(function(e,oa){if(oa!=ZEROADDR)dw('_address',oa);else{dw('_address',HYPHEN)}});}
  self.onUserAaAddr=function(){if(avalid(gv('_aowner')))return(alert(ERROR));mm_ping(toHash(gv('alias').toLowerCase()),g2('atype'));}
+ self.onUserAAlias=function(){dwAddrAliasInfo(gv('alias'),'_ahash','_aowner','_address');}
  self.onUserDomain=function(){dwDomainRegInfo(gv('domain'),'_downer','_dexp','dip','dnote');}
  self.goUserRedXut=function(a){a=gv('xutTo');if(avalid(a))return(dv('xutTarget',a));xutengUserRedirect(a,function(e,r){dv('xutTarget',r)})}
  self.goUserRedEth=function(a){a=gv('to');if(avalid(a))return(dv('ethTarget',a));xutengUserRedirect(a,function(e,r){dv('ethTarget',r)})}
- self.goUserAAlias=function(a){a=gv('alias').toLowerCase();dv('_ahash',toHash(a));xutengAliasesOwner(a,function(e,ua){if(ua!=ZEROADDR)dv('_aowner',ua);else{dv('_aowner',HYPHEN)}});}
  self.goUserGoUser=self.onUserGoUser;
  self.goUserDomain=self.onUserDomain;
+ self.goUserAAlias=self.onUserAAlias;
  self.onAuthGoUser=self.onGoUser;
  self.onAuthGetBuy=self.onGetBuy;
  self.onAuthGetSel=self.onGetSel;
