@@ -57,6 +57,7 @@ const Menu=function(element){self=this;
  self.onUserGetDom=function(){dwDomainWithFee(sender,'_domain','_domfee');}
  self.onUserSetPro=function(){createMyProfile(gv('proname'),gv('protext'),gv('prostyle'));}
  self.onUserSetDom=function(){createOneDomain(gv('domname'),{ip:gv('domip'),note:gv('domref')},g2('dometh'),function(e,r){if(e)dw('mm_setDomain',ERROR+e)},'mm_setDomain');}
+ self.onUserDomReg=function(){createOneDomain(gv('domain'),{ip:gv('dip'),note:gv('dnote')},g2('regeth'),function(e,r){if(e)dw('_domain_status',ERROR+e)},'_domain_status');}
  self.onUserDocSet=function(){createSimpleDoc(gv('docform'),gn('_uts'),g2('xutMin'),g2('xutMax'),g2('doctype'),{name:gv('docdat')},gv('rewards').split(COMMA),'_doc_hash','_doc_status');}
  self.onUserPayXut=function(){xutengRemitFor(gv('xutTo'),g2('xut'),gv('xutNote'),console.log,'_userxut_status',false);}
  self.onUserPayEth=function(){ethereumRemitFor(gv('to'),g2('eth'),gv('ethNote'),console.log,'_usereth_status',false);}
@@ -64,10 +65,12 @@ const Menu=function(element){self=this;
  self.onUserGoUser=function(){getAliasData(gv(_user),1,function(addr){dw('_userWallet',addr);deaddrMyProfile(addr,'_userProfile');deaddrMyDomains(addr,'_userDomain');});}
  self.onUserAAlias=function(){self.goUserAAlias();xuteng.methods.addressOf(gv('_ahash')).call(function(e,oa){if(oa!=ZEROADDR)dw('_address',oa);else{dw('_address',HYPHEN)}});}
  self.onUserAaAddr=function(){if(avalid(gv('_aowner')))return(alert(ERROR));mm_ping(toHash(gv('alias').toLowerCase()),g2('atype'));}
+ self.onUserDomain=function(){dwDomainRegInfo(gv('domain'),'_downer','_dexp','dip','dnote');}
  self.goUserRedXut=function(a){a=gv('xutTo');if(avalid(a))return(dv('xutTarget',a));xutengUserRedirect(a,function(e,r){dv('xutTarget',r)})}
  self.goUserRedEth=function(a){a=gv('to');if(avalid(a))return(dv('ethTarget',a));xutengUserRedirect(a,function(e,r){dv('ethTarget',r)})}
  self.goUserAAlias=function(a){a=gv('alias').toLowerCase();dv('_ahash',toHash(a));xutengAliasesOwner(a,function(e,ua){if(ua!=ZEROADDR)dv('_aowner',ua);else{dv('_aowner',HYPHEN)}});}
  self.goUserGoUser=self.onUserGoUser;
+ self.goUserDomain=self.onUserDomain;
  self.onAuthGoUser=self.onGoUser;
  self.onAuthGetBuy=self.onGetBuy;
  self.onAuthGetSel=self.onGetSel;
