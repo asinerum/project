@@ -13,8 +13,8 @@ const nlarge=function(n,s){n=s2n(n);s=s2n(s);return(n>s&&s>=0);};
 ////////////////////////////////////////////////////////////
 const wrd=function(o,v){return(Object.keys(o).find(key=>o[key]==v));};
 const n2s=function(n,d){if(!n)return(ZERO);if(!d)d=0;n=n.toString().split(DOT);n[0]=n[0].replace(/\B(?=(\d{3})+(?!\d))/g,COMMA);n[1]=n[1]?DOT+n[1].substr(0,d):EMPTY;return(n[0]+n[1]);};
-const w2s=function(n){return(n2s(fromWei(n),5));};
 const s2n=function(s){s=parseFloat(s.toString().replace(/[^\d\.\-]/g,EMPTY));if(isNaN(s))return(0);return(s);};
+const w2s=function(n,dec=5,len=22){n=n2s(fromWei(n),dec);return(n.length<len?n:ASK);};
 const s2w=function(s){return(toWei(s2n(s).toString()));};
 const toHex=function(s){return(web3.utils.toHex(s));};
 const toHash=function(s){return(web3.utils.keccak256(s,{encoding:HEX}));};
