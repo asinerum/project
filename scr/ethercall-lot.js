@@ -33,9 +33,9 @@ const getAddrFromHash=function(h,cbf=console.log){xuteng.methods.addressOf(h).ca
 const divHashFromAddr=function(a,div=TEST){getHashFromAddr(a,function(err,result){if(err)return(dw(div,HYPHEN));dw(div,result);});};
 const divAddrFromHash=function(h,div=TEST){getAddrFromHash(h,function(err,result){if(err)return(dw(div,HYPHEN));dw(div,result);});};
 ////////////////////////////////////////////////////////////[5]
-const dehashLottoGame=function(h,div=TEST,cbf=console.log){showLoad(div);dehash(h,function(err,result){if(err)return(dw(div,ERROR));if(cbf)cbf(null,result);window.txforDocDat=result;dwMyGameProfile(div,result);});};
-const deaddrLottoGame=function(a,div=TEST,cbf=console.log){showLoad(div);txaddr(a,function(err,result){if(err)return(dw(div,ERROR));if(cbf)cbf(null,result);window.txforDocDat=result;dwMyGameProfile(div,result);});};
-const dehashMyProfile=function(h,div=TEST,cbf=console.log){showLoad(div);dehash(h,function(err,result){if(err)return(dw(div,ERROR));if(cbf)cbf(null,result);window.txforDocDat=result;dwMyAddrProfile(div,result);});};
-const deaddrMyDomains=function(a,div=TEST,cbf=console.log){showLoad(div);xutengWalletDetail(a,function(err,result){if(err)return(dw(div,ERROR));if(cbf)cbf(null,result);window.txforDocDat=result;dwWalletsDomain(div,result);});};
-const deaddrMyProfile=function(a,div=TEST,cbf=console.log){showLoad(div);tcoLen(a,(e,len)=>{if(e)return(dw(div,ERROR));if(!len)return(dw(div,HYPHEN));deaddr(a,function(err,result){if(err)return(dw(div,CANCELED));if(cbf)cbf(null,result);window.txforDocDat=result;dwMyAddrProfile(div,result);},len-1);});};
+const dehashLottoGame=function(h,div=TEST,cbf=console.log){showLoad(div);dehash(h,function(err,result){if(err)return(dw(div,ERROR));if(cbf)cbf(null,result);window.txLottoGame=result;dwMyGameProfile(div,result);});};
+const deaddrLottoGame=function(a,div=TEST,cbf=console.log){showLoad(div);txaddr(a,function(err,result){if(err)return(dw(div,ERROR));if(cbf)cbf(null,result);window.txLottoGame=result;dwMyGameProfile(div,result);});};
+const dehashMyProfile=function(h,div=TEST,cbf=console.log){showLoad(div);dehash(h,function(err,result){if(err)return(dw(div,ERROR));if(cbf)cbf(null,result);window.txMyProfile=result;dwMyAddrProfile(div,result);});};
+const deaddrMyProfile=function(a,div=TEST,cbf=console.log){showLoad(div);tcoLen(a,(e,len)=>{if(e)return(dw(div,ERROR));if(!len)return(dw(div,HYPHEN));deaddr(a,function(err,result){if(err)return(dw(div,CANCELED));if(cbf)cbf(null,result);window.txMyProfile=result;dwMyAddrProfile(div,result);},len-1);});};
+const deaddrMyDomains=function(a,div=TEST,cbf=console.log){showLoad(div);xutengWalletDetail(a,function(err,result){if(err)return(dw(div,ERROR));if(cbf)cbf(null,result);window.txMyDomains=result;dwWalletsDomain(div,result);});};
 ////////////////////////////////////////////////////////////
