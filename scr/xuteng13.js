@@ -399,17 +399,24 @@ const BALANCEOFXUT=1;
 const TOTALSUPPLY=2;//xutdat
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
+const adec=function(d,t=[]){while(d>=0)t.push(d--);return(t)};
+const cdec=function(s,ds,c,a=[]){if(!Array.isArray(ds))return(null);s=s.toString();if(s.length%2)s+=BLANK+ZERO;while(s.length>0){c=Number(s.substr(0,2));if(!ds.includes(c))return(false);a.push(c);s=s.slice(2);};return(a);};
+const decs=function(n,d=9,i,s,a=[]){i=Math.floor(Number(n));if(i==n)return([i,[0]]);s=n.toString().split(DOT)[1];if(d>9){a=cdec(s,adec(d));if(!a)return(a);return([i,a]);};if(s>d||s.length>1)return(false);return([i,[Number(s)]]);};
+////////////////////////////////////////////////////////////
 const GAMES={
-bet1v0:{info:"",dec:[1],num:1,rev:["win","lose"]},
-bet1c0:{info:"",dec:[1],num:1,rev:["over","under"]},
-bet210:{info:"",dec:[2],num:1,rev:["win","tie","lose"]},
-bet310:{info:"",dec:[2],num:1,rev:["home","draw","away"]},
-lo1x99:{info:"",dec:[99],num:1,dup:true,mul:true},
-lo5x36:{info:"",dec:[36],num:5},
-lo6x36:{info:"",dec:[36],num:6},
-lo6x45:{info:"",dec:[45],num:6},
-lo7x49:{info:"",dec:[49],num:7},
+bet1v0:{info:"",dec:1,num:1,rev:["win","lose"]},
+bet1c0:{info:"",dec:1,num:1,rev:["over","under"]},
+bet210:{info:"",dec:2,num:1,rev:["win","tie","lose"]},
+bet310:{info:"",dec:2,num:1,rev:["home","draw","away"]},
+lo1x99:{info:"",dec:99,dup:true},
+lo5x36:{info:"",dec:36,num:5},
+lo6x36:{info:"",dec:36,num:6},
+lo6x45:{info:"",dec:45,num:6},
+lo7x49:{info:"",dec:49,num:7},
 };
+////////////////////////////////////////////////////////////
+const GAMEXUT=354;
+const SDOCXUT=911;
 ////////////////////////////////////////////////////////////
 const STRUCTTRANSFER=['address','uint256'];
 const STRUCTTRANSFERFOR=['address','uint256','string'];
@@ -607,11 +614,13 @@ const userSelling=function(ua,n,divD,divP,divV,divN){xuteng.methods.userSelling(
 const setPGwei=function(){gasPGwei((e,gwei)=>{if(e)return;console.log('GWEI:',gwei);try{document.getElementById(_txgwei).options[0]=(new Option('GWEI:'+gwei,gwei));}catch(e){}});};
 const gasPGwei=function(cbf=console.log){web3.eth.getGasPrice().then((resolve,reject)=>{if(reject)return(cbf(reject,null));window.txgwei=gfromWei(resolve);return(cbf(null,window.txgwei));});};
 const betValid=function(to,xut,uts,cbf=console.log){txaddr(to,function(err,result){if(err)return(cbf(err,null));if(!result)return(cbf(null,undefined));if(!uts)uts=ethnow();if(xut<result.min||xut>result.max)return(cbf(null,0));if(uts<result.txUts||uts>result.uts)return(cbf(null,false));return(cbf(null,result.txBlock));});};
-////////////////////////////////////////////////////////////[4]
+////////////////////////////////////////////////////////////[6]
 const tcoLen=function(uaw,cbf=console.log,dt=TYPES.personal_profile,dti=TYPEDCONTENTSOF){xuteng.methods.getData(uaw,dt).call((err,result)=>{if(err)return(cbf(err,null));cbf(null,result.objlen[dti]);});};
 const txaddr=function(txa,cbf=console.log,idx=0){xuteng.methods.hashesOf(txa,idx).call((err,result)=>{if(err)return(cbf(err,null));dehash(result,function(err,result){if(err)return(cbf(err,null));cbf(null,result);});});};
 const deaddr=function(uaw,cbf=console.log,idx=0){xuteng.methods.typedContentsOf(uaw,TYPES.personal_profile,idx).call((err,result)=>{if(err)return(cbf(err,null));xuteng.methods.hashesOf(result,0).call((err,result)=>{if(err)return(cbf(err,null));dehash(result,function(err,result){if(err)return(cbf(err,null));cbf(null,result);});});});};
 const dehash=function(txh,cbf=console.log){web3.eth.getTransaction(txh,function(err,result){if(err||!result)return(cbf(err,null));console.log(result.input);txh=hexObj(result.input);if(!txh.obj)txh={obj:{raw:result.input}};Object.assign(txh.obj,{txBlock:Number(result.blockNumber),txAuthor:result.from,txWei:result.value});web3.eth.getBlock(result.blockNumber).then(result=>{txh.obj.txUts=result.timestamp;cbf(null,txh.obj);}).catch(err=>{txh.obj.txUts=0;cbf(null,txh.obj);});});};//#forms.getInput();
+const rehash=async(txh,cbf=console.log)=>{await(web3.eth.getTransaction(txh).then(data=>{window.txInputJson=hexObj(data.input);cbf(null,window.txInputJson)}).catch(e=>{window.txInputJson=null;cbf(hi_alert_data,null)}))};
+const ofhash=async(txh,cbf=console.log)=>{await(xuteng.methods.addressOf(txh).call().then(address=>{window.hashAddress=address;cbf(null,window.hashAddress)}).catch(e=>{window.hashAddress=null;cbf(hi_alert_data,null)}))};
 ////////////////////////////////////////////////////////////[2]
 const lotter=async(timestamp,digits,maxdig,cbf=console.log)=>{if(timestamp>lotnow().lotstamp)return(cbf(null,[-4]));if(!timestamp)timestamp=lotnow().lotstamp;if(!digits)digits=1;if(!maxdig)maxdig=99;window.lotstamp=Number(timestamp);window.lotdigits=Number(digits);window.lotmaxdig=Number(maxdig);window.blocknum=0;await(getBStop(0,window.lotstamp));if(!window.blocknum)return(cbf(null,[-1]));getlot(window.blocknum,cbf);};//GenerateWinningNumbers;
 const getlot=function(block,cbf=console.log,skip=0,maxpage=99,i){if(window.lotdigits>7)return(cbf(null,[-3]));if(!skip)window.eventpicks=[];xuteng.getPastEvents('Transfer',{fromBlock:block-999,toBlock:block},function(err,result){if(err)return(cbf(err,null));if(skip>maxpage)return(cbf(null,[-2]));if(!result||!result.length)return(getlot(block-999-1,cbf,++skip));for(i=result.length-1;result[i]&&window.eventpicks.length<10;i--){window.eventpicks.push(result[i]);}if(window.eventpicks.length<10)return(getlot(block-999-1,cbf,++skip));
@@ -654,10 +663,11 @@ const xutengUserRedirect=async(name=BLANK,cbf=console.log)=>{return new Promise(
 ////////////////////////////////////////////////////////////[2]
 const xutengDomainAnnualETH=async(cbf=console.log)=>{return new Promise(resolve=>{xuteng.methods.getData(contractAddress,TYPES.domain).call((e,r)=>{if(e){if(cbf)cbf(e,null);resolve(null);}else{r=fromWei(r.prices[TYPEPIW]);if(cbf)cbf(null,r);resolve(r);}});});};
 const xutengMemberAnnualXUT=async(cbf=console.log)=>{return new Promise(resolve=>{xuteng.methods.getData(contractAddress,TYPES.domain).call((e,r)=>{if(e){if(cbf)cbf(e,null);resolve(null);}else{r=fromWei(r.prices[MEMBERFEEOFXUT]);if(cbf)cbf(null,r);resolve(r);}});});};
-////////////////////////////////////////////////////////////[4]
+////////////////////////////////////////////////////////////[5]
 const xutengTxDehash=async(hash,cbf=console.log)=>{if(!hvalid(hash))return(cbf(hi_alert_address,null));return new Promise(resolve=>{dehash(hash,(e,r)=>{if(e){if(cbf)cbf(ERROR,null);resolve(null);}else{if(cbf)cbf(null,r);resolve(r);}});});};
-const xutengReceived=async(address,begin,end,cbf=console.log,t,i,j=[])=>{if(!avalid(address))return(cbf(hi_alert_address,null));try{t=await(xutengTxBlocks(begin,end));}catch(e){return(cbf(ERROR,null))}if(!t||!t.begin||!t.end)return(t);xuteng.getPastEvents('Transfer',{filter:{toAddress:address},fromBlock:t.begin,toBlock:t.end},function(err,result){if(err)return(null);for(i=0;i<result.length;i++){j.push({xut:fromWei(result[i].returnValues.txPenny),tx:result[i].transactionHash,from:result[i].returnValues.fromAddress});}if(cbf)cbf(null,j);console.log(j);return(j);});};
-const xutengSentAway=async(address,begin,end,cbf=console.log,t,i,j=[])=>{if(!avalid(address))return(cbf(hi_alert_address,null));try{t=await(xutengTxBlocks(begin,end));}catch(e){return(cbf(ERROR,null))}if(!t||!t.begin||!t.end)return(t);xuteng.getPastEvents('Transfer',{filter:{fromAddress:address},fromBlock:t.begin,toBlock:t.end},function(err,result){if(err)return(null);for(i=0;i<result.length;i++){j.push({xut:fromWei(result[i].returnValues.txPenny),tx:result[i].transactionHash,to:result[i].returnValues.toAddress});}if(cbf)cbf(null,j);console.log(j);return(j);});};
+const xutengSDocList=async(address,begin,end,cbf=console.log,penny=GAMEXUT,t)=>{if(!avalid(address))return(cbf(hi_alert_address,null));try{t=await(xutengTxBlocks(begin,end));}catch(e){return(cbf(ERROR,null))}if(!t||!t.begin||!t.end)return(t);await(xuteng.getPastEvents('Transfer',{filter:{fromAddress:address,toAddress:ZEROADDR},fromBlock:t.begin,toBlock:t.end},function(err,result){if(err)return(null);window.docDict={};result.forEach(async(item)=>{if(item.returnValues.txPenny==penny){window.docDict[item.transactionHash]={};await(ofhash(item.transactionHash,function(e,r){;}));window.docDict[item.transactionHash].addr=window.hashAddress;await(rehash(item.transactionHash,function(e,r){;}));window.docDict[item.transactionHash].json=window.txInputJson;console.warn(window.docDict[item.transactionHash].json.obj.frm+COLON,fromDate(window.docDict[item.transactionHash].json.obj.uts));console.warn(window.docDict[item.transactionHash].addr);}})}));cbf(null,window.docDict);return(window.docDict);};
+const xutengReceived=async(address,begin,end,cbf=console.log,t,i,j=[])=>{if(!avalid(address))return(cbf(hi_alert_address,null));try{t=await(xutengTxBlocks(begin,end));}catch(e){return(cbf(ERROR,null))}if(!t||!t.begin||!t.end)return(t);xuteng.getPastEvents('Transfer',{filter:{toAddress:address},fromBlock:t.begin,toBlock:t.end},function(err,result){if(err)return(null);for(i=0;i<result.length;i++){j.push({xut:fromWei(result[i].returnValues.txPenny),tx:result[i].transactionHash,from:result[i].returnValues.fromAddress});}if(cbf)cbf(null,j);console.warn(j);return(j);});};
+const xutengSentAway=async(address,begin,end,cbf=console.log,t,i,j=[])=>{if(!avalid(address))return(cbf(hi_alert_address,null));try{t=await(xutengTxBlocks(begin,end));}catch(e){return(cbf(ERROR,null))}if(!t||!t.begin||!t.end)return(t);xuteng.getPastEvents('Transfer',{filter:{fromAddress:address},fromBlock:t.begin,toBlock:t.end},function(err,result){if(err)return(null);for(i=0;i<result.length;i++){j.push({xut:fromWei(result[i].returnValues.txPenny),tx:result[i].transactionHash,to:result[i].returnValues.toAddress});}if(cbf)cbf(null,j);console.warn(j);return(j);});};
 const xutengTxBlocks=async(begin,end,t)=>{t=trange(begin,end);if(!t)return(t);await(getBStop(0,t.begin));begin=window.blocknum;if(!begin)return(null);await(getBStop(0,t.end));end=window.blocknum;if(!end)return(null);return({begin,end});};
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
@@ -781,8 +791,8 @@ const submitto=function(to,xutinput,div='mm_transfer',x){x=g2(xutinput);betValid
 ////////////////////////////////////////////////////////////[3]
 const createOneDomain=function(domain=BLANK,ref=BLANK,eth=0,cbf=console.log,status=TEST){return(xutengSetDomainName(domain,ref,eth,cbf,status,false))};
 const createMyProfile=function(name,text,style='#000000'){return(createSimpleDoc('profile',ethnow()+10,-1,-1,TYPES.personal_profile,{name,text,style}));};//Delay10Seconds;
-const createSimpleDoc=function(frm,uts,min,max,typ,dat,odd,hdiv,adiv){if(!frm)frm='lo1x99';if(!hdiv)hdiv='hash'+frm;if(!adiv)adiv='addr'+frm;if(!uts)uts=lotnow().lotstamp;if(!min)min=1;if(!max)max=100000;if(!typ)typ=TYPES.gaming;if(!dat)dat={};typ=Number(typ);uts=Number(uts);min=Number(min);max=Number(max);if(!Array.isArray(odd))odd=[70];if(uts<ethnow())return(dw(hdiv,ERROR+'time:invalid'));showLoad(hdiv);
-;xuteng.methods.transferFor(ZEROADDR,0,setInput({typ,frm,uts,min,max,odd,dat})).send(mmsender(),function(err,hash){if(err)return(dw(hdiv,ERROR+'document.creation:invalid'));dw(hdiv,hash);console.log(hash);lastTxHashId=hdiv;lastTxHash[lastTxHashId]=hash;showLoad(adiv);/*GAS25K*/
+const createSimpleDoc=function(frm,uts,min,max,typ,dat,odd,hdiv,adiv,penny=GAMEXUT){if(!frm)frm='lo1x99';if(!hdiv)hdiv='hash'+frm;if(!adiv)adiv='addr'+frm;if(!uts)uts=lotnow().lotstamp;if(!min)min=1;if(!max)max=100000;if(!typ)typ=TYPES.gaming;if(!dat)dat={};typ=Number(typ);uts=Number(uts);min=Number(min);max=Number(max);if(!Array.isArray(odd))odd=[70];if(uts<ethnow())return(dw(hdiv,ERROR+'time:invalid'));showLoad(hdiv);
+;xuteng.methods.transferFor(ZEROADDR,penny,setInput({typ,frm,uts,min,max,odd,dat})).send(mmsender(),function(err,hash){if(err)return(dw(hdiv,ERROR+'document.creation:invalid'));dw(hdiv,hash);console.log(hash);lastTxHashId=hdiv;lastTxHash[lastTxHashId]=hash;showLoad(adiv);/*GAS25K*/
 ;xuteng.methods.ping(hash,typ).send(mmsender(),function(err,hash){if(err)return(dw(adiv,ERROR+'document.registration:invalid'));return(divAddrFromHash(lastTxHash[lastTxHashId],adiv));});});};/*GAS180K*/
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
@@ -1182,7 +1192,10 @@ const promm_setFee=function(){if(bad_setFee())return;;;mm_setFee(gv(_levels));;}
 const promm_regs2sys=function(to,xut){to=contractAddress;xut=gv(_reglev);if(bad_register(to,xut))return;;;mm_transferFor(to,xut,REFREG);;};
 const promm_regs2usr=function(to,xut){to=gv(_user);xut=gv(_regmem);if(bad_register(to,xut))return;;;mm_transferFor(to,xut,REFREG);;};
 ////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////[3]
+////////////////////////////////////////////////////////////[4]
+const gamePlay=function(cbf=console.log,varXut='gamexut',varAddr='txhash',divHash='_txaddress',status='_game_status',checkform=true,a,h){a=gv(varAddr);h=gt(divHash);if(avalid(h)&&hvalid(a)){a=h}else{if(avalid(a)&&hvalid(h)){;}else{return(alert(ERROR+'ADDRESS'))}};
+;if(a==ZEROADDR)return(alert(ERROR+'GAME'));if(!window.txLottoGame)return(alert(ERROR+'NETWORK'));window.gameForm=GAMES[txLottoGame.frm];window.gameAddress=a;window.gameBet=g2(varXut);window.gameUts=ethnow();if(gameBet<txLottoGame.min||gameBet>txLottoGame.max)return(alert(ERROR+'OVERFUND'));if(gameUts<txLottoGame.txUts||gameUts>txLottoGame.uts)return(alert(ERROR+'OVERTIME'));
+;if(checkform){if(!window.gameForm)return(alert(ERROR+'FORMAT'));a=decs(gameBet,gameForm.dec);if(!a)return(alert(ERROR+'NUMBERS'));if(!gameForm.dup&&(new Set(a[1])).size!=a[1].length)return(alert(ERROR+'DUPLICATES'+SPACE+a[1]));if(gameForm.num&&a[1].length!=gameForm.num)return(alert(ERROR+gameForm.num+SPACE+'NUMBERS'));window.gameVals=a;if(!confirm('AMOUNT:\t'+gameBet+NEWLINE+'NUMBERS:\t'+gameVals[1]))return;};mm_transfer(gameAddress,gameBet,status);};
 const userInit=function(user,divUser='user'){user=hashParam(ARGADDR);if(!user){dv(divUser,BLANK);return(console.error(hi_alert_data));};dv(divUser,user);window.setTimeout(menu.onUserGoUser,1000);};
 const gameInit=function(game,divAddr='txhash',divUser='user'){game=hashParam(ARGADDR);game=(avalid(game)||hvalid(game))?game:BLANK;if(!game){dv(divAddr,BLANK);dv(divUser,BLANK);return(console.error(hi_alert_data));};dv(divAddr,game);window.setTimeout(menu.onUserTxView,1000);};
 const reLotter=function(cbf,status='_gameresult',varAddr='txhash',divHash='_txaddress',a,h){a=gv(varAddr);h=gt(divHash);if(avalid(a)&&hvalid(h)){window.targetAddress=a;}else{if(avalid(h)&&hvalid(a)){window.targetAddress=h;}else{window.targetAddress=null;return(cbf(null,null));}};showLoad(status);
