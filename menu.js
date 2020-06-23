@@ -53,6 +53,8 @@ const Menu=function(element){self=this;
  self.goAuthNetFix=function(){selectNet(network);}
  self.goAuthGasWei=function(){txgwei=gv(_txgwei);}
  self.goAuthGasMax=function(){maxgas=gv(_maxgas);}
+ self.onGameResult=function(){reLotter(console.log);}
+ self.onGameTxPlay=function(){gamePlay(console.warn);}
  self.onUserGetPro=function(){deaddrMyProfile(sender,'_profile');}
  self.onUserGetDom=function(){dwDomainWithFee(sender,'_domain','_domfee');}
  self.onUserSetPro=function(){createMyProfile(gv('proname'),gv('protext'),gv('prostyle'));}
@@ -61,7 +63,7 @@ const Menu=function(element){self=this;
  self.onUserDocSet=function(){createSimpleDoc(gv('docform'),gn('_uts'),g2('xutMin'),g2('xutMax'),g2('doctype'),{name:gv('docdat')},gv('rewards').split(COMMA),'_doc_hash','_doc_status');}
  self.onUserPayXut=function(){xutengRemitFor(gv('xutTo'),g2('xut'),gv('xutNote'),console.log,'_userxut_status',false);}
  self.onUserPayEth=function(){ethereumRemitFor(gv('to'),g2('eth'),gv('ethNote'),console.log,'_usereth_status',false);}
- self.onUserTxView=function(){dwTxHashContent(gv('txhash'),'_txaddress','_txnote','_txdata');};
+ self.onUserTxView=function(){dwTxHashContent(gv('txhash'),'_txaddress','_txnote','_txdata',function(e,data){dv('user',data?data.txAuthor:BLANK);menu.onUserGoUser();});};
  self.onUserGoUser=function(){getAliasData(gv(_user),1,function(addr){dw('_userWallet',addr);deaddrMyProfile(addr,'_userProfile');deaddrMyDomains(addr,'_userDomain');});}
  self.onUserAaAddr=function(){if(avalid(gv('_aowner')))return(alert(ERROR));mm_ping(toHash(gv('alias').toLowerCase()),g2('atype'));}
  self.onUserAAlias=function(){dwAddrAliasInfo(gv('alias'),'_ahash','_aowner','_address');}
@@ -76,8 +78,8 @@ const Menu=function(element){self=this;
  self.onAuthGetSel=self.onGetSel;
  self.onAuthGetOfr=self.onGetOfr;
  self.onAuthGetReq=self.onGetReq;
- showCaps();
 }
-new Menu(document.getElementById(ACTDIV));
+const menu = new Menu(document.getElementById(ACTDIV));
 lottimePicker('year','month','day','hour','minute','_uts','_utstring');
+showCaps();
 ////////////////////////////////////////////////////////////
