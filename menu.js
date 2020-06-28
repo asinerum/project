@@ -54,13 +54,14 @@ const Menu=function(element){self=this;
  self.goAuthGasWei=function(){txgwei=gv(_txgwei);}
  self.goAuthGasMax=function(){maxgas=gv(_maxgas);}
  self.onGameResult=function(){reLotter(console.log);}
- self.onGameTxPlay=function(){gamePlay(console.warn);}
+ self.onGameTxPlay=function(){gamePlay(window.txLottoGame);}
  self.onUserGetPro=function(){deaddrMyProfile(sender,'_profile');}
  self.onUserGetDom=function(){dwDomainWithFee(sender,'_domain','_domfee');}
  self.onUserSetPro=function(){createMyProfile(gv('proname'),gv('protext'),gv('prostyle'));}
  self.onUserSetDom=function(){createOneDomain(gv('domname'),{ip:gv('domip'),note:gv('domref')},g2('dometh'),function(e,r){if(e)dw('mm_setDomain',ERROR+e)},'mm_setDomain');}
  self.onUserDomReg=function(){createOneDomain(gv('domain'),{ip:gv('dip'),note:gv('dnote')},g2('regeth'),function(e,r){if(e)dw('_domain_status',ERROR+e)},'_domain_status');}
  self.onUserDocSet=function(){createSimpleDoc(gv('docform'),gn('_uts'),g2('xutMin'),g2('xutMax'),g2('doctype'),{name:gv('docdat')},gv('rewards').split(COMMA),'_doc_hash','_doc_status');}
+ self.onGameDocSet=function(){createSimpleDoc(gv('docform'),gn('_uts'),g2('xutMin'),g2('xutMax'),0,{name:gv('docdat')},genArray('rewards'),'_doc_hash','_doc_status');}
  self.onUserPayXut=function(){xutengRemitFor(gv('xutTo'),g2('xut'),gv('xutNote'),console.log,'_userxut_status',false);}
  self.onUserPayEth=function(){ethereumRemitFor(gv('to'),g2('eth'),gv('ethNote'),console.log,'_usereth_status',false);}
  self.onUserTxView=function(){dwTxHashContent(gv('txhash'),'_txaddress','_txnote','_txdata',function(e,data){dv('user',data?data.txAuthor:BLANK);menu.onUserGoUser();});};

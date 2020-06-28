@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<html lang="en">
+<head>
+<title>ASINERUM LOTTO GAME</title>
+<link href="./favicon.ico" rel="icon" type="image/x-icon"/>
+<script src="./xuteng.user.js"></script>
+</head>
+<body class="private">
+<div class="body" id="body">
+<img class="banner" src="./gui/logo_asinerum.jpg" id="_img_banner"/>
+<br/>
+<br/>
+<a name="DOC"></a>
+<div class="header" id="_header_docgame">PUBLISH A XUTENG GAME</div>
+<hr class="cp"/>
+<div>
+<table class="cover">
+<tr><td class="buttoner"><span class="trlab" id="_label_GameDocUtc">GAME CLOSING TIME</span></td><td>
+  <select data-change="UtcGet" id="year"></select>
+  <select data-change="UtcGet" id="month"></select>
+  <select data-change="UtcGet" id="day"></select>&nbsp;
+  <select data-change="UtcGet" id="hour"></select>
+  <select data-change="UtcGet" id="minute"></select>&nbsp;UTC</td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_GameDocUts">GAME TIMESTAMP</span></td><td><span id="_uts"></span>&nbsp;<span id="_utstring"></span></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_GameDocMin">MINIMUM BET</span></td><td><input type="text" class="money" value="0" id="xutMin"/>&nbsp;XUT</td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_GameDocMax">MAXIMUM BET</span></td><td><input type="text" class="money" value="0" id="xutMax"/>&nbsp;XUT</td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_GameDocRew">ODDS/REWARDS</span></td><td>
+  <input type="text" class="money" id="rewards6"/>
+  <input type="text" class="money" id="rewards5"/>
+  <input type="text" class="money" id="rewards4"/>
+  <input type="text" class="money" id="rewards3"/>
+  <input type="text" class="money" id="rewards2"/>
+  <input type="text" class="money" id="rewards1"/>
+  <input type="text" class="money" id="rewards0"/></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_GameDocFrm">GAME FORMAT</span></td><td>
+  <select class="long" id="docform">
+  <option value="lo1x99">SODE 1x99</option>
+  <option value="lo5x36">LOTTO 5x36</option>
+  <option value="lo6x36">LOTTO 6x36</option>
+  <option value="lo6x45">LOTTO 6x45</option>
+  <option value="lo7x49">LOTTO 7x49</option>
+  </select></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_GameDocDat">GAME HEADER</span></td><td><input type="text" class="long" value="" id="docdat"/></td></tr>
+<tr><td class="buttoner"><a class="button" data-action="GameDocSet" id="_button_GameDocSet">PUBLISH</a></td><td><span class="textnotice" id="_note_GameDocSet">EXCLUDING GAS FEE</span></td></tr>
+</table>
+<div class="result" id="_doc_status"></div>
+<div class="result" id="_doc_hash"></div>
+</div>
+<hr class="cp"/>
+<br/>
+<a name="REVIEW"></a>
+<div class="header" id="_header_reviewgame">REVIEW A PUBLISHED GAME</div>
+<hr class="cp"/>
+<div>
+<table class="cover">
+<tr><td class="buttoner"><a class="button" data-action="UserTxView" id="_button_GameTxView">GAME HASH</a></td><td><input type="text" class="long" value="0x00" id="txhash"/></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_GameTxAddr">GAME ADDRESS</span></td><td><span id="_txaddress"></span></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_GameTxData">GAME DATA</span></td><td><span id="_txdata"></span></td></tr>
+</table>
+<div class="result" id="_review_status"></div>
+<div class="result" id="_review_hash"></div>
+</div>
+<hr class="cp"/>
+<br/>
+<div class="footer" id="_header_copyright">(C)2019 ASINERUM INTERNATIONAL PROJECT</div>
+</div>
+<script src="./showpro-author.js"></script>
+<script src="./menu.js"></script>
+</body>
+</html>
