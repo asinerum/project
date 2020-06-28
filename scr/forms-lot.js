@@ -1,3 +1,7 @@
+////////////////////////////////////////////////////////////[3]
+const adec=function(d,t=[]){while(d>=0)t.push(d--);return(t)};
+const cdec=function(s,ds,c,a=[]){if(!Array.isArray(ds))return(null);s=s.toString();if(s.length%2)s+=BLANK+ZERO;while(s.length>0){c=Number(s.substr(0,2));if(!ds.includes(c))return(false);a.push(c);s=s.slice(2);};return(a);};
+const decs=function(n,d=9,i,s,a=[]){i=Math.floor(Number(n));if(i==n)return([i,[0]]);s=n.toString().split(DOT)[1];if(d>9){a=cdec(s,adec(d));if(!a)return(a);return([i,a]);};if(s>d||s.length>1)return(false);return([i,[Number(s)]]);};
 ////////////////////////////////////////////////////////////[5]
 const h2d=function(s,add,c,d,n,r,t){add=function(x,y){c=0;r=[];x=x.split('').map(Number);y=y.split('').map(Number);while(x.length||y.length){s=(x.pop()||0)+(y.pop()||0)+c;r.unshift(s<10?s:s-10);c=s<10?0:1;};if(c)r.unshift(c);return(r.join(''));};d='0';s.split('').forEach(function(chr){n=parseInt(chr,16);for(t=8;t;t>>=1){d=add(d,d);if(n&t)d=add(d,'1');}});return(d);};
 const h2i=function(s){return(h2d(s).toString().substr(0,12));};

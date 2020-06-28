@@ -88,11 +88,7 @@ const REFEXC='EXC';
 const REFREG='REG';
 const ZERO='0';
 const ZEROADDR='0x0000000000000000000000000000000000000000';
-////////////////////////////////////////////////////////////
-const CANCELED='CANCELED\t';
-const ERROR='ERROR\t';
-const OK='OK\t';
-////////////////////////////////////////////////////////////
+const FAILADDR='0x0000000000000000000000000000000000000001';
 ////////////////////////////////////////////////////////////
 const MAXGASES={
 high:600000,
@@ -399,10 +395,6 @@ const BALANCEOFXUT=1;
 const TOTALSUPPLY=2;//xutdat
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
-const adec=function(d,t=[]){while(d>=0)t.push(d--);return(t)};
-const cdec=function(s,ds,c,a=[]){if(!Array.isArray(ds))return(null);s=s.toString();if(s.length%2)s+=BLANK+ZERO;while(s.length>0){c=Number(s.substr(0,2));if(!ds.includes(c))return(false);a.push(c);s=s.slice(2);};return(a);};
-const decs=function(n,d=9,i,s,a=[]){i=Math.floor(Number(n));if(i==n)return([i,[0]]);s=n.toString().split(DOT)[1];if(d>9){a=cdec(s,adec(d));if(!a)return(a);return([i,a]);};if(s>d||s.length>1)return(false);return([i,[Number(s)]]);};
-////////////////////////////////////////////////////////////
 const GAMES={
 bet1v0:{info:"",dec:1,num:1,rev:["win","lose"]},
 bet1c0:{info:"",dec:1,num:1,rev:["over","under"]},
@@ -614,11 +606,13 @@ const userSelling=function(ua,n,divD,divP,divV,divN){xuteng.methods.userSelling(
 const setPGwei=function(){gasPGwei((e,gwei)=>{if(e)return;console.log('GWEI:',gwei);try{document.getElementById(_txgwei).options[0]=(new Option('GWEI:'+gwei,gwei));}catch(e){}});};
 const gasPGwei=function(cbf=console.log){web3.eth.getGasPrice().then((resolve,reject)=>{if(reject)return(cbf(reject,null));window.txgwei=gfromWei(resolve);return(cbf(null,window.txgwei));});};
 const betValid=function(to,xut,uts,cbf=console.log){txaddr(to,function(err,result){if(err)return(cbf(err,null));if(!result)return(cbf(null,undefined));if(!uts)uts=ethnow();if(xut<result.min||xut>result.max)return(cbf(null,0));if(uts<result.txUts||uts>result.uts)return(cbf(null,false));return(cbf(null,result.txBlock));});};
-////////////////////////////////////////////////////////////[6]
+////////////////////////////////////////////////////////////[8]
+const readdr=function(txa,idx=0){return new Promise(resolve=>{txaddr(txa,function(err,result){if(err||!result){resolve(null)}else{resolve(result)}},idx);});};
 const tcoLen=function(uaw,cbf=console.log,dt=TYPES.personal_profile,dti=TYPEDCONTENTSOF){xuteng.methods.getData(uaw,dt).call((err,result)=>{if(err)return(cbf(err,null));cbf(null,result.objlen[dti]);});};
 const txaddr=function(txa,cbf=console.log,idx=0){xuteng.methods.hashesOf(txa,idx).call((err,result)=>{if(err)return(cbf(err,null));dehash(result,function(err,result){if(err)return(cbf(err,null));cbf(null,result);});});};
 const deaddr=function(uaw,cbf=console.log,idx=0){xuteng.methods.typedContentsOf(uaw,TYPES.personal_profile,idx).call((err,result)=>{if(err)return(cbf(err,null));xuteng.methods.hashesOf(result,0).call((err,result)=>{if(err)return(cbf(err,null));dehash(result,function(err,result){if(err)return(cbf(err,null));cbf(null,result);});});});};
-const dehash=function(txh,cbf=console.log){web3.eth.getTransaction(txh,function(err,result){if(err||!result)return(cbf(err,null));console.log(result.input);txh=hexObj(result.input);if(!txh.obj)txh={obj:{raw:result.input}};Object.assign(txh.obj,{txBlock:Number(result.blockNumber),txAuthor:result.from,txWei:result.value});web3.eth.getBlock(result.blockNumber).then(result=>{txh.obj.txUts=result.timestamp;cbf(null,txh.obj);}).catch(err=>{txh.obj.txUts=0;cbf(null,txh.obj);});});};//#forms.getInput();
+const dehash=function(txh,cbf=console.log){web3.eth.getTransaction(txh,function(err,result){if(err||!result)return(cbf(err,null));console.log(result.input);txh=hexObj(result.input);if(!txh.obj)txh={obj:{raw:result.input}};Object.assign(txh.obj,{txBlock:Number(result.blockNumber),txAuthor:result.from,txWei:result.value});web3.eth.getBlock(result.blockNumber).then(result=>{txh.obj.txUts=result.timestamp;cbf(null,txh.obj);}).catch(err=>{txh.obj.txUts=0;cbf(null,txh.obj);});});};
+const txfunc=async(txh,cbf=console.log,o,d)=>{await(web3.eth.getTransaction(txh,function(err,result){if(err)return(cbf(err,null));o={from:result.from,contact:result.to,hexdata:result.input,block:result.blockNumber,gas:result.gas,eth:fromWei(result.value)};d=dedata(o.hexdata);if(d){o.xutrec=d.data[0];o.xutval=fromWei(d.data[1]);o.xutdoc=d.data[2];o.func=d.func;}return(cbf(null,o));}));};
 const rehash=async(txh,cbf=console.log)=>{await(web3.eth.getTransaction(txh).then(data=>{window.txInputJson=hexObj(data.input);cbf(null,window.txInputJson)}).catch(e=>{window.txInputJson=null;cbf(hi_alert_data,null)}))};
 const ofhash=async(txh,cbf=console.log)=>{await(xuteng.methods.addressOf(txh).call().then(address=>{window.hashAddress=address;cbf(null,window.hashAddress)}).catch(e=>{window.hashAddress=null;cbf(hi_alert_data,null)}))};
 ////////////////////////////////////////////////////////////[2]
@@ -630,12 +624,12 @@ const logBStop=async(timestamp)=>{await(getBStop(0,timestamp));console.log('Stop
 const getBLast=async()=>{window.blocknum=await(web3.eth.getBlockNumber());console.log('Latest:'+window.blocknum);};
 const getBTime=async(block)=>{block=await(web3.eth.getBlock(block));if(!block){console.log('BlockNotFound');return;}window.blockstamp=block.timestamp;console.log('BlockStamp:'+window.blockstamp);console.log('BlockTime:'+fromDate(window.blockstamp));};
 const getBStop=async(skip,timestamp,block)=>{if(!skip){await(getBLast());skip=Number(window.blocknum);}if(timestamp)window.lotstamp=Number(timestamp);block=await(web3.eth.getBlock(window.blocknum));if(!block){console.log('BlockNotFound');return;}if(block.timestamp==window.lotstamp)return;if(skip==0&&ethnow()<window.lotstamp)return;if(skip==1&&block.timestamp>window.lotstamp)return;if(skip==1&&block.timestamp<window.lotstamp)return(++window.blocknum);skip=Math.ceil(skip/2);if(block.timestamp>window.lotstamp){window.blocknum-=skip;}else{window.blocknum+=skip;}return(getBStop(skip));};//GetClosestStopBlock;
-////////////////////////////////////////////////////////////[5]
-/// window.lotsubmits;window.numsubmits;window.numresults;window.blocknum;window.lotodds;
-/// window.lotaddress;window.lotauthor;window.lotblock;window.lotstamp;window.xutminip;window.xutmaxip;
-const reTransferTx=function(txh,cbf=console.log,o,d){web3.eth.getTransaction(txh,function(err,result){if(err)return(cbf(err,null));o={from:result.from,contact:result.to,hexdata:result.input,block:result.blockNumber,gas:result.gas,eth:fromWei(result.value)};d=dedata(o.hexdata);if(d){o.xutrec=d.data[0];o.xutval=fromWei(d.data[1]);o.xutdoc=d.data[2];o.func=d.func;}return(cbf(null,o));});};
-const scanTxLottos=async(ga,cbf=console.log)=>{window.lotaddress=ga;txaddr(ga,function(err,result){if(err)return(cbf(err,null));if(!result||!result.txBlock||!result.uts)return(cbf(null,undefined));window.lotauthor=result.txAuthor;window.lotblock=result.txBlock;window.lotstamp=result.uts;window.xutminip=result.min;window.xutmaxip=result.max;window.lotodds=result.odd;web3.eth.getBlockNumber().then(result=>{window.blocknum=result;console.log('StartBlock:'+window.lotblock);console.log('StopTime:'+window.lotstamp);if(ethnow()>window.lotstamp)await(getBStop(0,window.lotstamp));console.log('StopBlock:'+window.blocknum);scanTxEvents(window.lotaddress,window.lotblock,window.blocknum,window.xutminip,window.xutmaxip,cbf);}).catch(err=>{return(cbf(err,null));});});};
-const scanTxEvents=function(ga,bfrom,bto,xmin,xmax,cbf=console.log,i,n){window.lotsubmits=[];xuteng.getPastEvents('Transfer',{filter:{toAddress:ga},fromBlock:bfrom,toBlock:bto},function(err,result){if(err)return(cbf(err,null));for(i=0;i<result.length;i++){n=fromWei(result[i].returnValues.txPenny);if(xmin<=n&&n<=xmax)window.lotsubmits.push({from:result[i].returnValues.fromAddress,xut:n,tx:result[i].transactionHash});}}).then(function(result){for(i=0;i<result.length;i++){console.log(result[i].returnValues.fromAddress,COLON,result[i].returnValues.txPenny);};return(cbf(null,window.lotsubmits));});};
+////////////////////////////////////////////////////////////[4]
+const scanTxLottos=async(ga,cbf=console.log,scan=scanTxEvents)=>{if(!avalid(ga))return(cbf(hi_alert_address,null));window.lotaddress=ga;
+;await(readdr(ga).then(result=>{if(!result||!result.uts||!result.txBlock)return(cbf(null,null));window.lotauthor=result.txAuthor;window.lotblock=result.txBlock;window.lotstamp=result.uts;window.xutmin=result.min;window.xutmax=result.max;window.lotodds=result.odd;window.lotform=result.frm;window.dtype=result.typ;window.GA=result;}));
+;await(web3.eth.getBlockNumber().then(result=>{window.lastblock=result;window.blocknum=result;console.log('LastBlock:'+blocknum);if(window.lotblock&&window.lotstamp){console.warn('StartBlock:'+lotblock);console.log('StopTime:'+lotstamp);}else{return(cbf(ERROR,null))}}).catch(err=>{return(cbf(hi_alert_data,null));}));
+;await(getBStop(0,lotstamp));if(!window.blocknum||window.blocknum<window.lotblock||window.blocknum>window.lastblock)return(cbf(CANCELED,null));console.warn('StopBlock:'+blocknum);if(!window.lotblock)return(cbf(ERROR,null));if(scan)scan(lotaddress,lotblock,blocknum,xutmin,xutmax,cbf,lotform,lotodds);};
+const scanTxEvents=function(ga,bfrom,bto,xmin,xmax,cbf=console.log,i,n){window.lotsubmits=[];xuteng.getPastEvents('Transfer',{filter:{toAddress:ga},fromBlock:bfrom,toBlock:bto},function(err,result){if(err)return(cbf(err,null));for(i=0;i<result.length;i++){n=fromWei(result[i].returnValues.txPenny);if(xmin<=n&&n<=xmax)window.lotsubmits.push({from:result[i].returnValues.fromAddress,xut:n,tx:result[i].transactionHash});}}).then(function(result){/**for(i=0;i<result.length;i++){console.log(result[i].returnValues.fromAddress,COLON,result[i].returnValues.txPenny)}**/;return(cbf(null,window.lotsubmits));});};
 const lo1x99submit=function(desubmits,cbf=console.log,i,j,k,x){submits=Object.assign([],desubmits);for(i=0;i<100;i++){if(i==0)window.numsubmits={};window.numsubmits[i]=[];}if(!submits||!submits.length)return(cbf(null,window.numsubmits));for(i=0;i<100;i++){for(j=0;j<submits.length;j++){if(submits[j]&&submits[j].from&&submits[j].xut){x=xut2de(submits[j].xut);for(k=0;k<x.de.length;k++){if(Number(x.de[k])==i){window.numsubmits[i].push({from:submits[j].from,xut:x.xut,tx:submits[j].tx});}}}}}return(cbf(null,window.numsubmits));};//desubmits[]<=>window.lotsubmits[];//ArrayObjectFrom[scanTxEvents()];
 const lo1x99winner=function(detable,win,mul,cbf=console.log,i){table=Object.assign({},detable);if(!mul)mul=70;if(table[win]&&table[win].length){for(i=0;i<table[win].length;i++){table[win][i].win=mul*table[win][i].xut};return(cbf(null,{wins:table[win]}));}return(cbf(ERROR,null));};//detable{}<=>window.numsubmits{};//CleanObjectFrom[lo1x99submit()];
 ////////////////////////////////////////////////////////////[2]
@@ -852,6 +846,7 @@ const setStyle=function(d,s){$(d).removeClass().addClass(s);};
 const setClick=function(d,ha,sa){$(document).ready(function(){$(DOT+ha).click(function(){hide(d);});$(DOT+sa).click(function(){show(d);});});};
 const setCheck=function(option,button){$(HASH+button).on('click',function(){dc(option,true);return(false);});};
 const getCheck=function(name){return($('input[name="'+name+'"]:checked').val());};
+const genArray=function(d,i=7,v=[],t=true){while(t&&i--){t=g2(d+i);if(t)v.push(t)};return(v);};
 ////////////////////////////////////////////////////////////
 const hide=function(d,ob){if(!ob)ob=HASH;$(ob+d).hide();};
 const show=function(d,ob){if(!ob)ob=HASH;$(ob+d).show();};
@@ -891,6 +886,10 @@ const dt=function(d,t,ob){if(!ob)ob=HASH;$(ob+d).text(t);};
 const wrong=function(chk,msg){if(!chk){alert(msg);return(true);}return(false);};
 const reask=function(chk,msg){if(chk)return(confirm(msg));return(true);};
 ////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////[3]
+const adec=function(d,t=[]){while(d>=0)t.push(d--);return(t)};
+const cdec=function(s,ds,c,a=[]){if(!Array.isArray(ds))return(null);s=s.toString();if(s.length%2)s+=BLANK+ZERO;while(s.length>0){c=Number(s.substr(0,2));if(!ds.includes(c))return(false);a.push(c);s=s.slice(2);};return(a);};
+const decs=function(n,d=9,i,s,a=[]){i=Math.floor(Number(n));if(i==n)return([i,[0]]);s=n.toString().split(DOT)[1];if(d>9){a=cdec(s,adec(d));if(!a)return(a);return([i,a]);};if(s>d||s.length>1)return(false);return([i,[Number(s)]]);};
 ////////////////////////////////////////////////////////////[5]
 const h2d=function(s,add,c,d,n,r,t){add=function(x,y){c=0;r=[];x=x.split('').map(Number);y=y.split('').map(Number);while(x.length||y.length){s=(x.pop()||0)+(y.pop()||0)+c;r.unshift(s<10?s:s-10);c=s<10?0:1;};if(c)r.unshift(c);return(r.join(''));};d='0';s.split('').forEach(function(chr){n=parseInt(chr,16);for(t=8;t;t>>=1){d=add(d,d);if(n&t)d=add(d,'1');}});return(d);};
 const h2i=function(s){return(h2d(s).toString().substr(0,12));};
@@ -1192,10 +1191,12 @@ const promm_setFee=function(){if(bad_setFee())return;;;mm_setFee(gv(_levels));;}
 const promm_regs2sys=function(to,xut){to=contractAddress;xut=gv(_reglev);if(bad_register(to,xut))return;;;mm_transferFor(to,xut,REFREG);;};
 const promm_regs2usr=function(to,xut){to=gv(_user);xut=gv(_regmem);if(bad_register(to,xut))return;;;mm_transferFor(to,xut,REFREG);;};
 ////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////[4]
-const gamePlay=function(cbf=console.log,varXut='gamexut',varAddr='txhash',divHash='_txaddress',status='_game_status',checkform=true,a,h){a=gv(varAddr);h=gt(divHash);if(avalid(h)&&hvalid(a)){a=h}else{if(avalid(a)&&hvalid(h)){;}else{return(alert(ERROR+'ADDRESS'))}};
-;if(a==ZEROADDR)return(alert(ERROR+'GAME'));if(!window.txLottoGame)return(alert(ERROR+'NETWORK'));window.gameForm=GAMES[txLottoGame.frm];window.gameAddress=a;window.gameBet=g2(varXut);window.gameUts=ethnow();if(gameBet<txLottoGame.min||gameBet>txLottoGame.max)return(alert(ERROR+'OVERFUND'));if(gameUts<txLottoGame.txUts||gameUts>txLottoGame.uts)return(alert(ERROR+'OVERTIME'));
-;if(checkform){if(!window.gameForm)return(alert(ERROR+'FORMAT'));a=decs(gameBet,gameForm.dec);if(!a)return(alert(ERROR+'NUMBERS'));if(!gameForm.dup&&(new Set(a[1])).size!=a[1].length)return(alert(ERROR+'DUPLICATES'+SPACE+a[1]));if(gameForm.num&&a[1].length!=gameForm.num)return(alert(ERROR+gameForm.num+SPACE+'NUMBERS'));window.gameVals=a;if(!confirm('AMOUNT:\t'+gameBet+NEWLINE+'NUMBERS:\t'+gameVals[1]))return;};mm_transfer(gameAddress,gameBet,status);};
+////////////////////////////////////////////////////////////[2]
+const gamePlay=function(game=window.txLottoGame,xut='gamexut',hash='txhash',addr='_txaddress',status='_game_status'){xut=g2(xut);hash=gv(hash);addr=gt(addr);if(avalid(hash)&&hvalid(addr)){addr=hash}else{if(avalid(addr)&&hvalid(hash)){;}else{return(alert(ERROR+'ADDRESS'))}};return(validate(game,xut,addr,ethnow(),status,confirm,mm_transfer,alert));};
+const validate=function(game,xut,addr,uts,status=TEST,ask=null,run=null,error=console.error,val=null,dec=null){if(!avalid(addr)||addr==ZEROADDR)return(error(INVALID+'ADDRESS'));if(!game)return(error(INVALID+'INPUT'));window.gameForm=GAMES[game.frm];
+;if(!window.gameForm)return(error(INVALID+'FORMAT'));window.gameAddress=addr;window.gameBet=xut;window.gameUts=uts;if(gameBet<game.min||gameBet>game.max)return(error(INVALID+'AMOUNT'));if(gameUts<game.txUts||gameUts>game.uts)return(error(INVALID+'TIME'));val=decs(gameBet,gameForm.dec);
+;if(!val)return(error(INVALID+'VALUES'));dec=(new Set(val[1]));if(gameForm.num&&(gameForm.num!=val[1].length))return(error(UNCHECKED+gameForm.num+SPACE+'NUMBERS'));if(!gameForm.dup&&(dec.size!=val[1].length))return(error(FOUND+'DUPLICATES'+SPACE+val[1]));window.gameVals=val;if(ask&&!ask('AMOUNT:\t'+gameBet+NEWLINE+'NUMBERS:\t'+gameVals[1]))return;if(run)run(gameAddress,gameBet,status);};
+////////////////////////////////////////////////////////////[3]
 const userInit=function(user,divUser='user'){user=hashParam(ARGADDR);if(!user){dv(divUser,BLANK);return(console.error(hi_alert_data));};dv(divUser,user);window.setTimeout(menu.onUserGoUser,1000);};
 const gameInit=function(game,divAddr='txhash',divUser='user'){game=hashParam(ARGADDR);game=(avalid(game)||hvalid(game))?game:BLANK;if(!game){dv(divAddr,BLANK);dv(divUser,BLANK);return(console.error(hi_alert_data));};dv(divAddr,game);window.setTimeout(menu.onUserTxView,1000);};
 const reLotter=function(cbf,status='_gameresult',varAddr='txhash',divHash='_txaddress',a,h){a=gv(varAddr);h=gt(divHash);if(avalid(a)&&hvalid(h)){window.targetAddress=a;}else{if(avalid(h)&&hvalid(a)){window.targetAddress=h;}else{window.targetAddress=null;return(cbf(null,null));}};showLoad(status);

@@ -16,6 +16,7 @@ const setStyle=function(d,s){$(d).removeClass().addClass(s);};
 const setClick=function(d,ha,sa){$(document).ready(function(){$(DOT+ha).click(function(){hide(d);});$(DOT+sa).click(function(){show(d);});});};
 const setCheck=function(option,button){$(HASH+button).on('click',function(){dc(option,true);return(false);});};
 const getCheck=function(name){return($('input[name="'+name+'"]:checked').val());};
+const genArray=function(d,i=7,v=[],t=true){while(t&&i--){t=g2(d+i);if(t)v.push(t)};return(v);};
 ////////////////////////////////////////////////////////////
 const hide=function(d,ob){if(!ob)ob=HASH;$(ob+d).hide();};
 const show=function(d,ob){if(!ob)ob=HASH;$(ob+d).show();};

@@ -61,6 +61,18 @@ const hi_alert_cookieset = 'THE DATA IS BEING STORED IN COOKIES';
 const hi_alert_cookiedel = 'THE DATA HAS BEEN REMOVED FROM COOKIES';
 ////////////////////////////////////////////////////////////
 ﻿////////////////////////////////////////////////////////////
+const CANCELED='CANCELED\t';
+const CHECKED='CHECKED\t';
+const DONE='DONE\t';
+const ERROR='ERROR\t';
+const FAILED='FAILED\t';
+const FOUND='FOUND\t';
+const INVALID='INVALID\t';
+const OK='OK\t';
+const UNCHECKED='UNCHECKED\t';
+const UNKNOWN='UNKNOWN\t';
+const ALERTS={en:{CANCELED,CHECKED,DONE,ERROR,FAILED,FOUND,INVALID,OK,UNCHECKED,UNKNOWN}};
+////////////////////////////////////////////////////////////
 const LABELS={en:{
 _button_AuthAccExp: "EXPORT PRIVATE KEY",
 _button_AuthAccImp: "IMPORT PRIVATE KEY",
@@ -81,9 +93,11 @@ _button_BuyOfr: "BUY NOW",
 _button_DisBuy: "STOP THIS REQUEST",
 _button_DisSel: "STOP THIS OFFER",
 _button_EthXut: "BUY NOW",
+_button_GameDocSet: "PUBLISH",
 _button_GameGoUser: "OWNER ADDRESS",
 _button_GameTxAddr: "GAME ADDRESS",
 _button_GameTxPlay: "PAY TO PLAY",
+_button_GameTxView: "GAME HASH",
 _button_GetBuy: "BUYING REQUEST#",
 _button_GetOfr: "SELLER OFFER#",
 _button_GetReq: "BUYER REQUEST#",
@@ -118,6 +132,7 @@ _header_buying: "REVIEWING A BUYING REQUEST",
 _header_copyright: "(C)2019 ASINERUM INTERNATIONAL PROJECT",
 _header_cost: "ETHEREUM TRANSACTION COST",
 _header_doc: "POSTING A VALUED DOCUMENT",
+_header_docgame: "PUBLISHING A XUTENG GAME",
 _header_domain: "REGISTERING A DOMAIN NAME",
 _header_game: "GAME INFORMATION",
 _header_gamer: "GAME OWNER INFORMATION AND STATS",
@@ -126,6 +141,7 @@ _header_profile: "PERSONAL PROFILE AND DOMAIN",
 _header_rate: "XUTENG TOKEN OFFICIAL EXCHANGE RATE",
 _header_register: "REGISTERING AS A LEVELED USER",
 _header_review: "REVIEWING A TRANSACTION",
+_header_reviewgame: "REVIEWING A PUBLISHED GAME",
 _header_sell: "DIRECTLY SELLING XUTENG TOKENS TO SYSTEM FUND",
 _header_selling: "REVIEWING A SELLING OFFER",
 _header_sellto: "SELLING XUTENG TOKENS TO ANOTHER USER",
@@ -168,7 +184,15 @@ _label_Buying7Get: "XUT TO BUY",
 _label_Buying8Pay: "ETH TO PAY",
 _label_Counts0Buy: "REQUESTS TO BUY",
 _label_Counts1Sel: "OFFERS TO SELL",
+_label_GameDocDat: "GAME HEADER",
+_label_GameDocMax: "MAXIMUM BET",
+_label_GameDocMin: "MINIMUM BET",
+_label_GameDocFrm: "GAME FORMAT",
+_label_GameDocRew: "ODDS/REWARDS",
+_label_GameDocUtc: "GAME CLOSING TIME",
+_label_GameDocUts: "GAME TIMESTAMP",
 _label_GameResult: "GAME RESULT",
+_label_GameTxAddr: "GAME ADDRESS",
 _label_GameTxData: "GAME DATA",
 _label_GameTxHash: "GAME HASH",
 _label_GameTxInfo: "SPECIAL INFO",
@@ -279,6 +303,7 @@ _note_BuyOfr: "EXCLUDING GAS FEE",
 _note_DisBuy: "EXCLUDING GAS FEE",
 _note_DisSel: "EXCLUDING GAS FEE",
 _note_EthXut: "EXCLUDING GAS FEE",
+_note_GameDocSet: "EXCLUDING GAS FEE",
 _note_GameTxNote: "THIS GAME IS OWNED AND MANAGED BY ITS VERY OWNER<br/>SO PEOPLE PLEASE BE AWARE OF SCAMMING BEHAVIOURS",
 _note_SelReq: "EXCLUDING GAS FEE",
 _note_SetBuy: "EXCLUDING GAS FEE",
