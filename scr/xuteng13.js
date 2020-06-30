@@ -396,15 +396,16 @@ const TOTALSUPPLY=2;//xutdat
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
 const GAMES={
-bet1v0:{info:"",dec:1,num:1,rev:["win","lose"]},
-bet1c0:{info:"",dec:1,num:1,rev:["over","under"]},
-bet210:{info:"",dec:2,num:1,rev:["win","tie","lose"]},
-bet310:{info:"",dec:2,num:1,rev:["home","draw","away"]},
-lo1x99:{info:"",dec:99,dup:true},
-lo5x36:{info:"",dec:36,num:5},
-lo6x36:{info:"",dec:36,num:6},
-lo6x45:{info:"",dec:45,num:6},
-lo7x49:{info:"",dec:49,num:7},
+tossup:{info:function(x,t,n,ra){return(x*(n?1:0)*ra[1-n])},dec:1,num:1},/*t=0*/
+bet1v0:{info:function(x,i,n,ra){return(x*(n?1:0)*ra[1-i])},dec:1,num:1,rev:["win","lose"]},/*i=index*/
+bet1c0:{info:function(x,i,n,ra){return(x*(n?1:0)*ra[1-i])},dec:1,num:1,rev:["over","under"]},/*i=index*/
+bet210:{info:function(x,i,n,ra){return(x*(n?1:0)*ra[2-i])},dec:2,num:1,rev:["win","tie","lose"]},/*i=index*/
+bet310:{info:function(x,i,n,ra){return(x*(n?1:0)*ra[2-i])},dec:2,num:1,rev:["home","draw","away"]},/*i=index*/
+lo1x99:{info:function(x,c,n,ra){return(x/(c?c:1)*(n<=c?n:0)*ra[0])},dec:99,dup:true},/*c=count*/
+lo5x36:{info:function(x,t,n,ra){return(x*ra[5-n])},dec:36,num:5},/*t=0*/
+lo6x36:{info:function(x,t,n,ra){return(x*ra[6-n])},dec:36,num:6},/*t=0*/
+lo6x45:{info:function(x,t,n,ra){return(x*ra[6-n])},dec:45,num:6},/*t=0*/
+lo7x49:{info:function(x,t,n,ra){return(x*ra[7-n])},dec:49,num:7},/*t=0*/
 };
 ////////////////////////////////////////////////////////////
 const GAMEXUT=354;
@@ -616,25 +617,33 @@ const txfunc=async(txh,cbf=console.log,o,d)=>{await(web3.eth.getTransaction(txh,
 const rehash=async(txh,cbf=console.log)=>{await(web3.eth.getTransaction(txh).then(data=>{window.txInputJson=hexObj(data.input);cbf(null,window.txInputJson)}).catch(e=>{window.txInputJson=null;cbf(hi_alert_data,null)}))};
 const ofhash=async(txh,cbf=console.log)=>{await(xuteng.methods.addressOf(txh).call().then(address=>{window.hashAddress=address;cbf(null,window.hashAddress)}).catch(e=>{window.hashAddress=null;cbf(hi_alert_data,null)}))};
 ////////////////////////////////////////////////////////////[2]
-const lotter=async(timestamp,digits,maxdig,cbf=console.log)=>{if(timestamp>lotnow().lotstamp)return(cbf(null,[-4]));if(!timestamp)timestamp=lotnow().lotstamp;if(!digits)digits=1;if(!maxdig)maxdig=99;window.lotstamp=Number(timestamp);window.lotdigits=Number(digits);window.lotmaxdig=Number(maxdig);window.blocknum=0;await(getBStop(0,window.lotstamp));if(!window.blocknum)return(cbf(null,[-1]));getlot(window.blocknum,cbf);};//GenerateWinningNumbers;
+const lotter=async(timestamp,digits,maxdig,cbf=console.log)=>{if(timestamp>lotnow().lotstamp)return(cbf(null,[-4]));if(!timestamp)timestamp=lotnow().lotstamp;if(!digits)digits=1;if(!maxdig)maxdig=99;window.lotstamp=Number(timestamp);window.lotdigits=Number(digits);window.lotmaxdig=Number(maxdig);window.blocknum=0;await(getBStop(0,window.lotstamp));if(!window.blocknum)return(cbf(null,[-1]));getlot(window.blocknum,cbf);};//GenerateWinningNumbers//
 const getlot=function(block,cbf=console.log,skip=0,maxpage=99,i){if(window.lotdigits>7)return(cbf(null,[-3]));if(!skip)window.eventpicks=[];xuteng.getPastEvents('Transfer',{fromBlock:block-999,toBlock:block},function(err,result){if(err)return(cbf(err,null));if(skip>maxpage)return(cbf(null,[-2]));if(!result||!result.length)return(getlot(block-999-1,cbf,++skip));for(i=result.length-1;result[i]&&window.eventpicks.length<10;i--){window.eventpicks.push(result[i]);}if(window.eventpicks.length<10)return(getlot(block-999-1,cbf,++skip));
 ;window.numberpicks=[];window.cryptstring=window.lotstamp+COLON+window.blocknum+COLON;for(i=window.eventpicks.length-1;i>0;i--){window.cryptstring+=toHash(window.eventpicks[i].blockHash+window.eventpicks[i].blockNumber+window.eventpicks[i].transactionHash+window.eventpicks[i].transactionIndex+window.eventpicks[i].signature);};console.log(window.cryptstring);while(window.numberpicks.length<window.lotdigits){window.cryptstring=toHash(window.cryptstring+HYPHEN+window.lotdigits+COLON+window.lotmaxdig);window.lottonum=h2m(window.cryptstring.slice(2),window.lotmaxdig);if(window.numberpicks.includes(window.lottonum))continue;window.numberpicks.push(window.lottonum);}return(cbf(null,window.numberpicks));});};
 ////////////////////////////////////////////////////////////[4]
-const logBStop=async(timestamp)=>{await(getBStop(0,timestamp));console.log('StopBlock:'+window.blocknum);}
+const logBStop=async(timestamp)=>{await(getBStop(0,timestamp));console.log('StopBlock:'+window.blocknum);};
 const getBLast=async()=>{window.blocknum=await(web3.eth.getBlockNumber());console.log('Latest:'+window.blocknum);};
 const getBTime=async(block)=>{block=await(web3.eth.getBlock(block));if(!block){console.log('BlockNotFound');return;}window.blockstamp=block.timestamp;console.log('BlockStamp:'+window.blockstamp);console.log('BlockTime:'+fromDate(window.blockstamp));};
-const getBStop=async(skip,timestamp,block)=>{if(!skip){await(getBLast());skip=Number(window.blocknum);}if(timestamp)window.lotstamp=Number(timestamp);block=await(web3.eth.getBlock(window.blocknum));if(!block){console.log('BlockNotFound');return;}if(block.timestamp==window.lotstamp)return;if(skip==0&&ethnow()<window.lotstamp)return;if(skip==1&&block.timestamp>window.lotstamp)return;if(skip==1&&block.timestamp<window.lotstamp)return(++window.blocknum);skip=Math.ceil(skip/2);if(block.timestamp>window.lotstamp){window.blocknum-=skip;}else{window.blocknum+=skip;}return(getBStop(skip));};//GetClosestStopBlock;
-////////////////////////////////////////////////////////////[4]
-const scanTxLottos=async(ga,cbf=console.log,scan=scanTxEvents)=>{if(!avalid(ga))return(cbf(hi_alert_address,null));window.lotaddress=ga;
+const getBStop=async(skip,timestamp,block)=>{if(!skip){await(getBLast());skip=Number(window.blocknum);}if(timestamp)window.lotstamp=Number(timestamp);block=await(web3.eth.getBlock(window.blocknum));if(!block){console.log('BlockNotFound');return;}if(block.timestamp==window.lotstamp)return;if(skip==0&&ethnow()<window.lotstamp)return;if(skip==1&&block.timestamp>window.lotstamp)return;if(skip==1&&block.timestamp<window.lotstamp)return(++window.blocknum);skip=Math.ceil(skip/2);if(block.timestamp>window.lotstamp){window.blocknum-=skip;}else{window.blocknum+=skip;}return(getBStop(skip));};//GetClosestStopBlock//
+////////////////////////////////////////////////////////////[2]
+const scanGameData=async(ga,wins=[],least=1,cbf=console.log)=>{await(scanTxLottos(ga,wins,least,cbf,scanGameWins));};
+const scanTxLottos=async(ga,wins=[],least=1,cbf=console.log,scan=scanTxEvents)=>{if(!avalid(ga))return(cbf(hi_alert_address,null));window.lotaddress=ga;
 ;await(readdr(ga).then(result=>{if(!result||!result.uts||!result.txBlock)return(cbf(null,null));window.lotauthor=result.txAuthor;window.lotblock=result.txBlock;window.lotstamp=result.uts;window.xutmin=result.min;window.xutmax=result.max;window.lotodds=result.odd;window.lotform=result.frm;window.dtype=result.typ;window.GA=result;}));
 ;await(web3.eth.getBlockNumber().then(result=>{window.lastblock=result;window.blocknum=result;console.log('LastBlock:'+blocknum);if(window.lotblock&&window.lotstamp){console.warn('StartBlock:'+lotblock);console.log('StopTime:'+lotstamp);}else{return(cbf(ERROR,null))}}).catch(err=>{return(cbf(hi_alert_data,null));}));
-;await(getBStop(0,lotstamp));if(!window.blocknum||window.blocknum<window.lotblock||window.blocknum>window.lastblock)return(cbf(CANCELED,null));console.warn('StopBlock:'+blocknum);if(!window.lotblock)return(cbf(ERROR,null));if(scan)scan(lotaddress,lotblock,blocknum,xutmin,xutmax,cbf,lotform,lotodds);};
-const scanTxEvents=function(ga,bfrom,bto,xmin,xmax,cbf=console.log,i,n){window.lotsubmits=[];xuteng.getPastEvents('Transfer',{filter:{toAddress:ga},fromBlock:bfrom,toBlock:bto},function(err,result){if(err)return(cbf(err,null));for(i=0;i<result.length;i++){n=fromWei(result[i].returnValues.txPenny);if(xmin<=n&&n<=xmax)window.lotsubmits.push({from:result[i].returnValues.fromAddress,xut:n,tx:result[i].transactionHash});}}).then(function(result){/**for(i=0;i<result.length;i++){console.log(result[i].returnValues.fromAddress,COLON,result[i].returnValues.txPenny)}**/;return(cbf(null,window.lotsubmits));});};
-const lo1x99submit=function(desubmits,cbf=console.log,i,j,k,x){submits=Object.assign([],desubmits);for(i=0;i<100;i++){if(i==0)window.numsubmits={};window.numsubmits[i]=[];}if(!submits||!submits.length)return(cbf(null,window.numsubmits));for(i=0;i<100;i++){for(j=0;j<submits.length;j++){if(submits[j]&&submits[j].from&&submits[j].xut){x=xut2de(submits[j].xut);for(k=0;k<x.de.length;k++){if(Number(x.de[k])==i){window.numsubmits[i].push({from:submits[j].from,xut:x.xut,tx:submits[j].tx});}}}}}return(cbf(null,window.numsubmits));};//desubmits[]<=>window.lotsubmits[];//ArrayObjectFrom[scanTxEvents()];
-const lo1x99winner=function(detable,win,mul,cbf=console.log,i){table=Object.assign({},detable);if(!mul)mul=70;if(table[win]&&table[win].length){for(i=0;i<table[win].length;i++){table[win][i].win=mul*table[win][i].xut};return(cbf(null,{wins:table[win]}));}return(cbf(ERROR,null));};//detable{}<=>window.numsubmits{};//CleanObjectFrom[lo1x99submit()];
+;await(getBStop(0,lotstamp));if(!window.blocknum||window.blocknum<window.lotblock||window.blocknum>window.lastblock)return(cbf(CANCELED,null));console.warn('StopBlock:'+blocknum);if(!window.lotblock)return(cbf(ERROR,null));if(scan)scan(lotaddress,lotblock,blocknum,window.GA,wins,least,cbf);};
 ////////////////////////////////////////////////////////////[2]
-const loNxNNresult=function(desubmits,wins,cbf=console.log,i,j){if(!wins.length||wins.length<2)return(cbf(ERROR,null));submits=Object.assign([],desubmits);for(i=1;i<=wins.length;i++){if(i==1)window.numresults={};window.numresults[i]=[];}if(!submits||!submits.length)return(cbf(null,window.numresults));for(i=1;i<=wins.length;i++){for(j=0;j<submits.length;j++){if(submits[j]&&submits[j].from&&submits[j].xut){if(reLottoArray(wins,xut2lo(submits[j].xut).lo)==i)window.numresults[i].push({from:submits[j].from,xut:submits[j].xut,tx:submits[j].tx,lotto:i});}}}return(cbf(null,window.numresults));};//desubmits[]<=>window.lotsubmits[];
-const loNxNNwinner=function(detable,winobj,cbf=console.log,i){table=Object.assign({},detable);Object.keys(winobj).forEach(function(key){if(table[key]&&table[key].length){for(i=0;i<table[key].length;i++){if(table[key][i].lotto==key&&Number(winobj[key])>0)table[key][i].win=winobj[key]*table[key][i].xut;}}});return(cbf(null,{wins:table}));};//detable{}<=>window.numresults{};//winobj{}={1:N,2:NN,,,7:NNN};
+const scanTxEvents=function(ga,bfrom,bto,game=window.GA,wins=[],least=1,cbf=console.log,tx=BLANK,from=BLANK,xut=0,ds=[],n=0){if(!avalid(ga)||!bfrom||!bto||!game)return(cbf(hi_alert_data,null));window.lotpayments=[];window.lotsubmits=[];window.lotrunners=[];//=>window.lotrunners[]//
+;xuteng.getPastEvents('Transfer',{filter:{toAddress:ga},fromBlock:bfrom,toBlock:bto},function(err,result){if(err)return(cbf(err,null));result.forEach((item)=>{xut=fromWei(item.returnValues.txPenny);from=item.returnValues.fromAddress;tx=item.transactionHash;window.lotpayments.push({from,xut,tx});
+;if(!invalide(game,xut,ga,game.txUts)){window.lotsubmits.push({from,xut,tx});if(wins.length){ds=decs(xut,GAMES[game.frm].dec)[1];n=cmpArray(ds,wins);if(n>=least)window.lotrunners.push({from,xut,tx,ds,n});}}});}).then(function(result){if(wins.length){cbf(null,window.lotrunners)}else{cbf(null,window.lotsubmits)}});};
+const scanGameWins=function(ga,bfrom,bto,game=window.GA,wins=[],least=1,cbf=console.log,won=0){window.lotwinners=[];//wins=[NNNN,NNN,NN,0]//
+;scanTxEvents(ga,bfrom,bto,game,wins,least,function(err,result){if(err||!result)return(cbf(err,result));result.forEach((item)=>{if(item.n&&item.n>=least){//DOUBLE-CHECK[least]//
+;won=GAMES[game.frm].info(item.xut,GAMES[game.frm].dup?item.ds.length:wins[0],item.n,game.odd);if(won)window.lotwinners.push({from:item.from,tx:item.tx,xut:item.xut,n:item.n,win:won});}});cbf(null,window.lotwinners);});};
+////////////////////////////////////////////////////////////[2]
+const lo1x99submit=function(desubmits,cbf=console.log,i,j,k,x){submits=Object.assign([],desubmits);for(i=0;i<100;i++){if(i==0)window.numsubmits={};window.numsubmits[i]=[];}if(!submits||!submits.length)return(cbf(null,window.numsubmits));for(i=0;i<100;i++){for(j=0;j<submits.length;j++){if(submits[j]&&submits[j].from&&submits[j].xut){x=xut2de(submits[j].xut);for(k=0;k<x.de.length;k++){if(Number(x.de[k])==i){window.numsubmits[i].push({from:submits[j].from,xut:x.xut,tx:submits[j].tx});}}}}}return(cbf(null,window.numsubmits));};//desubmits[]<=>window.lotsubmits[]//
+const lo1x99winner=function(detable,win,mul,cbf=console.log,i){table=Object.assign({},detable);if(!mul)mul=70;if(table[win]&&table[win].length){for(i=0;i<table[win].length;i++){table[win][i].win=mul*table[win][i].xut};return(cbf(null,{wins:table[win]}));}return(cbf(ERROR,null));};//detable{}<=>window.numsubmits{}//
+////////////////////////////////////////////////////////////[2]
+const loNxNNresult=function(desubmits,wins,cbf=console.log,i,j){if(!wins.length||wins.length<2)return(cbf(ERROR,null));submits=Object.assign([],desubmits);for(i=1;i<=wins.length;i++){if(i==1)window.numresults={};window.numresults[i]=[];}if(!submits||!submits.length)return(cbf(null,window.numresults));for(i=1;i<=wins.length;i++){for(j=0;j<submits.length;j++){if(submits[j]&&submits[j].from&&submits[j].xut){if(lotArray(wins,xut2lo(submits[j].xut).lo)==i)window.numresults[i].push({from:submits[j].from,xut:submits[j].xut,tx:submits[j].tx,lotto:i});}}}return(cbf(null,window.numresults));};//desubmits[]<=>window.lotsubmits[]//
+const loNxNNwinner=function(detable,winobj,cbf=console.log,i){table=Object.assign({},detable);Object.keys(winobj).forEach(function(key){if(table[key]&&table[key].length){for(i=0;i<table[key].length;i++){if(table[key][i].lotto==key&&Number(winobj[key])>0)table[key][i].win=winobj[key]*table[key][i].xut;}}});return(cbf(null,{wins:table}));};//detable{}<=>window.numresults{}//
 ////////////////////////////////////////////////////////////[4]
 const getHashFromAddr=function(a,cbf=console.log,idx=0){xuteng.methods.hashesOf(a,idx).call(function(err,result){cbf(err,result);});};
 const getAddrFromHash=function(h,cbf=console.log){xuteng.methods.addressOf(h).call(function(err,result){cbf(err,result);});};
@@ -919,8 +928,9 @@ const depara=function(struct,hexinput){try{return(web3.eth.abi.decodeParameters(
 ////////////////////////////////////////////////////////////[2]
 const Contract=function(scid='usdt'){return(new web3.eth.Contract(EXTOKENS[scid].abi,EXTOKENS[scid].addr));};
 const gfromWei=function(w){return(web3.utils.fromWei(w.toString(),GWEI));};
-////////////////////////////////////////////////////////////[1]
-const reLottoArray=function(dad,son,n,i){n=arrdup(dad);if(n==null||n)return(0);n=arrdup(son);if(n==null||n)return(0);if(dad.length<son.length)return(0);n=0;for(i=0;i<dad.length;i++){if(son.includes(dad[i]))n++;}return(n);};
+////////////////////////////////////////////////////////////[2]
+const cmpArray=function(a=[],to=[],c=0){a.forEach(i=>{if(to.includes(i))c++});return(c);};//NumberArraysOnly
+const lotArray=function(dad,son,n,i){n=arrdup(dad);if(n==null||n)return(0);n=arrdup(son);if(n==null||n)return(0);if(dad.length<son.length)return(0);n=0;for(i=0;i<dad.length;i++){if(son.includes(dad[i]))n++;}return(n);};
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
 const bad_register=function(to,xut){if(disable()||badAddr(to)||badXuts(xut)||notTran()||stopReg())return(true);return(false);};
@@ -1192,10 +1202,11 @@ const promm_regs2sys=function(to,xut){to=contractAddress;xut=gv(_reglev);if(bad_
 const promm_regs2usr=function(to,xut){to=gv(_user);xut=gv(_regmem);if(bad_register(to,xut))return;;;mm_transferFor(to,xut,REFREG);;};
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////[2]
-const gamePlay=function(game=window.txLottoGame,xut='gamexut',hash='txhash',addr='_txaddress',status='_game_status'){xut=g2(xut);hash=gv(hash);addr=gt(addr);if(avalid(hash)&&hvalid(addr)){addr=hash}else{if(avalid(addr)&&hvalid(hash)){;}else{return(alert(ERROR+'ADDRESS'))}};return(validate(game,xut,addr,ethnow(),status,confirm,mm_transfer,alert));};
-const validate=function(game,xut,addr,uts,status=TEST,ask=null,run=null,error=console.error,val=null,dec=null){if(!avalid(addr)||addr==ZEROADDR)return(error(INVALID+'ADDRESS'));if(!game)return(error(INVALID+'INPUT'));window.gameForm=GAMES[game.frm];
+const gamePlay=function(game=window.txLottoGame,xut='gamexut',hash='txhash',addr='_txaddress',status='_game_status'){xut=g2(xut);hash=gv(hash);addr=gt(addr);if(avalid(hash)&&hvalid(addr)){addr=hash}else{if(avalid(addr)&&hvalid(hash)){;}else{return(alert(ERROR+'ADDRESS'))}};return(invalide(game,xut,addr,ethnow(),status,confirm,mm_transfer,alert));};
+const invalide=function(game,xut,addr,uts,status=TEST,ask=null,run=null,error=function(e){console.error(e);return(e)},val=null,dec=null){if(!avalid(addr)||addr==ZEROADDR)return(error(INVALID+'ADDRESS'));if(!game)return(error(INVALID+'INPUT'));window.gameForm=GAMES[game.frm];/*IgnoreCheckingHash*/
 ;if(!window.gameForm)return(error(INVALID+'FORMAT'));window.gameAddress=addr;window.gameBet=xut;window.gameUts=uts;if(gameBet<game.min||gameBet>game.max)return(error(INVALID+'AMOUNT'));if(gameUts<game.txUts||gameUts>game.uts)return(error(INVALID+'TIME'));val=decs(gameBet,gameForm.dec);
-;if(!val)return(error(INVALID+'VALUES'));dec=(new Set(val[1]));if(gameForm.num&&(gameForm.num!=val[1].length))return(error(UNCHECKED+gameForm.num+SPACE+'NUMBERS'));if(!gameForm.dup&&(dec.size!=val[1].length))return(error(FOUND+'DUPLICATES'+SPACE+val[1]));window.gameVals=val;if(ask&&!ask('AMOUNT:\t'+gameBet+NEWLINE+'NUMBERS:\t'+gameVals[1]))return;if(run)run(gameAddress,gameBet,status);};
+;if(!val)return(error(INVALID+'VALUES'));dec=(new Set(val[1]));if(gameForm.num&&(gameForm.num!=val[1].length))return(error(UNCHECKED+gameForm.num+SPACE+'NUMBERS'));if(!gameForm.dup&&(dec.size!=val[1].length))return(error(FOUND+'DUPLICATES'+SPACE+val[1]));window.gameVals=val;
+;if(ask&&!ask('AMOUNT:\t'+gameBet+NEWLINE+'NUMBERS:\t'+gameVals[1]))return(CANCELED);if(run)run(gameAddress,gameBet,status);return(false);};
 ////////////////////////////////////////////////////////////[3]
 const userInit=function(user,divUser='user'){user=hashParam(ARGADDR);if(!user){dv(divUser,BLANK);return(console.error(hi_alert_data));};dv(divUser,user);window.setTimeout(menu.onUserGoUser,1000);};
 const gameInit=function(game,divAddr='txhash',divUser='user'){game=hashParam(ARGADDR);game=(avalid(game)||hvalid(game))?game:BLANK;if(!game){dv(divAddr,BLANK);dv(divUser,BLANK);return(console.error(hi_alert_data));};dv(divAddr,game);window.setTimeout(menu.onUserTxView,1000);};
