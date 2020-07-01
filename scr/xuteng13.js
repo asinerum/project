@@ -1201,8 +1201,10 @@ const promm_setFee=function(){if(bad_setFee())return;;;mm_setFee(gv(_levels));;}
 const promm_regs2sys=function(to,xut){to=contractAddress;xut=gv(_reglev);if(bad_register(to,xut))return;;;mm_transferFor(to,xut,REFREG);;};
 const promm_regs2usr=function(to,xut){to=gv(_user);xut=gv(_regmem);if(bad_register(to,xut))return;;;mm_transferFor(to,xut,REFREG);;};
 ////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////[2]
-const gamePlay=function(game=window.txLottoGame,xut='gamexut',hash='txhash',addr='_txaddress',status='_game_status'){xut=g2(xut);hash=gv(hash);addr=gt(addr);if(avalid(hash)&&hvalid(addr)){addr=hash}else{if(avalid(addr)&&hvalid(hash)){;}else{return(alert(ERROR+'ADDRESS'))}};return(invalide(game,xut,addr,ethnow(),status,confirm,mm_transfer,alert));};
+////////////////////////////////////////////////////////////[4]
+const playMove=function(gaddr,holder=FAILADDR,status=TEST){mm_setHolder(gaddr,holder,status);};
+const playSend=function(gaddr,gxut,status=TEST){xuteng.methods.holderOf(gaddr).call().then(addr=>{if(!addr||addr==FAILADDR||addr==ZEROADDR)return(alert(FAILED));mm_transfer(gaddr,gxut,status);});};
+const gamePlay=function(game=window.txLottoGame,xut='gamexut',hash='txhash',addr='_txaddress',status='_game_status'){xut=g2(xut);hash=gv(hash);addr=gt(addr);if(avalid(hash)&&hvalid(addr)){addr=hash}else{if(avalid(addr)&&hvalid(hash)){;}else{return(alert(ERROR+'ADDRESS'))}};return(invalide(game,xut,addr,ethnow(),status,confirm,playSend,alert));};
 const invalide=function(game,xut,addr,uts,status=TEST,ask=null,run=null,error=function(e){console.error(e);return(e)},val=null,dec=null){if(!avalid(addr)||addr==ZEROADDR)return(error(INVALID+'ADDRESS'));if(!game)return(error(INVALID+'INPUT'));window.gameForm=GAMES[game.frm];/*IgnoreCheckingHash*/
 ;if(!window.gameForm)return(error(INVALID+'FORMAT'));window.gameAddress=addr;window.gameBet=xut;window.gameUts=uts;if(gameBet<game.min||gameBet>game.max)return(error(INVALID+'AMOUNT'));if(gameUts<game.txUts||gameUts>game.uts)return(error(INVALID+'TIME'));val=decs(gameBet,gameForm.dec);
 ;if(!val)return(error(INVALID+'VALUES'));dec=(new Set(val[1]));if(gameForm.num&&(gameForm.num!=val[1].length))return(error(UNCHECKED+gameForm.num+SPACE+'NUMBERS'));if(!gameForm.dup&&(dec.size!=val[1].length))return(error(FOUND+'DUPLICATES'+SPACE+val[1]));window.gameVals=val;
