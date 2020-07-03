@@ -1,5 +1,6 @@
-////////////////////////////////////////////////////////////[1]
+////////////////////////////////////////////////////////////[2]
 const Transfer=function(to,amt,cbf=console.log,scid='usdt',eth=0){var sc=Contract(scid),sca=EXTOKENS[scid].addr,scd=EXTOKENS[scid].dec,dat={data:sc.methods.transfer(to,(amt*(10**scd)).toString()).encodeABI(),from:sender,to:sca,value:(eth?s2w(eth):0),gasPrice:gtoWei(txgwei),gas:maxgas};console.log(dat);web3.eth.sendTransaction(dat,function(err,hash){if(err)return(cbf(err,null));return(cbf(null,hash));});};
+const batchPay=async(winners=window.lotwinners,cbf=console.warn)=>{winners.forEach(async(item)=>{if(item.from&&item.xut&&item.win){await(mm_transfer(item.from,item.win))}});};
 ////////////////////////////////////////////////////////////[2]
 const submitRe=function(to,xutinput,ref,div='mm_transferFor',x){x=g2(xutinput);betValid(to,x,0,function(err,result){if(err||!result)return(dw(div,ERROR+'input:invalid'));return(mm_transferFor(to,x,(avalid(ref)?setInput({ref}):BLANK)));});};
 const submitto=function(to,xutinput,div='mm_transfer',x){x=g2(xutinput);betValid(to,x,0,function(err,result){if(err||!result)return(dw(div,ERROR+'input:invalid'));return(mm_transfer(to,x));});};
