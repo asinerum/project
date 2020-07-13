@@ -2,7 +2,8 @@
 const showOkay=function(div=TEST){dw(div,OK);};
 const showError=function(div=TEST){dw(div,ERROR);};
 const showCancel=function(div=TEST){dw(div,CANCELED);};
-const showLoad=function(div=TEST){dw(div,'<img\tsrc="loading.gif"/>');};
+const showLoad=function(div=TEST){dw(div,'<img\tsrc="https://cdn.jsdelivr.net/gh/asinerum/project/loading.gif"/>');};
+////////////////////////////////////////////////////////////
 const netStyle=function(){networkStyle=XUTENG[network].bcls;setStyle('body',networkStyle);};
 const accepted=function(divS){if(confirm(hi_prompt_fee+NEWLINE+gasfee+SPACE+COIN))return(true);dw(divS,CANCELED);return(false);};
 ////////////////////////////////////////////////////////////
