@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<html>
+  <head>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/asinerum/project/gui/fonts.css"/>
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/asinerum/project/gui/style.css"/>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.6/angular.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js@1.0.0-beta.34/dist/web3.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/ethereumjs/browser-builds/dist/ethereumjs-tx/ethereumjs-tx-1.3.3.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/synaptic@1.1.4/dist/synaptic.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjs@6.6.4/dist/math.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@0.8/dist/teachablemachine-image.min.js"></script>
+  <script src="https://unpkg.com/keras-js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/asinerum/project/scr/xuteng.js"></script>
+  </head>
+  <body>
+  <div class="body" id="body">
+  WEB APP TEST ON GOOGLE CHROME: PRESS F12 TO OPEN CONSOLE
+  <br/>
+  <br/>
+  <span class="textwarn">DO NOT TEST THIS API IN PUBLIC COMPUTERS</span>
+  <br/>
+  <br/>
+  <span class="textwarn">ALWAYS DO CLEAR CONSOLE HISTORY AFTER WORKING</span>
+  <br/>
+  <br/>
+  <div class="textdate">
+  CONNECT TO AN ETHEREUM TEST NODE
+  <br/>
+  <i class="fa fa-caret-right"></i> launchRpc("https://ropsten-rpc.linkpool.io","ropsten");
+  <br/>
+  <br/>
+  CREATE YOUR NEW WALLET IF YOU HAVE NONE
+  <br/>
+  <i class="fa fa-caret-right"></i> userCreate("your_secret_passcode");
+  <br/>
+  <i class="fa fa-caret-right"></i> userImport("new_secret_passcode", "existing_private_key");
+  <br/>
+  <br/>
+  UNLOCK YOUR WALLET WITH SECRET PASSCODE
+  <br/>
+  <i class="fa fa-caret-right"></i> userUnlock("your_secret_passcode", "your_keystore");
+  <br/>
+  <br/>
+  START YOUR WORKING SESSION
+  <br/>
+  <i class="fa fa-caret-right"></i> getData("your_ethereum_wallet", 1);
+  <br/>
+  <i class="fa fa-caret-right"></i> getData(sender, 1);
+  <br/>
+  <br/>
+  </div>
+  <br/>
+  <button onclick="test();">TEST</button>
+  <br/>
+  <br/>
+  <div id="test">
+  </div>
+  <div class="test">
+  </div>
+  <div id="hash">
+  </div>
+  <div class="hash">
+  </div>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  </div>
+  </body>
+</html>
