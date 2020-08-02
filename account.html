@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<html lang="en">
+<head>
+<title>ETHEREUM ACCOUNT ADDRESS AND SIGNATURE</title>
+<link href="https://cdn.jsdelivr.net/gh/asinerum/project/favicon.ico" rel="icon" type="image/x-icon"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+<link href="https://cdn.jsdelivr.net/npm/trumbowyg@2.21.0/dist/ui/trumbowyg.min.css" rel="stylesheet" type="text/css"/>
+<link href="https://cdn.jsdelivr.net/gh/asinerum/project/gui/fonts.css" rel="stylesheet" type="text/css"/>
+<link href="https://cdn.jsdelivr.net/gh/asinerum/project/gui/style.css" rel="stylesheet" type="text/css"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.6/angular.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js@1.0.0-beta.34/dist/web3.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/ethereumjs/browser-builds/dist/ethereumjs-tx/ethereumjs-tx-1.3.3.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/trumbowyg@2.21.0/dist/trumbowyg.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/asinerum/project/scr/xuteng13a.js"></script>
+</head>
+<body class="private">
+<div class="body" id="body">
+<img class="banner" src="https://cdn.jsdelivr.net/gh/asinerum/project/gui/asinerum.jpg" id="_img_banner"/>
+<br/>
+<br/>
+<a name="ACCOUNT"></a>
+<div class="header" id="_header_account">ACCOUNT</div>
+<hr class="cp"/>
+<div>
+<table class="cover">
+<tr><td class="buttoner"><span class="label" id="_label_AuthKstPwd"></span></td><td><input type="password" class="address" value="xxx" id="password"/></td></tr>
+<tr><td class="buttoner"><a class="button" data-action="AuthAccNew" id="_button_AuthAccNew"></a></td><td><span id="new_address"></span></td></tr>
+<tr><td class="buttoner"><span class="label" id="_label_AuthAccKey"></span></td><td><input type="text" class="long" value="" id="new_private"/><br/><a class="link" data-action="AuthCpyKey" id="_button_AuthCpyKey"></a>&nbsp;</td></tr>
+<tr><td class="buttoner"><span class="label" id="_label_AuthKstore"></span></td><td><textarea class="longfat" id="keystore"></textarea><br/><a class="link" data-action="AuthCpyKst" id="_button_AuthCpyExp"></a>&nbsp;</td></tr>
+<tr><td class="buttoner"><a class="button" data-action="AuthAccImp" id="_button_AuthAccImp"></a></td><td><input type="password" class="copy" value="" id="old_private"/></td></tr>
+<tr><td class="buttoner"><span class="label" id="_label_AuthorAddr"></span></td><td><span id="_keystore_status"></span></td></tr>
+</table>
+<div class="result" id="_account_status"></div>
+<div class="result" id="_help_account"></div>
+</div>
+<hr class="cp"/>
+<br/>
+<a name="SIGN"></a>
+<div class="header" id="_header_sign">SIGN</div>
+<hr class="cp"/>
+<div>
+<table class="cover">
+<tr><td class="buttoner"><span class="label" id="_label_AuthSigMsg"></span></td><td><textarea class="longfat" id="message"></textarea></td></tr>
+<tr><td class="buttoner"><a class="button" data-action="AuthSigSig" id="_button_AuthSigSig"></a></td><td><input type="text" class="long" value="" id="signature"/><br/><a class="link" data-action="AuthCpySig" id="_button_AuthCpySig"></a>&nbsp;</td></tr>
+<tr><td class="buttoner"><span class="label" id="_label_AuthSigUsr"></span></td><td><input type="text" class="long" value="0x00" id="signatory"/></td></tr>
+<tr><td class="buttoner"><a class="button" data-action="AuthSigVer" id="_button_AuthSigVer"></a></td><td><span class="result" id="verify"></span></td></tr>
+</table>
+<div class="result" id="_sign_status"></div>
+<div class="result" id="_help_sign"></div>
+</div>
+<hr class="cp"/>
+<br/>
+<div class="footer" id="_header_copyright">(C)</div>
+</div>
+<script src="https://cdn.jsdelivr.net/gh/asinerum/project/startCaller.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/asinerum/project/menu13a.js"></script>
+</body>
+</html>
