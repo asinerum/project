@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<html lang="en">
+<head>
+<title>ASINERUM ETHEREUM GAMING</title>
+<link href="https://cdn.jsdelivr.net/gh/asinerum/project/favicon.ico" rel="icon" type="image/x-icon"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+<link href="https://cdn.jsdelivr.net/npm/trumbowyg@2.21.0/dist/ui/trumbowyg.min.css" rel="stylesheet" type="text/css"/>
+<link href="https://cdn.jsdelivr.net/gh/asinerum/project/gui/fonts.css" rel="stylesheet" type="text/css"/>
+<link href="https://cdn.jsdelivr.net/gh/asinerum/project/gui/style.css" rel="stylesheet" type="text/css"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.6/angular.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js@1.0.0-beta.34/dist/web3.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/ethereumjs/browser-builds/dist/ethereumjs-tx/ethereumjs-tx-1.3.3.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/trumbowyg@2.21.0/dist/trumbowyg.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/asinerum/project/scr/xuteng14a2.js"></script>
+</head>
+<body class="private">
+<div class="body" id="body">
+<img class="banner" src="https://cdn.jsdelivr.net/gh/asinerum/project/gui/asinerum.jpg" id="_img_banner"/>
+<br/>
+<br/>
+<a name="GAME"></a>
+<div class="header" id="_header_game">GAME INFORMATION</div>
+<hr class="cp"/>
+<div>
+<table class="cover">
+<tr><td class="buttoner"><a class="button" data-action="UserTxView" id="_button_GameTxView">GAME ADDRESS</a></td><td><input type="text" class="long" value="0x00" id="txhash"/></td></tr>
+<tr><td class="buttoner"><span class="label" id="_label_GameTxNote">SYSTEM WARNING</span></td><td><span class="textnotice" id="_note_GameTxNote">WARNING</span></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_GameTxData">GAME DATA</span></td><td><span id="_txdata"></span></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_GameTxInfo">SPECIAL INFO</span></td><td><span id="_gameinfo">-</span></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_GameTxOpts">BET OPTION</span></td><td>
+  <select class="long" id="gamebet">
+  <option value="2">2: home/win</option>
+  <option value="1">1: draw/tie/over/odd</option>
+  <option value="0">0: away/lose/under/even</option>
+  </select></td></tr>
+<tr><td class="buttoner"><a class="button" data-action="GameTxSend" id="_button_GameTxPlay">PAY TO PLAY</a></td><td><input type="text" class="money" value="" id="gameeth"/>&nbsp;ETH</td></tr>
+</table>
+<div class="result" id="_game_status"></div>
+<div class="result" id="_game_hash"></div>
+<div class="result" id="_help_game"></div>
+</div>
+<hr class="cp"/>
+<br/>
+<a name="GAMER"></a>
+<div class="header" id="_header_gamer">GAME OWNER INFORMATION AND STATS</div>
+<hr class="cp"/>
+<div>
+<table class="cover">
+<tr><td class="buttoner"><a class="button" data-action="UserGoUser" id="_button_GameGoUser">OWNER ADDRESS</a></td><td><input disabled type="text" class="long" data-change="UserGoUser" id="user"/></td></tr>
+<tr><td class="buttoner"><span class="label" id="_label_Wallet1Xut">XUT BALANCE</span></td><td><span id="_xuteng_user"></span>&nbsp;XUT</td></tr>
+<tr><td class="buttoner"><span class="label" id="_label_Wallet2Eth">ETH BALANCE</span></td><td><span id="_ethers_user"></span>&nbsp;ETH</td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_Wallet5Rol">ROLE</span></td><td><span id="_pteRole_user"></span></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_Wallet6Rnk">RANK</span></td><td><span id="_pteTick_user"></span></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_Wallet7Lvl">LEVEL</span></td><td><span id="_pteLevl_user"></span></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_UserExFile">USER PROFILE</span></td><td><span id="_userProfile"></span></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_UserExHome">USER DOMAIN</span></td><td><span id="_userDomain"></span></td></tr>
+</table>
+<div class="result" id="_gamer_status"></div>
+<div class="result" id="_help_gamer"></div>
+</div>
+<hr class="cp"/>
+<br/>
+<div class="footer" id="_header_copyright">(C)2019 ASINERUM INTERNATIONAL PROJECT</div>
+</div>
+<script src="https://cdn.jsdelivr.net/gh/asinerum/project/startBroker.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/asinerum/project/menu14a.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/asinerum/project/game.js"></script>
+</body>
+</html>
