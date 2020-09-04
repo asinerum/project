@@ -10,6 +10,6 @@ const mint=async(walk=1000,cbf=console.log,femt=xutengFemt,exe=ercTokens,error=a
 const mine=async(walk=1000,cbf=console.log,femt=xutengFemt,exe=ercTokens,error=alert,act=mmsender(),b,k,i,m)=>{await(femt.methods.basicRate().call().then(r=>{b=r}));await(femt.methods.randomKey().call().then(r=>{k=r}));k=big(k).mod(big(b)).toString();for(i=1;i<walk;i++){await(femt.methods.keymod(i).call().then(r=>{m=r}));if(m==k)break;};await(femt.methods.mine(100,i).send(act).then(console.log).catch(e=>{error(e)}));exe(femt,sender,cbf)};
 ////////////////////////////////////////////////////////////[3]
 const ercTokens=function(sc=xutengFemt,user=sender,cbf=console.log){sc.methods.balanceOf(user).call().then(r=>cbf(w2s(r)))};
+const launchNid=function(rpc,nid,gas=1200000,scinfo=FEMT,scabi=ABIFEMT){maxgas=gas;CONTRACT=scinfo;SCABI=scabi;launchRpc(rpc,nid)};/*using:self*/
 const startFemt=function(gas=1200000,abi=ABIFEMT,addr=FEMT[network].addr){maxgas=gas;window.xutengFemt=_Contract(abi,addr);return(window.xutengFemt)};/*using:provider*/
-const launchFemt=function(rpc,nid,gas=1200000,scinfo=FEMT,scabi=ABIFEMT,func=launchNet){maxgas=gas;CONTRACT=scinfo;SCABI=scabi;CONTRACT[nid].rpcs=rpc;func(nid);gasPGwei(console.warn)};/*using:self*/
 ////////////////////////////////////////////////////////////
