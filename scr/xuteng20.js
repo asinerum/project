@@ -1040,7 +1040,7 @@ const accepted=function(divS){if(confirm(hi_prompt_fee+NEWLINE+gasfee+SPACE+COIN
 const launchNet=function(nid){if(!nid)nid=hashParam(ARGWNET);selectNet(switchNet(nid));};
 const selectNet=function(nid){switchNet(nid);changeNet();startXuteng(network);};
 const switchNet=function(nid,dnid){if(!dnid)dnid=MAINNET;if(CONTRACT[nid]){window.network=nid}else{window.network=dnid};netStyle();return(network);};
-const launchRpc=function(rpc,nid=MAINNET){CONTRACT[nid].rpcs=rpc;launchNet(nid);gasPGwei((e,gwei)=>{if(e||!gwei)console.error('RPC');});};
+const launchRpc=function(rpc,nid=MAINNET,func=launchNet){CONTRACT[nid].rpcs=rpc;func(nid);gasPGwei((e,gwei)=>{if(e||!gwei)console.error('RPC');});};
 const changeNet=function(){contractAddress=CONTRACT[network].addr;networkChainId=CONTRACT[network].ncid;networkStyle=CONTRACT[network].bcls;contractScanner=CONTRACT[network].scan+contractAddress;mr('bgxutengscan',contractScanner);};
 const getRpcNet=function(){window.rpcServer=gv(_rpcs);if(!window.rpcServer)window.rpcServer=CONTRACT[network].rpcs;return(rpcServer);};
 const getSender=function(){web3.eth.getAccounts().then((accounts)=>{sender=accounts[0];});};
