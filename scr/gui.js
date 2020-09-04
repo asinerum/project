@@ -4,15 +4,15 @@ const showError=function(div=TEST){dw(div,ERROR);};
 const showCancel=function(div=TEST){dw(div,CANCELED);};
 const showLoad=function(div=TEST){dw(div,'<img\tsrc="https://cdn.jsdelivr.net/gh/asinerum/project/loading.gif"/>');};
 ////////////////////////////////////////////////////////////
-const netStyle=function(){networkStyle=XUTENG[network].bcls;setStyle('body',networkStyle);};
+const netStyle=function(){networkStyle=CONTRACT[network].bcls;setStyle('body',networkStyle);};
 const accepted=function(divS){if(confirm(hi_prompt_fee+NEWLINE+gasfee+SPACE+COIN))return(true);dw(divS,CANCELED);return(false);};
 ////////////////////////////////////////////////////////////
 const launchNet=function(nid){if(!nid)nid=hashParam(ARGWNET);selectNet(switchNet(nid));};
 const selectNet=function(nid){switchNet(nid);changeNet();startXuteng(network);};
-const switchNet=function(nid,dnid){if(!dnid)dnid=MAINNET;if(XUTENG[nid]){window.network=nid}else{window.network=dnid};netStyle();return(network);};
-const launchRpc=function(rpc,nid=MAINNET){XUTENG[nid].rpcs=rpc;launchNet(nid);gasPGwei((e,gwei)=>{if(e||!gwei)console.error('RPC');});};
-const changeNet=function(){contractAddress=XUTENG[network].addr;networkChainId=XUTENG[network].ncid;networkStyle=XUTENG[network].bcls;contractScanner=XUTENG[network].scan+contractAddress;mr('bgxutengscan',contractScanner);};
-const getRpcNet=function(){window.rpcServer=gv(_rpcs);if(!window.rpcServer)window.rpcServer=XUTENG[network].rpcs;return(rpcServer);};
+const switchNet=function(nid,dnid){if(!dnid)dnid=MAINNET;if(CONTRACT[nid]){window.network=nid}else{window.network=dnid};netStyle();return(network);};
+const launchRpc=function(rpc,nid=MAINNET){CONTRACT[nid].rpcs=rpc;launchNet(nid);gasPGwei((e,gwei)=>{if(e||!gwei)console.error('RPC');});};
+const changeNet=function(){contractAddress=CONTRACT[network].addr;networkChainId=CONTRACT[network].ncid;networkStyle=CONTRACT[network].bcls;contractScanner=CONTRACT[network].scan+contractAddress;mr('bgxutengscan',contractScanner);};
+const getRpcNet=function(){window.rpcServer=gv(_rpcs);if(!window.rpcServer)window.rpcServer=CONTRACT[network].rpcs;return(rpcServer);};
 const getSender=function(){web3.eth.getAccounts().then((accounts)=>{sender=accounts[0];});};
 ////////////////////////////////////////////////////////////
 const wrdExpt=function(v){userExpt=v;if(!v||v==0)return(HYPHEN);return(fromDate(v));};
@@ -25,9 +25,9 @@ const showMaxGas=function(t){t=BLANK;Object.keys(MAXGASES).forEach(function(key)
 const showTxGwei=function(t){t=BLANK;Object.keys(TXGWEIS).forEach(function(key){t+='<option\tvalue="'+TXGWEIS[key]+'">'+key+':&nbsp;'+TXGWEIS[key]+'&nbsp;GWEI</option>';});console.log(t);dw(_txgwei,t);};
 ////////////////////////////////////////////////////////////
 const getDType=function(t){t=gv(_setType);return(t?t:TYPES.token_trading);};
-const networkById=function(ncid){Object.keys(XUTENG).forEach(function(key){if(XUTENG[key].ncid==ncid)return(ncid=key);});if(ncid>0)return(LOCALHOST);return(ncid);};
+const networkById=function(ncid){Object.keys(CONTRACT).forEach(function(key){if(CONTRACT[key].ncid==ncid)return(ncid=key);});if(ncid>0)return(LOCALHOST);return(ncid);};
 ////////////////////////////////////////////////////////////
-const showNetwork=function(t){t=BLANK;Object.keys(XUTENG).forEach(function(key){t+='<option'+((network==key)?'\tselected':BLANK)+'\tvalue="'+key+'">'+key+'</option>';});console.log(t);dw(_network,t);};
+const showNetwork=function(t){t=BLANK;Object.keys(CONTRACT).forEach(function(key){t+='<option'+((network==key)?'\tselected':BLANK)+'\tvalue="'+key+'">'+key+'</option>';});console.log(t);dw(_network,t);};
 const showDsModel=function(t){t=BLANK;Object.keys(MODELS).forEach(function(key){t+='<option\tvalue="'+key+'">'+MODELS[key].name+'</option>';});console.log(t);dw(_model,t);};
 const showAccount=function(t){t=BLANK;Object.keys(ADDRESSES).forEach(function(key){t+='<option\tvalue="'+key+'">'+key+'</option>';});console.log(t);dw(_account,t);};
 const optnAccount=function(t){t=BLANK;Object.keys(ADDRESSES).forEach(function(key){t+='<option\tvalue="'+ADDRESSES[key]+'">'+key+':&nbsp;'+ADDRESSES[key]+'</option>';});return(t);};
@@ -65,8 +65,8 @@ const stopSession=function(mis){setInterval(function(){senderPte=BLANK;password=
 const statsXuteng=function(mis){setInterval(function(){getData(sender,getDType(0));},mis);};
 const statsSender=function(mis){setInterval(function(){getSenderData();},mis);};
 ////////////////////////////////////////////////////////////
-const resetXuteng=function(){contractAddress=XUTENG[network].addr;window.xuteng=(new web3.eth.Contract(ABIXUTENG,contractAddress));setPGwei();};
-const web3Mainnet=function(){web3.eth.net.getNetworkType().then(function(net){if(net=='main'){switchNet(MAINNET);alert(hi_alert_ismainnet);}else{switchNet(net,LOCALHOST);alert(hi_alert_nomainnet);}networkChainId=XUTENG[network].ncid;resetXuteng();});getSender();};
+const resetXuteng=function(){contractAddress=CONTRACT[network].addr;window.xuteng=(new web3.eth.Contract(SCABI,contractAddress));setPGwei();};
+const web3Mainnet=function(){web3.eth.net.getNetworkType().then(function(net){if(net=='main'){switchNet(MAINNET);alert(hi_alert_ismainnet);}else{switchNet(net,LOCALHOST);alert(hi_alert_nomainnet);}networkChainId=CONTRACT[network].ncid;resetXuteng();});getSender();};
 const metaMainnet=function(){ethereum.autoRefreshOnNetworkChange=false;sender=ethereum.selectedAddress;if(!sender)getSender();if(ethereum.networkVersion!=1)alert(hi_alert_nomainnet);switchNet(networkById(ethereum.networkVersion));;;ethereum.on('networkChanged',function(ncid){console.log(ncid);switchNet(networkById(ncid));resetXuteng();console.log(network);networkChainId=ncid;if(ncid!=1)alert(hi_alert_nomainnet);});ethereum.on('accountsChanged',function(accounts){sender=accounts[0];});window.addEventListener('load',async()=>{try{await(ethereum.enable());}catch(err){alert(hi_alert_accdenied);}});};
 const getProvider=function(){if(window.ethereum){window.web3=(new Web3(ethereum));metaMainnet();}else{if(window.web3){window.web3=(new Web3(web3.currentProvider));web3Mainnet();}else{startXuteng(MAINNET);return(alert(hi_alert_metamasks));}};resetXuteng();};
 const startXuteng=function(nid){if(nid){switchNet(nid);window.web3=(new Web3(new Web3.providers.HttpProvider(getRpcNet())));resetXuteng();}else{getProvider();};};

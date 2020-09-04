@@ -4,6 +4,8 @@
 /// window.rpcServer;
 /// window.network='mainnet';
 ////////////////////////////////////////////////////////////
+var CONTRACT=XUTENG;
+var SCABI=ABIXUTENG;
 var contractAddress;
 var contractScanner;
 var networkChainId;
