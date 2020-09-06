@@ -29,13 +29,13 @@ const GEMT={
 mainnet:{ncid:1,addr:'',hash:'',rpcs:'https://mainnet.infura.io/metamask',bcls:'private',scan:'https://etherscan.io/token/'},
 rinkeby:{ncid:4,addr:'0x56448b2607A8f53D0db5cAb8d59975EA0A560cC3',hash:'0xdd5cb18f12a02552214670391287d455ee40bbd753e50674d93d7794e6e74292',rpcs:'https://rinkeby.infura.io/metamask',bcls:'team',scan:'https://rinkeby.etherscan.io/token/'},
 ropsten:{ncid:3,addr:'0xb99533f88c10c90C1241C9f52Ad0375a850BfD25',hash:'0x2bbba718aa80813e8c5803da7a1ec3371dc868fe8c8d7b04db2252d1d8d0a55d',rpcs:'https://ropsten.infura.io/metamask',bcls:'group',scan:'https://ropsten.etherscan.io/token/'},
-localhost:{ncid:1579432490134,addr:'0x2C278Ab23201B3D292E20E9093074fd190ccf801',hash:'0x819b663abf243747a32b435da66322d9ac40ad70745340940f48601b66537e9d',rpcs:'http://localhost:8545',bcls:'public',scan:''}};
+localhost:{ncid:1579432490134,addr:'0x33daC8F8a4825f832249Ec9037E1B784b9207ED7',hash:'0x44e678f7b017962d9092d3dd2778d191ccad2c360beecbe2a87512a060909c93',rpcs:'http://localhost:8545',bcls:'public',scan:''}};
 ////////////////////////////////////////////////////////////
 const FEMT={
 mainnet:{ncid:1,addr:'',hash:'',rpcs:'https://mainnet.infura.io/metamask',bcls:'private',scan:'https://etherscan.io/token/'},
 rinkeby:{ncid:4,addr:'0xb99533f88c10c90C1241C9f52Ad0375a850BfD25',hash:'0x038937388e63885d269e59256eafc761839c1b0410b6aa1120fb43432ad45c78',rpcs:'https://rinkeby.infura.io/metamask',bcls:'team',scan:'https://rinkeby.etherscan.io/token/'},
 ropsten:{ncid:3,addr:'0xd030028572aEec5f3B3fACFb3866940820378359',hash:'0x498af5b67345298156181fbc1a93f94b4c6e778efed7e7758b4b32853439e0b4',rpcs:'https://ropsten.infura.io/metamask',bcls:'group',scan:'https://ropsten.etherscan.io/token/'},
-localhost:{ncid:1579432490134,addr:'0xaD0134ddaEd890b711F2F5AB422F0E035ACe29a0',hash:'0x03e2cebaed9bfa696624bd8f9837e4d5fa77eb5a5d2b6971ad8c3c03680dcbee',rpcs:'http://localhost:8545',bcls:'public',scan:''}};
+localhost:{ncid:1579432490134,addr:'0x2d2f404640f71FfC064Ae5e734Fa54124f9BDb3a',hash:'0xe2b243e44a5a205171b4af73e53e945a9c461ff15ff94ecd4719501523298746',rpcs:'http://localhost:8545',bcls:'public',scan:''}};
 ////////////////////////////////////////////////////////////
 const XUTENG={
 mainnet:{ncid:1,addr:'0x872Bc37697f45526fc0C960E19654c8714dB6957',hash:'0x1e7ae86d7fd7cba08377c641a50ff38ccbeefa50f78a369613483abdfc88f8ab',rpcs:'https://mainnet.infura.io/metamask',bcls:'private',scan:'https://etherscan.io/token/'},
