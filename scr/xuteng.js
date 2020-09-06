@@ -27,14 +27,14 @@ test:'0x102C30d2932307B9D7eb18Cf51B6539A609C3FBF'};
 ////////////////////////////////////////////////////////////
 const GEMT={
 mainnet:{ncid:1,addr:'',hash:'',rpcs:'https://mainnet.infura.io/metamask',bcls:'private',scan:'https://etherscan.io/token/'},
-rinkeby:{ncid:4,addr:'0x56448b2607A8f53D0db5cAb8d59975EA0A560cC3',hash:'0xdd5cb18f12a02552214670391287d455ee40bbd753e50674d93d7794e6e74292',rpcs:'https://rinkeby.infura.io/metamask',bcls:'team',scan:'https://rinkeby.etherscan.io/token/'},
-ropsten:{ncid:3,addr:'0xb99533f88c10c90C1241C9f52Ad0375a850BfD25',hash:'0x2bbba718aa80813e8c5803da7a1ec3371dc868fe8c8d7b04db2252d1d8d0a55d',rpcs:'https://ropsten.infura.io/metamask',bcls:'group',scan:'https://ropsten.etherscan.io/token/'},
+rinkeby:{ncid:4,addr:'0x65FbFF53f04f603177f73f4FB71DDfD2eb921a34',hash:'0x11bd126b9f14079b9ebee816fda7d9acc9ef38774066483773bf9d28ce9b0ca8',rpcs:'https://rinkeby.infura.io/metamask',bcls:'team',scan:'https://rinkeby.etherscan.io/token/'},
+ropsten:{ncid:3,addr:'0x176680FeeF221871194E520a28DB988edD203D5F',hash:'0x2bfc5a3b2a943b33e4d1c41721cfa722a7976d6b16a666603d03009429a1d635',rpcs:'https://ropsten.infura.io/metamask',bcls:'group',scan:'https://ropsten.etherscan.io/token/'},
 localhost:{ncid:1579432490134,addr:'0x33daC8F8a4825f832249Ec9037E1B784b9207ED7',hash:'0x44e678f7b017962d9092d3dd2778d191ccad2c360beecbe2a87512a060909c93',rpcs:'http://localhost:8545',bcls:'public',scan:''}};
 ////////////////////////////////////////////////////////////
 const FEMT={
 mainnet:{ncid:1,addr:'',hash:'',rpcs:'https://mainnet.infura.io/metamask',bcls:'private',scan:'https://etherscan.io/token/'},
-rinkeby:{ncid:4,addr:'0xb99533f88c10c90C1241C9f52Ad0375a850BfD25',hash:'0x038937388e63885d269e59256eafc761839c1b0410b6aa1120fb43432ad45c78',rpcs:'https://rinkeby.infura.io/metamask',bcls:'team',scan:'https://rinkeby.etherscan.io/token/'},
-ropsten:{ncid:3,addr:'0xd030028572aEec5f3B3fACFb3866940820378359',hash:'0x498af5b67345298156181fbc1a93f94b4c6e778efed7e7758b4b32853439e0b4',rpcs:'https://ropsten.infura.io/metamask',bcls:'group',scan:'https://ropsten.etherscan.io/token/'},
+rinkeby:{ncid:4,addr:'0x176680FeeF221871194E520a28DB988edD203D5F',hash:'0xb780692715dd5e3d8ac1b9cbb7f0b93661e70f438738f6826687d068966dcbe4',rpcs:'https://rinkeby.infura.io/metamask',bcls:'team',scan:'https://rinkeby.etherscan.io/token/'},
+ropsten:{ncid:3,addr:'0x56448b2607A8f53D0db5cAb8d59975EA0A560cC3',hash:'0x6bcf5e1f88f75090623243c45a619ae5fe8d0ce33e18ece5bfeccb8f0a7741c8',rpcs:'https://ropsten.infura.io/metamask',bcls:'group',scan:'https://ropsten.etherscan.io/token/'},
 localhost:{ncid:1579432490134,addr:'0x2d2f404640f71FfC064Ae5e734Fa54124f9BDb3a',hash:'0xe2b243e44a5a205171b4af73e53e945a9c461ff15ff94ecd4719501523298746',rpcs:'http://localhost:8545',bcls:'public',scan:''}};
 ////////////////////////////////////////////////////////////
 const XUTENG={
