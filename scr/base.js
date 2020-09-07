@@ -9,7 +9,7 @@ const FEMT={
 mainnet:{ncid:1,addr:'',hash:'',rpcs:'https://mainnet.infura.io/metamask',bcls:'private',scan:'https://etherscan.io/token/'},
 rinkeby:{ncid:4,addr:'0x176680FeeF221871194E520a28DB988edD203D5F',hash:'0xb780692715dd5e3d8ac1b9cbb7f0b93661e70f438738f6826687d068966dcbe4',rpcs:'https://rinkeby.infura.io/metamask',bcls:'team',scan:'https://rinkeby.etherscan.io/token/'},
 ropsten:{ncid:3,addr:'0x56448b2607A8f53D0db5cAb8d59975EA0A560cC3',hash:'0x6bcf5e1f88f75090623243c45a619ae5fe8d0ce33e18ece5bfeccb8f0a7741c8',rpcs:'https://ropsten.infura.io/metamask',bcls:'group',scan:'https://ropsten.etherscan.io/token/'},
-localhost:{ncid:1579432490134,addr:'0x2d2f404640f71FfC064Ae5e734Fa54124f9BDb3a',hash:'0xe2b243e44a5a205171b4af73e53e945a9c461ff15ff94ecd4719501523298746',rpcs:'http://localhost:8545',bcls:'public',scan:''}};
+localhost:{ncid:1579432490134,addr:'0x4883d69EE0fd221D3f7da84895eb2EcfCcD5Db94',hash:'0xa884c312f4ee58bfb13538d5fa1b7d66dea5a416ced1e83cba0cc53d1289ae06',rpcs:'http://localhost:8545',bcls:'public',scan:''}};
 ////////////////////////////////////////////////////////////
 const XUTENG={
 mainnet:{ncid:1,addr:'0x872Bc37697f45526fc0C960E19654c8714dB6957',hash:'0x1e7ae86d7fd7cba08377c641a50ff38ccbeefa50f78a369613483abdfc88f8ab',rpcs:'https://mainnet.infura.io/metamask',bcls:'private',scan:'https://etherscan.io/token/'},
