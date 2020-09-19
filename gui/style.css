@@ -102,6 +102,16 @@ iframe{
  width:100%;
  height:auto;
  frameborder:0;}
+.tright{
+ text-align:right;}
+.tcenter{
+ text-align:center;}
+.tjustify{
+ text-align:justify;}
+.ttop{
+ vertical-align:text-top;}
+.tbottom{
+ vertical-align:text-bottom;}
 .axut{
  color:white;
  background-color:DodgerBlue;

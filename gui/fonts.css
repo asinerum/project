@@ -1,36 +1,36 @@
 @font-face {
   font-family: 'GIUN_TAHOMA';
-  src: url('https://raw.githubusercontent.com/asinerum/project/master/static/fonts/TAHOMA.woff') format('woff');
+  src: url('https://cdn.jsdelivr.net/gh/asinerum/project/static/fonts/TAHOMA.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 }
 @font-face {
   font-family: 'GIUN_TAHOMA';
-  src: url('https://raw.githubusercontent.com/asinerum/project/master/static/fonts/tahomabd.woff') format('woff');
+  src: url('https://cdn.jsdelivr.net/gh/asinerum/project/static/fonts/tahomabd.woff') format('woff');
   font-weight: bold;
   font-style: normal;
 }
 @font-face {
   font-family: 'GIUN_ARIAL';
-  src: url('https://raw.githubusercontent.com/asinerum/project/master/static/fonts/arial.woff') format('woff');
+  src: url('https://cdn.jsdelivr.net/gh/asinerum/project/static/fonts/arial.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 }
 @font-face {
   font-family: 'GARAMOND';
-  src: url('https://raw.githubusercontent.com/asinerum/project/master/static/fonts/GARA.woff') format('woff');
+  src: url('https://cdn.jsdelivr.net/gh/asinerum/project/static/fonts/GARA.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 }
 @font-face {
   font-family: 'GARAMOND';
-  src: url('https://raw.githubusercontent.com/asinerum/project/master/static/fonts/GARABD.woff') format('woff');
+  src: url('https://cdn.jsdelivr.net/gh/asinerum/project/static/fonts/GARABD.woff') format('woff');
   font-weight: bold;
   font-style: normal;
 }
 @font-face {
   font-family: 'GARAMOND';
-  src: url('https://raw.githubusercontent.com/asinerum/project/master/static/fonts/GARAIT.woff') format('woff');
+  src: url('https://cdn.jsdelivr.net/gh/asinerum/project/static/fonts/GARAIT.woff') format('woff');
   font-weight: normal;
   font-style: italic;
 }
