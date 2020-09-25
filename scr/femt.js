@@ -11,9 +11,18 @@ const mine=async(method=100,cbf=console.log,femt=xuteng)=>{mint(method,cbf,femt,
 ////////////////////////////////////////////////////////////[2]
 const funcMine=function(contract,nonce,method){return(method?contract.methods.mine(method,nonce):contract.methods.mine(nonce))};
 const argsMine=function(nonce,method){return(method?[method,nonce]:[nonce])};
-////////////////////////////////////////////////////////////[4]
+////////////////////////////////////////////////////////////[7]
 const ercTokens=function(sc=xutengFemt,user=sender,cbf=console.log){sc.methods.balanceOf(user).call().then(r=>cbf(w2s(r)))};
 const launchNid=function(rpc,nid,gas=1200000,scinfo=FEMT,scabi=ABIFEMT){maxgas=gas;CONTRACT=scinfo;SCABI=scabi;launchRpc(rpc,nid)};/*using:self*/
 const startFemt=function(gas=1200000,abi=ABIFEMT,addr=FEMT[network].addr){maxgas=gas;window.xutengFemt=_Contract(abi,addr);return(window.xutengFemt)};/*using:provider*/
 const startGemt=function(gas=1200000,abi=ABIGEMT,addr=GEMT[network].addr){return(startFemt(gas,abi,addr))};
+const startNemt=function(gas=1200000,abi=ABINEMT,addr=NEMT[network].addr){return(startFemt(gas,abi,addr))};
+const startLeft=function(gas=1200000,abi=ABILEFT,addr=LEFT[network].addr){return(startFemt(gas,abi,addr))};
+const startExet=function(gas=1200000,abi=ABIEXET,addr=EXET[network].addr){return(startFemt(gas,abi,addr))};
+////////////////////////////////////////////////////////////[5]
+const initFemt=function(){startXuteng();startFemt();};
+const initGemt=function(){startXuteng();startGemt();};
+const initNemt=function(){startXuteng();startNemt();};
+const initLeft=function(){startXuteng();startLeft();};
+const initExet=function(){startXuteng();startExet();};
 ////////////////////////////////////////////////////////////
