@@ -5302,24 +5302,24 @@ const PRIVATEKEY = {
     try {
       hex = Bitcoin.Base58.decode(base58Encrypted);
     } catch (e) {
-      cbf(100,null);
+      cbf(100, null);
       return;
     }
     // 43 bytes: 2 bytes prefix, 37 bytes payload, 4 bytes checksum
     if (hex.length != 43) {
-      cbf(110,null);
+      cbf(110, null);
       return;
     }
     // first byte is always 0x01 
     else if (hex[0] != 0x01) {
-      cbf(120,null);
+      cbf(120, null);
       return;
     }
     var expChecksum = hex.slice(-4);
     hex = hex.slice(0, -4);
     var checksum = Bitcoin.Util.dsha256(hex);
     if (checksum[0] != expChecksum[0] || checksum[1] != expChecksum[1] || checksum[2] != expChecksum[2] || checksum[3] != expChecksum[3]) {
-      cbf(130,null);
+      cbf(130, null);
       return;
     }
     var isCompPoint = false;
@@ -5331,7 +5331,7 @@ const PRIVATEKEY = {
         isCompPoint = true;
       }
       else if (hex[2] != 0xc0) {
-        cbf(140,null);
+        cbf(140, null);
         return;
       }
     }
@@ -5341,12 +5341,12 @@ const PRIVATEKEY = {
       isCompPoint = (hex[2] & 0x20) != 0;
       hasLotSeq = (hex[2] & 0x04) != 0;
       if ((hex[2] & 0x24) != hex[2]) {
-        cbf(150,null);
+        cbf(150, null);
         return;
       }
     }
     else {
-      cbf(160,null);
+      cbf(160, null);
       return;
     }
     var decrypted;
@@ -5356,10 +5356,10 @@ const PRIVATEKEY = {
       var base58AddrText = tmpkey.setCompressed(isCompPoint).getBitcoinAddress(); // isCompPoint using closure
       checksum = Bitcoin.Util.dsha256(base58AddrText); // checksum using closure
       if (checksum[0] != hex[3] || checksum[1] != hex[4] || checksum[2] != hex[5] || checksum[3] != hex[6]) {
-        cbf(170,null);
+        cbf(170, null);
         return;
       }
-      cbf(tmpkey.getBitcoinPrivateKeyByteArray());
+      cbf(null, tmpkey.getBitcoinPrivateKeyByteArray());
     };
     if (!isECMult) {
       var addresshash = hex.slice(3, 7);
@@ -5419,7 +5419,7 @@ const PRIVATEKEY = {
       var encryptedKey = [0x01, 0x42, flagByte].concat(salt);
       encryptedKey = encryptedKey.concat(Crypto.AES.encrypt(privKeyBytes, derivedBytes.slice(32), AES_opts));
       encryptedKey = encryptedKey.concat(Bitcoin.Util.dsha256(encryptedKey).slice(0, 4));
-      cbf(Bitcoin.Base58.encode(encryptedKey));
+      cbf(null, Bitcoin.Base58.encode(encryptedKey));
     });
   },
   BIP38GenerateIntermediatePointAsync: function (passphrase, lotNum, sequenceNum, cbf) {
@@ -5454,7 +5454,7 @@ const PRIVATEKEY = {
       var intermediate = magicBytes.concat(ownerEntropy).concat(passpoint);
       // base58check encode
       intermediate = intermediate.concat(Bitcoin.Util.dsha256(intermediate).slice(0, 4));
-      cbf(Bitcoin.Base58.encode(intermediate));
+      cbf(null, Bitcoin.Base58.encode(intermediate));
     });
   },
   BIP38GenerateECAddressAsync: function (intermediate, compressed, cbf) {
@@ -5498,7 +5498,7 @@ const PRIVATEKEY = {
       var encryptedKey = [0x01, 0x43, flagByte].concat(addressHash).concat(ownerEntropy).concat(encryptedPart1.slice(0, 8)).concat(encryptedSeedB);
       // base58check encode
       encryptedKey = encryptedKey.concat(Bitcoin.Util.dsha256(encryptedKey).slice(0, 4));
-      cbf(generatedAddress, Bitcoin.Base58.encode(encryptedKey));
+      cbf(null, generatedAddress, Bitcoin.Base58.encode(encryptedKey));
     });
   }
 };
