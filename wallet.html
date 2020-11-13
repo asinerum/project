@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<html lang="en">
+<head>
+<title>ASINERUM PERMANENT ACCOUNT</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+<link href="https://cdn.jsdelivr.net/npm/trumbowyg@2.21.0/dist/ui/trumbowyg.min.css" rel="stylesheet" type="text/css"/>
+<link href="https://cdn.jsdelivr.net/gh/asinerum/project/gui/fonts.css" rel="stylesheet" type="text/css"/>
+<link href="https://cdn.jsdelivr.net/gh/asinerum/project/gui/style.css" rel="stylesheet" type="text/css"/>
+<link href="https://cdn.jsdelivr.net/gh/asinerum/project/favicon.ico" rel="icon" type="image/x-icon"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.6/angular.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/trumbowyg@2.21.0/dist/trumbowyg.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js@1.0.0-beta.34/dist/web3.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/ethereumjs/browser-builds/dist/ethereumjs-tx/ethereumjs-tx-1.3.3.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/asinerum/project/scr/_bip.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/asinerum/project/scr/_qrcode.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/asinerum/project/scr/xuteng.js"></script>
+</head>
+<body class="private">
+<div class="body" id="body">
+<img class="banner" src="https://cdn.jsdelivr.net/gh/asinerum/project/gui/asinerum.jpg" id="_img_banner"/>
+<br/>
+<br/>
+<a name="ACCOUNT"></a>
+<div class="header" id="_header_BipAccount">CREATING A PERMANENT ACCOUNT</div>
+<hr class="cp"/>
+<div>
+<table class="cover">
+<tr><td class="buttoner"><a class="button" data-action="BipeAccNew" id="_button_BipeAccNew">CREATE</a></td><td><span class="textnotice" id="_label_BipeAccNew"></span></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_BipeAccBtc">BITCOIN WALLET</span></td><td><input type="text" class="address" value="" id="new_btc"/></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_BipeAccEth">ETHEREUM WALLET</span></td><td><input type="text" class="address" value="" id="new_eth"/></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_BipeAccKey">BTC PRIVATE KEY</span></td><td><input type="text" class="copy" value="" id="new_key"/></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_BipeAccHex">ETH PRIVATE KEY</span></td><td><input type="text" class="copy" value="" id="new_hex"/></td></tr>
+<tr><td class="buttoner"><span class="label" id="_label_BipCaution">CAUTION</span></td><td><span class="textnotice" id="_label_BipCautionNote">PRIVATE KEYS MUST BE KEPT SAFE AND SECRET</span></td></tr>
+</table>
+<div class="result" id="_account_status"><span id="_label_BipAccountNote">BE SURE THAT NOBODY CAN SEE YOUR SCREEN THEN CLICK "CREATE"</span></div>
+<div class="result" id="_help_account"></div>
+</div>
+<hr class="cp"/>
+<br/>
+<a name="ENCODE"></a>
+<div class="header" id="_header_BipEncrypt">ENCRYPTING AN ORIGINAL PRIVATE KEY</div>
+<hr class="cp"/>
+<div>
+<table class="cover">
+<tr><td class="buttoner"><span class="trlab" id="_label_BipeOldKey">BTC/ETH PRIVATE KEY</span></td><td><input type="text" class="copy" value="" id="old_key"/></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_BipeEncPwd">PASSCODE TO ENCRYPT</span></td><td><input type="password" class="address" value="" id="enc_pwd"/></td></tr>
+<tr><td class="buttoner"><a class="button" data-action="BipEncrypt" id="_button_BipEncrypt">ENCRYPT</a></td><td><span class="textnotice" id="_label_BipEncrypt"></span></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_BipeOldBtc">BITCOIN WALLET</span></td><td><input type="text" class="address" value="" id="old_btc"/></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_BipeOldEth">ETHEREUM WALLET</span></td><td><input type="text" class="address" value="" id="old_eth"/></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_BipeEncBip">BIP38 ENCRYPTED KEY</span></td><td><input type="text" class="address" value="" id="enc_bip"/></td></tr>
+<tr><td class="buttoner"><span class="label" id="_label_BipWarning">WARNING</span></td><td><span class="textnotice" id="_label_BipWarningNote">PASSCODE CAN BE NEITHER RESTORED NOR RESET</span></td></tr>
+</table>
+<div class="result" id="_encrypt_status"><span id="_label_BipEncryptNote">TIPS: ENCRYPTED KEY SHOULD BE PRINTED TO PAPER</span></div>
+<div class="result" id="_help_encrypt"></div>
+</div>
+<hr class="cp"/>
+<br/>
+<a name="DECODE"></a>
+<div class="header" id="_header_BipDecrypt">DECRYPTING AN ENCRYPTED KEY</div>
+<hr class="cp"/>
+<div>
+<table class="cover">
+<tr><td class="buttoner"><span class="trlab" id="_label_BipeDecBip">BIP38 ENCRYPTED KEY</span></td><td><input type="text" class="address" value="" id="dec_bip"/></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_BipeDecPwd">PASSCODE TO DECRYPT</span></td><td><input type="password" class="address" value="" id="dec_pwd"/></td></tr>
+<tr><td class="buttoner"><a class="button" data-action="BipDecrypt" id="_button_BipDecrypt">DECRYPT</a></td><td><span class="textnotice" id="_label_BipDecrypt"></span></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_BipeExpBtc">BITCOIN WALLET</span></td><td><input type="text" class="address" value="" id="exp_btc"/></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_BipeExpEth">ETHEREUM WALLET</span></td><td><input type="text" class="address" value="" id="exp_eth"/></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_BipeExpKey">BTC PRIVATE KEY</span></td><td><input type="text" class="copy" value="" id="exp_key"/></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_BipeExpHex">ETH PRIVATE KEY</span></td><td><input type="text" class="copy" value="" id="exp_hex"/></td></tr>
+</table>
+<div class="result" id="_decrypt_status"></div>
+<div class="result" id="_help_decrypt"></div>
+</div>
+<hr class="cp"/>
+<br/>
+<a name="PROJECT"></a>
+<div class="header" id="_header_BipProject">APPLICATION DESCRIPTION</div>
+<hr class="cp"/>
+<div>
+<table class="cover">
+<tr><td class="buttoner"><span class="trlab" id="_label_BipAdAbout">ABOUT</span></td><td><span id="_label_BipAdAboutNote">CLIENT SIDE PAPER WALLET GENERATOR</span></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_BipAdUsage">USAGE</span></td><td><span id="_label_BipAdUsageNote">PAGES SHOULD BE SAVED AND SEEN OFFLINE</span></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_BipAdRight">COPYRIGHT</span></td><td><span id="_label_BipAdRightNote">FREE TO USE FOR ANY PURPOSE WITH NO WARRANTY</span></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_BipAdPrBtc">BTC DONATION</span></td><td><span class="result">1CXsNnd148Dv7Nj9p4oTBYkVJ8NDvghac5</span></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_BipAdPrEth">ETH DONATION</span></td><td><span class="result">0x537ca62B4c232af1ef82294BE771B824cCc078Ff</span></td></tr>
+</table>
+<div class="result" id="_ad_status"></div>
+<div class="result" id="_help_ad"></div>
+</div>
+<hr class="cp"/>
+<br/>
+<div class="footer" id="_header_copyright">(C)</div>
+</div>
+<script src="https://cdn.jsdelivr.net/gh/asinerum/project/startPure.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/asinerum/project/menu21a.js"></script>
+</body>
+</html>
