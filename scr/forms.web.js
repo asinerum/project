@@ -1,4 +1,6 @@
 ////////////////////////////////////////////////////////////
+const clearTags=function(tag='input'){$(COLON+tag).val(EMPTY);};
+////////////////////////////////////////////////////////////
 const ww=function(d,w){return(warn(d,w));};
 const prt=function(q,a,t){t=prompt(q);return(t==a);};
 const warn=function(d,w){dw(d,'<span\tclass="textwarn">'+w+'</span>');};

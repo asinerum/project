@@ -1,3 +1,11 @@
+////////////////////////////////////////////////////////////[7]
+const _Time=function(){return(new Date().getTime())};
+const _Array=function(size){return(new Array(size))};
+const _Random=function(){return(new SecureRandom())};
+const _Integer=function(dat,base){return(new BigInteger(dat,base))};
+const _Address=function(hash){return(new Bitcoin.Address(hash))};
+const _ECKey=function(key){return(new Bitcoin.ECKey(key))};
+const _QRCode=function(typ,ec){return(new QRCode(typ,ec))};
 ////////////////////////////////////////////////////////////[8]
 const _Set=function(val){return(new Set(val))};
 const _Date=function(val){return(new Date(val))};
