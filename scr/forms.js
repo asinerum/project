@@ -25,6 +25,8 @@ const fromWei=function(w){return(web3.utils.fromWei(w.toString(),ETHER));};
 const fromGwei=function(g){return(fromWei(gtoWei(g)));};
 const s2wHex=function(s){return(toHex(s2w(s)));};
 const g2wHex=function(g){return(toHex(gtoWei(g)));};
+const n2Hex=function(n,dec=18){return(toHex(toDec(n,dec)));};
+const toDec=function(n,dec=18,a,s,u){n=n.toString();dec=parseInt(dec);if(isNaN(n)||isNaN(dec)||n<=0)return(ZERO);a=n.split(DOT);s=a[0];u=a[1];if(s||(s=ZERO),u||(u=ZERO),u.length>dec)return(ZERO);for(;u.length<dec;)u+=ZERO;return(big(s).mul(big(10).pow(big(dec))).add(big(u)).toString());};
 ////////////////////////////////////////////////////////////
 const setInput=function(obj){return(JSON.stringify({obj:obj}));};
 const getInput=function(tx,cbf=console.log){if(!hvalid(tx))return(cbf(ERROR,null));web3.eth.getTransaction(tx,function(err,result){if(err||!result||!result.input)return(cbf(err,null));cbf(null,hexObj(result.input).obj);});};
