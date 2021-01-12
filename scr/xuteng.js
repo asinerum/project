@@ -69,9 +69,9 @@ localhost:{ncid:1579432490134,addr:'0x78b787bC341baC70030d81e90FD61c3D2C8386bE',
 ////////////////////////////////////////////////////////////
 const ETHERSCAN={
 api:{
-rinkeby:'https://api-rinkeby.etherscan.io/api?module=proxy',
-ropsten:'https://api-ropsten.etherscan.io/api?module=proxy',
-mainnet:'https://api.etherscan.io/api?module=proxy'},
+rinkeby:'https://api-rinkeby.etherscan.io/api?',
+ropsten:'https://api-ropsten.etherscan.io/api?',
+mainnet:'https://api.etherscan.io/api?'},
 push:{
 rinkeby:'https://rinkeby.etherscan.io/pushTx',
 ropsten:'https://ropsten.etherscan.io/pushTx',
@@ -83,11 +83,14 @@ const TXDECODERS=[
 ////////////////////////////////////////////////////////////
 const PROXIES=[
 {/*https://etherscan.io/apis#proxy*/
-getTransactionCount:function(addr,ncid=MAINNET){return(`${ETHERSCAN.api[ncid]}&action=eth_getTransactionCount&address=${addr}`)},
-getContractDecimals:function(addr,ncid=MAINNET){return(`${ETHERSCAN.api[ncid]}&action=eth_call&to=${addr}&data=0x313ce567&tag=latest`)},
-sendToSmartContract:function(addr,data,ncid=MAINNET){return(`${ETHERSCAN.api[ncid]}&action=eth_call&to=${addr}&data=${data}&tag=latest`)},
-sendRawTransaction:function(hex,ncid=MAINNET){return(`${ETHERSCAN.api[ncid]}&action=eth_sendRawTransaction&hex=${hex}`)},
-getGasPrice:function(ncid=MAINNET){return(`${ETHERSCAN.api[ncid]}&action=eth_gasPrice`)}}];
+getTransactionCount:function(addr,ncid=MAINNET){return(`${ETHERSCAN.api[ncid]}module=proxy&action=eth_getTransactionCount&address=${addr}`)},
+getContractDecimals:function(addr,ncid=MAINNET){return(`${ETHERSCAN.api[ncid]}module=proxy&action=eth_call&to=${addr}&data=0x313ce567&tag=latest`)},
+getTokenTotalSupply:function(addr,ncid=MAINNET){return(`${ETHERSCAN.api[ncid]}module=proxy&action=eth_call&to=${addr}&data=0x18160ddd&tag=latest`)},
+getUserTokenBalance:function(addr,acc,ncid=MAINNET){return(`${ETHERSCAN.api[ncid]}module=account&action=tokenbalance&contractaddress=${addr}&address=${acc}&tag=latest`)},
+getUserEtherBalance:function(acc,ncid=MAINNET){return(`${ETHERSCAN.api[ncid]}module=account&action=balance&address=${acc}&tag=latest`)},
+sendToSmartContract:function(addr,data,ncid=MAINNET){return(`${ETHERSCAN.api[ncid]}module=proxy&action=eth_call&to=${addr}&data=${data}&tag=latest`)},
+sendRawTransaction:function(hex,ncid=MAINNET){return(`${ETHERSCAN.api[ncid]}module=proxy&action=eth_sendRawTransaction&hex=${hex}`)},
+getGasPrice:function(ncid=MAINNET){return(`${ETHERSCAN.api[ncid]}module=proxy&action=eth_gasPrice`)}}];
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
 const EXTOKENS={
@@ -1333,6 +1336,10 @@ const dwAddrAliasInfo=function(alias,divHash,divOwner,divAddr,cbf){alias=alias.t
 ////////////////////////////////////////////////////////////
 const rawTransfer=function(acc,pte,to,amt,scid,price,gas,status=TEST,out=TEST,test=true,eth=0,dec){if(!EXTOKENS[scid])return(dw(status,INVALID));if(test){chooseNet(TESTNET);dec=TESTTOKENS[scid].dec;scid=TESTTOKENS[scid].addr;}else{chooseNet(MAINNET);dec=EXTOKENS[scid].dec;};showLoad(status);rawGetNonce(acc,function(err,nonce){if(err)return(dw(status,err));Transfer(to,amt,dec,function(err,result){senderPte=EMPTY;if(err||!result)return(dw(status,err));dw(status,DONE);db(out,result);},scid,eth,price,gas,nonce,acc,pte,true,false);});};
 const rawPayEther=function(acc,pte,to,eth,msg,price,gas,status=TEST,out=TEST,test=true){if(test){chooseNet(TESTNET);}else{chooseNet(MAINNET);};showLoad(status);rawGetNonce(acc,function(err,nonce){if(err)return(dw(status,err));PayEther(to,eth,msg,function(err,result){senderPte=EMPTY;if(err||!result)return(dw(status,err));dw(status,DONE);db(out,result);},price,gas,nonce,acc,pte,true,false);});};
+////////////////////////////////////////////////////////////
+const rawTokenSum=function(addr=XUTENG[network].addr,cbf=console.log){axios.get(PROXIES[0].getTokenTotalSupply(addr,network)).then(r=>{cbf(null,fromHex(r.data.result))}).catch(e=>{cbf(e,null)});};/*pennies*/
+const rawAccToken=function(addr=XUTENG[network].addr,acc=sender,cbf=console.log){axios.get(PROXIES[0].getUserTokenBalance(addr,acc,network)).then(r=>{cbf(null,fromHex(r.data.result))}).catch(e=>{cbf(e,null)});};/*pennies*/
+const rawAccEther=function(acc=sender,cbf=console.log){axios.get(PROXIES[0].getUserEtherBalance(acc,network)).then(r=>{cbf(null,fromWHex(r.data.result))}).catch(e=>{cbf(e,null)});};/*ethers*/
 ////////////////////////////////////////////////////////////
 const rawDecimals=function(addr=XUTENG[network].addr,cbf=console.log){axios.get(PROXIES[0].getContractDecimals(addr,network)).then(r=>{cbf(null,fromHex(r.data.result))}).catch(e=>{cbf(e,null)});};
 const rawGetNonce=function(addr=sender,cbf=console.log){axios.get(PROXIES[0].getTransactionCount(addr,network)).then(r=>{cbf(null,fromHex(r.data.result))}).catch(e=>{cbf(e,null)});};
