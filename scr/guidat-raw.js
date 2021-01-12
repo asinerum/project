@@ -1,0 +1,8 @@
+////////////////////////////////////////////////////////////
+const rawTransfer=function(acc,pte,to,amt,scid,price,gas,status=TEST,out=TEST,test=true,eth=0){if(!EXTOKENS[scid])return(dw(status,INVALID));if(test){chooseNet(TESTNET);dec=TESTTOKENS[scid].dec;scid=TESTTOKENS[scid].addr;}else{chooseNet(MAINNET);};showLoad(status);rawGetNonce(acc,function(err,nonce){if(err)return(dw(status,err));Transfer(to,amt,dec,function(err,result){senderPte=EMPTY;if(err||!result)return(dw(status,err));dw(status,DONE);db(out,result);},scid,eth,price,gas,nonce,acc,pte,true,false);});};
+const rawPayEther=function(acc,pte,to,eth,msg,price,gas,status=TEST,out=TEST,test=true){if(test){chooseNet(TESTNET);}else{chooseNet(MAINNET);};showLoad(status);rawGetNonce(acc,function(err,nonce){if(err)return(dw(status,err));PayEther(to,eth,msg,function(err,result){senderPte=EMPTY;if(err||!result)return(dw(status,err));dw(status,DONE);db(out,result);},price,gas,nonce,acc,pte,true,false);});};
+////////////////////////////////////////////////////////////
+const rawDecimals=function(addr=XUTENG[network].addr,cbf=console.log){axios.get(PROXIES[0].getContractDecimals(addr,network)).then(r=>{cbf(null,fromHex(r.data.result))}).catch(e=>{cbf(e,null)});};
+const rawGetNonce=function(addr=sender,cbf=console.log){axios.get(PROXIES[0].getTransactionCount(addr,network)).then(r=>{cbf(null,fromHex(r.data.result))}).catch(e=>{cbf(e,null)});};
+const rawGetPrice=function(cbf=console.log){axios.get(PROXIES[0].getGasPrice(network)).then(r=>{cbf(null,fromHex(r.data.result)/1000000000)}).catch(e=>{cbf(e,null)});};
+////////////////////////////////////////////////////////////

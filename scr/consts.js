@@ -17,6 +17,7 @@ const REF='ref';
 const BODY='body';
 const TEST='test';
 const MAINNET='mainnet';
+const TESTNET='rinkeby';
 const LOCALHOST='localhost';
 const ARGADDR='a';
 const ARGEXEC='e';

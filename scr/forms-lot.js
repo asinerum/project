@@ -29,9 +29,6 @@ const strCut=function(str,sb,se){if(!sb)sb='{';if(!se)se='}';str=str.substring(s
 const dedata=function(hexinput,s){s=depara(STRUCTTRANSFERFOR,hexinput);if(!s)s=depara(STRUCTTRANSFER,hexinput);if(!s)return(null);return({data:s,func:hexinput.slice(2).substr(0,8)});};
 const depara=function(struct,hexinput){try{return(web3.eth.abi.decodeParameters(struct,HEXINIT+hexinput.slice(10)));}catch(e){return(null);}};
 ////////////////////////////////////////////////////////////[2]
-const Contract=function(scid='usdt'){return(new web3.eth.Contract(EXTOKENS[scid].abi,EXTOKENS[scid].addr));};
-const gfromWei=function(w){return(web3.utils.fromWei(w.toString(),GWEI));};
-////////////////////////////////////////////////////////////[2]
 const cmpArray=function(a=[],to=[],c=0){a.forEach(i=>{if(to.includes(i))c++});return(c);};//NumberArraysOnly
 const lotArray=function(dad,son,n,i){n=arrdup(dad);if(n==null||n)return(0);n=arrdup(son);if(n==null||n)return(0);if(dad.length<son.length)return(0);n=0;for(i=0;i<dad.length;i++){if(son.includes(dad[i]))n++;}return(n);};
 ////////////////////////////////////////////////////////////
