@@ -90,7 +90,8 @@ getUserTokenBalance:function(addr,acc,ncid=MAINNET){return(`${ETHERSCAN.api[ncid
 getUserEtherBalance:function(acc,ncid=MAINNET){return(`${ETHERSCAN.api[ncid]}module=account&action=balance&address=${acc}&tag=latest`)},
 sendToSmartContract:function(addr,data,ncid=MAINNET){return(`${ETHERSCAN.api[ncid]}module=proxy&action=eth_call&to=${addr}&data=${data}&tag=latest`)},
 sendRawTransaction:function(hex,ncid=MAINNET){return(`${ETHERSCAN.api[ncid]}module=proxy&action=eth_sendRawTransaction&hex=${hex}`)},
-getGasPrice:function(ncid=MAINNET){return(`${ETHERSCAN.api[ncid]}module=proxy&action=eth_gasPrice`)}}];
+getGasPrice:function(ncid=MAINNET){return(`${ETHERSCAN.api[ncid]}module=proxy&action=eth_gasPrice`)},
+setApiKey:function(key,ncid=MAINNET){ETHERSCAN.api[ncid]+=`apikey=${key}&`}}];
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
 const EXTOKENS={
