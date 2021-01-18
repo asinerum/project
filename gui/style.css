@@ -94,10 +94,8 @@ textarea.code{
  overflow-wrap:normal;
  overflow-x:scroll;}
 hr.cp{
- border:3px;
  border-style:solid;
- border-color:#E6E6E6;
- border-radius:2px;}
+ border-color:#E6E6E6;}
 iframe{
  width:100%;
  height:auto;
@@ -172,11 +170,11 @@ iframe{
  color:#FF0000;
  font-size:medium;}
 .buttoner{
- width:220px;}
+ width:240px;}
 .button{
  background-color:#4D7A9F;
  border-radius:6px;
- width:200px;
+ width:220px;
  border:none;
  color:white;
  padding:5px;
@@ -189,7 +187,7 @@ iframe{
 .label{
  background-color:#A5AC20;
  border-radius:6px;
- width:200px;
+ width:220px;
  border:none;
  color:white;
  padding:5px;
@@ -200,7 +198,7 @@ iframe{
 .ltlab{
  background-color:lightblue;
  border-radius:6px;
- width:200px;
+ width:220px;
  border:none;
  color:black;
  padding:5px;
