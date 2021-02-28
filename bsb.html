@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<html lang="en">
+<head>
+<title>ASINERUM BSC BINANCE COIN SENDER</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+<link href="https://cdn.jsdelivr.net/npm/trumbowyg@2.21.0/dist/ui/trumbowyg.min.css" rel="stylesheet" type="text/css"/>
+<link href="https://cdn.jsdelivr.net/gh/asinerum/project/gui/fonts.css" rel="stylesheet" type="text/css"/>
+<link href="https://cdn.jsdelivr.net/gh/asinerum/project/gui/style.css" rel="stylesheet" type="text/css"/>
+<link href="https://cdn.jsdelivr.net/gh/asinerum/project/favicon.ico" rel="icon" type="image/x-icon"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.6/angular.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/trumbowyg@2.21.0/dist/trumbowyg.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/asinerum/project/scr/_web3js.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/asinerum/project/scr/_ethereumjs-tx.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/asinerum/project/scr/_bip.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/asinerum/project/scr/_qrcode.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/asinerum/project/scr/xuteng.js"></script>
+</head>
+<body class="private">
+<div class="body" id="body">
+<img class="banner" src="https://cdn.jsdelivr.net/gh/asinerum/project/gui/asinerum.jpg" id="_img_banner"/>
+<br/>
+<br/>
+<a name="KEYS"></a>
+<div class="header" id="_header_BipUnlock">SELECTING NETWORK AND DECRYPTING BIP38 KEYSTORE</div>
+<hr class="cp"/>
+<div>
+<table class="cover">
+<tr><td class="buttoner"><span class="trlab" id="_label_AuthKstNet"></span></td><td><select disabled class="long" data-change="AuthNetPut" id="network"></select></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_AuthKstRpc"></span></td><td><input disabled class="address" data-change="AuthNetFix" value="https://bsc-dataseed.binance.org/" id="rpcs"/></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_BipeDecBip"></span></td><td><input class="address" value="?" id="keystore"/></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_BipeDecPwd"></span></td><td><input type="password" class="address" value="xxx" id="password"/></td></tr>
+<tr><td class="buttoner"><a class="button" data-action="BipeUnlock" id="_button_BipDecrypt"></a></td><td>BSC&nbsp;BINANCE&nbsp;COIN&nbsp;<span class="result" id="wallet">WALLET</span></td></tr>
+</table>
+<div class="result" id="_keystore_status"></div>
+<div class="result" id="_help_keystore"></div>
+</div>
+<hr class="cp"/>
+<br/>
+<a name="COST"></a>
+<div class="header" id="_header_costBnb">BNB TRANSACTION COST</div>
+<hr class="cp"/>
+<div>
+<table class="cover">
+<tr><td class="buttoner"><span class="label" id="_label_AuthGasWei"></span></td><td><select class="address" data-change="AuthGasWei" id="txgwei"></select></td></tr>
+<tr><td class="buttoner"><span class="label" id="_label_AuthGasMax"></span></td><td><select class="address" data-change="AuthGasMax" id="maxgas"></select></td></tr>
+</table>
+<div class="result" id="_cost_status"></div>
+<div class="result" id="_help_cost"></div>
+</div>
+<hr class="cp"/>
+<br/>
+<a name="ETH"></a>
+<div class="header" id="_header_sendBnb">PERSONAL BNB BALANCE</div>
+<hr class="cp"/>
+<div>
+<table class="cover">
+<tr><td class="buttoner"><span class="trlab" id="_label_AuthSumBnb">BNB BALANCE</span></td><td><span id="bgether">&nbsp;<span id="_ethers">?</span>&nbsp;</span></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_AuthAdrBnb">BNB RECEIVER</span></td><td><input type="text" class="long" value="0x00" id="to"/></td></tr>
+<tr><td class="buttoner"><a class="button" data-action="AuthPayEth" id="_button_AuthPayBnb">SEND BNB</a></td><td><input type="text" class="money" value="0" id="eth"/>&nbsp;BNB</td></tr>
+</table>
+<div class="result" id="_sendeth_status"></div>
+<div class="result" id="_sendeth_hash"></div>
+</div>
+<hr class="cp"/>
+<br/>
+<div class="footer" id="_header_copyright">(C)</div>
+</div>
+<script src="https://cdn.jsdelivr.net/gh/asinerum/project/startCallerBnb.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/asinerum/project/menu.js"></script>
+</body>
+</html>
