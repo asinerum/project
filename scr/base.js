@@ -1,4 +1,11 @@
 ////////////////////////////////////////////////////////////
+const BNBCHAINID=56;
+const BNBRPCSERVER='https://bsc-dataseed.binance.org/';
+const BNBEXPLORER='https://www.bscscan.com';
+const ETCCHAINID=61;
+const ETCRPCSERVER='https://www.ethercluster.com/etc';
+const ETCEXPLORER='https://etcblockexplorer.com/';
+////////////////////////////////////////////////////////////
 const EXET={
 mainnet:{ncid:1,addr:'0x28e5fe0ad29597dc290c055eef59c4f582a7a056',hash:'0x3334fb84cfb2977e743a6c0b54b4a10e2f457b0773e2ba13cce2b4d4c23de367',rpcs:'https://mainnet.rpc.fiews.io/v1/free',bcls:'private',scan:'https://etherscan.io/token/'},
 rinkeby:{ncid:4,addr:'0xE9d7FDDF9F36BD1cD2a77B31a91cD069ef012Ab0',hash:'0x91b258a158a68f8f995c7ef3a1447bd2476b5aabd5f822faede996390681bfd3',rpcs:'https://rinkeby.rpc.fiews.io/v1/free',bcls:'team',scan:'https://rinkeby.etherscan.io/token/'},
