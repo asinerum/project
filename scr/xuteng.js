@@ -30,12 +30,12 @@ const ADDRESSES={
 test:'0x102C30d2932307B9D7eb18Cf51B6539A609C3FBF'};
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
-const BNBCHAINID=56;
-const BNBRPCSERVER='https://bsc-dataseed.binance.org/';
-const BNBEXPLORER='https://www.bscscan.com';
-const ETCCHAINID=61;
-const ETCRPCSERVER='https://www.ethercluster.com/etc';
-const ETCEXPLORER='https://etcblockexplorer.com/';
+const EXCHAINS={
+ethereum:{ncid:1,rpcs:'',scan:'https://etherscan.io/'},
+binancesmart:{ncid:56,rpcs:'https://bsc-dataseed.binance.org/',scan:'https://www.bscscan.com/'},
+ethereumclassic:{ncid:61,rpcs:'https://www.ethercluster.com/etc',scan:'https://etcblockexplorer.com/'},
+rinkebyethereum:{ncid:4,rpcs:'',scan:'https://rinkeby.etherscan.io/'},
+ropstenethereum:{ncid:3,rpcs:'',scan:'https://ropsten.etherscan.io/'}};
 ////////////////////////////////////////////////////////////
 const EXET={
 mainnet:{ncid:1,addr:'0x28e5fe0ad29597dc290c055eef59c4f582a7a056',hash:'0x3334fb84cfb2977e743a6c0b54b4a10e2f457b0773e2ba13cce2b4d4c23de367',rpcs:'https://mainnet.rpc.fiews.io/v1/free',bcls:'private',scan:'https://etherscan.io/token/'},
@@ -1147,7 +1147,7 @@ const switchNet=function(nid,dnid){if(!dnid)dnid=MAINNET;if(CONTRACT[nid]){windo
 const changeNet=function(){contractAddress=CONTRACT[network].addr;networkChainId=CONTRACT[network].ncid;networkStyle=CONTRACT[network].bcls;contractScanner=CONTRACT[network].scan+contractAddress;mr('bgxutengscan',contractScanner);};
 const getRpcNet=function(){window.rpcServer=gv(_rpcs);if(!window.rpcServer)window.rpcServer=CONTRACT[network].rpcs;return(rpcServer);};
 const getSender=function(){web3.eth.getAccounts().then((accounts)=>{sender=accounts[0];});};
-const swapChain=function(cid=BNBCHAINID){CONTRACT[MAINNET].ncid=cid;networkChainId=cid;};
+const swapChain=function(cid){CONTRACT[MAINNET].ncid=cid;networkChainId=cid;};
 ////////////////////////////////////////////////////////////
 const wrdExpt=function(v){userExpt=v;if(!v||v==0)return(HYPHEN);return(fromDate(v));};
 const wrdRegs=function(v){userRegs=v;v=wrd(REGIS,userRegs);if(!v)return(HYPHEN);return(v);};

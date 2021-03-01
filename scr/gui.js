@@ -15,7 +15,7 @@ const switchNet=function(nid,dnid){if(!dnid)dnid=MAINNET;if(CONTRACT[nid]){windo
 const changeNet=function(){contractAddress=CONTRACT[network].addr;networkChainId=CONTRACT[network].ncid;networkStyle=CONTRACT[network].bcls;contractScanner=CONTRACT[network].scan+contractAddress;mr('bgxutengscan',contractScanner);};
 const getRpcNet=function(){window.rpcServer=gv(_rpcs);if(!window.rpcServer)window.rpcServer=CONTRACT[network].rpcs;return(rpcServer);};
 const getSender=function(){web3.eth.getAccounts().then((accounts)=>{sender=accounts[0];});};
-const swapChain=function(cid=BNBCHAINID){CONTRACT[MAINNET].ncid=cid;networkChainId=cid;};
+const swapChain=function(cid){CONTRACT[MAINNET].ncid=cid;networkChainId=cid;};
 ////////////////////////////////////////////////////////////
 const wrdExpt=function(v){userExpt=v;if(!v||v==0)return(HYPHEN);return(fromDate(v));};
 const wrdRegs=function(v){userRegs=v;v=wrd(REGIS,userRegs);if(!v)return(HYPHEN);return(v);};
