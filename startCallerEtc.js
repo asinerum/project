@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////
 launchNet();
-swapChain(ETCCHAINID);
+swapChain(EXCHAINS.ethereumclassic.ncid);
 stopSession(sestime);
 statsXuteng(refresh);
 statsEthers(refresh);

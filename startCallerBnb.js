@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////
 launchNet();
-swapChain(BNBCHAINID);
+swapChain(EXCHAINS.binancesmart.ncid);
 stopSession(sestime);
 statsXuteng(refresh);
 statsEthers(refresh);
