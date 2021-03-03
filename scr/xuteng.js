@@ -124,6 +124,8 @@ femt:{dec:18,addr:FEMT.mainnet.addr,abi:ABIERC20},
 xut:{dec:18,addr:XUTENG.mainnet.addr,abi:ABIERC20}};
 ////////////////////////////////////////////////////////////
 const BSCTOKENS={/*binance*/
+usdc:{dec:18,addr:'0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d',abi:ABIERC20},
+usdt:{dec:18,addr:'0x55d398326f99059ff775485246999027b3197955',abi:ABIERC20},
 exet:{dec:18,addr:EXET.binance.addr,abi:ABIERC20},
 left:{dec:18,addr:LEFT.binance.addr,abi:ABIERC20},
 nemt:{dec:18,addr:NEMT.binance.addr,abi:ABIERC20},
