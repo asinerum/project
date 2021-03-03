@@ -1,4 +1,5 @@
-////////////////////////////////////////////////////////////[7]
+////////////////////////////////////////////////////////////[8]
+const _Menu=function(div=ACTDIV){return(new Menu(document.getElementById(div)))};
 const _Time=function(){return(new Date().getTime())};
 const _Array=function(size){return(new Array(size))};
 const _Random=function(){return(new SecureRandom())};

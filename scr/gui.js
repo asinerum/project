@@ -63,6 +63,7 @@ const userImport=function(passCode,privKey){oldAccount(passCode,0,0,0,privKey);}
 const userCreate=function(passCode){newAccount(passCode);};
 ////////////////////////////////////////////////////////////
 const showDefault=function(){$(document).ready(function(){showNetwork(0);showAccount(0);showMaxGas(0);showTxGwei(0);showRole(0);showTick(0);showDTyp(0);showAccs();});};
+const promoteMenu=function(){window.menu=_Menu(ACTDIV);lottimePicker('year','month','day','hour','minute','_uts','_utstring');showCaps();};
 const stopSession=function(mis){setInterval(function(){senderPte=BLANK;password=BLANK;window.newaccount=null;dv(_password,SYMBOL);},mis);};
 const statsXuteng=function(mis){setInterval(function(){getData(sender,getDType(0));},mis);};
 const statsEthers=function(mis){setInterval(function(){getCoin(sender,'_ethers');},mis);};
