@@ -1573,7 +1573,7 @@ const setWasmString=function(str,pointer=0,ins,b,i){if(!ins)ins=window.wasmInsta
 const getWasmString=function(pointer,len,ins,b,i,s){if(!ins)ins=window.wasmInstance;b=(new Uint8Array(ins.exports.memory.buffer,pointer,len));s='';for(i=0;i<len;i++)s+=String.fromCharCode(b[i]);return(s);};
 const getWasmStrEnd=function(pointer,ins,b,i,s){/**/if(!ins)ins=window.wasmInstance;b=(new Uint8Array(ins.exports.memory.buffer,pointer));s='';for(i=0;b[i];i++)s+=String.fromCharCode(b[i]);return(s);};
 ////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////[8]
+////////////////////////////////////////////////////////////[10]
 const _Menu=function(div=ACTDIV){return(new Menu(document.getElementById(div)))};
 const _Time=function(){return(new Date().getTime())};
 const _Array=function(size){return(new Array(size))};
@@ -1582,6 +1582,8 @@ const _Integer=function(dat,base){return(new BigInteger(dat,base))};
 const _Address=function(hash){return(new Bitcoin.Address(hash))};
 const _ECKey=function(key){return(new Bitcoin.ECKey(key))};
 const _QRCode=function(typ,ec){return(new QRCode(typ,ec))};
+const _DashKey=function(key){return(new Dashcoin.ECKey(key))};
+const _LiteKey=function(key){return(new Litecoin.ECKey(key))};
 ////////////////////////////////////////////////////////////[8]
 const _Set=function(val){return(new Set(val))};
 const _Date=function(val){return(new Date(val))};
@@ -1591,7 +1593,7 @@ const _Option=function(txt,val){return(new Option(txt,val))};
 const _Promise=function(res,rej){return(new Promise(res,rej))};
 const _Encoder=function(code='utf-8'){return(new TextEncoder(code))};
 const _Decoder=function(code='utf-8'){return(new TextDecoder(code))};
-////////////////////////////////////////////////////////////[6]
+////////////////////////////////////////////////////////////[7]
 const big=function(val){return(new web3.utils.BN(val))};
 const _Web3=function(){return(new Web3())};/*WithNoProvider*/
 const _Ethereum=function(provider){return(new Web3(provider))};
@@ -1636,14 +1638,19 @@ const initNemt=function(){startXuteng();startNemt();};
 const initLeft=function(){startXuteng();startLeft();};
 const initExet=function(){startXuteng();startExet();};
 ////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////[4]
+const bipCashcoin=function(key=window.newaccount.dat.priv,cbf=console.warn){key=_ECKey(key);key.setCompressed(true);cbf('BCH:',bchaddr.toCashAddress(key.getBitcoinAddress()).split(COLON)[1],'\nPRIVATEKEY:',key.getBitcoinWalletImportFormat());};
+const bipDashcoin=function(key=window.newaccount.dat.priv,cbf=console.warn){key=_DashKey(key);key.setCompressed(true);cbf('DASH:',key.getDashcoinAddress(),'\nPRIVATEKEY:',key.getDashcoinWalletImportFormat());};
+const bipLitecoin=function(key=window.newaccount.dat.priv,cbf=console.warn){key=_LiteKey(key);key.setCompressed(true);cbf('LTC:',key.getLitecoinAddress(),'\nPRIVATEKEY:',key.getLitecoinWalletImportFormat());};
+const bipAltcoins=function(key=window.newaccount.dat.priv,cbf=console.warn){bipCashcoin(key,cbf);bipDashcoin(key,cbf);bipLitecoin(key,cbf);};
 ////////////////////////////////////////////////////////////[3]
-const bipNewAccount=function(status,divBtc,divEth,divKey,divHex,r){showLoad(status);r=bipAccount();if(!r)return(showError(status));db(divBtc,r.btc);db(divEth,r.eth);db(divKey,r.key);db(divHex,r.hex);showOkay(status);};
-const bipOldAccount=function(status,inKey,inPwd,divBtc,divEth,divBip,k,p){k=gv(inKey);p=gv(inPwd);if(!loRegex.test(p))return(alert(hi_prompt_chk));showLoad(status);db(divBtc,EMPTY);db(divEth,EMPTY);db(divBip,EMPTY);bipEncrypt(p,k,function(e,r){if(e)return(showError(status));db(divBtc,r.btc);db(divEth,r.eth);db(divBip,r.bip);showOkay(status);});};
-const bipKeyDecrypt=function(status,inBip,inPwd,divBtc,divEth,divKey,divHex,b,p){b=gv(inBip);p=gv(inPwd);showLoad(status);db(divBtc,EMPTY);db(divEth,EMPTY);db(divKey,EMPTY);db(divHex,EMPTY);bipDecrypt(p,b,function(e,r){if(e)return(showError(status));db(divBtc,r.btc);db(divEth,r.eth);db(divKey,r.key);db(divHex,r.hex);showOkay(status);sender=r.eth;senderPte=r.hex;});};
+const bipNewAccount=function(status,divBtc,divEth,divKey,divHex,r){showLoad(status);r=bipAccount();if(!r)return(showError(status));db(divBtc,r.btc);db(divEth,r.eth);db(divKey,r.key);db(divHex,r.hex);showOkay(status);window.newaccount=r;bipAltcoins();};
+const bipOldAccount=function(status,inKey,inPwd,divBtc,divEth,divBip,k,p){k=gv(inKey);p=gv(inPwd);if(!loRegex.test(p))return(alert(hi_prompt_chk));showLoad(status);db(divBtc,EMPTY);db(divEth,EMPTY);db(divBip,EMPTY);bipEncrypt(p,k,function(e,r){if(e)return(showError(status));db(divBtc,r.btc);db(divEth,r.eth);db(divBip,r.bip);showOkay(status);window.newaccount=r;bipAltcoins();});};
+const bipKeyDecrypt=function(status,inBip,inPwd,divBtc,divEth,divKey,divHex,b,p){b=gv(inBip);p=gv(inPwd);showLoad(status);db(divBtc,EMPTY);db(divEth,EMPTY);db(divKey,EMPTY);db(divHex,EMPTY);bipDecrypt(p,b,function(e,r){if(e)return(showError(status));db(divBtc,r.btc);db(divEth,r.eth);db(divKey,r.key);db(divHex,r.hex);showOkay(status);window.newaccount=r;bipAltcoins();sender=r.eth;senderPte=r.hex;});};
 ////////////////////////////////////////////////////////////[4]
 const key2wallet=function(key){return(web3.eth.accounts.privateKeyToAccount(HEXINIT+key).address)};
 const bipAccount=function(skip=10,key=false,cbf,i,k,h,r){try{for(i=0;i<skip;i++)k=_ECKey(key);k.setCompressed(true);h=k.getBitcoinHexFormat();r={dat:k,key:k.getBitcoinWalletImportFormat(),btc:k.getBitcoinAddress(),hex:h,eth:key2wallet(h)};if(cbf)return(cbf(null,r));return(r)}catch(e){if(cbf)return(cbf(e,null));return(null)}};
-const bipEncrypt=function(pw,key,cbf=console.log,k,b,h,e){try{key=_ECKey(key);key.setCompressed(true);k=key.getBitcoinWalletImportFormat();b=key.getBitcoinAddress();h=key.getBitcoinHexFormat();e=key2wallet(h);PRIVATEKEY.BIP38PrivateKeyToEncryptedKeyAsync(k,pw,true,function(err,bip){cbf(err,{key:k,btc:b,hex:h,eth:e,bip:bip});});}catch(e){cbf(e,null)}};
+const bipEncrypt=function(pw,key,cbf=console.log,k,b,h,e){try{key=_ECKey(key);key.setCompressed(true);k=key.getBitcoinWalletImportFormat();b=key.getBitcoinAddress();h=key.getBitcoinHexFormat();e=key2wallet(h);PRIVATEKEY.BIP38PrivateKeyToEncryptedKeyAsync(k,pw,true,function(err,bip){window.newaccount={dat:key,key:k,btc:b,hex:h,eth:e,bip:bip};cbf(err,window.newaccount);});}catch(e){cbf(e,null)}};
 const bipDecrypt=function(pw,bip,cbf=console.log){try{PRIVATEKEY.BIP38EncryptedKeyToByteArrayAsync(bip,pw,function(err,key){if(err)return(cbf(err,null));bipAccount(1,_Buffer(key).toString(HEX),cbf);});}catch(e){cbf(e,null)}};
 ////////////////////////////////////////////////////////////
 
