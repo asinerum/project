@@ -25,7 +25,7 @@ var password='';
 var senderPte='';
 var senderId='test';
 var sender=ADDRESSES[senderId];
-var accountOptions=optnAccount(0);
+var accountOptions=optnAccount();
 ////////////////////////////////////////////////////////////
 var txreceipt={};
 var sendingEth=0;
