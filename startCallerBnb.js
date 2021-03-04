@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////
 launchNet();
-swapChain(EXCHAINS.binancesmart.ncid);
+swapChain(EXCHAINS.binance.ncid);
 stopSession(sestime);
 statsEthers(refresh);
 showDefault();

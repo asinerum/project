@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////
 launchNet();
-swapChain(EXCHAINS.ethereumclassic.ncid);
+swapChain(EXCHAINS.classic.ncid);
 stopSession(sestime);
 statsEthers(refresh);
 showDefault();
