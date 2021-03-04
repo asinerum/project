@@ -31,11 +31,11 @@ test:'0x102C30d2932307B9D7eb18Cf51B6539A609C3FBF'};
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
 const EXCHAINS={
-ethereum:{ncid:1,rpcs:'',scan:'https://etherscan.io/'},
-binancesmart:{ncid:56,rpcs:'https://bsc-dataseed.binance.org/',scan:'https://www.bscscan.com/'},
-ethereumclassic:{ncid:61,rpcs:'https://www.ethercluster.com/etc',scan:'https://etcblockexplorer.com/'},
-rinkebyethereum:{ncid:4,rpcs:'',scan:'https://rinkeby.etherscan.io/'},
-ropstenethereum:{ncid:3,rpcs:'',scan:'https://ropsten.etherscan.io/'}};
+mainnet:{ncid:1,rpcs:'',scan:'https://etherscan.io/',api:'https://api.etherscan.io/api?',push:'https://etherscan.io/pushtx'},
+rinkeby:{ncid:4,rpcs:'',scan:'https://rinkeby.etherscan.io/',api:'https://api-rinkeby.etherscan.io/api?',push:'https://rinkeby.etherscan.io/pushtx'},
+ropsten:{ncid:3,rpcs:'',scan:'https://ropsten.etherscan.io/',api:'https://api-ropsten.etherscan.io/api?',push:'https://ropsten.etherscan.io/pushtx'},
+binance:{ncid:56,rpcs:'https://bsc-dataseed.binance.org/',scan:'https://www.bscscan.com/',api:'https://api.bscscan.com/api?',push:'https://bscscan.com/pushtx'},
+classic:{ncid:61,rpcs:'https://www.ethercluster.com/etc',scan:'https://etcblockexplorer.com/'}};
 ////////////////////////////////////////////////////////////
 const EXET={
 mainnet:{ncid:1,addr:'0x28e5fe0ad29597dc290c055eef59c4f582a7a056',hash:'0x3334fb84cfb2977e743a6c0b54b4a10e2f457b0773e2ba13cce2b4d4c23de367',rpcs:'https://mainnet.rpc.fiews.io/v1/free',bcls:'private',scan:'https://etherscan.io/token/'},
@@ -82,19 +82,19 @@ localhost:{ncid:1579432490134,addr:'0x78b787bC341baC70030d81e90FD61c3D2C8386bE',
 ////////////////////////////////////////////////////////////
 const BSCSCAN={
 api:{
-mainnet:'https://api.bscscan.com/api?'},
+mainnet:EXCHAINS.binance.api},
 push:{
-mainnet:'https://bscscan.com/pushtx'}};
+mainnet:EXCHAINS.binance.push}};
 ////////////////////////////////////////////////////////////
 const ETHERSCAN={
 api:{
-rinkeby:'https://api-rinkeby.etherscan.io/api?',
-ropsten:'https://api-ropsten.etherscan.io/api?',
-mainnet:'https://api.etherscan.io/api?'},
+rinkeby:EXCHAINS.rinkeby.api,
+ropsten:EXCHAINS.ropsten.api,
+mainnet:EXCHAINS.mainnet.api},
 push:{
-rinkeby:'https://rinkeby.etherscan.io/pushTx',
-ropsten:'https://ropsten.etherscan.io/pushTx',
-mainnet:'https://etherscan.io/pushTx'}};
+rinkeby:EXCHAINS.rinkeby.push,
+ropsten:EXCHAINS.ropsten.push,
+mainnet:EXCHAINS.mainnet.push}};
 ////////////////////////////////////////////////////////////
 const TXDECODERS=[
 'https://www.ethereumdecoder.com/',
@@ -102,15 +102,15 @@ const TXDECODERS=[
 ////////////////////////////////////////////////////////////
 const PROXIES=[
 {/*https://etherscan.io/apis#proxy*/
-getTransactionCount:function(addr,ncid=MAINNET,proxy=ETHERSCAN){return(`${proxy['api'][ncid]}module=proxy&action=eth_getTransactionCount&address=${addr}`)},
-getContractDecimals:function(addr,ncid=MAINNET,proxy=ETHERSCAN){return(`${proxy['api'][ncid]}module=proxy&action=eth_call&to=${addr}&data=0x313ce567&tag=latest`)},
-getTokenTotalSupply:function(addr,ncid=MAINNET,proxy=ETHERSCAN){return(`${proxy['api'][ncid]}module=proxy&action=eth_call&to=${addr}&data=0x18160ddd&tag=latest`)},
-getUserTokenBalance:function(addr,acc,ncid=MAINNET,proxy=ETHERSCAN){return(`${proxy['api'][ncid]}module=account&action=tokenbalance&contractaddress=${addr}&address=${acc}&tag=latest`)},
-getUserEtherBalance:function(acc,ncid=MAINNET,proxy=ETHERSCAN){return(`${proxy['api'][ncid]}module=account&action=balance&address=${acc}&tag=latest`)},
-sendToSmartContract:function(addr,data,ncid=MAINNET,proxy=ETHERSCAN){return(`${proxy['api'][ncid]}module=proxy&action=eth_call&to=${addr}&data=${data}&tag=latest`)},
-sendRawTransaction:function(hex,ncid=MAINNET,proxy=ETHERSCAN){return(`${proxy['api'][ncid]}module=proxy&action=eth_sendRawTransaction&hex=${hex}`)},
-getGasPrice:function(ncid=MAINNET,proxy=ETHERSCAN){return(`${proxy['api'][ncid]}module=proxy&action=eth_gasPrice`)},
-setApiKey:function(key,ncid=MAINNET,proxy=ETHERSCAN){proxy['api'][ncid]+=`apikey=${key}&`}}];
+getTransactionCount:function(addr,ncid=MAINNET){return(`${EXCHAINS[ncid].api}module=proxy&action=eth_getTransactionCount&address=${addr}`)},
+getContractDecimals:function(addr,ncid=MAINNET){return(`${EXCHAINS[ncid].api}module=proxy&action=eth_call&to=${addr}&data=0x313ce567&tag=latest`)},
+getTokenTotalSupply:function(addr,ncid=MAINNET){return(`${EXCHAINS[ncid].api}module=proxy&action=eth_call&to=${addr}&data=0x18160ddd&tag=latest`)},
+getUserTokenBalance:function(addr,acc,ncid=MAINNET){return(`${EXCHAINS[ncid].api}module=account&action=tokenbalance&contractaddress=${addr}&address=${acc}&tag=latest`)},
+getUserEtherBalance:function(acc,ncid=MAINNET){return(`${EXCHAINS[ncid].api}module=account&action=balance&address=${acc}&tag=latest`)},
+sendToSmartContract:function(addr,data,ncid=MAINNET){return(`${EXCHAINS[ncid].api}module=proxy&action=eth_call&to=${addr}&data=${data}&tag=latest`)},
+sendRawTransaction:function(hex,ncid=MAINNET){return(`${EXCHAINS[ncid].api}module=proxy&action=eth_sendRawTransaction&hex=${hex}`)},
+getGasPrice:function(ncid=MAINNET){return(`${EXCHAINS[ncid].api}module=proxy&action=eth_gasPrice`)},
+setApiKey:function(key,ncid=MAINNET){EXCHAINS[ncid].api+=`apikey=${key}&`}}];
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
 const EXTOKENS={
@@ -1177,21 +1177,22 @@ const wrdRole=function(v){userRole=v;v=wrd(ROLES,userRole);if(!v)return(HYPHEN);
 const wrdTick=function(v){userTick=v;v=wrd(TICKS,userTick);if(!v)return(HYPHEN);return(v);};
 const wrdType=function(v){contType=v;v=wrd(TYPES,contType);if(!v)return(contType);return(v);};
 ////////////////////////////////////////////////////////////
-const showMaxGas=function(t){t=BLANK;Object.keys(MAXGASES).forEach(function(key){t+='<option\tvalue="'+MAXGASES[key]+'">'+key+':&nbsp;'+n2s(MAXGASES[key])+'</option>';});console.log(t);dw(_maxgas,t);};
-const showTxGwei=function(t){t=BLANK;Object.keys(TXGWEIS).forEach(function(key){t+='<option\tvalue="'+TXGWEIS[key]+'">'+key+':&nbsp;'+TXGWEIS[key]+'&nbsp;GWEI</option>';});console.log(t);dw(_txgwei,t);};
+const showMaxGas=function(t=BLANK){Object.keys(MAXGASES).forEach(function(key){t+='<option\tvalue="'+MAXGASES[key]+'">'+key+':&nbsp;'+n2s(MAXGASES[key])+'</option>';});console.log(t);dw(_maxgas,t);};
+const showTxGwei=function(t=BLANK){Object.keys(TXGWEIS).forEach(function(key){t+='<option\tvalue="'+TXGWEIS[key]+'">'+key+':&nbsp;'+TXGWEIS[key]+'&nbsp;GWEI</option>';});console.log(t);dw(_txgwei,t);};
 ////////////////////////////////////////////////////////////
 const getDType=function(t){t=gv(_setType);return(t?t:TYPES.token_trading);};
 const networkById=function(ncid){Object.keys(CONTRACT).forEach(function(key){if(CONTRACT[key].ncid==ncid)return(ncid=key);});if(ncid>0)return(LOCALHOST);return(ncid);};
 ////////////////////////////////////////////////////////////
-const showNetwork=function(t){t=BLANK;Object.keys(CONTRACT).forEach(function(key){t+='<option'+((network==key)?'\tselected':BLANK)+'\tvalue="'+key+'">'+key+'</option>';});console.log(t);dw(_network,t);};
-const showDsModel=function(t){t=BLANK;Object.keys(MODELS).forEach(function(key){t+='<option\tvalue="'+key+'">'+MODELS[key].name+'</option>';});console.log(t);dw(_model,t);};
-const showAccount=function(t){t=BLANK;Object.keys(ADDRESSES).forEach(function(key){t+='<option\tvalue="'+key+'">'+key+'</option>';});console.log(t);dw(_account,t);};
-const optnAccount=function(t){t=BLANK;Object.keys(ADDRESSES).forEach(function(key){t+='<option\tvalue="'+ADDRESSES[key]+'">'+key+':&nbsp;'+ADDRESSES[key]+'</option>';});return(t);};
+const showExChain=function(net=network,t=BLANK){Object.keys(EXCHAINS).forEach(function(key){t+='<option'+((net==key)?'\tselected':BLANK)+'\tvalue="'+key+'">'+key+'</option>';});console.log(t);dw(_network,t);};
+const showNetwork=function(net=network,t=BLANK){Object.keys(CONTRACT).forEach(function(key){t+='<option'+((net==key)?'\tselected':BLANK)+'\tvalue="'+key+'">'+key+'</option>';});console.log(t);dw(_network,t);};
+const showDsModel=function(t=BLANK){Object.keys(MODELS).forEach(function(key){t+='<option\tvalue="'+key+'">'+MODELS[key].name+'</option>';});console.log(t);dw(_model,t);};
+const showAccount=function(t=BLANK){Object.keys(ADDRESSES).forEach(function(key){t+='<option\tvalue="'+key+'">'+key+'</option>';});console.log(t);dw(_account,t);};
+const optnAccount=function(t=BLANK){Object.keys(ADDRESSES).forEach(function(key){t+='<option\tvalue="'+ADDRESSES[key]+'">'+key+':&nbsp;'+ADDRESSES[key]+'</option>';});return(t);};
 ////////////////////////////////////////////////////////////
 const showCaps=function(lang='en'){Object.keys(LABELS[lang]).forEach(function(key){dw(key,LABELS[lang][key]);});};
-const showRole=function(t){t=BLANK;Object.keys(ROLES).forEach(function(key){t+='<option\tvalue="'+ROLES[key]+'">'+key+'</option>';});console.log(t);dw(_roleVal,t);};
-const showTick=function(t){t=BLANK;Object.keys(TICKS).forEach(function(key){t+='<option\tvalue="'+TICKS[key]+'">'+key+'</option>';});console.log(t);dw(_tickVal,t);};
-const showDTyp=function(t){t=BLANK;Object.keys(TYPES).forEach(function(key){t+='<option\tvalue="'+TYPES[key]+'">'+key+'</option>';});console.log(t);dw(_refType,t);};
+const showRole=function(t=BLANK){Object.keys(ROLES).forEach(function(key){t+='<option\tvalue="'+ROLES[key]+'">'+key+'</option>';});console.log(t);dw(_roleVal,t);};
+const showTick=function(t=BLANK){Object.keys(TICKS).forEach(function(key){t+='<option\tvalue="'+TICKS[key]+'">'+key+'</option>';});console.log(t);dw(_tickVal,t);};
+const showDTyp=function(t=BLANK){Object.keys(TYPES).forEach(function(key){t+='<option\tvalue="'+TYPES[key]+'">'+key+'</option>';});console.log(t);dw(_refType,t);};
 const showAccs=function(){dw(_ethTo,accountOptions);dw(_xutTo,accountOptions);dw(_owner,accountOptions);dw(_sendToAdmin,accountOptions);dw(_transToAdmin,accountOptions);console.log(accountOptions);};
 ////////////////////////////////////////////////////////////
 const retrAccount=function(t){switchNet(gv(_network));senderId=gv(_account);try{t=getv3key(gv(_password),0);}catch(err){dw('_keystore_status',err.message);alert(hi_alert_data);return(0);};sender=t.address;senderPte=t.privateKey.substr(2);};
@@ -1216,7 +1217,7 @@ const userUnlock=function(passCode,keyStore,t){t=gettextkey(passCode,keyStore);i
 const userImport=function(passCode,privKey){oldAccount(passCode,0,0,0,privKey);};
 const userCreate=function(passCode){newAccount(passCode);};
 ////////////////////////////////////////////////////////////
-const showDefault=function(){$(document).ready(function(){showNetwork(0);showAccount(0);showMaxGas(0);showTxGwei(0);showRole(0);showTick(0);showDTyp(0);showAccs();});};
+const showDefault=function(){$(document).ready(function(){showNetwork();showAccount();showMaxGas();showTxGwei();showRole();showTick();showDTyp();showAccs();});};
 const promoteMenu=function(){window.menu=_Menu(ACTDIV);lottimePicker('year','month','day','hour','minute','_uts','_utstring');showCaps();};
 const stopSession=function(mis){setInterval(function(){senderPte=BLANK;password=BLANK;window.newaccount=null;dv(_password,SYMBOL);},mis);};
 const statsXuteng=function(mis){setInterval(function(){getData(sender,getDType(0));},mis);};
