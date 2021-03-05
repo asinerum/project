@@ -979,6 +979,7 @@ const hashRegex=(new RegExp('^0x([A-Fa-f0-9]{64})$'));
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
 const clearTags=function(tag='input'){$(COLON+tag).val(EMPTY);};
+const clearPwds=function(){$('input:password').val(SYMBOL);};
 ////////////////////////////////////////////////////////////
 const ww=function(d,w){return(warn(d,w));};
 const prt=function(q,a,t){t=prompt(q);return(t==a);};
@@ -1219,7 +1220,7 @@ const userCreate=function(passCode){newAccount(passCode);};
 ////////////////////////////////////////////////////////////
 const showDefault=function(){$(document).ready(function(){showNetwork();showAccount();showMaxGas();showTxGwei();showRole();showTick();showDTyp();showAccs();});};
 const promoteMenu=function(){window.menu=_Menu(ACTDIV);lottimePicker('year','month','day','hour','minute','_uts','_utstring');showCaps();};
-const stopSession=function(mis){setInterval(function(){senderPte=BLANK;password=BLANK;window.newaccount=null;dv(_password,SYMBOL);},mis);};
+const stopSession=function(mis){setInterval(function(){senderPte=BLANK;password=BLANK;window.newaccount=null;clearPwds();clear();clearHistory();},mis);};
 const statsXuteng=function(mis){setInterval(function(){getData(sender,getDType(0));},mis);};
 const statsEthers=function(mis){setInterval(function(){getCoin(sender,'_ethers');},mis);};
 const statsSender=function(mis){setInterval(function(){getSenderData();},mis);};

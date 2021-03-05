@@ -1,5 +1,6 @@
 ////////////////////////////////////////////////////////////
 const clearTags=function(tag='input'){$(COLON+tag).val(EMPTY);};
+const clearPwds=function(){$('input:password').val(SYMBOL);};
 ////////////////////////////////////////////////////////////
 const ww=function(d,w){return(warn(d,w));};
 const prt=function(q,a,t){t=prompt(q);return(t==a);};
