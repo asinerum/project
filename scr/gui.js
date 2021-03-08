@@ -11,7 +11,7 @@ const launchRpc=function(rpc,nid=MAINNET,func=launchNet){CONTRACT[nid].rpcs=rpc;
 const launchNet=function(nid){if(!nid)nid=hashParam(ARGWNET);selectNet(nid);};
 const selectNet=function(nid){switchNet(nid);startXuteng(network);};
 const chooseNet=function(nid){switchNet(nid);window.web3=_Web3();};
-const switchNet=function(nid,dnid){if(!dnid)dnid=MAINNET;if(CONTRACT[nid]){window.network=nid}else{window.network=dnid};netStyle();changeNet();return(network);};
+const switchNet=function(nid,dnid){if(!dnid)dnid=MAINNET;if(EXCHAINS[nid]){window.network=nid}else{window.network=dnid};netStyle();changeNet();return(network);};
 const changeNet=function(){contractAddress=CONTRACT[network].addr;networkChainId=CONTRACT[network].ncid;networkStyle=CONTRACT[network].bcls;contractScanner=CONTRACT[network].scan+contractAddress;mr('bgxutengscan',contractScanner);};
 const getRpcNet=function(){window.rpcServer=gv(_rpcs);if(!window.rpcServer)window.rpcServer=CONTRACT[network].rpcs;return(rpcServer);};
 const getSender=function(){web3.eth.getAccounts().then((accounts)=>{sender=accounts[0];});};
@@ -27,7 +27,7 @@ const showMaxGas=function(t=BLANK){Object.keys(MAXGASES).forEach(function(key){t
 const showTxGwei=function(t=BLANK){Object.keys(TXGWEIS).forEach(function(key){t+='<option\tvalue="'+TXGWEIS[key]+'">'+key+':&nbsp;'+TXGWEIS[key]+'&nbsp;GWEI</option>';});console.log(t);dw(_txgwei,t);};
 ////////////////////////////////////////////////////////////
 const getDType=function(t){t=gv(_setType);return(t?t:TYPES.token_trading);};
-const networkById=function(ncid){Object.keys(CONTRACT).forEach(function(key){if(CONTRACT[key].ncid==ncid)return(ncid=key);});if(ncid>0)return(LOCALHOST);return(ncid);};
+const networkById=function(ncid){Object.keys(CONTRACT).forEach(function(key){if(CONTRACT[key].ncid==ncid)return(ncid=key);});if(ncid>0)return(MAINNET);return(ncid);};
 ////////////////////////////////////////////////////////////
 const showExChain=function(net=network,t=BLANK){Object.keys(EXCHAINS).forEach(function(key){t+='<option'+((net==key)?'\tselected':BLANK)+'\tvalue="'+key+'">'+key+'</option>';});console.log(t);dw(_network,t);};
 const showNetwork=function(net=network,t=BLANK){Object.keys(CONTRACT).forEach(function(key){t+='<option'+((net==key)?'\tselected':BLANK)+'\tvalue="'+key+'">'+key+'</option>';});console.log(t);dw(_network,t);};
@@ -71,7 +71,7 @@ const statsEthers=function(mis){setInterval(function(){getCoin(sender,'_ethers')
 const statsSender=function(mis){setInterval(function(){getSenderData();},mis);};
 ////////////////////////////////////////////////////////////
 const resetXuteng=function(){contractAddress=CONTRACT[network].addr;window.xuteng=(new web3.eth.Contract(SCABI,contractAddress));setPGwei();};
-const web3Mainnet=function(){web3.eth.net.getNetworkType().then(function(net){if(net=='main'){switchNet(MAINNET);alert(hi_alert_ismainnet);}else{switchNet(net,LOCALHOST);alert(hi_alert_nomainnet);};resetXuteng();});getSender();};
+const web3Mainnet=function(){web3.eth.net.getNetworkType().then(function(net){if(net=='main'){switchNet(MAINNET);alert(hi_alert_ismainnet);}else{switchNet(net,MAINNET);alert(hi_alert_nomainnet);};resetXuteng();});getSender();};
 const metaMainnet=function(){ethereum.autoRefreshOnNetworkChange=false;sender=ethereum.selectedAddress;if(!sender)getSender();if(ethereum.networkVersion!=1)alert(hi_alert_nomainnet);switchNet(networkById(ethereum.networkVersion));;;ethereum.on('networkChanged',function(ncid){console.log(ncid);switchNet(networkById(ncid));resetXuteng();console.log(network);if(ncid!=1)alert(hi_alert_nomainnet);});ethereum.on('accountsChanged',function(accounts){sender=accounts[0];});window.addEventListener('load',async()=>{try{await(ethereum.enable());}catch(err){alert(hi_alert_accdenied);}});};
 const getProvider=function(){if(window.ethereum){window.web3=(new Web3(ethereum));metaMainnet();}else{if(window.web3){window.web3=(new Web3(web3.currentProvider));web3Mainnet();}else{startXuteng(MAINNET);return(alert(hi_alert_metamasks));}};resetXuteng();};
 const startXuteng=function(nid){if(nid){switchNet(nid);window.web3=(new Web3(new Web3.providers.HttpProvider(getRpcNet())));resetXuteng();}else{getProvider();};};

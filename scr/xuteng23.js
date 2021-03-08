@@ -35,49 +35,72 @@ mainnet:{ncid:1,rpcs:'',scan:'https://etherscan.io/',api:'https://api.etherscan.
 rinkeby:{ncid:4,rpcs:'',scan:'https://rinkeby.etherscan.io/',api:'https://api-rinkeby.etherscan.io/api?',push:'https://rinkeby.etherscan.io/pushtx'},
 ropsten:{ncid:3,rpcs:'',scan:'https://ropsten.etherscan.io/',api:'https://api-ropsten.etherscan.io/api?',push:'https://ropsten.etherscan.io/pushtx'},
 binance:{ncid:56,rpcs:'https://bsc-dataseed.binance.org/',scan:'https://www.bscscan.com/',api:'https://api.bscscan.com/api?',push:'https://bscscan.com/pushtx'},
-classic:{ncid:61,rpcs:'https://www.ethercluster.com/etc',scan:'https://etcblockexplorer.com/'}};
+classic:{ncid:61,rpcs:'https://www.ethercluster.com/etc/',scan:'https://etcblockexplorer.com/',api:'',push:''},
+};
+////////////////////////////////////////////////////////////
+const USDC={
+mainnet:{ncid:1,addr:'0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',scan:'https://etherscan.io/token/'},
+rinkeby:{ncid:4,addr:'',scan:'https://rinkeby.etherscan.io/token/'},
+ropsten:{ncid:3,addr:'',scan:'https://ropsten.etherscan.io/token/'},
+binance:{ncid:56,addr:'0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d',rpcs:'https://bsc-dataseed.binance.org/',scan:'https://www.bscscan.com/token/'},
+classic:{ncid:61,addr:'',rpcs:'https://www.ethercluster.com/etc/',scan:'https://etcblockexplorer.com/token/'},
+};
+////////////////////////////////////////////////////////////
+const USDT={
+mainnet:{ncid:1,addr:'0xdac17f958d2ee523a2206206994597c13d831ec7',scan:'https://etherscan.io/token/'},
+rinkeby:{ncid:4,addr:'',scan:'https://rinkeby.etherscan.io/token/'},
+ropsten:{ncid:3,addr:'',scan:'https://ropsten.etherscan.io/token/'},
+binance:{ncid:56,addr:'0x55d398326f99059ff775485246999027b3197955',rpcs:'https://bsc-dataseed.binance.org/',scan:'https://www.bscscan.com/token/'},
+classic:{ncid:61,addr:'',rpcs:'https://www.ethercluster.com/etc/',scan:'https://etcblockexplorer.com/token/'},
+};
 ////////////////////////////////////////////////////////////
 const EXET={
 mainnet:{ncid:1,addr:'0x28e5fe0ad29597dc290c055eef59c4f582a7a056',hash:'0x3334fb84cfb2977e743a6c0b54b4a10e2f457b0773e2ba13cce2b4d4c23de367',rpcs:'https://mainnet.rpc.fiews.io/v1/free',bcls:'private',scan:'https://etherscan.io/token/'},
 rinkeby:{ncid:4,addr:'0xE9d7FDDF9F36BD1cD2a77B31a91cD069ef012Ab0',hash:'0x91b258a158a68f8f995c7ef3a1447bd2476b5aabd5f822faede996390681bfd3',rpcs:'https://rinkeby.rpc.fiews.io/v1/free',bcls:'team',scan:'https://rinkeby.etherscan.io/token/'},
 ropsten:{ncid:3,addr:'0xd10488C78a0c46BE21aF749e0c0F102AF9D0d926',hash:'0x46ce74e52333d2fd4af58f4f825cccd9cdf187a8af462b79f519b7d4a0cc848c',rpcs:'https://ropsten.rpc.fiews.io/v1/free',bcls:'group',scan:'https://ropsten.etherscan.io/token/'},
 binance:{ncid:56,addr:'0xDEA0c8bAF81975876F4AF9FC2a1fC4F3A67e039B',hash:'0xbfee2c155e1ff224bdcab10fe8c492ba8fef5cf98c0d770ec07e0d2165c6da09',rpcs:'https://bsc-dataseed.binance.org/',bcls:'private',scan:'https://www.bscscan.com/token/'},
-localhost:{ncid:1579432490134,addr:'0x3A05DB2c5a2c8F30d7028df31C7d4fE6C073C9Cb',hash:'0xc0075866656df5ed58194b7f5a76f00c62bfc46be50a41476b5f3c8859e2bcc7',rpcs:'http://localhost:8545/',bcls:'public',scan:''}};
+classic:{ncid:61,addr:'0x18C7F74cA7C4b9DAf0cCe931e7eF0c0BA9788576',hash:'0x3aec175a0cad6bb05b6aa087872cb456da0a87dd85327ea78daed8191c6e8d47',rpcs:'https://www.ethercluster.com/etc/',bcls:'private',scan:'https://etcblockexplorer.com/token/'},
+};
 ////////////////////////////////////////////////////////////
 const LEFT={
 mainnet:{ncid:1,addr:'0x4244f169be509aa6f0a49e537d1bd89800451264',hash:'0x3754245163677f324edd1173f5ef453bce5f86dbce4f4f52a84fd98ffa0f1dd1',rpcs:'https://mainnet.rpc.fiews.io/v1/free',bcls:'private',scan:'https://etherscan.io/token/'},
 rinkeby:{ncid:4,addr:'0xf8c308CF496Bf9323B671b485F555882a3b4d9E7',hash:'0xe9d6c1f5b3a7f0e297349a011f64bd04ef89d961d6fc08ba3d185821249ae59d',rpcs:'https://rinkeby.rpc.fiews.io/v1/free',bcls:'team',scan:'https://rinkeby.etherscan.io/token/'},
 ropsten:{ncid:3,addr:'0x3D6C8E2C2ae17726386231f99169C9d69a20F104',hash:'0x5b12d71d74038533f6461e9438a77bad5211fb7da1a299cf20948428a9a3ec30',rpcs:'https://ropsten.rpc.fiews.io/v1/free',bcls:'group',scan:'https://ropsten.etherscan.io/token/'},
 binance:{ncid:56,addr:'0x050010e67858E4B71f6D79359ad950e614863e0d',hash:'0x06d526444424671aeff0d257ee1254bd4a2cda96ee73af965678415dd5372df7',rpcs:'https://bsc-dataseed.binance.org/',bcls:'private',scan:'https://www.bscscan.com/token/'},
-localhost:{ncid:1579432490134,addr:'0x09a564464c68f57438a758e5c542B22875e8BEbe',hash:'0x5e078d8464923e8227fcd161f97d09f904c39b8981ca616ada451f2ad52c2552',rpcs:'http://localhost:8545/',bcls:'public',scan:''}};
+classic:{ncid:61,addr:'0xDEA0c8bAF81975876F4AF9FC2a1fC4F3A67e039B',hash:'0xb3df5f5695a4c0bf5b33dc86ec95d5db504d2031916a4f14e9483603e5381189',rpcs:'https://www.ethercluster.com/etc/',bcls:'private',scan:'https://etcblockexplorer.com/token/'},
+};
 ////////////////////////////////////////////////////////////
 const NEMT={
 mainnet:{ncid:1,addr:'0x208871E7f29C0C0e131Dc275f1FCfc9e73C2b06e',hash:'0xe7a06b31a4ea68e0611fc28bd6a176d1179b15a4ac4a056430ff2c89bd80700b',rpcs:'https://mainnet.rpc.fiews.io/v1/free',bcls:'private',scan:'https://etherscan.io/token/'},
 rinkeby:{ncid:4,addr:'0x3D6C8E2C2ae17726386231f99169C9d69a20F104',hash:'0x0bf18f0780882431aa0ddd5a6929d6654a5dbe00b7ba2dc6aef1849442856770',rpcs:'https://rinkeby.rpc.fiews.io/v1/free',bcls:'team',scan:'https://rinkeby.etherscan.io/token/'},
 ropsten:{ncid:3,addr:'0x45EbbFb3b3DFeb2e1DeD3429C4E04aA31B18a9e1',hash:'0x0a298e1e745ca09513d62908ef60cdf843cf7213f33a134770574a5b235c9a9a',rpcs:'https://ropsten.rpc.fiews.io/v1/free',bcls:'group',scan:'https://ropsten.etherscan.io/token/'},
 binance:{ncid:56,addr:'0xc9dDF5d5adBA8711F106953B97987B02F8EAe5e4',hash:'0x79cfec17f40779886ba1c88549927c0cfb56866f84b79b02f47c78c3a63b306d',rpcs:'https://bsc-dataseed.binance.org/',bcls:'private',scan:'https://www.bscscan.com/token/'},
-localhost:{ncid:1579432490134,addr:'0xBD43D9161CdEe6A2b85003D41D0d38240D7a79AF',hash:'0xe669ba51f41e8bd2a525aa0b65f7e041352940834b35204dc0b194f08c4b9544',rpcs:'http://localhost:8545/',bcls:'public',scan:''}};
+classic:{ncid:61,addr:'0x050010e67858E4B71f6D79359ad950e614863e0d',hash:'0xe63a60272577195cf05bbef7a30b736597e4255ff34288d55aa80d58f8fee610',rpcs:'https://www.ethercluster.com/etc/',bcls:'private',scan:'https://etcblockexplorer.com/token/'},
+};
 ////////////////////////////////////////////////////////////
 const GEMT={
 mainnet:{ncid:1,addr:'0x4f8e54e2e840561e5aa8a296ad5f7b0ae18e6eff',hash:'0xadf8c72399b53b3486b665798b6599109a7c6ed33593d65c0354504d0bac92c8',rpcs:'https://mainnet.rpc.fiews.io/v1/free',bcls:'private',scan:'https://etherscan.io/token/'},
 rinkeby:{ncid:4,addr:'0x70538eF05E51CdA13E7Cc393A550838eB137688E',hash:'0x17c98761e4122b545bbd8459fcd5d76ce55f19fdf9819f6347cb9ebac146cc68',rpcs:'https://rinkeby.rpc.fiews.io/v1/free',bcls:'team',scan:'https://rinkeby.etherscan.io/token/'},
 ropsten:{ncid:3,addr:'0xB2f5036F69E05B030688Ce065a98fD0e6cF3f40a',hash:'0x106de1840dccc8c6cd158bf6a976ba0007dd31ea0d62e479aad162b036bb867e',rpcs:'https://ropsten.rpc.fiews.io/v1/free',bcls:'group',scan:'https://ropsten.etherscan.io/token/'},
 binance:{ncid:56,addr:'0x872Bc37697f45526fc0C960E19654c8714dB6957',hash:'0x061787e0dbb8074ee4aeaf57cf6f1badaffd5e2c8a1afa8f6ee52511ca15bf82',rpcs:'https://bsc-dataseed.binance.org/',bcls:'private',scan:'https://www.bscscan.com/token/'},
-localhost:{ncid:1579432490134,addr:'0xa8091125B33fa3051bb69ddE40501Ab39D812931',hash:'0x06ea1d002bc897fd608dc91c7a25bbc6b5eab4827d53ba912eff1970102d9661',rpcs:'http://localhost:8545/',bcls:'public',scan:''}};
+classic:{ncid:61,addr:'0xc9dDF5d5adBA8711F106953B97987B02F8EAe5e4',hash:'0xad8c60417f5266e28906fdc6a5b2dc050abfe75a999623153589fbd2a0d721a4',rpcs:'https://www.ethercluster.com/etc/',bcls:'private',scan:'https://etcblockexplorer.com/token/'},
+};
 ////////////////////////////////////////////////////////////
 const FEMT={
 mainnet:{ncid:1,addr:'0x17634BDcC40c6Bad899D4bB0d825641ec8370f1D',hash:'0xc386bd3cd946c0b5f454d94ec671ba2fd33840889445fb165c158c13ebe9b328',rpcs:'https://mainnet.rpc.fiews.io/v1/free',bcls:'private',scan:'https://etherscan.io/token/'},
 rinkeby:{ncid:4,addr:'0x45EbbFb3b3DFeb2e1DeD3429C4E04aA31B18a9e1',hash:'0xcdaa4b22fa7487daad7f49c5f7daed2f41e2442cc0ad52405a931631ddb6e8a4',rpcs:'https://rinkeby.rpc.fiews.io/v1/free',bcls:'team',scan:'https://rinkeby.etherscan.io/token/'},
 ropsten:{ncid:3,addr:'0x3E86E647FC2BE17266071f8047b8B1c755D589fe',hash:'0xa6983f99fc86c1d55a3f022f465d083c3d31872db2be35a8b0062f2314664b87',rpcs:'https://ropsten.rpc.fiews.io/v1/free',bcls:'group',scan:'https://ropsten.etherscan.io/token/'},
 binance:{ncid:56,addr:'0xd827007Dda5AdEC1548171945d639ac156CfAd59',hash:'0xe991dc63c5317ccb3eb9c7cc05ecfe7ea1f820cf8955ad593b222d1a528026e4',rpcs:'https://bsc-dataseed.binance.org/',bcls:'private',scan:'https://www.bscscan.com/token/'},
-localhost:{ncid:1579432490134,addr:'0xC0D5920cf22A7f0d999eCd59eD3a5E651AfD6bB8',hash:'0xfa2d5a9b1d61b90be7e3ce507f38de13424013b12afbbe89c5dec1f43c976534',rpcs:'http://localhost:8545/',bcls:'public',scan:''}};
+classic:{ncid:61,addr:'0x872Bc37697f45526fc0C960E19654c8714dB6957',hash:'0xd941ac6e3d21cbdb102c093c07df0d33d7eefa9fc581eaaf07f394bed0ec2f97',rpcs:'https://www.ethercluster.com/etc/',bcls:'private',scan:'https://etcblockexplorer.com/token/'},
+};
 ////////////////////////////////////////////////////////////
 const XUTENG={
 mainnet:{ncid:1,addr:'0x872Bc37697f45526fc0C960E19654c8714dB6957',hash:'0x1e7ae86d7fd7cba08377c641a50ff38ccbeefa50f78a369613483abdfc88f8ab',rpcs:'https://mainnet.rpc.fiews.io/v1/free',bcls:'private',scan:'https://etherscan.io/token/'},
 rinkeby:{ncid:4,addr:'0x021e3Ddf28C84B15e5Ab6269da72ec9b816993D7',hash:'0x4402c9b1f4beb9768d10509244440a521c93b7f3bc24e43b17999a166227986d',rpcs:'https://rinkeby.rpc.fiews.io/v1/free',bcls:'team',scan:'https://rinkeby.etherscan.io/token/'},
 ropsten:{ncid:3,addr:'0x9F57B97a6723b1620A6360af33B28d006806EC0d',hash:'0x73dba80fff9871330489f6b665861a76211dd90668b1d4578c3ede5493534d1c',rpcs:'https://ropsten.rpc.fiews.io/v1/free',bcls:'group',scan:'https://ropsten.etherscan.io/token/'},
 binance:{ncid:56,addr:'0x1a2944F9FE6adD404F9A1Ee0E12be5c8671ea224',hash:'0x7eae323a5c3f05f049237199e34a84e466bbc5d8faec59be9ef644ff05d2f4da',rpcs:'https://bsc-dataseed.binance.org/',bcls:'private',scan:'https://www.bscscan.com/token/'},
-localhost:{ncid:1579432490134,addr:'0x78b787bC341baC70030d81e90FD61c3D2C8386bE',hash:'0x631c0cf96bc7c0d52362f59e0b57f17b437667c96d56ea4e790c99a16cf83530',rpcs:'http://localhost:8545/',bcls:'public',scan:''}};
+classic:{ncid:61,addr:'0xd827007Dda5AdEC1548171945d639ac156CfAd59',hash:'0x66dbbd972497dd0183b291f4ccd17de6159ba95ecdef65d636f41da3f5771e74',rpcs:'https://www.ethercluster.com/etc/',bcls:'private',scan:'https://etcblockexplorer.com/token/'},
+};
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
 const BSCSCAN={
@@ -114,32 +137,14 @@ setApiKey:function(key,ncid=MAINNET){EXCHAINS[ncid].api+=`apikey=${key}&`}}];
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
 const EXTOKENS={
-usdc:{dec:6,addr:'0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',abi:ABIERC20},
-usdt:{dec:6,addr:'0xdac17f958d2ee523a2206206994597c13d831ec7',abi:ABIERC20},
-exet:{dec:18,addr:EXET.mainnet.addr,abi:ABIERC20},
-left:{dec:18,addr:LEFT.mainnet.addr,abi:ABIERC20},
-nemt:{dec:18,addr:NEMT.mainnet.addr,abi:ABIERC20},
-gemt:{dec:18,addr:GEMT.mainnet.addr,abi:ABIERC20},
-femt:{dec:18,addr:FEMT.mainnet.addr,abi:ABIERC20},
-xut:{dec:18,addr:XUTENG.mainnet.addr,abi:ABIERC20}};
-////////////////////////////////////////////////////////////
-const BSCTOKENS={/*binance*/
-usdc:{dec:18,addr:'0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d',abi:ABIERC20},
-usdt:{dec:18,addr:'0x55d398326f99059ff775485246999027b3197955',abi:ABIERC20},
-exet:{dec:18,addr:EXET.binance.addr,abi:ABIERC20},
-left:{dec:18,addr:LEFT.binance.addr,abi:ABIERC20},
-nemt:{dec:18,addr:NEMT.binance.addr,abi:ABIERC20},
-gemt:{dec:18,addr:GEMT.binance.addr,abi:ABIERC20},
-femt:{dec:18,addr:FEMT.binance.addr,abi:ABIERC20},
-xut:{dec:18,addr:XUTENG.binance.addr,abi:ABIERC20}};
-////////////////////////////////////////////////////////////
-const TESTTOKENS={/*rinkeby*/
-exet:{dec:18,addr:EXET.rinkeby.addr,abi:ABIERC20},
-left:{dec:18,addr:LEFT.rinkeby.addr,abi:ABIERC20},
-nemt:{dec:18,addr:NEMT.rinkeby.addr,abi:ABIERC20},
-gemt:{dec:18,addr:GEMT.rinkeby.addr,abi:ABIERC20},
-femt:{dec:18,addr:FEMT.rinkeby.addr,abi:ABIERC20},
-xut:{dec:18,addr:XUTENG.rinkeby.addr,abi:ABIERC20}};
+usdc:function(){return({dec:06,addr:USDC[network].addr,abi:ABIERC20})},
+usdt:function(){return({dec:06,addr:USDT[network].addr,abi:ABIERC20})},
+exet:function(){return({dec:18,addr:EXET[network].addr,abi:ABIERC20})},
+left:function(){return({dec:18,addr:LEFT[network].addr,abi:ABIERC20})},
+nemt:function(){return({dec:18,addr:NEMT[network].addr,abi:ABIERC20})},
+gemt:function(){return({dec:18,addr:GEMT[network].addr,abi:ABIERC20})},
+femt:function(){return({dec:18,addr:FEMT[network].addr,abi:ABIERC20})},
+xut:function(){return({dec:18,addr:XUTENG[network].addr,abi:ABIERC20})}};
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
 const COIN='ETH';
@@ -596,10 +601,13 @@ const xutengCall=function(method,args=[],status=TEST,out=TEST,cbf=console.log,cb
 const xutengSend=function(method,args=[],eth=0,status=TEST,out=TEST,cbf=console.log,cbo=dw){showLoad(status);xuteng.methods[method].apply(this,args).send(mmsender(eth)).then(data=>{showOkay(status);cbo(out,data);cbf(null,data)}).catch(err=>{showError(status);cbf(err,null)});};
 const xutengRaws=function(method,args=[],eth=0,status=TEST,out=TEST,cbf=console.log){showLoad(status);sendingFunc=xuteng.methods[method].apply(this,args);sendingAbi=sendingFunc.encodeABI();sendingEth=eth?eth:0;txsend(0,out,status,cbf);};
 ////////////////////////////////////////////////////////////
+const getGwei=function(nid=network){getGweiPrice(nid,(e,r)=>{if(r)dv(_txgwei,r)});};
 const getCoin=function(ua,div=TEST){web3.eth.getBalance(ua,function(err,result){if(err)return;result=w2s(result);if(ua==sender)userEth=result;dw(div,result);});};
 const getData=function(ua,dt){contType=dt;;xuteng.methods.getData(ua,dt).call((err,result)=>{if(err)return;showData(result);cloneData(result);cloneBalance(result);})};
 const getUserData=function(ua,dt,cbf){if(badAddr(ua))return;;xuteng.methods.getData(ua,dt).call((err,result)=>{if(result)showUserData(result);if(cbf)cbf(err,result);})};
 const getAliasData=function(ua,dt,cb1){if(avalid(ua)){getUserData(ua,dt);return(cb1(ua));}xutengUserRedirect(ua).then(ua=>{if(ua!=ZEROADDR)getUserData(ua,dt);cb1(ua);});};
+const getGweiPrice=function(nid=network,cbf=console.log){if(!EXCHAINS[nid])return(cbf(ERROR,null));switchNet(nid);if(EXCHAINS[nid].rpcs){window.web3=_Ethereum(EXCHAINS[nid].rpcs);return(gasPGwei(cbf));}if(EXCHAINS[nid].api){window.web3=_Web3();return(rawGetPrice(cbf));}return(cbf(ERROR,null));};
+const getUserNonce=function(ua,nid=network,cbf=console.log){if(!EXCHAINS[nid]||!avalid(ua))return(cbf(ERROR,null));switchNet(nid);if(EXCHAINS[nid].rpcs){window.web3=_Ethereum(EXCHAINS[nid].rpcs);web3.eth.getTransactionCount(ua).then(r=>{return(cbf(null,r))}).catch(e=>{return(cbf(ERROR,null))});return;}if(EXCHAINS[nid].api){window.web3=_Web3();return(rawGetNonce(ua,cbf));}return(cbf(ERROR,null));};
 ////////////////////////////////////////////////////////////
 const showData=function(result){
 dw('_symbol',(SYMBOL));
@@ -913,7 +921,7 @@ const mm_sellToBuyer=function(ua,i,c,xut,n){;;if(!n)n=funcName();xuteng.methods.
 ////////////////////////////////////////////////////////////[5]
 const PayEther=async(to,eth,msg=EMPTY,cbf=console.log,price=txgwei,gas=maxgas,nonce=0,acc=sender,pte=senderPte,raw=false,run=false,x)=>{if(!avalid(to))return(cbf(INVALID,null));msg=toHex(msg);txgwei=price;maxgas=gas;sender=acc;senderPte=pte;
 ;if(!raw){x={data:msg,from:sender,to:to,value:(eth?s2w(eth):0),gasPrice:gtoWei(txgwei),gas:maxgas};console.log(CHECKED,x);await(web3.eth.sendTransaction(x).then(hash=>{return(cbf(null,hash))}).catch(e=>{return(cbf(e,null))}));return;};if(!Number(nonce))await(web3.eth.getTransactionCount(sender).then(n=>{nonce=n}).catch(e=>{return(cbf(e,null))}));nonce=Number(nonce).toString(16);x=rawtx(msg,nonce,eth,to);console.log(CHECKED,x);if(!run)return(cbf(null,x));web3.eth.sendSignedTransaction(x).on(RECEIPT,receipt=>{txreceipt=receipt;cbf(null,receipt);}).then(result=>{cbf(null,result);}).catch(e=>{return(cbf(e,null))});};
-const Transfer=async(to,amt,dec=0,cbf=console.log,scid='usdt',eth=0,price=txgwei,gas=maxgas,nonce=0,acc=sender,pte=senderPte,raw=false,run=false,a,b,c,d,x)=>{txgwei=price;maxgas=gas;sender=acc;senderPte=pte;if(EXTOKENS[scid]){c=Contract(scid);a=EXTOKENS[scid].addr;d=EXTOKENS[scid].dec;}else{if(avalid(scid)){c=_Contract(ABIXUTENG,scid);a=scid;if(!Number(dec)){await(c.methods.decimals().call().then(r=>{d=r}));}else{d=dec};}else{return(cbf(ERROR,null));}};b=c.methods.transfer(to,toDec(amt,d)).encodeABI();
+const Transfer=async(to,amt,dec=0,cbf=console.log,scid='usdt',eth=0,price=txgwei,gas=maxgas,nonce=0,acc=sender,pte=senderPte,raw=false,run=false,a,b,c,d,x)=>{txgwei=price;maxgas=gas;sender=acc;senderPte=pte;if(EXTOKENS[scid]){c=Contract(scid);a=EXTOKENS[scid]().addr;d=EXTOKENS[scid]().dec;}else{if(avalid(scid)){c=_Contract(ABIXUTENG,scid);a=scid;if(!Number(dec)){await(c.methods.decimals().call().then(r=>{d=r}));}else{d=dec};}else{return(cbf(ERROR,null));}};b=c.methods.transfer(to,toDec(amt,d)).encodeABI();
 ;if(!raw){x={data:b,from:sender,to:a,value:(eth?s2w(eth):0),gasPrice:gtoWei(txgwei),gas:maxgas};console.log(CHECKED,x);await(web3.eth.sendTransaction(x).then(hash=>{return(cbf(null,hash))}).catch(e=>{return(cbf(e,null))}));return;};if(!Number(nonce))await(web3.eth.getTransactionCount(sender).then(n=>{nonce=n}).catch(e=>{return(cbf(e,null))}));nonce=Number(nonce).toString(16);x=rawtx(b,nonce,eth,a);console.log(CHECKED,x);if(!run)return(cbf(null,x));web3.eth.sendSignedTransaction(x).on(RECEIPT,receipt=>{txreceipt=receipt;cbf(null,receipt);}).then(result=>{cbf(null,result);}).catch(e=>{return(cbf(e,null))});};
 const batchpay=function(winners=window.lotwinners,raw=false,status=TEST,out=_hash,cbf=console.log,method='transfer',args=[]){args=winners.shift();if(!args)return(cbf(null,DONE));console.log('Waiting..');args=[args.from,toWei(args.win)];if(!avalid(args[0])||!args[1])return(cbf(ERROR,DONE));if(raw){;
 ;xutengRaws(method,args,0,status,out,function(err,result){if(err)return(cbf(err,CANCELED));console.warn(args[0],fromWei(args[1]),result.transactionHash);batchpay(winners,raw,status,out,cbf,method);});}else{;/**;;
@@ -931,7 +939,7 @@ const createSimpleDat=function(frm,uts,min,max,typ,dat,odd,hdiv,adiv,penny=GAMEX
 const createSimpleDoc=function(frm,uts,min,max,typ,dat,odd,hdiv,adiv,penny=GAMEXUT,doping=true){if(!frm)frm='lo1x99';if(!hdiv)hdiv='hash'+frm;if(!adiv)adiv='addr'+frm;if(!uts)uts=lotnow().lotstamp;if(!min)min=1;if(!max)max=1000;if(!typ)typ=TYPES.gaming;if(!dat)dat={};typ=Number(typ);uts=Number(uts);min=Number(min);max=Number(max);if(!Array.isArray(odd))odd=[70];if(uts<ethnow())return(dw(hdiv,ERROR+'time:invalid'));showLoad(hdiv);xuteng.methods.transferFor(ZEROADDR,penny,setInput({typ,frm,uts,min,max,odd,dat})).send(mmsender(),function(err,hash){if(err)return(dw(hdiv,ERROR+'document.creation:invalid'));dw(hdiv,hash);console.log(hash);lastTxHashId=hdiv;lastTxHash[lastTxHashId]=hash;if(!doping)return;/*GAS25K*/;showLoad(adiv);xuteng.methods.ping(hash,typ).send(mmsender(),function(err,hash){if(err)return(dw(adiv,ERROR+'document.registration:invalid'));return(divAddrFromHash(lastTxHash[lastTxHashId],adiv));});});};/*GAS180K*/
 const createSimpleRef=function(frm='ethref',uts=lotnow().lotstamp,min=0,max=0,typ=TYPES.draft,dat,odd,exp,md5,txt,att,cap,ref,rep,ipf,hdiv='hash',alias=ZEROADDR,t){typ=Number(typ);uts=Number(uts);min=Number(min);max=Number(max);t={typ,frm,uts,min,max};if(dat)t.dat=dat;/*{}*/;if(odd)t.odd=odd;/*[]*/;if(exp)t.exp=Number(exp);if(md5)t.md5=md5;if(txt)t.txt=txt;/*{}*/;if(att)t.att=att;/*{}*/;if(cap)t.cap=cap;if(ref)t.ref=ref;if(rep)t.rep=rep;if(ipf)t.ipf=ipf;showLoad(hdiv);mm_sendeth(alias,0,setInput(t),hdiv);};
 ////////////////////////////////////////////////////////////[1]
-const Contract=function(scid='usdt'){return(new web3.eth.Contract(EXTOKENS[scid].abi,EXTOKENS[scid].addr));};
+const Contract=function(scid='usdt'){return(_Contract(EXTOKENS[scid]().abi,EXTOKENS[scid]().addr));};
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
 const trim=function(s){if(s)return(s.replace(/^\s+|\s+$/g,BLANK));return(BLANK);};
@@ -1166,7 +1174,7 @@ const launchRpc=function(rpc,nid=MAINNET,func=launchNet){CONTRACT[nid].rpcs=rpc;
 const launchNet=function(nid){if(!nid)nid=hashParam(ARGWNET);selectNet(nid);};
 const selectNet=function(nid){switchNet(nid);startXuteng(network);};
 const chooseNet=function(nid){switchNet(nid);window.web3=_Web3();};
-const switchNet=function(nid,dnid){if(!dnid)dnid=MAINNET;if(CONTRACT[nid]){window.network=nid}else{window.network=dnid};netStyle();changeNet();return(network);};
+const switchNet=function(nid,dnid){if(!dnid)dnid=MAINNET;if(EXCHAINS[nid]){window.network=nid}else{window.network=dnid};netStyle();changeNet();return(network);};
 const changeNet=function(){contractAddress=CONTRACT[network].addr;networkChainId=CONTRACT[network].ncid;networkStyle=CONTRACT[network].bcls;contractScanner=CONTRACT[network].scan+contractAddress;mr('bgxutengscan',contractScanner);};
 const getRpcNet=function(){window.rpcServer=gv(_rpcs);if(!window.rpcServer)window.rpcServer=CONTRACT[network].rpcs;return(rpcServer);};
 const getSender=function(){web3.eth.getAccounts().then((accounts)=>{sender=accounts[0];});};
@@ -1182,7 +1190,7 @@ const showMaxGas=function(t=BLANK){Object.keys(MAXGASES).forEach(function(key){t
 const showTxGwei=function(t=BLANK){Object.keys(TXGWEIS).forEach(function(key){t+='<option\tvalue="'+TXGWEIS[key]+'">'+key+':&nbsp;'+TXGWEIS[key]+'&nbsp;GWEI</option>';});console.log(t);dw(_txgwei,t);};
 ////////////////////////////////////////////////////////////
 const getDType=function(t){t=gv(_setType);return(t?t:TYPES.token_trading);};
-const networkById=function(ncid){Object.keys(CONTRACT).forEach(function(key){if(CONTRACT[key].ncid==ncid)return(ncid=key);});if(ncid>0)return(LOCALHOST);return(ncid);};
+const networkById=function(ncid){Object.keys(CONTRACT).forEach(function(key){if(CONTRACT[key].ncid==ncid)return(ncid=key);});if(ncid>0)return(MAINNET);return(ncid);};
 ////////////////////////////////////////////////////////////
 const showExChain=function(net=network,t=BLANK){Object.keys(EXCHAINS).forEach(function(key){t+='<option'+((net==key)?'\tselected':BLANK)+'\tvalue="'+key+'">'+key+'</option>';});console.log(t);dw(_network,t);};
 const showNetwork=function(net=network,t=BLANK){Object.keys(CONTRACT).forEach(function(key){t+='<option'+((net==key)?'\tselected':BLANK)+'\tvalue="'+key+'">'+key+'</option>';});console.log(t);dw(_network,t);};
@@ -1226,7 +1234,7 @@ const statsEthers=function(mis){setInterval(function(){getCoin(sender,'_ethers')
 const statsSender=function(mis){setInterval(function(){getSenderData();},mis);};
 ////////////////////////////////////////////////////////////
 const resetXuteng=function(){contractAddress=CONTRACT[network].addr;window.xuteng=(new web3.eth.Contract(SCABI,contractAddress));setPGwei();};
-const web3Mainnet=function(){web3.eth.net.getNetworkType().then(function(net){if(net=='main'){switchNet(MAINNET);alert(hi_alert_ismainnet);}else{switchNet(net,LOCALHOST);alert(hi_alert_nomainnet);};resetXuteng();});getSender();};
+const web3Mainnet=function(){web3.eth.net.getNetworkType().then(function(net){if(net=='main'){switchNet(MAINNET);alert(hi_alert_ismainnet);}else{switchNet(net,MAINNET);alert(hi_alert_nomainnet);};resetXuteng();});getSender();};
 const metaMainnet=function(){ethereum.autoRefreshOnNetworkChange=false;sender=ethereum.selectedAddress;if(!sender)getSender();if(ethereum.networkVersion!=1)alert(hi_alert_nomainnet);switchNet(networkById(ethereum.networkVersion));;;ethereum.on('networkChanged',function(ncid){console.log(ncid);switchNet(networkById(ncid));resetXuteng();console.log(network);if(ncid!=1)alert(hi_alert_nomainnet);});ethereum.on('accountsChanged',function(accounts){sender=accounts[0];});window.addEventListener('load',async()=>{try{await(ethereum.enable());}catch(err){alert(hi_alert_accdenied);}});};
 const getProvider=function(){if(window.ethereum){window.web3=(new Web3(ethereum));metaMainnet();}else{if(window.web3){window.web3=(new Web3(web3.currentProvider));web3Mainnet();}else{startXuteng(MAINNET);return(alert(hi_alert_metamasks));}};resetXuteng();};
 const startXuteng=function(nid){if(nid){switchNet(nid);window.web3=(new Web3(new Web3.providers.HttpProvider(getRpcNet())));resetXuteng();}else{getProvider();};};
@@ -1370,8 +1378,8 @@ const dwTxHashContent=function(txh,divAddr,divNote,divData,cbf){dw(divAddr,HYPHE
 const dwAddrAliasInfo=function(alias,divHash,divOwner,divAddr,cbf){alias=alias.toLowerCase();db(divHash,toHash(alias));xutengAliasesOwner(alias,function(e,ua){if(cbf)cbf(e,ua);if(ua!=ZEROADDR)db(divOwner,ua);else{db(divOwner,HYPHEN)}});xuteng.methods.addressOf(gv(divHash)).call(function(e,oa){if(cbf)cbf(e,oa);if(oa!=ZEROADDR)db(divAddr,oa);else{db(divAddr,HYPHEN)}});}
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
-const rawTransfer=function(acc,pte,to,amt,scid,price,gas,status=TEST,out=TEST,test=true,eth=0,dec){if(!EXTOKENS[scid])return(dw(status,INVALID));if(test){chooseNet(TESTNET);dec=TESTTOKENS[scid].dec;scid=TESTTOKENS[scid].addr;}else{chooseNet(MAINNET);dec=EXTOKENS[scid].dec;};showLoad(status);rawGetNonce(acc,function(err,nonce){if(err)return(dw(status,err));Transfer(to,amt,dec,function(err,result){senderPte=EMPTY;if(err||!result)return(dw(status,err));dw(status,DONE);db(out,result);},scid,eth,price,gas,nonce,acc,pte,true,false);});};
-const rawPayEther=function(acc,pte,to,eth,msg,price,gas,status=TEST,out=TEST,test=true){if(test){chooseNet(TESTNET);}else{chooseNet(MAINNET);};showLoad(status);rawGetNonce(acc,function(err,nonce){if(err)return(dw(status,err));PayEther(to,eth,msg,function(err,result){senderPte=EMPTY;if(err||!result)return(dw(status,err));dw(status,DONE);db(out,result);},price,gas,nonce,acc,pte,true,false);});};
+const rawTransfer=function(acc,pte,to,amt,scid,price,gas,status=TEST,out=TEST,eth=0){if(!EXTOKENS[scid])return(dw(status,INVALID));showLoad(status);getUserNonce(acc,network,function(err,nonce){if(err)return(dw(status,err));Transfer(to,amt,EXTOKENS[scid]().dec,function(err,result){if(err||!result)return(dw(status,err));dw(status,DONE);db(out,result);},scid,eth,price,gas,nonce,acc,pte,true,false);});};
+const rawPayEther=function(acc,pte,to,eth,msg,price,gas,status=TEST,out=TEST){showLoad(status);getUserNonce(acc,network,function(err,nonce){if(err)return(dw(status,err));PayEther(to,eth,msg,function(err,result){if(err||!result)return(dw(status,err));dw(status,DONE);db(out,result);},price,gas,nonce,acc,pte,true,false);});};
 ////////////////////////////////////////////////////////////
 const rawTokenSum=function(addr=XUTENG[network].addr,cbf=console.log){axios.get(PROXIES[0].getTokenTotalSupply(addr,network)).then(r=>{cbf(null,fromHex(r.data.result))}).catch(e=>{cbf(e,null)});};/*pennies*/
 const rawAccToken=function(addr=XUTENG[network].addr,acc=sender,cbf=console.log){axios.get(PROXIES[0].getUserTokenBalance(addr,acc,network)).then(r=>{cbf(null,fromHex(r.data.result))}).catch(e=>{cbf(e,null)});};/*pennies*/
@@ -1385,6 +1393,8 @@ const rawGetPrice=function(cbf=console.log){axios.get(PROXIES[0].getGasPrice(net
 const help_ContentMod=function(w){ww(_help_content,w);};
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
+/// window.newaccount;
+/// window.menu;
 /// window.web3;
 /// window.xuteng;
 /// window.rpcServer;
@@ -1398,8 +1408,8 @@ var networkChainId;
 var networkStyle;
 ////////////////////////////////////////////////////////////
 var sestime=900000;
-var refresh=4000;
-var maxgas=600000;
+var refresh=5000;
+var maxgas=200000;
 var txgwei=1;
 var estgas=0;
 var gasfee=0;
@@ -1518,6 +1528,7 @@ const Menu=function(element){self=this;
  self.goAuthNetFix=function(){selectNet(network);}
  self.goAuthGasWei=function(){txgwei=gv(_txgwei);}
  self.goAuthGasMax=function(){maxgas=gv(_maxgas);}
+ self.goRawTxChain=function(){switchNet(gv(_network));getGwei()}
  self.onGameResult=function(){reLotter(console.log);}
  self.onGameTxPlay=function(){gamePlay(window.txLottoGame);}
  self.onGameTxSend=function(){gameSend(window.txLottoGame);}
@@ -1540,6 +1551,10 @@ const Menu=function(element){self=this;
  self.onBipEncrypt=function(){bipOldAccount('_encrypt_status','old_key','enc_pwd','old_btc','old_eth','enc_bip');}
  self.onBipDecrypt=function(){bipKeyDecrypt('_decrypt_status','dec_bip','dec_pwd','exp_btc','exp_eth','exp_key','exp_hex');}
  self.onBipeUnlock=function(){bipKeyDecrypt('_keystore_status','keystore','password','100','wallet','200','300');}
+ self.onRawTxDoEth=function(){rawPayEther(gv('exp_eth'),window.newaccount.hex,gv(_sendTo),gv(_sendVal),gv(_smessage),gv(_txgwei),gv(_maxgas),'_txdata_status','txdata');}
+ self.onRawPushEth=function(){dv('txlink',PROXIES[0].sendRawTransaction(gv('txdata'),network));}
+ self.onRawCopyHex=function(){tcopy('txdata',hi_alert_kstcopy);}
+ self.onRawCopyApi=function(){tcopy('txlink',hi_alert_kstcopy);}
  self.goUserRedXut=function(a){a=gv('xutTo');if(avalid(a))return(dv('xutTarget',a));xutengUserRedirect(a,function(e,r){dv('xutTarget',r)})}
  self.goUserRedEth=function(a){a=gv('to');if(avalid(a))return(dv('ethTarget',a));xutengUserRedirect(a,function(e,r){dv('ethTarget',r)})}
  self.goUserGoUser=self.onUserGoUser;

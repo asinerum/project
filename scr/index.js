@@ -1,4 +1,6 @@
 ////////////////////////////////////////////////////////////
+/// window.newaccount;
+/// window.menu;
 /// window.web3;
 /// window.xuteng;
 /// window.rpcServer;
@@ -12,8 +14,8 @@ var networkChainId;
 var networkStyle;
 ////////////////////////////////////////////////////////////
 var sestime=900000;
-var refresh=4000;
-var maxgas=600000;
+var refresh=5000;
+var maxgas=200000;
 var txgwei=1;
 var estgas=0;
 var gasfee=0;
