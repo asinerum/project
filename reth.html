@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<html lang="en">
+<head>
+<title>ASINERUM ETHEREUM RAW TRANSACTION GENERATOR</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+<link href="https://cdn.jsdelivr.net/npm/trumbowyg@2.21.0/dist/ui/trumbowyg.min.css" rel="stylesheet" type="text/css"/>
+<link href="https://cdn.jsdelivr.net/gh/asinerum/project/gui/fonts.css" rel="stylesheet" type="text/css"/>
+<link href="https://cdn.jsdelivr.net/gh/asinerum/project/gui/style.css" rel="stylesheet" type="text/css"/>
+<link href="https://cdn.jsdelivr.net/gh/asinerum/project/favicon.ico" rel="icon" type="image/x-icon"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.6/angular.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/trumbowyg@2.21.0/dist/trumbowyg.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/asinerum/project/scr/_web3js.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/asinerum/project/scr/_ethereumjs-tx.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/asinerum/project/scr/_bitcoinjs-lib.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/asinerum/project/scr/_axios.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/asinerum/project/scr/_bip.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/asinerum/project/scr/_cash.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/asinerum/project/scr/_dash.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/asinerum/project/scr/_lite.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/asinerum/project/scr/_qrcode.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/asinerum/project/scr/xuteng.js"></script>
+</head>
+<body class="private">
+<div class="body" id="body">
+<img class="banner" src="https://cdn.jsdelivr.net/gh/asinerum/project/gui/asinerum-eth.jpg" id="_img_banner"/>
+<br/>
+<br/>
+<a name="TARGET"></a>
+<div class="header" id="_header_BipTarget">MISSION</div>
+<hr class="cp"/>
+<div>
+<table class="cover">
+<tr><td class="buttoner"><span class="trlab" id="_label_BipTargetHead">!</span></td><td><span id="_note_EthAbout">?</span></td></tr>
+</table>
+<div class="result" id="_help_about"></div>
+</div>
+<hr class="cp"/>
+<br/>
+<a name="PREREQ"></a>
+<div class="header" id="_header_BipPrereq">BEGIN</div>
+<hr class="cp"/>
+<div>
+<table class="cover">
+<tr><td class="buttoner"><span class="trlab" id="_label_BipPrereqHead">!</span></td><td><span id="_note_EthBegin">?</span></td></tr>
+</table>
+<div class="result" id="_help_begin"></div>
+</div>
+<hr class="cp"/>
+<br/>
+<a name="DECODE"></a>
+<div class="header" id="_header_BipDecode">UNLOCK PAPER WALLET</div>
+<hr class="cp"/>
+<div>
+<table class="cover">
+<tr><td class="buttoner"><span class="trlab" id="_label_BipeDecBip">?</span></td><td><input type="text" class="address" value="" id="dec_bip"/></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_BipeDecPwd">?</span></td><td><input type="password" class="address" value="" id="dec_pwd"/></td></tr>
+<tr><td class="buttoner"><a class="button" data-action="BipDecrypt" id="_button_BipDecrypt">?</a></td><td><span class="textnotice" id="_label_BipDecrypt"></span></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_BipeExpEth">?</span></td><td><input type="text" class="address" value="" id="exp_eth"/></td></tr>
+</table>
+<div class="result" id="_decrypt_status"></div>
+<div class="result" id="_help_decrypt"></div>
+</div>
+<hr class="cp"/>
+<br/>
+<a name="INPUT"></a>
+<div class="header" id="_header_RawTxInput">ENTER TRANSACTION INPUTS</div>
+<hr class="cp"/>
+<div>
+<table class="cover">
+<tr><td class="buttoner"><span class="label" id="_label_RawTxChain">?</span></td><td><select class="long" data-change="RawTxChain" id="network"></select></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_RawTxPrice">?</span></td><td><input class="address" value="10" id="txgwei"/></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_RawTxLimit">?</span></td><td><input class="address" value="100000" id="maxgas"/></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_RawTxOpMsg">?</span></td><td><input class="address" value="" id="message"/></td></tr>
+<tr><td class="buttoner"><span class="label" id="_label_RawTxEther">?</span></td><td><input class="address" value="0.00" id="eth"/></td></tr>
+<tr><td class="buttoner"><span class="label" id="_label_RawTxRecvr">?</span></td><td><input class="address" value="0x00" id="to"/></td></tr>
+</table>
+<div class="result" id="_txinput_status"></div>
+<div class="result" id="_help_txinput"></div>
+</div>
+<hr class="cp"/>
+<br/>
+<a name="DATA"></a>
+<div class="header" id="_header_RawTxData">GENERATE TRANSACTION DATA</div>
+<hr class="cp"/>
+<div>
+<table class="cover">
+<tr><td class="buttoner"><a class="button" data-action="RawTxDoEth" id="_button_RawTxDoEth">?</a></td><td><textarea class="longfat" id="txdata"></textarea><br/><a class="link" data-action="RawCopyHex" id="_button_RawCopyHex">?</a></td></tr>
+<tr><td class="buttoner"><a class="button" data-action="RawPushEth" id="_button_RawPushEth">?</a></td><td><textarea class="longfat" id="txlink"></textarea><br/><a class="link" data-action="RawCopyApi" id="_button_RawCopyApi">?</a></td></tr>
+</table>
+<div class="result" id="_txdata_status"></div>
+<div class="result" id="_help_txdata"></div>
+</div>
+<hr class="cp"/>
+<br/>
+<a name="PROJECT"></a>
+<div class="header" id="_header_BipProject">DESCRIPTION</div>
+<hr class="cp"/>
+<div>
+<table class="cover">
+<tr><td class="buttoner"><span class="trlab" id="_label_BipAdAbout">?</span></td><td><span id="_note_BipTxAbout">?</span></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_BipAdRight">?</span></td><td><span id="_note_BipAdRight">?</span></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_BipAdPrBtc">?</span></td><td><a target="_blank" href="https://cdn.jsdelivr.net/gh/asinerum/project/gui/1CXsNnd148Dv7Nj9p4oTBYkVJ8NDvghac5.png"><span class="result">1CXsNnd148Dv7Nj9p4oTBYkVJ8NDvghac5</span></a></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_BipAdPrEth">?</span></td><td><a target="_blank" href="https://cdn.jsdelivr.net/gh/asinerum/project/gui/0x537ca62B4c232af1ef82294BE771B824cCc078Ff.png"><span class="result">0x537ca62B4c232af1ef82294BE771B824cCc078Ff</span></a></td></tr>
+</table>
+<div class="result" id="_ad_status"></div>
+<div class="result" id="_help_ad"></div>
+</div>
+<hr class="cp"/>
+<br/>
+<a href=https://github.com/asinerum/project target=_blank>
+<div class="footer" id="_header_copyright">(C)</div>
+</a>
+</div>
+<script src="https://cdn.jsdelivr.net/gh/asinerum/project/startRawEth.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/asinerum/project/menu.js"></script>
+</body>
+</html>
