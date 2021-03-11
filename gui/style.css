@@ -236,7 +236,7 @@ iframe{
  padding:1px;}
 msg::before{content:"* ";}
 msg::after{content:" *";}
-eth::before{content:"* ETH ";}
+eth::before{content:"* ";}
 eth::after{content:" *";}
 xut::before{content:"* XUT ";}
 xut::after{content:" *";}
