@@ -12,7 +12,7 @@ const Menu=function(element){self=this;
  self.onDisSel=function(){promm_userStopSell(0);}
  self.onBuyOfr=function(){promm_buyFromSeller();}
  self.onSelReq=function(){promm_sellToBuyer();}
- self.onGoUser=function(){getUserData(gv(_user),getDType(0));}
+ self.onGoUser=function(){getUserData(gv(_user),getDocType(0));}
  self.onGetBuy=function(){getOwnRequest(g2(_buyPostNum));}
  self.onGetSel=function(){getOwnOffer(g2(_sellPostNum));}
  self.onGetOfr=function(){getUserOffer(gv(_sellerAddress),g2(_sellerPostNum));}

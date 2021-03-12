@@ -11,7 +11,7 @@ const idcap=function(es,is,e,i,n,d=['_label','_header','_button','_note']){es=do
 const chcap=function(caps){if(!caps)caps=idcap();Object.keys(caps).forEach(function(key){if(!LABELS.en[key])console.log(key+COLON,'"'+caps[key]+'",');});};
 ////////////////////////////////////////////////////////////
 const hashParam=function(p,t){if(!t)t=document.location.hash;if(!t)return(BLANK);p=RegExp('[#?&]'+p.replace(/[\[\]]/g,'\\$&')+'(=([^&#]*)|&|#|$)');p=p.exec(t);if(!p)return(BLANK);if(!p[2])return(BLANK);return(decodeURIComponent(p[2].replace(/\+/g,SPACE)));};
-const setCookie=function(cn,cv,dd,t){if(!dd)dd=365;dd=(new Date(nowDate()*1000+dd*24*60*60*1000)).toUTCString();if(!t)t=document;return(t.cookie=cn+EQUAL+cv+';expires='+dd+';path=/');};
+const setCookie=function(cn,cv,dd,t){if(!dd)dd=365;dd=_Date(nowDate()*1000+dd*24*60*60*1000).toUTCString();if(!t)t=document;return(t.cookie=cn+EQUAL+cv+';expires='+dd+';path=/');};
 const getCookie=function(cn,t){if(!t)t=document;try{return(t.cookie.match('(^|;)\s?'+cn+'=([^;]*)(;|$)')[2]);}catch(err){return(BLANK);}};
 const setAction=function(e,self,attribute,actionid){e=(e&&e.target).getAttribute(attribute);if(e){self[actionid+e]()}};
 ////////////////////////////////////////////////////////////

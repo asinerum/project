@@ -10,8 +10,8 @@ const do_setPenny=function(div='_setPenny_status'){if(bad_setPenny())return;;;se
 const do_setAllow=function(div='_setAllow_status'){if(bad_setAllow())return;;;setAllow(gc(_setBA),gc(_setSA),gc(_setTA),gc(_setEA));send(null,null,div);};
 const do_setRole=function(div='_setRegisterLevel_status'){if(bad_setRole())return;;;setRole(gv(_roleTo),gv(_roleVal));send(null,null,div);};
 const do_setTick=function(div='_setRegisterLevel_status'){if(bad_setTick())return;;;setTick(gv(_tickTo),gv(_tickVal));send(null,null,div);};
-const do_setType=function(div='_setType_status'){if(bad_setType())return;;;setType(getDType(0),gc(_setTR),gc(_setTB),gc(_setTP));send(null,null,div);};
-const do_setTypePrice=function(div='_setType_status'){if(bad_setTypePrice())return;;;setTypePrice(getDType(0),gv(_setPT),gv(_setPE));send(null,null,div);};
+const do_setType=function(div='_setType_status'){if(bad_setType())return;;;setType(getDocType(0),gc(_setTR),gc(_setTB),gc(_setTP));send(null,null,div);};
+const do_setTypePrice=function(div='_setType_status'){if(bad_setTypePrice())return;;;setTypePrice(getDocType(0),gv(_setPT),gv(_setPE));send(null,null,div);};
 ////////////////////////////////////////////////////////////
 const do_setName=function(div='_setName_status'){if(bad_setName())return;;;setName(gv(_name));send(null,null,div);dv(_name,BLANK);};
 const do_setOwner=function(div='_setOwner_status'){if(bad_setOwner())return;;;setOwner(gv(_refex));send(null,null,div);};

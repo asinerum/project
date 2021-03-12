@@ -4,10 +4,12 @@
 /// window.web3;
 /// window.xuteng;
 /// window.rpcServer;
-/// window.network='mainnet';
+/// window.btcnet='bitcoin';
 ////////////////////////////////////////////////////////////
+var COIN='ETH';
 var CONTRACT=XUTENG;
 var SCABI=ABIXUTENG;
+var network=MAINNET;
 var contractAddress;
 var contractScanner;
 var networkChainId;
