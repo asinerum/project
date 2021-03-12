@@ -21,19 +21,19 @@
 <br/>
 <br/>
 <a name="KEYS"></a>
-<div class="header" id="_header_keystore">KEYSTORE</div>
+<div class="header" id="_header_keystore">SELECT NETWORK AND DECRYPT KEYSTORE</div>
 <hr class="cp"/>
 <div>
 <table class="cover">
-<tr><td class="buttoner"><span class="trlab" id="_label_AuthKstNet"></span></td><td><select class="long" data-change="AuthNetPut" id="network"></select></td></tr>
-<tr><td class="buttoner"><span class="trlab" id="_label_AuthKstRpc"></span></td><td><input class="address" data-change="AuthNetFix" value="" id="rpcs"/></td></tr>
-<tr><td class="buttoner"><span class="trlab" id="_label_AuthKstPwd"></span></td><td><input type="password" class="address" value="xxx" id="password"/></td></tr>
-<tr><td class="buttoner"><span class="trlab" id="_label_AuthKstore"></span></td><td><textarea class="longfat" id="keystore"></textarea><br/>
-   <a class="link" data-action="AuthCpyKst" id="_button_AuthCpyKst"></a>&nbsp;
-   <a class="link" data-action="AuthCokGet" id="_button_AuthCokGet"></a>&nbsp;
-   <a class="link" data-action="AuthCokSet" id="_button_AuthCokSet"></a>&nbsp;
-   <a class="link" data-action="AuthCokDel" id="_button_AuthCokDel"></a>&nbsp;</td></tr>
-<tr><td class="buttoner"><a class="button" data-action="AuthKstDec" id="_button_AuthKstDec"></a></td><td></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_AuthKstNet">?</span></td><td><select class="long" data-change="AuthNetPut" id="network"></select></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_AuthKstRpc">?</span></td><td><input class="address" data-change="AuthNetFix" value="" id="rpcs"/></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_AuthKstPwd">?</span></td><td><input type="password" class="address" value="xxx" id="password"/></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_AuthKstore">?</span></td><td><textarea class="longfat" id="keystore"></textarea><br/>
+   <a class="link" data-action="AuthCpyKst" id="_button_AuthCpyKst">?</a>&nbsp;
+   <a class="link" data-action="AuthCokGet" id="_button_AuthCokGet">?</a>&nbsp;
+   <a class="link" data-action="AuthCokSet" id="_button_AuthCokSet">?</a>&nbsp;
+   <a class="link" data-action="AuthCokDel" id="_button_AuthCokDel">?</a>&nbsp;</td></tr>
+<tr><td class="buttoner"><a class="button" data-action="AuthKstDec" id="_button_AuthKstDec">?</a></td><td></td></tr>
 </table>
 <div class="result" id="_keystore_status"></div>
 <div class="result" id="_help_keystore"></div>
@@ -41,26 +41,26 @@
 <hr class="cp"/>
 <br/>
 <a name="COST"></a>
-<div class="header" id="_header_cost">COST</div>
+<div class="header" id="_header_cost">TRANSACTION COST</div>
 <hr class="cp"/>
 <div>
 <table class="cover">
-<tr><td class="buttoner"><span class="label" id="_label_AuthGasWei"></span></td><td><select class="address" data-change="AuthGasWei" id="txgwei"></select></td></tr>
-<tr><td class="buttoner"><span class="label" id="_label_AuthGasMax"></span></td><td><select class="address" data-change="AuthGasMax" id="maxgas"></select></td></tr>
+<tr><td class="buttoner"><span class="label" id="_label_AuthGasWei">?</span></td><td><select class="address" data-change="AuthGasWei" id="txgwei"></select></td></tr>
+<tr><td class="buttoner"><span class="label" id="_label_AuthGasMax">?</span></td><td><select class="address" data-change="AuthGasMax" id="maxgas"></select></td></tr>
 </table>
 <div class="result" id="_cost_status"></div>
 <div class="result" id="_help_cost"></div>
 </div>
 <hr class="cp"/>
 <br/>
-<a name="ETH"></a>
-<div class="header" id="_header_sendeth">ETHEREUM</div>
+<a name="COIN"></a>
+<div class="header" id="_header_sendeth">PERSONAL BALANCE</div>
 <hr class="cp"/>
 <div>
 <table class="cover">
-<tr><td class="buttoner"><span class="trlab" id="_label_AuthSumEth"></span></td><td><span id="bgether"><eth><span id="_ethers"></span></eth></span></td></tr>
-<tr><td class="buttoner"><span class="trlab" id="_label_AuthAdrEth"></span></td><td><input type="text" class="long" value="0x00" id="to"/></td></tr>
-<tr><td class="buttoner"><a class="button" data-action="AuthPayEth" id="_button_AuthPayEth"></a></td><td><input type="text" class="money" value="0" id="eth"/>&nbsp;ETH</td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_AuthSumEth">?</span></td><td><span id="bgether"><eth><span id="_ethers"></span></eth></span></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_AuthAdrEth">?</span></td><td><input type="text" class="long" value="0x00" id="to"/></td></tr>
+<tr><td class="buttoner"><a class="button" data-action="AuthPayEth" id="_button_AuthPayEth">?</a></td><td><input type="text" class="money" value="0" id="eth"/>&nbsp;<span class="coin">COIN</span></td></tr>
 </table>
 <div class="result" id="_sendeth_status"></div>
 <div class="result" id="_sendeth_hash"></div>
