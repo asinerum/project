@@ -10,9 +10,9 @@ var COIN='ETH';
 var CONTRACT=XUTENG;
 var SCABI=ABIXUTENG;
 var network=MAINNET;
+var networkChainId=1;
 var contractAddress;
 var contractScanner;
-var networkChainId;
 var networkStyle;
 ////////////////////////////////////////////////////////////
 var sestime=900000;

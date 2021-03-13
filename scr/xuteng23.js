@@ -1381,6 +1381,7 @@ const dwAddrAliasInfo=function(alias,divHash,divOwner,divAddr,cbf){alias=alias.t
 ////////////////////////////////////////////////////////////
 const rawTransfer=function(acc,pte,to,amt,scid,price,gas,status=TEST,out=TEST,eth=0){if(!EXTOKENS[scid])return(dw(status,INVALID));showLoad(status);getUserNonce(acc,network,function(err,nonce){if(err)return(dw(status,err));Transfer(to,amt,EXTOKENS[scid]().dec,function(err,result){if(err||!result)return(dw(status,err));dw(status,DONE);db(out,result);},scid,eth,price,gas,nonce,acc,pte,true,false);});};
 const rawPayEther=function(acc,pte,to,eth,msg,price,gas,status=TEST,out=TEST){showLoad(status);getUserNonce(acc,network,function(err,nonce){if(err)return(dw(status,err));PayEther(to,eth,msg,function(err,result){if(err||!result)return(dw(status,err));dw(status,DONE);db(out,result);},price,gas,nonce,acc,pte,true,false);});};
+const rawGenEther=function(acc,pte,to,eth,msg,price,gas,nonce,status=TEST,out=TEST){showLoad(status);PayEther(to,eth,msg,function(err,result){if(err||!result)return(dw(status,err));dw(status,DONE);db(out,result);},price,gas,nonce,acc,pte,true,false);};
 ////////////////////////////////////////////////////////////
 const rawTokenSum=function(addr=XUTENG[network].addr,cbf=console.log){axios.get(PROXIES[0].getTokenTotalSupply(addr,network)).then(r=>{cbf(null,fromHex(r.data.result))}).catch(e=>{cbf(e,null)});};/*pennies*/
 const rawAccToken=function(addr=XUTENG[network].addr,acc=sender,cbf=console.log){axios.get(PROXIES[0].getUserTokenBalance(addr,acc,network)).then(r=>{cbf(null,fromHex(r.data.result))}).catch(e=>{cbf(e,null)});};/*pennies*/
@@ -1405,9 +1406,9 @@ var COIN='ETH';
 var CONTRACT=XUTENG;
 var SCABI=ABIXUTENG;
 var network=MAINNET;
+var networkChainId=1;
 var contractAddress;
 var contractScanner;
-var networkChainId;
 var networkStyle;
 ////////////////////////////////////////////////////////////
 var sestime=900000;
@@ -1529,9 +1530,10 @@ const Menu=function(element){self=this;
  self.onAuthCokDel=function(){user_delCookie();}
  self.goAuthNetPut=function(){selectNet(gv(_network));}
  self.goAuthNetFix=function(){selectNet(network);}
- self.goAuthGasWei=function(){txgwei=gv(_txgwei);}
- self.goAuthGasMax=function(){maxgas=gv(_maxgas);}
+ self.goAuthGasWei=function(){txgwei=g2(_txgwei);}
+ self.goAuthGasMax=function(){maxgas=g2(_maxgas);}
  self.goRawTxChain=function(){switchNet(gv(_network));getGwei()}
+ self.goRawNetwork=function(){switchNet(gv(_network));}
  self.onGameResult=function(){reLotter(console.log);}
  self.onGameTxPlay=function(){gamePlay(window.txLottoGame);}
  self.onGameTxSend=function(){gameSend(window.txLottoGame);}
@@ -1554,7 +1556,8 @@ const Menu=function(element){self=this;
  self.onBipEncrypt=function(){bipOldAccount('_encrypt_status','old_key','enc_pwd','old_btc','old_eth','enc_bip');}
  self.onBipDecrypt=function(){bipKeyDecrypt('_decrypt_status','dec_bip','dec_pwd','exp_btc','exp_eth','exp_key','exp_hex');}
  self.onBipeUnlock=function(){bipKeyDecrypt('_keystore_status','keystore','password','100','wallet','200','300');}
- self.onRawTxDoEth=function(){rawPayEther(gv('exp_eth'),window.newaccount.hex,gv(_sendTo),gv(_sendVal),gv(_smessage),gv(_txgwei),gv(_maxgas),'_txdata_status','txdata');}
+ self.onRawTxDoEth=function(){rawPayEther(gv('exp_eth'),window.newaccount.hex,gv(_sendTo),gv(_sendVal),gv(_smessage),g2(_txgwei),g2(_maxgas),'_txdata_status','txdata');}
+ self.onRawPureEth=function(){rawGenEther(gv('exp_eth'),window.newaccount.hex,gv(_sendTo),gv(_sendVal),gv(_smessage),g2(_txgwei),g2(_maxgas),g2('nonce'),'_txdata_status','txdata');}
  self.onRawPushEth=function(){dv('txlink',PROXIES[0].sendRawTransaction(gv('txdata'),network));}
  self.onRawCopyHex=function(){tcopy('txdata',hi_alert_kstcopy);}
  self.onRawCopyApi=function(){tcopy('txlink',hi_alert_kstcopy);}
