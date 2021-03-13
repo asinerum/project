@@ -1753,7 +1753,7 @@ const ALERTS={en:{CANCELED,CHECKED,DONE,ERROR,FAILED,FOUND,INVALID,OK,UNCHECKED,
 ////////////////////////////////////////////////////////////
 const DOCGASPRICE='<a href="https://asinerum.github.io/project/doc/ethereum/gasprice" target="_blank">GAS PRICE</a>';
 const DOCGASLIMIT='<a href="https://asinerum.github.io/project/doc/ethereum/gaslimit" target="_blank">GAS LIMIT</a>';
-const DOCETXNONCE='<a href="https://asinerum.github.io/project/doc/ethereum/ethnonce" target="_blank">TX NONCE</a>';
+const DOCETXNONCE='<a href="https://asinerum.github.io/project/doc/ethereum/nonce" target="_blank">TX NONCE</a>';
 ////////////////////////////////////////////////////////////
 const CAPCLASSCOIN='<span class="coin">COIN</span>';
 const CAPNODISCLOS='<span class="textwarn">without disclosing</span>';
