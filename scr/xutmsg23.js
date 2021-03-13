@@ -80,13 +80,14 @@ const DOCETXNONCE='<a href="https://asinerum.github.io/project/doc/ethereum/ethn
 const CAPCLASSCOIN='<span class="coin">COIN</span>';
 const CAPNODISCLOS='<span class="textwarn">without disclosing</span>';
 const CAPBIP38EKEY='<span class="textwarn">bip38 encrypted key</span>';
-const LNKPUSHTXBTC='<a href="https://www.blockchain.com/btc/pushtx" target="_blank">broadcasting services</a>';
-const LNKPUSHTXETH='<a href="https://etherscan.io/pushtx" target="_blank">broadcasting services</a>';
+const LNKBTCPUSHTX='<a href="https://www.blockchain.com/btc/pushtx" target="_blank">broadcasting services</a>';
+const LNKETHPUSHTX='<a href="https://etherscan.io/pushtx" target="_blank">broadcasting services</a>';
 const LNKGITWALLET='<a href="https://asinerum.github.io/project/wallet" target="_blank">github repository</a>';
 const LNKBTCWALLET='<a href="https://blockchain.info/rawaddr/1CXsNnd148Dv7Nj9p4oTBYkVJ8NDvghac5" target="_blank">account last transaction</a>';
 const LNKETHWALLET='<a href="https://etherscan.io/address/0x537ca62B4c232af1ef82294BE771B824cCc078Ff" target="_blank">account transaction listing</a>';
 const LNKETHGASFEE='<a href="https://etherscan.io/gastracker" target="_blank">ethereum gas price</a>';
 const LNKUSERNONCE='<a href="https://kb.myetherwallet.com/en/transactions/what-is-nonce" target="_blank">transaction nonce</a>';
+const LNKEXOFFLINE='<a href="https://asinerum.github.io/project/raweth">offline approach</a>';
 const NOTEEXGASFEE='EXCLUDING GAS FEE';
 ////////////////////////////////////////////////////////////
 const LABELS={en:{
@@ -388,10 +389,10 @@ _note_BuyOfr: `${NOTEEXGASFEE}`,
 _note_DisBuy: `${NOTEEXGASFEE}`,
 _note_DisSel: `${NOTEEXGASFEE}`,
 _note_EthXut: `${NOTEEXGASFEE}`,
-_note_BtcAbout: `this applet has been created for bitcoin professionals to send bitcoins from their paper wallet to another wallet ${CAPNODISCLOS} the wallet's private key by generating transaction's raw data and push it over bitcoin network using free ${LNKPUSHTXBTC};`,
-_note_EthAbout: `this applet has been created for ethereum professionals to send ethers or erc-tokens from their paper wallet to another wallet ${CAPNODISCLOS} the wallet's private key by generating transaction's raw data and push it over ethereum network using free ${LNKPUSHTXETH};`,
-_note_BtcBegin: `first, you do be sure that you have your own paper wallet already with its ${CAPBIP38EKEY} and the very decrypting passcode; in case of having none, you are suggested to try our tool at ${LNKGITWALLET};<br/>a stable internet connection is required to get ${LNKBTCWALLET};`,
-_note_EthBegin: `first, you do be sure that you have your own paper wallet already with its ${CAPBIP38EKEY} and the very decrypting passcode; in case of having none, you are suggested to try our tool at ${LNKGITWALLET};<br/>a stable internet connection is required to get ${LNKETHGASFEE} and ${LNKUSERNONCE};`,
+_note_BtcAbout: `This applet has been created for bitcoin professionals to send bitcoins from their paper wallet to another wallet ${CAPNODISCLOS} the wallet's private key by generating transaction's raw data and push it over bitcoin network using free ${LNKBTCPUSHTX};`,
+_note_EthAbout: `This applet has been created for ethereum professionals to send ethers or erc-tokens from their paper wallet to another wallet ${CAPNODISCLOS} the wallet's private key by generating transaction's raw data and push it over ethereum network using free ${LNKETHPUSHTX};`,
+_note_BtcBegin: `First, you do be sure that you have your own paper wallet already with its ${CAPBIP38EKEY} and the very decrypting passcode; in case of having none, you are suggested to try our tool at ${LNKGITWALLET};<br/>A stable internet connection is required to get ${LNKBTCWALLET};`,
+_note_EthBegin: `First, you do be sure that you have your own paper wallet already with its ${CAPBIP38EKEY} and the very decrypting passcode; in case of having none, you are suggested to try our tool at ${LNKGITWALLET};<br/>A stable internet connection is required to get ${LNKETHGASFEE} and ${LNKUSERNONCE}, otherwise you may take the ${LNKEXOFFLINE};`,
 _note_GameDocSet: `${NOTEEXGASFEE}`,
 _note_GameTxNote: `THIS GAME IS OWNED AND MANAGED BY ITS VERY OWNER<br/>SO PEOPLE PLEASE BE AWARE OF SCAMMING BEHAVIOURS`,
 _note_SelReq: `${NOTEEXGASFEE}`,
