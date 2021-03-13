@@ -77,8 +77,8 @@ const Menu=function(element){self=this;
  self.onBipEncrypt=function(){bipOldAccount('_encrypt_status','old_key','enc_pwd','old_btc','old_eth','enc_bip');}
  self.onBipDecrypt=function(){bipKeyDecrypt('_decrypt_status','dec_bip','dec_pwd','exp_btc','exp_eth','exp_key','exp_hex');}
  self.onBipeUnlock=function(){bipKeyDecrypt('_keystore_status','keystore','password','100','wallet','200','300');}
- self.onRawTxDoEth=function(){rawPayEther(gv('exp_eth'),window.newaccount.hex,gv(_sendTo),gv(_sendVal),gv(_smessage),g2(_txgwei),g2(_maxgas),'_txdata_status','txdata');}
- self.onRawPureEth=function(){rawGenEther(gv('exp_eth'),window.newaccount.hex,gv(_sendTo),gv(_sendVal),gv(_smessage),g2(_txgwei),g2(_maxgas),g2('nonce'),'_txdata_status','txdata');}
+ self.onRawTxDoEth=function(){if(noLogin())return;rawPayEther(gv('exp_eth'),window.newaccount.hex,gv(_sendTo),gv(_sendVal),gv(_smessage),g2(_txgwei),g2(_maxgas),'_txdata_status','txdata')}
+ self.onRawPureEth=function(){if(noLogin())return;rawGenEther(gv('exp_eth'),window.newaccount.hex,gv(_sendTo),gv(_sendVal),gv(_smessage),g2(_txgwei),g2(_maxgas),g2('nonce'),'_txdata_status','txdata')}
  self.onRawPushEth=function(){dv('txlink',PROXIES[0].sendRawTransaction(gv('txdata'),network));}
  self.onRawCopyHex=function(){tcopy('txdata',hi_alert_kstcopy);}
  self.onRawCopyApi=function(){tcopy('txlink',hi_alert_kstcopy);}
