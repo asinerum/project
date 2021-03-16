@@ -1,5 +1,4 @@
 ////////////////////////////////////////////////////////////
-/// window.newaccount;
 /// window.menu;
 /// window.web3;
 /// window.xuteng;
@@ -22,6 +21,7 @@ var txgwei=1;
 var estgas=0;
 var gasfee=0;
 ////////////////////////////////////////////////////////////
+var newaccount={};
 var netkeys={};
 var accounts={};
 var keypairs={};

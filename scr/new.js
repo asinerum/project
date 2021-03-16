@@ -1,17 +1,22 @@
-////////////////////////////////////////////////////////////[10]
+////////////////////////////////////////////////////////////[14]
 const _Menu=function(div=ACTDIV){return(new Menu(document.getElementById(div)))};
 const _Time=function(){return(new Date().getTime())};
 const _Array=function(size){return(new Array(size))};
 const _Random=function(){return(new SecureRandom())};
+const _Decimal=function(num){return(new Decimal(num))};
 const _Integer=function(dat,base){return(new BigInteger(dat,base))};
 const _Address=function(hash){return(new Bitcoin.Address(hash))};
 const _ECKey=function(key){return(new Bitcoin.ECKey(key))};
 const _QRCode=function(typ,ec){return(new QRCode(typ,ec))};
+const _CashKey=function(key){return(_ECKey(key))};
 const _DashKey=function(key){return(new Dashcoin.ECKey(key))};
 const _LiteKey=function(key){return(new Litecoin.ECKey(key))};
+const _Builder=function(cid){return(new bitcoin.TransactionBuilder(bitcoin.networks[cid]))};
+const _BWallet=function(wif,cid=BITCOIN,w){w=bitcoin.ECPair.fromWIF(wif);w.network=bitcoin.networks[cid];return(w);};
 ////////////////////////////////////////////////////////////[8]
 const _Set=function(val){return(new Set(val))};
-const _Date=function(val){return(new Date(val))};
+const _Date=function(val){if(val)return(new Date(val));return(new Date())};
+const _Error=function(err){throw(new Error(err));}
 const _Regex=function(pat){return(new RegExp(pat))};
 const _Uint8=function(val){return(new Uint8Array(val))};
 const _Option=function(txt,val){return(new Option(txt,val))};

@@ -31,3 +31,9 @@ sendRawTransaction:function(hex,ncid=MAINNET){return(`${EXCHAINS[ncid].api}modul
 getGasPrice:function(ncid=MAINNET){return(`${EXCHAINS[ncid].api}module=proxy&action=eth_gasPrice`)},
 setApiKey:function(key,ncid=MAINNET){EXCHAINS[ncid].api+=`apikey=${key}&`}}];
 ////////////////////////////////////////////////////////////
+const BROXIES=[
+{/*https://www.blockcypher.com/dev/bitcoin/#introduction*/
+getTransactionList:function(addr,ncid=BITCOIN){return(`${BXCHAINS[ncid].api}addrs/${addr}?token=${BXCHAINS[ncid].token?BXCHAINS[ncid].token:BLANK}`)},
+sendRawTransaction:function(hex,ncid=BITCOIN){return(`curl\u0020-d\u0020"{\\"tx\\":\\"${hex}\\"}"\u0020${BXCHAINS[ncid].api}txs/push?token=${BXCHAINS[ncid].token?BXCHAINS[ncid].token:BLANK}`)},
+setApiKey:function(key,ncid=BITCOIN){BXCHAINS[ncid].token=key}}];
+////////////////////////////////////////////////////////////

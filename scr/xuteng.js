@@ -30,6 +30,14 @@ const ADDRESSES={
 test:'0x102C30d2932307B9D7eb18Cf51B6539A609C3FBF'};
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
+const BXCHAINS={/*scan:/address/;api:/addrs/*/
+bitcoin:{coin:'BTC',rpcs:'',scan:'https://live.blockcypher.com/btc/',api:'https://api.blockcypher.com/v1/btc/main/',push:'https://live.blockcypher.com/btc/pushtx'},
+testnet:{coin:'TBTC',rpcs:'',scan:'https://live.blockcypher.com/btc-testnet/',api:'https://api.blockcypher.com/v1/btc/test3/',push:'https://live.blockcypher.com/btc-testnet/pushtx'},
+//bcytest:{coin:'CBTC',rpcs:'',scan:'https://live.blockcypher.com/bcy/',api:'https://api.blockcypher.com/v1/bcy/test/',push:'https://live.blockcypher.com/bcy/pushtx'},
+dashcoin:{coin:'DASH',rpcs:'',scan:'https://live.blockcypher.com/dash/',api:'https://api.blockcypher.com/v1/dash/main/',push:'https://live.blockcypher.com/dash/pushtx'},
+litecoin:{coin:'LTC',rpcs:'',scan:'https://live.blockcypher.com/ltc/',api:'https://api.blockcypher.com/v1/ltc/main/',push:'https://live.blockcypher.com/ltc/pushtx'},
+};
+////////////////////////////////////////////////////////////
 const EXCHAINS={
 mainnet:{coin:'ETH',ncid:1,rpcs:'',scan:'https://etherscan.io/',api:'https://api.etherscan.io/api?',push:'https://etherscan.io/pushtx'},
 rinkeby:{coin:'RIN',ncid:4,rpcs:'',scan:'https://rinkeby.etherscan.io/',api:'https://api-rinkeby.etherscan.io/api?',push:'https://rinkeby.etherscan.io/pushtx'},
@@ -135,6 +143,12 @@ sendRawTransaction:function(hex,ncid=MAINNET){return(`${EXCHAINS[ncid].api}modul
 getGasPrice:function(ncid=MAINNET){return(`${EXCHAINS[ncid].api}module=proxy&action=eth_gasPrice`)},
 setApiKey:function(key,ncid=MAINNET){EXCHAINS[ncid].api+=`apikey=${key}&`}}];
 ////////////////////////////////////////////////////////////
+const BROXIES=[
+{/*https://www.blockcypher.com/dev/bitcoin/#introduction*/
+getTransactionList:function(addr,ncid=BITCOIN){return(`${BXCHAINS[ncid].api}addrs/${addr}?token=${BXCHAINS[ncid].token?BXCHAINS[ncid].token:BLANK}`)},
+sendRawTransaction:function(hex,ncid=BITCOIN){return(`curl\u0020-d\u0020"{\\"tx\\":\\"${hex}\\"}"\u0020${BXCHAINS[ncid].api}txs/push?token=${BXCHAINS[ncid].token?BXCHAINS[ncid].token:BLANK}`)},
+setApiKey:function(key,ncid=BITCOIN){BXCHAINS[ncid].token=key}}];
+////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
 const EXTOKENS={
 usdc:function(){return({dec:06,addr:USDC[network].addr,abi:ABIERC20})},
@@ -165,6 +179,8 @@ const BODY='body';
 const TEST='test';
 const MAINNET='mainnet';
 const TESTNET='rinkeby';
+const BITCOIN='bitcoin';
+const BITTEST='testnet';
 const LOCALHOST='localhost';
 const ARGADDR='a';
 const ARGEXEC='e';
@@ -595,6 +611,44 @@ live:0,
 stop:-4,
 dead:-8};
 ////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////[14]
+const _Menu=function(div=ACTDIV){return(new Menu(document.getElementById(div)))};
+const _Time=function(){return(new Date().getTime())};
+const _Array=function(size){return(new Array(size))};
+const _Random=function(){return(new SecureRandom())};
+const _Decimal=function(num){return(new Decimal(num))};
+const _Integer=function(dat,base){return(new BigInteger(dat,base))};
+const _Address=function(hash){return(new Bitcoin.Address(hash))};
+const _ECKey=function(key){return(new Bitcoin.ECKey(key))};
+const _QRCode=function(typ,ec){return(new QRCode(typ,ec))};
+const _CashKey=function(key){return(_ECKey(key))};
+const _DashKey=function(key){return(new Dashcoin.ECKey(key))};
+const _LiteKey=function(key){return(new Litecoin.ECKey(key))};
+const _Builder=function(cid){return(new bitcoin.TransactionBuilder(bitcoin.networks[cid]))};
+const _BWallet=function(wif,cid=BITCOIN,w){w=bitcoin.ECPair.fromWIF(wif);w.network=bitcoin.networks[cid];return(w);};
+////////////////////////////////////////////////////////////[8]
+const _Set=function(val){return(new Set(val))};
+const _Date=function(val){if(val)return(new Date(val));return(new Date())};
+const _Error=function(err){throw(new Error(err));}
+const _Regex=function(pat){return(new RegExp(pat))};
+const _Uint8=function(val){return(new Uint8Array(val))};
+const _Option=function(txt,val){return(new Option(txt,val))};
+const _Promise=function(res,rej){return(new Promise(res,rej))};
+const _Encoder=function(code='utf-8'){return(new TextEncoder(code))};
+const _Decoder=function(code='utf-8'){return(new TextDecoder(code))};
+////////////////////////////////////////////////////////////[7]
+const big=function(val){return(new web3.utils.BN(val))};
+const _Web3=function(){return(new Web3())};/*WithNoProvider*/
+const _Ethereum=function(provider){return(new Web3(provider))};
+const _Provider=function(rpc){return(new Web3.providers.HttpProvider(rpc))};
+const _Contract=function(abi,addr){return(new web3.eth.Contract(abi,addr))};
+const _Buffer=function(val,code='hex'){return(new ethereumjs.Buffer.Buffer(val,code))};
+const _Transaction=function(dat){return(new ethereumjs.Tx(dat))};
+////////////////////////////////////////////////////////////[3]
+const _WasmMemory=function(dat){return(new WebAssembly.Memory(dat))};
+const _WasmModule=function(dat){return(new WebAssembly.Module(dat))};
+const _WasmInstance=function(module,imports){return(new WebAssembly.Instance(module,imports))};
+////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
 const xutengCall=function(method,args=[],status=TEST,out=TEST,cbf=console.log,cbo=dw){showLoad(status);xuteng.methods[method].apply(this,args).call().then(data=>{showOkay(status);cbo(out,data);cbf(null,data)}).catch(err=>{showError(status);cbf(err,null)});};
 const xutengSend=function(method,args=[],eth=0,status=TEST,out=TEST,cbf=console.log,cbo=dw){showLoad(status);xuteng.methods[method].apply(this,args).send(mmsender(eth)).then(data=>{showOkay(status);cbo(out,data);cbf(null,data)}).catch(err=>{showError(status);cbf(err,null)});};
@@ -973,16 +1027,21 @@ const g2wHex=function(g){return(toHex(gtoWei(g)));};
 const n2Hex=function(n,dec=18){return(toHex(toDec(n,dec)));};
 const toDec=function(n,dec=18,a,s,u){n=n.toString();dec=parseInt(dec);if(isNaN(n)||isNaN(dec)||n<=0)return(ZERO);a=n.split(DOT);s=a[0];u=a[1];if(s||(s=ZERO),u||(u=ZERO),u.length>dec)return(ZERO);for(;u.length<dec;)u+=ZERO;return(big(s).mul(big(10).pow(big(dec))).add(big(u)).toString());};
 ////////////////////////////////////////////////////////////
+const toSat=function(n){return(_Decimal(n).absoluteValue().mul(_Decimal(100000000)).toInteger().toString());};
+const fromSat=function(s){return(_Decimal(s).absoluteValue().toInteger().div(_Decimal(100000000)).toString());};
+const satChange=function(satBal,satAmt,satFee){satBal=big(satBal);satAmt=big(satAmt);satFee=big(satFee);if(satBal.lt(satAmt.add(satFee)))throw(ERROR);return(satBal.sub(satAmt).sub(satFee).toString());};
+const bitChange=function(bal,amt,fee){return(satChange(toSat(bal),toSat(amt),toSat(fee)));};
+////////////////////////////////////////////////////////////
 const setInput=function(obj){return(JSON.stringify({obj:obj}));};
 const getInput=function(tx,cbf=console.log){if(!hvalid(tx))return(cbf(ERROR,null));web3.eth.getTransaction(tx,function(err,result){if(err||!result||!result.input)return(cbf(err,null));cbf(null,hexObj(result.input).obj);});};
 ////////////////////////////////////////////////////////////
-const toDate=function(y,m,d){return(parseInt((new Date(Date.UTC(y,m-1,d,0,0,0,0))).getTime()/1000,10));};
-const nowDate=function(){return(parseInt((new Date()).getTime()/1000,10));};
-const fromDate=function(n){return((new Date(n*1000)).toString());};
+const toDate=function(y,m,d){return(parseInt(_Date(Date.UTC(y,m-1,d,0,0,0,0)).getTime()/1000,10));};
+const nowDate=function(){return(parseInt(_Date(0).getTime()/1000,10));};
+const fromDate=function(n){return(_Date(n*1000).toString());};
 ////////////////////////////////////////////////////////////
-const hiRegex=(new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})'));
-const loRegex=(new RegExp('^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})'));
-const hashRegex=(new RegExp('^0x([A-Fa-f0-9]{64})$'));
+const hiRegex=_Regex('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})');
+const loRegex=_Regex('^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})');
+const hashRegex=_Regex('^0x([A-Fa-f0-9]{64})$');
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
 const clearTags=function(tag='input'){$(COLON+tag).val(EMPTY);};
@@ -1173,11 +1232,15 @@ const launchRpc=function(rpc,nid=MAINNET,func=launchNet){CONTRACT[nid].rpcs=rpc;
 const launchNet=function(nid){if(!nid)nid=hashParam(ARGWNET);selectNet(nid);};/*selectNet:WithInputs*/
 const selectNet=function(nid){switchNet(nid);startXuteng(network);};/*LoadNetworkParamsAndConnectRPC*/
 const chooseNet=function(nid){switchNet(nid);window.web3=_Web3();};/*LoadNetworkParamsAndPureWeb3Lib*/
+const switchBtc=function(nid,dnid){if(!dnid)dnid=BITCOIN;if(BXCHAINS[nid]){window.network=nid}else{window.network=dnid};window.btcnet=network;return(network);};
 const switchNet=function(nid,dnid){if(!dnid)dnid=MAINNET;if(EXCHAINS[nid]){window.network=nid}else{window.network=dnid};netStyle();changeNet();showCoin();return(network);};/*LoadNetworkNameAndPageLayout*/
 const changeNet=function(){contractAddress=CONTRACT[network].addr;networkChainId=CONTRACT[network].ncid;networkStyle=CONTRACT[network].bcls;contractScanner=CONTRACT[network].scan+contractAddress;mr('bgxutengscan',contractScanner);};/*LoadGlobalVarsOnly*/
 const getRpcNet=function(){window.rpcServer=gv(_rpcs);if(!window.rpcServer)window.rpcServer=CONTRACT[network].rpcs;return(rpcServer);};/*UpdateNewRPCEndpoint*/
 const getSender=function(){web3.eth.getAccounts().then((accounts)=>{sender=accounts[0];});};/*UpdateUserWalletAddress*/
 const swapChain=function(cid){CONTRACT[MAINNET].ncid=cid;networkChainId=cid;};/*UpdateBlockchainIdOnly*/
+const swapBtcId=function(cid=BITCOIN){if(window.newaccount){if(cid==BITCOIN){sender=newaccount.btc;senderPte=newaccount.key;}else{if(newaccount[cid]){sender=newaccount[cid].btc;senderPte=newaccount[cid].key;}}};btcWallet(cid);db('change',sender);db('exp_btc',sender);};
+const btcWallet=function(cid=network){if(window.newaccount){try{newaccount.wallet=bitcoin.ECPair.fromWIF(newaccount.key)}catch(e){return(newaccount.wallet=null)};newaccount.wallet.network=bitcoin.networks[cid];if(!newaccount.wallet.network)return(newaccount.wallet=null);newaccount.btcpair=getBtcKey(newaccount.wallet);sender=newaccount.btcpair.btc;senderPte=newaccount.btcpair.key;}};
+const getBtcKey=function(wallet=newaccount.wallet){return({btc:bitcoin.payments.p2pkh({pubkey:wallet.publicKey,network:wallet.network}).address,key:wallet.toWIF()});};
 ////////////////////////////////////////////////////////////
 const wrdExpt=function(v){userExpt=v;if(!v||v==0)return(HYPHEN);return(fromDate(v));};
 const wrdRegs=function(v){userRegs=v;v=wrd(REGIS,userRegs);if(!v)return(HYPHEN);return(v);};
@@ -1191,13 +1254,14 @@ const showTxGwei=function(t=BLANK){Object.keys(TXGWEIS).forEach(function(key){t+
 const getDocType=function(t){t=gv(_setType);return(t?t:TYPES.token_trading);};
 const id2network=function(ncid){Object.keys(CONTRACT).forEach(function(key){if(CONTRACT[key].ncid==ncid)return(ncid=key);});if(ncid>0)return(MAINNET);return(ncid);};
 ////////////////////////////////////////////////////////////
+const showBxChain=function(net=btcnet,t=BLANK){Object.keys(BXCHAINS).forEach(function(key){t+='<option'+((net==key)?'\tselected':BLANK)+'\tvalue="'+key+'">'+key+'</option>';});console.log(t);dw(_network,t);};
 const showExChain=function(net=network,t=BLANK){Object.keys(EXCHAINS).forEach(function(key){t+='<option'+((net==key)?'\tselected':BLANK)+'\tvalue="'+key+'">'+key+'</option>';});console.log(t);dw(_network,t);};
 const showNetwork=function(net=network,t=BLANK){Object.keys(CONTRACT).forEach(function(key){t+='<option'+((net==key)?'\tselected':BLANK)+'\tvalue="'+key+'">'+key+'</option>';});console.log(t);dw(_network,t);};
 const showDsModel=function(t=BLANK){Object.keys(MODELS).forEach(function(key){t+='<option\tvalue="'+key+'">'+MODELS[key].name+'</option>';});console.log(t);dw(_model,t);};
 const showAccount=function(t=BLANK){Object.keys(ADDRESSES).forEach(function(key){t+='<option\tvalue="'+key+'">'+key+'</option>';});console.log(t);dw(_account,t);};
 const optnAccount=function(t=BLANK){Object.keys(ADDRESSES).forEach(function(key){t+='<option\tvalue="'+ADDRESSES[key]+'">'+key+':&nbsp;'+ADDRESSES[key]+'</option>';});return(t);};
 ////////////////////////////////////////////////////////////
-const showCoin=function(cls='coin'){COIN=EXCHAINS[network].coin;mw(cls,COIN);};
+const showCoin=function(cls='coin'){if(EXCHAINS[network])COIN=EXCHAINS[network].coin;else{if(BXCHAINS[network])COIN=BXCHAINS[network].coin;}mw(cls,COIN);};
 const showCaps=function(lang='en'){Object.keys(LABELS[lang]).forEach(function(key){dw(key,LABELS[lang][key]);});};
 const showRole=function(t=BLANK){Object.keys(ROLES).forEach(function(key){t+='<option\tvalue="'+ROLES[key]+'">'+key+'</option>';});console.log(t);dw(_roleVal,t);};
 const showTick=function(t=BLANK){Object.keys(TICKS).forEach(function(key){t+='<option\tvalue="'+TICKS[key]+'">'+key+'</option>';});console.log(t);dw(_tickVal,t);};
@@ -1379,6 +1443,12 @@ const dwTxHashContent=function(txh,divAddr,divNote,divData,cbf){dw(divAddr,HYPHE
 const dwAddrAliasInfo=function(alias,divHash,divOwner,divAddr,cbf){alias=alias.toLowerCase();db(divHash,toHash(alias));xutengAliasesOwner(alias,function(e,ua){if(cbf)cbf(e,ua);if(ua!=ZEROADDR)db(divOwner,ua);else{db(divOwner,HYPHEN)}});xuteng.methods.addressOf(gv(divHash)).call(function(e,oa){if(cbf)cbf(e,oa);if(oa!=ZEROADDR)db(divAddr,oa);else{db(divAddr,HYPHEN)}});}
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
+const rawFilterTx=function(r){return({bal:fromSat(r.final_balance),usl:r.txrefs.filter(item=>!item.spent_by&&item.tx_output_n!==-1)});};
+const rawCypherUs=function(acc,scid,cbf=console.log){rawCypherTx(acc,scid,(e,r)=>{if(e)return(cbf(e,null));if(!r||!r.final_balance)return(cbf(hi_alert_balance,null));cbf(null,rawFilterTx(r))})};
+const rawCypherTx=function(acc,scid,cbf=console.log){axios.get(BROXIES[0].getTransactionList(acc,scid)).then(r=>{if(r.status===200){cbf(null,r.data)}else{_Error(r.status)}}).catch(e=>{cbf(e,null)});};
+const rawGenBtcTx=function(usl,bal,acc,wif,to,amt,scid,fee,out=TEST,b,w){try{b=_Builder(scid);b.setVersion(1);w=_BWallet(wif,scid);/*wif=newaccount.key*/;usl.forEach(item=>b.addInput(item.tx_hash,item.tx_output_n));b.addOutput(to,1*toSat(amt));b.addOutput(acc,1*bitChange(bal,amt,fee));/*acc=sender*/;usl.forEach((item,index)=>{b.sign(index,w)});db(out,b.build().toHex());}catch(e){return(db(out,e))}};
+const rawSetBtcTx=function(acc,wif,to,amt,scid,fee,out=TEST){rawCypherUs(acc,scid,(e,r)=>{if(e)return(db(out,e));return(rawGenBtcTx(r.usl,r.bal,acc,wif,to,amt,scid,fee,out))})};
+////////////////////////////////////////////////////////////
 const rawTransfer=function(acc,pte,to,amt,scid,price,gas,status=TEST,out=TEST,eth=0){if(!EXTOKENS[scid])return(dw(status,INVALID));showLoad(status);getUserNonce(acc,network,function(err,nonce){if(err)return(dw(status,err));Transfer(to,amt,EXTOKENS[scid]().dec,function(err,result){if(err||!result)return(dw(status,err));dw(status,DONE);db(out,result);},scid,eth,price,gas,nonce,acc,pte,true,false);});};
 const rawPayEther=function(acc,pte,to,eth,msg,price,gas,status=TEST,out=TEST){showLoad(status);getUserNonce(acc,network,function(err,nonce){if(err)return(dw(status,err));PayEther(to,eth,msg,function(err,result){if(err||!result)return(dw(status,err));dw(status,DONE);db(out,result);},price,gas,nonce,acc,pte,true,false);});};
 const rawGenEther=function(acc,pte,to,eth,msg,price,gas,nonce,status=TEST,out=TEST){showLoad(status);PayEther(to,eth,msg,function(err,result){if(err||!result)return(dw(status,err));dw(status,DONE);db(out,result);},price,gas,nonce,acc,pte,true,false);};
@@ -1395,7 +1465,6 @@ const rawGetPrice=function(cbf=console.log){axios.get(PROXIES[0].getGasPrice(net
 const help_ContentMod=function(w){ww(_help_content,w);};
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
-/// window.newaccount;
 /// window.menu;
 /// window.web3;
 /// window.xuteng;
@@ -1418,6 +1487,7 @@ var txgwei=1;
 var estgas=0;
 var gasfee=0;
 ////////////////////////////////////////////////////////////
+var newaccount={};
 var netkeys={};
 var accounts={};
 var keypairs={};
@@ -1533,6 +1603,7 @@ const Menu=function(element){self=this;
  self.goAuthGasWei=function(){txgwei=g2(_txgwei);}
  self.goAuthGasMax=function(){maxgas=g2(_maxgas);}
  self.goRawTxChain=function(){switchNet(gv(_network));getGwei()}
+ self.goRawBxChain=function(){switchBtc(gv(_network));swapBtcId(network)}
  self.goRawNetwork=function(){switchNet(gv(_network));}
  self.onGameResult=function(){reLotter(console.log);}
  self.onGameTxPlay=function(){gamePlay(window.txLottoGame);}
@@ -1556,9 +1627,11 @@ const Menu=function(element){self=this;
  self.onBipEncrypt=function(){bipOldAccount('_encrypt_status','old_key','enc_pwd','old_btc','old_eth','enc_bip');}
  self.onBipDecrypt=function(){bipKeyDecrypt('_decrypt_status','dec_bip','dec_pwd','exp_btc','exp_eth','exp_key','exp_hex');}
  self.onBipeUnlock=function(){bipKeyDecrypt('_keystore_status','keystore','password','100','wallet','200','300');}
+ self.onRawTxDoBtc=function(){swapBtcId(gv(_network));if(noLogin())return;rawSetBtcTx(gv('exp_btc'),newaccount.key,gv('to'),gv('btc'),gv('network'),gv('fee'),'txdata')}
  self.onRawTxDoEth=function(){if(noLogin())return;rawPayEther(gv('exp_eth'),window.newaccount.hex,gv(_sendTo),gv(_sendVal),gv(_smessage),g2(_txgwei),g2(_maxgas),'_txdata_status','txdata')}
  self.onRawPureEth=function(){if(noLogin())return;rawGenEther(gv('exp_eth'),window.newaccount.hex,gv(_sendTo),gv(_sendVal),gv(_smessage),g2(_txgwei),g2(_maxgas),g2('nonce'),'_txdata_status','txdata')}
  self.onRawPushEth=function(){dv('txlink',PROXIES[0].sendRawTransaction(gv('txdata'),network));}
+ self.onRawPushBtc=function(){dv('txlink',BROXIES[0].sendRawTransaction(gv('txdata'),network));}
  self.onRawCopyHex=function(){tcopy('txdata',hi_alert_kstcopy);}
  self.onRawCopyApi=function(){tcopy('txlink',hi_alert_kstcopy);}
  self.goUserRedXut=function(a){a=gv('xutTo');if(avalid(a))return(dv('xutTarget',a));xutengUserRedirect(a,function(e,r){dv('xutTarget',r)})}
@@ -1595,39 +1668,6 @@ const setWasmString=function(str,pointer=0,ins,b,i){if(!ins)ins=window.wasmInsta
 const getWasmString=function(pointer,len,ins,b,i,s){if(!ins)ins=window.wasmInstance;b=(new Uint8Array(ins.exports.memory.buffer,pointer,len));s='';for(i=0;i<len;i++)s+=String.fromCharCode(b[i]);return(s);};
 const getWasmStrEnd=function(pointer,ins,b,i,s){/**/if(!ins)ins=window.wasmInstance;b=(new Uint8Array(ins.exports.memory.buffer,pointer));s='';for(i=0;b[i];i++)s+=String.fromCharCode(b[i]);return(s);};
 ////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////[10]
-const _Menu=function(div=ACTDIV){return(new Menu(document.getElementById(div)))};
-const _Time=function(){return(new Date().getTime())};
-const _Array=function(size){return(new Array(size))};
-const _Random=function(){return(new SecureRandom())};
-const _Integer=function(dat,base){return(new BigInteger(dat,base))};
-const _Address=function(hash){return(new Bitcoin.Address(hash))};
-const _ECKey=function(key){return(new Bitcoin.ECKey(key))};
-const _QRCode=function(typ,ec){return(new QRCode(typ,ec))};
-const _DashKey=function(key){return(new Dashcoin.ECKey(key))};
-const _LiteKey=function(key){return(new Litecoin.ECKey(key))};
-////////////////////////////////////////////////////////////[8]
-const _Set=function(val){return(new Set(val))};
-const _Date=function(val){return(new Date(val))};
-const _Regex=function(pat){return(new RegExp(pat))};
-const _Uint8=function(val){return(new Uint8Array(val))};
-const _Option=function(txt,val){return(new Option(txt,val))};
-const _Promise=function(res,rej){return(new Promise(res,rej))};
-const _Encoder=function(code='utf-8'){return(new TextEncoder(code))};
-const _Decoder=function(code='utf-8'){return(new TextDecoder(code))};
-////////////////////////////////////////////////////////////[7]
-const big=function(val){return(new web3.utils.BN(val))};
-const _Web3=function(){return(new Web3())};/*WithNoProvider*/
-const _Ethereum=function(provider){return(new Web3(provider))};
-const _Provider=function(rpc){return(new Web3.providers.HttpProvider(rpc))};
-const _Contract=function(abi,addr){return(new web3.eth.Contract(abi,addr))};
-const _Buffer=function(val,code='hex'){return(new ethereumjs.Buffer.Buffer(val,code))};
-const _Transaction=function(dat){return(new ethereumjs.Tx(dat))};
-////////////////////////////////////////////////////////////[3]
-const _WasmMemory=function(dat){return(new WebAssembly.Memory(dat))};
-const _WasmModule=function(dat){return(new WebAssembly.Module(dat))};
-const _WasmInstance=function(module,imports){return(new WebAssembly.Instance(module,imports))};
-////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////[3]
 const ercCall=function(sc=xutengFemt,method,args=[],status=TEST,out=TEST,cbf=console.log,cbo=dw){showLoad(status);sc.methods[method].apply(this,args).call().then(data=>{showOkay(status);cbo(out,data);cbf(null,data)}).catch(err=>{showError(status);cbf(err,null)});};
 const ercSend=function(sc=xutengFemt,method,args=[],eth=0,status=TEST,out=TEST,cbf=console.log,cbo=dw){showLoad(status);sc.methods[method].apply(this,args).send(mmsender(eth)).then(data=>{showOkay(status);cbo(out,data);cbf(null,data)}).catch(err=>{showError(status);cbf(err,null)});};
@@ -1660,11 +1700,12 @@ const initNemt=function(){startXuteng();startNemt();};
 const initLeft=function(){startXuteng();startLeft();};
 const initExet=function(){startXuteng();startExet();};
 ////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////[4]
-const bipCashcoin=function(key=window.newaccount.dat.priv,cbf=console.warn){key=_ECKey(key);key.setCompressed(true);cbf('BCH:',bchaddr.toCashAddress(key.getBitcoinAddress()).split(COLON)[1],'\nPRIVATEKEY:',key.getBitcoinWalletImportFormat());};
-const bipDashcoin=function(key=window.newaccount.dat.priv,cbf=console.warn){key=_DashKey(key);key.setCompressed(true);cbf('DASH:',key.getDashcoinAddress(),'\nPRIVATEKEY:',key.getDashcoinWalletImportFormat());};
-const bipLitecoin=function(key=window.newaccount.dat.priv,cbf=console.warn){key=_LiteKey(key);key.setCompressed(true);cbf('LTC:',key.getLitecoinAddress(),'\nPRIVATEKEY:',key.getLitecoinWalletImportFormat());};
+////////////////////////////////////////////////////////////[5]
+const bipCashcoin=function(key=window.newaccount.dat.priv,cbf=console.warn,a,k){key=_CashKey(key);key.setCompressed(true);a=getCashcoinAddress(key);;k=key.getBitcoinWalletImportFormat();;cbf('**BCH:',a,'\nPRIVATEKEY:',k);window.newaccount.cashcoin={btc:a,key:k};};
+const bipDashcoin=function(key=window.newaccount.dat.priv,cbf=console.warn,a,k){key=_DashKey(key);key.setCompressed(true);a=key.getDashcoinAddress();k=key.getDashcoinWalletImportFormat();cbf('*DASH:',a,'\nPRIVATEKEY:',k);window.newaccount.dashcoin={btc:a,key:k};};
+const bipLitecoin=function(key=window.newaccount.dat.priv,cbf=console.warn,a,k){key=_LiteKey(key);key.setCompressed(true);a=key.getLitecoinAddress();k=key.getLitecoinWalletImportFormat();cbf('**LTC:',a,'\nPRIVATEKEY:',k);window.newaccount.litecoin={btc:a,key:k};};
 const bipAltcoins=function(key=window.newaccount.dat.priv,cbf=console.warn){bipCashcoin(key,cbf);bipDashcoin(key,cbf);bipLitecoin(key,cbf);};
+const getCashcoinAddress=function(key){return(bchaddr.toCashAddress(key.getBitcoinAddress()).split(COLON)[1]);};
 ////////////////////////////////////////////////////////////[3]
 const bipNewAccount=function(status,divBtc,divEth,divKey,divHex,r){showLoad(status);r=bipAccount();if(!r)return(showError(status));db(divBtc,r.btc);db(divEth,r.eth);db(divKey,r.key);db(divHex,r.hex);showOkay(status);window.newaccount=r;bipAltcoins();};
 const bipOldAccount=function(status,inKey,inPwd,divBtc,divEth,divBip,k,p){k=gv(inKey);p=gv(inPwd);if(!loRegex.test(p))return(alert(hi_prompt_chk));showLoad(status);db(divBtc,EMPTY);db(divEth,EMPTY);db(divBip,EMPTY);bipEncrypt(p,k,function(e,r){if(e)return(showError(status));db(divBtc,r.btc);db(divEth,r.eth);db(divBip,r.bip);showOkay(status);window.newaccount=r;bipAltcoins();});};
@@ -1761,11 +1802,12 @@ const CAPBIP38EKEY='<span class="textwarn">bip38 encrypted key</span>';
 const LNKBTCPUSHTX='<a href="https://www.blockchain.com/btc/pushtx" target="_blank">broadcasting services</a>';
 const LNKETHPUSHTX='<a href="https://etherscan.io/pushtx" target="_blank">broadcasting services</a>';
 const LNKGITWALLET='<a href="https://asinerum.github.io/project/wallet" target="_blank">github repository</a>';
-const LNKBTCWALLET='<a href="https://blockchain.info/rawaddr/1CXsNnd148Dv7Nj9p4oTBYkVJ8NDvghac5" target="_blank">account last transaction</a>';
-const LNKETHWALLET='<a href="https://etherscan.io/address/0x537ca62B4c232af1ef82294BE771B824cCc078Ff" target="_blank">account transaction listing</a>';
-const LNKETHGASFEE='<a href="https://etherscan.io/gastracker" target="_blank">ethereum gas price</a>';
+const LNKBTCWALLET='<a href="https://api.blockcypher.com/v1/btc/main/addrs/1CXsNnd148Dv7Nj9p4oTBYkVJ8NDvghac5" target="_blank">transaction input</a>';
+const LNKETHWALLET='<a href="https://etherscan.io/address/0x537ca62B4c232af1ef82294BE771B824cCc078Ff" target="_blank">transactions listing</a>';
+const LNKETHGASFEE='<a href="https://etherscan.io/gastracker" target="_blank">transaction cost</a>';
 const LNKUSERNONCE='<a href="https://kb.myetherwallet.com/en/transactions/what-is-nonce" target="_blank">transaction nonce</a>';
 const LNKEXOFFLINE='<a href="https://asinerum.github.io/project/raweth">offline approach</a>';
+const LNKBXOFFLINE='<a href="https://asinerum.github.io/project/rawbit">offline approach</a>';
 const NOTEEXGASFEE='EXCLUDING GAS FEE';
 ////////////////////////////////////////////////////////////
 const LABELS={en:{
@@ -1954,6 +1996,9 @@ _label_Ofrsel3Fee: `POSTING FEE`,
 _label_Ofrsel4Ask: `EXPECTED RATE`,
 _label_Ofrsel5Pay: `XUT TO DEPOSIT`,
 _label_Ofrsel6Rec: `${CAPCLASSCOIN} TO RECEIVE`,
+_label_RawBxCAddr: `CHANGE ADDRESS`,
+_label_RawBxChain: `BITCOIN CHAIN ID`,
+_label_RawBxPrice: `TRANSACTION FEE`,
 _label_RawTxChain: `ETHEREUM CHAIN ID`,
 _label_RawTxEther: `AMOUNT TO BE SENT`,
 _label_RawTxLimit: `${DOCGASLIMIT} USAGE`,
@@ -1961,6 +2006,7 @@ _label_RawTxNonce: `ACCOUNT ${DOCETXNONCE}`,
 _label_RawTxOpMsg: `MESSAGE: OPTIONAL`,
 _label_RawTxPrice: `${DOCGASPRICE} IN GWEI`,
 _label_RawTxRecvr: `RECIPIENT ADDRESS`,
+_label_RawTxToken: `BCYPHER API TOKEN`,
 _label_Reqbuy0Xut: `YOUR XUT BALANCE`,
 _label_Reqbuy1Eth: `YOUR ${CAPCLASSCOIN} BALANCE`,
 _label_Reqbuy1Tpe: `EXCHANGE RATE`,
@@ -2067,9 +2113,9 @@ _note_BuyOfr: `${NOTEEXGASFEE}`,
 _note_DisBuy: `${NOTEEXGASFEE}`,
 _note_DisSel: `${NOTEEXGASFEE}`,
 _note_EthXut: `${NOTEEXGASFEE}`,
-_note_BtcAbout: `This applet has been created for bitcoin professionals to send bitcoins from their paper wallet to another wallet ${CAPNODISCLOS} the wallet's private key by generating transaction's raw data and push it over bitcoin network using free ${LNKBTCPUSHTX};`,
+_note_BtcAbout: `This applet has been created for bitcoin professionals to send bitcoins [with change amount sent back to sender] from their paper wallet to another wallet ${CAPNODISCLOS} the wallet's private key by generating transaction's raw data and push it over bitcoin network using free ${LNKBTCPUSHTX};`,
 _note_EthAbout: `This applet has been created for ethereum professionals to send ethers or erc-tokens from their paper wallet to another wallet ${CAPNODISCLOS} the wallet's private key by generating transaction's raw data and push it over ethereum network using free ${LNKETHPUSHTX};`,
-_note_BtcBegin: `First, you do be sure that you have your own paper wallet already with its ${CAPBIP38EKEY} and the very decrypting passcode; in case of having none, you are suggested to try our tool at ${LNKGITWALLET};<br/>A stable internet connection is required to get ${LNKBTCWALLET};`,
+_note_BtcBegin: `First, you do be sure that you have your own paper wallet already with its ${CAPBIP38EKEY} and the very decrypting passcode; in case of having none, you are suggested to try our tool at ${LNKGITWALLET};<br/>Second, a stable internet connection is required to get ${LNKBTCWALLET}, otherwise you may take the ${LNKBXOFFLINE};`,
 _note_EthBegin: `First, you do be sure that you have your own paper wallet already with its ${CAPBIP38EKEY} and the very decrypting passcode; in case of having none, you are suggested to try our tool at ${LNKGITWALLET};<br/>A stable internet connection is required to get ${LNKETHGASFEE} and ${LNKUSERNONCE}, otherwise you may take the ${LNKEXOFFLINE};`,
 _note_GameDocSet: `${NOTEEXGASFEE}`,
 _note_GameTxNote: `THIS GAME IS OWNED AND MANAGED BY ITS VERY OWNER<br/>SO PEOPLE PLEASE BE AWARE OF SCAMMING BEHAVIOURS`,

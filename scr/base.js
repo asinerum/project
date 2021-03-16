@@ -1,4 +1,12 @@
 ////////////////////////////////////////////////////////////
+const BXCHAINS={/*scan:/address/;api:/addrs/*/
+bitcoin:{coin:'BTC',rpcs:'',scan:'https://live.blockcypher.com/btc/',api:'https://api.blockcypher.com/v1/btc/main/',push:'https://live.blockcypher.com/btc/pushtx'},
+testnet:{coin:'TBTC',rpcs:'',scan:'https://live.blockcypher.com/btc-testnet/',api:'https://api.blockcypher.com/v1/btc/test3/',push:'https://live.blockcypher.com/btc-testnet/pushtx'},
+//bcytest:{coin:'CBTC',rpcs:'',scan:'https://live.blockcypher.com/bcy/',api:'https://api.blockcypher.com/v1/bcy/test/',push:'https://live.blockcypher.com/bcy/pushtx'},
+dashcoin:{coin:'DASH',rpcs:'',scan:'https://live.blockcypher.com/dash/',api:'https://api.blockcypher.com/v1/dash/main/',push:'https://live.blockcypher.com/dash/pushtx'},
+litecoin:{coin:'LTC',rpcs:'',scan:'https://live.blockcypher.com/ltc/',api:'https://api.blockcypher.com/v1/ltc/main/',push:'https://live.blockcypher.com/ltc/pushtx'},
+};
+////////////////////////////////////////////////////////////
 const EXCHAINS={
 mainnet:{coin:'ETH',ncid:1,rpcs:'',scan:'https://etherscan.io/',api:'https://api.etherscan.io/api?',push:'https://etherscan.io/pushtx'},
 rinkeby:{coin:'RIN',ncid:4,rpcs:'',scan:'https://rinkeby.etherscan.io/',api:'https://api-rinkeby.etherscan.io/api?',push:'https://rinkeby.etherscan.io/pushtx'},
