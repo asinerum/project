@@ -1443,11 +1443,11 @@ const dwTxHashContent=function(txh,divAddr,divNote,divData,cbf){dw(divAddr,HYPHE
 const dwAddrAliasInfo=function(alias,divHash,divOwner,divAddr,cbf){alias=alias.toLowerCase();db(divHash,toHash(alias));xutengAliasesOwner(alias,function(e,ua){if(cbf)cbf(e,ua);if(ua!=ZEROADDR)db(divOwner,ua);else{db(divOwner,HYPHEN)}});xuteng.methods.addressOf(gv(divHash)).call(function(e,oa){if(cbf)cbf(e,oa);if(oa!=ZEROADDR)db(divAddr,oa);else{db(divAddr,HYPHEN)}});}
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
-const rawFilterTx=function(r){return({bal:fromSat(r.final_balance),usl:r.txrefs.filter(item=>!item.spent_by&&item.tx_output_n!==-1)});};
+const rawFilterTx=function(r){return({bal:fromSat(r.final_balance),usl:r.txrefs.filter(item=>!item.spent_by&&item.tx_output_n!==-1)})};
 const rawCypherUs=function(acc,scid,cbf=console.log){rawCypherTx(acc,scid,(e,r)=>{if(e)return(cbf(e,null));if(!r||!r.final_balance)return(cbf(hi_alert_balance,null));cbf(null,rawFilterTx(r))})};
-const rawCypherTx=function(acc,scid,cbf=console.log){axios.get(BROXIES[0].getTransactionList(acc,scid)).then(r=>{if(r.status===200){cbf(null,r.data)}else{_Error(r.status)}}).catch(e=>{cbf(e,null)});};
-const rawGenBtcTx=function(usl,bal,acc,wif,to,amt,scid,fee,out=TEST,b,w){try{b=_Builder(scid);b.setVersion(1);w=_BWallet(wif,scid);/*wif=newaccount.key*/;usl.forEach(item=>b.addInput(item.tx_hash,item.tx_output_n));b.addOutput(to,1*toSat(amt));b.addOutput(acc,1*bitChange(bal,amt,fee));/*acc=sender*/;usl.forEach((item,index)=>{b.sign(index,w)});db(out,b.build().toHex());}catch(e){return(db(out,e))}};
-const rawSetBtcTx=function(acc,wif,to,amt,scid,fee,out=TEST){rawCypherUs(acc,scid,(e,r)=>{if(e)return(db(out,e));return(rawGenBtcTx(r.usl,r.bal,acc,wif,to,amt,scid,fee,out))})};
+const rawCypherTx=function(acc,scid,cbf=console.log){axios.get(BROXIES[0].getTransactionList(acc,scid)).then(r=>{if(r.status===200){cbf(null,r.data)}else{_Error(r.status)}}).catch(e=>{cbf(e,null)})};
+const rawGenBtcTx=function(usl,bal,acc,wif,to,amt,scid,fee,status=TEST,out=TEST,b,w){showLoad(status);try{b=_Builder(scid);b.setVersion(1);w=_BWallet(wif,scid);/*wif=newaccount.key*/;usl.forEach(item=>b.addInput(item.tx_hash,item.tx_output_n));b.addOutput(to,1*toSat(amt));b.addOutput(acc,1*bitChange(bal,amt,fee));/*acc=sender*/;usl.forEach((item,index)=>{b.sign(index,w)});db(out,b.build().toHex());dw(status,DONE);}catch(e){return(db(status,e))}};
+const rawSetBtcTx=function(acc,wif,to,amt,scid,fee,status=TEST,out=TEST){showLoad(status);rawCypherUs(acc,scid,(e,r)=>{if(e)return(db(status,e));return(rawGenBtcTx(r.usl,r.bal,acc,wif,to,amt,scid,fee,status,out))})};
 ////////////////////////////////////////////////////////////
 const rawTransfer=function(acc,pte,to,amt,scid,price,gas,status=TEST,out=TEST,eth=0){if(!EXTOKENS[scid])return(dw(status,INVALID));showLoad(status);getUserNonce(acc,network,function(err,nonce){if(err)return(dw(status,err));Transfer(to,amt,EXTOKENS[scid]().dec,function(err,result){if(err||!result)return(dw(status,err));dw(status,DONE);db(out,result);},scid,eth,price,gas,nonce,acc,pte,true,false);});};
 const rawPayEther=function(acc,pte,to,eth,msg,price,gas,status=TEST,out=TEST){showLoad(status);getUserNonce(acc,network,function(err,nonce){if(err)return(dw(status,err));PayEther(to,eth,msg,function(err,result){if(err||!result)return(dw(status,err));dw(status,DONE);db(out,result);},price,gas,nonce,acc,pte,true,false);});};
@@ -1602,8 +1602,8 @@ const Menu=function(element){self=this;
  self.goAuthNetFix=function(){selectNet(network);}
  self.goAuthGasWei=function(){txgwei=g2(_txgwei);}
  self.goAuthGasMax=function(){maxgas=g2(_maxgas);}
- self.goRawTxChain=function(){switchNet(gv(_network));getGwei()}
  self.goRawBxChain=function(){switchBtc(gv(_network));swapBtcId(network)}
+ self.goRawTxChain=function(){switchNet(gv(_network));getGwei()}
  self.goRawNetwork=function(){switchNet(gv(_network));}
  self.onGameResult=function(){reLotter(console.log);}
  self.onGameTxPlay=function(){gamePlay(window.txLottoGame);}
@@ -1627,7 +1627,7 @@ const Menu=function(element){self=this;
  self.onBipEncrypt=function(){bipOldAccount('_encrypt_status','old_key','enc_pwd','old_btc','old_eth','enc_bip');}
  self.onBipDecrypt=function(){bipKeyDecrypt('_decrypt_status','dec_bip','dec_pwd','exp_btc','exp_eth','exp_key','exp_hex');}
  self.onBipeUnlock=function(){bipKeyDecrypt('_keystore_status','keystore','password','100','wallet','200','300');}
- self.onRawTxDoBtc=function(){swapBtcId(gv(_network));if(noLogin())return;rawSetBtcTx(gv('exp_btc'),newaccount.key,gv('to'),gv('btc'),gv('network'),gv('fee'),'txdata')}
+ self.onRawTxDoBtc=function(){swapBtcId(gv(_network));if(noLogin())return;rawSetBtcTx(gv('exp_btc'),newaccount.key,gv('to'),gv('btc'),gv('network'),gv('fee'),'_txdata_status','txdata')}
  self.onRawTxDoEth=function(){if(noLogin())return;rawPayEther(gv('exp_eth'),window.newaccount.hex,gv(_sendTo),gv(_sendVal),gv(_smessage),g2(_txgwei),g2(_maxgas),'_txdata_status','txdata')}
  self.onRawPureEth=function(){if(noLogin())return;rawGenEther(gv('exp_eth'),window.newaccount.hex,gv(_sendTo),gv(_sendVal),gv(_smessage),g2(_txgwei),g2(_maxgas),g2('nonce'),'_txdata_status','txdata')}
  self.onRawPushEth=function(){dv('txlink',PROXIES[0].sendRawTransaction(gv('txdata'),network));}
