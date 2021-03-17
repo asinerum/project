@@ -48,6 +48,7 @@ const mv=function(d,v){dv(d,v,DOT);};
 const mw=function(d,w){dw(d,w,DOT);};
 const mt=function(d,t){dt(d,t,DOT);};
 const db=function(d,s){dw(d,s);dv(d,s);};
+const dbm=function(md,s){md.forEach((item)=>{db(item,s)});};
 ////////////////////////////////////////////////////////////
 const dr=function(d,r,ob){if(!ob)ob=HASH;$(ob+d).prop('href',r);};
 const dc=function(d,c,ob){if(!ob)ob=HASH;$(ob+d).prop('checked',c);};

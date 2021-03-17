@@ -53,6 +53,8 @@ const Menu=function(element){self=this;
  self.goAuthNetFix=function(){selectNet(network);}
  self.goAuthGasWei=function(){txgwei=g2(_txgwei);}
  self.goAuthGasMax=function(){maxgas=g2(_maxgas);}
+ self.goRawExToken=function(){PROXIES[0].setApiKey(gv('token'),network)}
+ self.goRawBxToken=function(){BROXIES[0].setApiKey(gv('token'),network)}
  self.goRawBxChain=function(){switchBtc(gv(_network));swapBtcId(network)}
  self.goRawTxChain=function(){switchNet(gv(_network));getGwei()}
  self.goRawNetwork=function(){switchNet(gv(_network));}
@@ -78,11 +80,12 @@ const Menu=function(element){self=this;
  self.onBipEncrypt=function(){bipOldAccount('_encrypt_status','old_key','enc_pwd','old_btc','old_eth','enc_bip');}
  self.onBipDecrypt=function(){bipKeyDecrypt('_decrypt_status','dec_bip','dec_pwd','exp_btc','exp_eth','exp_key','exp_hex');}
  self.onBipeUnlock=function(){bipKeyDecrypt('_keystore_status','keystore','password','100','wallet','200','300');}
- self.onRawTxDoBtc=function(){swapBtcId(gv(_network));if(noLogin())return;rawSetBtcTx(gv('exp_btc'),newaccount.key,gv('to'),gv('btc'),gv('network'),gv('fee'),'_txdata_status','txdata')}
- self.onRawTxDoEth=function(){if(noLogin())return;rawPayEther(gv('exp_eth'),window.newaccount.hex,gv(_sendTo),gv(_sendVal),gv(_smessage),g2(_txgwei),g2(_maxgas),'_txdata_status','txdata')}
- self.onRawPureEth=function(){if(noLogin())return;rawGenEther(gv('exp_eth'),window.newaccount.hex,gv(_sendTo),gv(_sendVal),gv(_smessage),g2(_txgwei),g2(_maxgas),g2('nonce'),'_txdata_status','txdata')}
- self.onRawPushEth=function(){dv('txlink',PROXIES[0].sendRawTransaction(gv('txdata'),network));}
- self.onRawPushBtc=function(){dv('txlink',BROXIES[0].sendRawTransaction(gv('txdata'),network));}
+ self.onRawTxDoBtc=function(){dbm(['txdata','txlink'],EMPTY);swapBtcId(gv(_network));if(noLogin())return;rawSetBtcTx(gv('exp_btc'),newaccount.key,gv('to'),gv('btc'),gv('network'),gv('fee'),'_txdata_status','txdata')}
+ self.onRawPureBtc=function(){dbm(['txdata','txlink'],EMPTY);swapBtcId(gv(_network));if(noLogin())return;rawPopBtcTx(gv('input'),gv('exp_btc'),newaccount.key,gv('to'),gv('btc'),gv('network'),gv('fee'),'_txdata_status','txdata')}
+ self.onRawTxDoEth=function(){dbm(['txdata','txlink'],EMPTY);if(noLogin())return;rawPayEther(gv('exp_eth'),window.newaccount.hex,gv(_sendTo),gv(_sendVal),gv(_smessage),g2(_txgwei),g2(_maxgas),'_txdata_status','txdata')}
+ self.onRawPureEth=function(){dbm(['txdata','txlink'],EMPTY);if(noLogin())return;rawGenEther(gv('exp_eth'),window.newaccount.hex,gv(_sendTo),gv(_sendVal),gv(_smessage),g2(_txgwei),g2(_maxgas),g2('nonce'),'_txdata_status','txdata')}
+ self.onRawPushEth=function(){self.goRawExToken();dv('txlink',PROXIES[0].sendRawTransaction(gv('txdata'),network))}
+ self.onRawPushBtc=function(){self.goRawBxToken();dv('txlink',BROXIES[0].sendRawTransaction(gv('txdata'),network))}
  self.onRawCopyHex=function(){tcopy('txdata',hi_alert_kstcopy);}
  self.onRawCopyApi=function(){tcopy('txlink',hi_alert_kstcopy);}
  self.goUserRedXut=function(a){a=gv('xutTo');if(avalid(a))return(dv('xutTarget',a));xutengUserRedirect(a,function(e,r){dv('xutTarget',r)})}

@@ -27,6 +27,7 @@ const LNKETHGASFEE='<a href="https://etherscan.io/gastracker" target="_blank">tr
 const LNKUSERNONCE='<a href="https://kb.myetherwallet.com/en/transactions/what-is-nonce" target="_blank">transaction nonce</a>';
 const LNKEXOFFLINE='<a href="https://asinerum.github.io/project/raweth">offline approach</a>';
 const LNKBXOFFLINE='<a href="https://asinerum.github.io/project/rawbit">offline approach</a>';
+const LNKBTCCYPHER='<a href="https://api.blockcypher.com/v1/btc/main/addrs/1CXsNnd148Dv7Nj9p4oTBYkVJ8NDvghac5" target="_blank">INPUT DATA</a>';
 const NOTEEXGASFEE='EXCLUDING GAS FEE';
 ////////////////////////////////////////////////////////////
 const LABELS={en:{
@@ -217,6 +218,7 @@ _label_Ofrsel5Pay: `XUT TO DEPOSIT`,
 _label_Ofrsel6Rec: `${CAPCLASSCOIN} TO RECEIVE`,
 _label_RawBxCAddr: `CHANGE ADDRESS`,
 _label_RawBxChain: `BITCOIN CHAIN ID`,
+_label_RawBxInput: `ACCOUNT ${LNKBTCCYPHER}`,
 _label_RawBxPrice: `TRANSACTION FEE`,
 _label_RawTxChain: `ETHEREUM CHAIN ID`,
 _label_RawTxEther: `AMOUNT TO BE SENT`,
@@ -325,6 +327,7 @@ _note_BipAdRight: `FREE TO USE FOR ANY PURPOSE WITH NO WARRANTY`,
 _note_BipAdUsage: `PAGES SHOULD BE SAVED AND SEEN OFFLINE`,
 _note_BipCaution: `PRIVATE KEYS MUST BE KEPT SAFE AND SECRET`,
 _note_BipEncrypt: `TIPS: ENCRYPTED KEY SHOULD BE PRINTED TO PAPER`,
+_note_BipBxAbout: `OFFLINE BITCOIN RAW TRANSACTION GENERATOR`,
 _note_BipExAbout: `OFFLINE ETHEREUM RAW TRANSACTION GENERATOR`,
 _note_BipTxAbout: `INDEPENDENT RAW TRANSACTION GENERATOR`,
 _note_BipWarning: `PASSCODE CAN BE NEITHER RESTORED NOR RESET`,
