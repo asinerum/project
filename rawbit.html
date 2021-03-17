@@ -2,7 +2,7 @@
 <meta charset="utf-8">
 <html lang="en">
 <head>
-<title>ASINERUM BITCOIN RAW TRANSACTION GENERATOR</title>
+<title>[OFFLINE APPROACH] ASINERUM BITCOIN RAW TRANSACTION GENERATOR</title>
 <link href="https://cdn.jsdelivr.net/gh/asinerum/project/favicon.ico" rel="icon" type="image/x-icon"/>
 <link href="https://cdn.jsdelivr.net/gh/asinerum/project/gui/_trumbowyg.css" rel="stylesheet" type="text/css"/>
 <link href="https://cdn.jsdelivr.net/gh/asinerum/project/gui/fonts.css" rel="stylesheet" type="text/css"/>
@@ -28,28 +28,6 @@
 <img class="banner" src="https://cdn.jsdelivr.net/gh/asinerum/project/gui/asinerum-btc.jpg" id="_img_banner"/>
 <br/>
 <br/>
-<a name="TARGET"></a>
-<div class="header" id="_header_BipTarget">MISSION</div>
-<hr class="cp"/>
-<div>
-<table class="cover">
-<tr><td class="buttoner"><span class="trlab" id="_label_BipTargetHead">!</span></td><td><span id="_note_BtcAbout">?</span></td></tr>
-</table>
-<div class="result" id="_help_about"></div>
-</div>
-<hr class="cp"/>
-<br/>
-<a name="PREREQ"></a>
-<div class="header" id="_header_BipPrereq">BEGIN</div>
-<hr class="cp"/>
-<div>
-<table class="cover">
-<tr><td class="buttoner"><span class="trlab" id="_label_BipPrereqHead">!</span></td><td><span id="_note_BtcBegin">?</span></td></tr>
-</table>
-<div class="result" id="_help_begin"></div>
-</div>
-<hr class="cp"/>
-<br/>
 <a name="DECODE"></a>
 <div class="header" id="_header_BipDecode">UNLOCK PAPER WALLET</div>
 <hr class="cp"/>
@@ -73,6 +51,7 @@
 <tr><td class="buttoner"><span class="label" id="_label_RawBxChain">?</span></td><td><select class="long" data-change="RawBxChain" id="network"></select></td></tr>
 <tr><td class="buttoner"><span class="trlab" id="_label_RawBxPrice">?</span></td><td><input class="address" value="0.0001" id="fee"/></td></tr>
 <tr><td class="buttoner"><span class="trlab" id="_label_RawBxCAddr">?</span></td><td><input disabled class="address" value="" id="change"/></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_RawBxInput">?</span></td><td><textarea class="longfat" id="input"></textarea></td></tr>
 <tr><td class="buttoner"><span class="trlab" id="_label_RawTxToken">?</span></td><td><input class="address" data-change="RawBxToken" value="" id="token"/></td></tr>
 <tr><td class="buttoner"><span class="label" id="_label_RawTxEther">?</span></td><td><input class="address" value="0.00" id="btc"/></td></tr>
 <tr><td class="buttoner"><span class="label" id="_label_RawTxRecvr">?</span></td><td><input class="address" value="?" id="to"/></td></tr>
@@ -87,7 +66,7 @@
 <hr class="cp"/>
 <div>
 <table class="cover">
-<tr><td class="buttoner"><a class="button" data-action="RawTxDoBtc" id="_button_RawTxDoEth">?</a></td><td><textarea class="longfat" id="txdata"></textarea><br/><a class="link" data-action="RawCopyHex" id="_button_RawCopyHex">?</a></td></tr>
+<tr><td class="buttoner"><a class="button" data-action="RawPureBtc" id="_button_RawTxDoEth">?</a></td><td><textarea class="longfat" id="txdata"></textarea><br/><a class="link" data-action="RawCopyHex" id="_button_RawCopyHex">?</a></td></tr>
 <tr><td class="buttoner"><a class="button" data-action="RawPushBtc" id="_button_RawPushEth">?</a></td><td><textarea class="longfat" id="txlink"></textarea><br/><a class="link" data-action="RawCopyApi" id="_button_RawCopyApi">?</a></td></tr>
 </table>
 <div class="result" id="_txdata_status"></div>
@@ -100,7 +79,7 @@
 <hr class="cp"/>
 <div>
 <table class="cover">
-<tr><td class="buttoner"><span class="trlab" id="_label_BipAdAbout">?</span></td><td><span id="_note_BipTxAbout">?</span></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_BipAdAbout">?</span></td><td><span id="_note_BipBxAbout">?</span></td></tr>
 <tr><td class="buttoner"><span class="trlab" id="_label_BipAdRight">?</span></td><td><span id="_note_BipAdRight">?</span></td></tr>
 <tr><td class="buttoner"><span class="trlab" id="_label_BipAdPrBtc">?</span></td><td><a target="_blank" href="https://cdn.jsdelivr.net/gh/asinerum/project/gui/1CXsNnd148Dv7Nj9p4oTBYkVJ8NDvghac5.png"><span class="result">1CXsNnd148Dv7Nj9p4oTBYkVJ8NDvghac5</span></a></td></tr>
 <tr><td class="buttoner"><span class="trlab" id="_label_BipAdPrEth">?</span></td><td><a target="_blank" href="https://cdn.jsdelivr.net/gh/asinerum/project/gui/0x537ca62B4c232af1ef82294BE771B824cCc078Ff.png"><span class="result">0x537ca62B4c232af1ef82294BE771B824cCc078Ff</span></a></td></tr>
