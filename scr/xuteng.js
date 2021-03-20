@@ -31,11 +31,11 @@ test:'0x102C30d2932307B9D7eb18Cf51B6539A609C3FBF'};
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
 const BXCHAINS={/*scan:/address/;api:/addrs/*/
-bitcoin:{coin:'BTC',rpcs:'',scan:'https://live.blockcypher.com/btc/',api:'https://api.blockcypher.com/v1/btc/main/',push:'https://live.blockcypher.com/btc/pushtx'},
-testnet:{coin:'TBTC',rpcs:'',scan:'https://live.blockcypher.com/btc-testnet/',api:'https://api.blockcypher.com/v1/btc/test3/',push:'https://live.blockcypher.com/btc-testnet/pushtx'},
-//bcytest:{coin:'CBTC',rpcs:'',scan:'https://live.blockcypher.com/bcy/',api:'https://api.blockcypher.com/v1/bcy/test/',push:'https://live.blockcypher.com/bcy/pushtx'},
-dashcoin:{coin:'DASH',rpcs:'',scan:'https://live.blockcypher.com/dash/',api:'https://api.blockcypher.com/v1/dash/main/',push:'https://live.blockcypher.com/dash/pushtx'},
-litecoin:{coin:'LTC',rpcs:'',scan:'https://live.blockcypher.com/ltc/',api:'https://api.blockcypher.com/v1/ltc/main/',push:'https://live.blockcypher.com/ltc/pushtx'},
+bitcoin:{version:0x00,pkprefix:0x80,coin:'BTC',rpcs:'',scan:'https://live.blockcypher.com/btc/',api:'https://api.blockcypher.com/v1/btc/main/',push:'https://live.blockcypher.com/btc/pushtx'},
+testnet:{version:0x6F,pkprefix:0xEF,coin:'TBTC',rpcs:'',scan:'https://live.blockcypher.com/btc-testnet/',api:'https://api.blockcypher.com/v1/btc/test3/',push:'https://live.blockcypher.com/btc-testnet/pushtx'},
+dogecoin:{version:0x1E,pkprefix:0x9E,coin:'DOGE',rpcs:'',scan:'https://live.blockcypher.com/doge/',api:'https://api.blockcypher.com/v1/doge/main/',push:'https://live.blockcypher.com/doge/pushtx'},
+dashcoin:{version:0x4C,pkprefix:0xCC,coin:'DASH',rpcs:'',scan:'https://live.blockcypher.com/dash/',api:'https://api.blockcypher.com/v1/dash/main/',push:'https://live.blockcypher.com/dash/pushtx'},
+litecoin:{version:0x30,pkprefix:0xB0,coin:'LTC',rpcs:'',scan:'https://live.blockcypher.com/ltc/',api:'https://api.blockcypher.com/v1/ltc/main/',push:'https://live.blockcypher.com/ltc/pushtx'},
 };
 ////////////////////////////////////////////////////////////
 const EXCHAINS={
@@ -1239,7 +1239,8 @@ const changeNet=function(){contractAddress=CONTRACT[network].addr;networkChainId
 const getRpcNet=function(){window.rpcServer=gv(_rpcs);if(!window.rpcServer)window.rpcServer=CONTRACT[network].rpcs;return(rpcServer);};/*UpdateNewRPCEndpoint*/
 const getSender=function(){web3.eth.getAccounts().then((accounts)=>{sender=accounts[0];});};/*UpdateUserWalletAddress*/
 const swapChain=function(cid){CONTRACT[MAINNET].ncid=cid;networkChainId=cid;};/*UpdateBlockchainIdOnly*/
-const swapBtcId=function(cid=BITCOIN){if(window.newaccount){if(cid==BITCOIN){sender=newaccount.btc;senderPte=newaccount.key;}else{if(newaccount[cid]){sender=newaccount[cid].btc;senderPte=newaccount[cid].key;}}};btcWallet(cid);db('change',sender);db('exp_btc',sender);};
+const swapBtcV2=function(cid=BITCOIN){if(window.newaccount){if(cid==BITCOIN){sender=newaccount.btc;senderPte=newaccount.key;}else{if(newaccount[cid]){sender=newaccount[cid].btc;senderPte=newaccount[cid].key;}}};btcWallet(cid);db('change',sender);db('exp_btc',sender);};
+const swapBtcId=function(cid=BITCOIN,k){if(window.newaccount&&BXCHAINS[cid]){k=_ECKey(window.newaccount.hex);k.setCompressed(true);Bitcoin.Address.networkVersion=BXCHAINS[cid].version;Bitcoin.ECKey.privateKeyPrefix=BXCHAINS[cid].pkprefix;sender=k.getBitcoinAddress();senderPte=k.getBitcoinWalletImportFormat();};btcWallet(cid);db('change',sender);db('exp_btc',sender);};
 const btcWallet=function(cid=network){if(window.newaccount){try{newaccount.wallet=bitcoin.ECPair.fromWIF(newaccount.key)}catch(e){return(newaccount.wallet=null)};newaccount.wallet.network=bitcoin.networks[cid];if(!newaccount.wallet.network)return(newaccount.wallet=null);newaccount.btcpair=getBtcKey(newaccount.wallet);sender=newaccount.btcpair.btc;senderPte=newaccount.btcpair.key;}};
 const getBtcKey=function(wallet=newaccount.wallet){return({btc:bitcoin.payments.p2pkh({pubkey:wallet.publicKey,network:wallet.network}).address,key:wallet.toWIF()});};
 ////////////////////////////////////////////////////////////
