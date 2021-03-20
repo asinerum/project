@@ -32,7 +32,7 @@ test:'0x102C30d2932307B9D7eb18Cf51B6539A609C3FBF'};
 ////////////////////////////////////////////////////////////
 const BXCHAINS={/*scan:/address/;api:/addrs/*/
 bitcoin:{version:0x00,pkprefix:0x80,coin:'BTC',rpcs:'',scan:'https://live.blockcypher.com/btc/',api:'https://api.blockcypher.com/v1/btc/main/',push:'https://live.blockcypher.com/btc/pushtx'},
-testnet:{version:0x6F,pkprefix:0xEF,coin:'TBTC',rpcs:'',scan:'https://live.blockcypher.com/btc-testnet/',api:'https://api.blockcypher.com/v1/btc/test3/',push:'https://live.blockcypher.com/btc-testnet/pushtx'},
+testnet:{version:0x6F,pkprefix:0xEF,coin:'TEST',rpcs:'',scan:'https://live.blockcypher.com/btc-testnet/',api:'https://api.blockcypher.com/v1/btc/test3/',push:'https://live.blockcypher.com/btc-testnet/pushtx'},
 dogecoin:{version:0x1E,pkprefix:0x9E,coin:'DOGE',rpcs:'',scan:'https://live.blockcypher.com/doge/',api:'https://api.blockcypher.com/v1/doge/main/',push:'https://live.blockcypher.com/doge/pushtx'},
 dashcoin:{version:0x4C,pkprefix:0xCC,coin:'DASH',rpcs:'',scan:'https://live.blockcypher.com/dash/',api:'https://api.blockcypher.com/v1/dash/main/',push:'https://live.blockcypher.com/dash/pushtx'},
 litecoin:{version:0x30,pkprefix:0xB0,coin:'LTC',rpcs:'',scan:'https://live.blockcypher.com/ltc/',api:'https://api.blockcypher.com/v1/ltc/main/',push:'https://live.blockcypher.com/ltc/pushtx'},
@@ -181,6 +181,10 @@ const MAINNET='mainnet';
 const TESTNET='rinkeby';
 const BITCOIN='bitcoin';
 const BITTEST='testnet';
+const CASHCOIN='cashcoin';
+const DASHCOIN='dashcoin';
+const DOGECOIN='dogecoin';
+const LITECOIN='litecoin';
 const LOCALHOST='localhost';
 const ARGADDR='a';
 const ARGEXEC='e';
@@ -1706,11 +1710,18 @@ const initNemt=function(){startXuteng();startNemt();};
 const initLeft=function(){startXuteng();startLeft();};
 const initExet=function(){startXuteng();startExet();};
 ////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////[6]
+const bipCashcoin=function(key=window.newaccount.hex,cbf=console.warn){return(bipkey2coin(key,CASHCOIN,cbf));};
+const bipDashcoin=function(key=window.newaccount.hex,cbf=console.warn){return(bipkey2coin(key,DASHCOIN,cbf));};
+const bipDogecoin=function(key=window.newaccount.hex,cbf=console.warn){return(bipkey2coin(key,DOGECOIN,cbf));};
+const bipLitecoin=function(key=window.newaccount.hex,cbf=console.warn){return(bipkey2coin(key,LITECOIN,cbf));};
+const bipTestcoin=function(key=window.newaccount.hex,cbf=console.warn){return(bipkey2coin(key,BITTEST,cbf));};
+const bipkey2coin=function(key,cid,cbf=console.warn,v,p,w,a,k){if(!BXCHAINS[cid])return(cbf(ERROR,null));v=Bitcoin.Address.networkVersion;p=Bitcoin.ECKey.privateKeyPrefix;try{w=_ECKey(key);w.setCompressed(true);Bitcoin.Address.networkVersion=BXCHAINS[cid].version;Bitcoin.ECKey.privateKeyPrefix=BXCHAINS[cid].pkprefix;a=w.getBitcoinAddress();k=w.getBitcoinWalletImportFormat();}catch(e){return(cbf(ERROR,null))};window.newaccount[cid]={btc:a,key:k};Bitcoin.Address.networkVersion=v;Bitcoin.ECKey.privateKeyPrefix=p;cbf(BXCHAINS[cid].coin+COLON,a,'\nPRIVATEKEY:',k);};
 ////////////////////////////////////////////////////////////[5]
-const bipCashcoin=function(key=window.newaccount.dat.priv,cbf=console.warn,a,k){key=_CashKey(key);key.setCompressed(true);a=getCashcoinAddress(key);;k=key.getBitcoinWalletImportFormat();;cbf('**BCH:',a,'\nPRIVATEKEY:',k);window.newaccount.cashcoin={btc:a,key:k};};
-const bipDashcoin=function(key=window.newaccount.dat.priv,cbf=console.warn,a,k){key=_DashKey(key);key.setCompressed(true);a=key.getDashcoinAddress();k=key.getDashcoinWalletImportFormat();cbf('*DASH:',a,'\nPRIVATEKEY:',k);window.newaccount.dashcoin={btc:a,key:k};};
-const bipLitecoin=function(key=window.newaccount.dat.priv,cbf=console.warn,a,k){key=_LiteKey(key);key.setCompressed(true);a=key.getLitecoinAddress();k=key.getLitecoinWalletImportFormat();cbf('**LTC:',a,'\nPRIVATEKEY:',k);window.newaccount.litecoin={btc:a,key:k};};
-const bipAltcoins=function(key=window.newaccount.dat.priv,cbf=console.warn){bipCashcoin(key,cbf);bipDashcoin(key,cbf);bipLitecoin(key,cbf);};
+const bipCashCoin=function(key=window.newaccount.dat.priv,cbf=console.warn,a,k){key=_CashKey(key);key.setCompressed(true);a=getCashcoinAddress(key);;k=key.getBitcoinWalletImportFormat();;cbf('**BCH:',a,'\nPRIVATEKEY:',k);window.newaccount.cashcoin={btc:a,key:k};};
+const bipDashCoin=function(key=window.newaccount.dat.priv,cbf=console.warn,a,k){key=_DashKey(key);key.setCompressed(true);a=key.getDashcoinAddress();k=key.getDashcoinWalletImportFormat();cbf('*DASH:',a,'\nPRIVATEKEY:',k);window.newaccount.dashcoin={btc:a,key:k};};
+const bipLiteCoin=function(key=window.newaccount.dat.priv,cbf=console.warn,a,k){key=_LiteKey(key);key.setCompressed(true);a=key.getLitecoinAddress();k=key.getLitecoinWalletImportFormat();cbf('**LTC:',a,'\nPRIVATEKEY:',k);window.newaccount.litecoin={btc:a,key:k};};
+const bipAltcoins=function(key=window.newaccount.dat.priv,cbf=console.warn){bipCashcoin(key,cbf);bipDashcoin(key,cbf);bipDogecoin(key,cbf);bipLitecoin(key,cbf);bipTestcoin(key,cbf);};
 const getCashcoinAddress=function(key){return(bchaddr.toCashAddress(key.getBitcoinAddress()).split(COLON)[1]);};
 ////////////////////////////////////////////////////////////[3]
 const bipNewAccount=function(status,divBtc,divEth,divKey,divHex,r){showLoad(status);r=bipAccount();if(!r)return(showError(status));db(divBtc,r.btc);db(divEth,r.eth);db(divKey,r.key);db(divHex,r.hex);showOkay(status);window.newaccount=r;bipAltcoins();};
