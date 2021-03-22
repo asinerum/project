@@ -1704,11 +1704,11 @@ const startNemt=function(gas=1200000,abi=ABINEMT,addr=NEMT[network].addr){return
 const startLeft=function(gas=1200000,abi=ABILEFT,addr=LEFT[network].addr){return(startFemt(gas,abi,addr))};
 const startExet=function(gas=1200000,abi=ABIEXET,addr=EXET[network].addr){return(startFemt(gas,abi,addr))};
 ////////////////////////////////////////////////////////////[5]
-const initFemt=function(){startXuteng();startFemt();};
-const initGemt=function(){startXuteng();startGemt();};
-const initNemt=function(){startXuteng();startNemt();};
-const initLeft=function(){startXuteng();startLeft();};
-const initExet=function(){startXuteng();startExet();};
+const initFemt=async()=>{await(startXuteng());startFemt();};
+const initGemt=async()=>{await(startXuteng());startGemt();};
+const initNemt=async()=>{await(startXuteng());startNemt();};
+const initLeft=async()=>{await(startXuteng());startLeft();};
+const initExet=async()=>{await(startXuteng());startExet();};
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////[6]
 const bipCashcoin=function(key=window.newaccount.hex,cbf=console.warn){return(bipkey2coin(key,CASHCOIN,cbf));};
@@ -2182,9 +2182,9 @@ const xready=function(mg=200000,gw=0){$(document).ready(function(){launch(mg,gw)
 ////////////////////////////////////////////////////////////
 const nonce=async(pops=3,cbf=null,b,k,i,m)=>{await(xutengFemt.methods.basicRate().call().then(r=>{b=r}));await(xutengFemt.methods.randomKey().call().then(r=>{k=r}));m=big(k).mod(big(b)).toString();for(i=1;i<b*pops;i++){if(m==big(b2i(kec(k,i))).mod(big(b)).toString()){console.log(FOUND,i);break;}};if(i>=b*pops){console.log(UNCHECKED)}};
 const xmint=async(pops=3,method=0)=>{mint(method,console.log,xutengFemt,ercTokens,alert,mmsender(),true,pops)};
-const Femt=async(pops=3)=>{await(initFemt());nonce(pops);};
-const Gemt=async(pops=3)=>{await(initGemt());nonce(pops);};
-const Nemt=async(pops=3)=>{await(initNemt());nonce(pops);};
+const Femt=async(pops=3)=>{await(initFemt());await(nonce(pops));};
+const Gemt=async(pops=3)=>{await(initGemt());await(nonce(pops));};
+const Nemt=async(pops=3)=>{await(initNemt());await(nonce(pops));};
 ////////////////////////////////////////////////////////////
 ////REF:consts-author.js
 ////////////////////////////////////////////////////////////
