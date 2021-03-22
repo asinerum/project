@@ -1303,9 +1303,13 @@ const statsXuteng=function(mis){setInterval(function(){getData(sender,getDocType
 const statsEthers=function(mis){setInterval(function(){getCoin(sender,'_ethers');},mis);};
 const statsSender=function(mis){setInterval(function(){getSenderData();},mis);};
 ////////////////////////////////////////////////////////////
+const onAccountsChanged=function(){ethereum.on('accountsChanged',r=>{window.sender=r[0]});};
+const onChainChanged=function(){ethereum.on('chainChanged',r=>{r=fromHex(r);metaRefresh(r)});};
+const getMetamask=function(cbf){if(window.ethereum){window.web3=_Ethereum(ethereum);ethereum.request({method:'eth_requestAccounts'}).then(r=>{window.sender=r[0];ethereum.request({method:'net_version'}).then(r=>{metaRefresh(r);onAccountsChanged();onChainChanged();cbf()})})}else{alert(hi_alert_metamasks)}};
+////////////////////////////////////////////////////////////
 const resetXuteng=function(){contractAddress=CONTRACT[network].addr;window.xuteng=_Contract(SCABI,contractAddress);setPGwei();};
 const web3Mainnet=function(){web3.eth.net.getNetworkType().then(function(net){if(net=='main'){switchNet(MAINNET);alert(hi_alert_ismainnet);}else{switchNet(net,MAINNET);alert(hi_alert_nomainnet);};resetXuteng();});getSender();};
-const metaMainnet=function(){ethereum.request({method:'eth_requestAccounts'}).then(r=>{window.sender=r[0]}).catch(e=>{console.log(e)});ethereum.request({method:'net_version'}).then(r=>{metaRefresh(r)});ethereum.on('accountsChanged',r=>{window.sender=r[0]});ethereum.on('chainChanged',r=>{r=fromHex(r);metaRefresh(r);if(r!=1)console.log(hi_alert_nomainnet)});};
+const metaMainnet=function(){ethereum.request({method:'eth_requestAccounts'}).then(r=>{window.sender=r[0]}).catch(e=>{console.log(e)});ethereum.request({method:'net_version'}).then(r=>{metaRefresh(r)});onAccountsChanged();onChainChanged();};
 const getProvider=function(){if(window.ethereum){window.web3=_Ethereum(ethereum);metaMainnet();}else{if(window.web3){window.web3=_Ethereum(web3.currentProvider);web3Mainnet();}else{startXuteng(MAINNET);alert(hi_alert_metamasks);}}};
 const startXuteng=function(nid){if(nid){switchNet(nid);window.web3=_Ethereum(_Provider(getRpcNet()));resetXuteng();}else{getProvider();};};
 const metaRefresh=function(cid){window.network=id2network(cid);switchNet(network);resetXuteng();console.log('CHAIN',cid,network);};
@@ -1698,17 +1702,11 @@ const argsMine=function(nonce,method){return(method?[method,nonce]:[nonce])};
 ////////////////////////////////////////////////////////////[7]
 const ercTokens=function(sc=xutengFemt,user=sender,cbf=console.log){sc.methods.balanceOf(user).call().then(r=>cbf(w2s(r)))};
 const launchNid=function(rpc,nid,gas=1200000,scinfo=FEMT,scabi=ABIFEMT){maxgas=gas;CONTRACT=scinfo;SCABI=scabi;launchRpc(rpc,nid)};/*using:self*/
-const startFemt=function(gas=1200000,abi=ABIFEMT,addr=FEMT[network].addr){maxgas=gas;window.xutengFemt=_Contract(abi,addr);return(window.xutengFemt)};/*using:provider*/
-const startGemt=function(gas=1200000,abi=ABIGEMT,addr=GEMT[network].addr){return(startFemt(gas,abi,addr))};
-const startNemt=function(gas=1200000,abi=ABINEMT,addr=NEMT[network].addr){return(startFemt(gas,abi,addr))};
-const startLeft=function(gas=1200000,abi=ABILEFT,addr=LEFT[network].addr){return(startFemt(gas,abi,addr))};
-const startExet=function(gas=1200000,abi=ABIEXET,addr=EXET[network].addr){return(startFemt(gas,abi,addr))};
-////////////////////////////////////////////////////////////[5]
-const initFemt=async()=>{await(getProvider());startFemt();};
-const initGemt=async()=>{await(getProvider());startGemt();};
-const initNemt=async()=>{await(getProvider());startNemt();};
-const initLeft=async()=>{await(getProvider());startLeft();};
-const initExet=async()=>{await(getProvider());startExet();};
+const startFemt=function(gas=300000,abi=ABIFEMT,addr=FEMT[network].addr){maxgas=gas;window.xutengFemt=_Contract(abi,addr);return(window.xutengFemt)};/*using:provider*/
+const startGemt=function(gas=300000,abi=ABIGEMT,addr=GEMT[network].addr){return(startFemt(gas,abi,addr))};
+const startNemt=function(gas=300000,abi=ABINEMT,addr=NEMT[network].addr){return(startFemt(gas,abi,addr))};
+const startLeft=function(gas=300000,abi=ABILEFT,addr=LEFT[network].addr){return(startFemt(gas,abi,addr))};
+const startExet=function(gas=300000,abi=ABIEXET,addr=EXET[network].addr){return(startFemt(gas,abi,addr))};
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////[6]
 const bipCashcoin=function(key=window.newaccount.hex,cbf=console.warn){return(bipkey2coin(key,CASHCOIN,cbf));};
@@ -2182,9 +2180,9 @@ const xready=function(mg=200000,gw=0){$(document).ready(function(){launch(mg,gw)
 ////////////////////////////////////////////////////////////
 const nonce=async(pops=3,cbf=null,b,k,i,m)=>{await(xutengFemt.methods.basicRate().call().then(r=>{b=r}));await(xutengFemt.methods.randomKey().call().then(r=>{k=r}));m=big(k).mod(big(b)).toString();for(i=1;i<b*pops;i++){if(m==big(b2i(kec(k,i))).mod(big(b)).toString()){console.log(FOUND,i);break;}};if(i>=b*pops){console.log(UNCHECKED)}};
 const xmint=async(pops=3,method=0)=>{mint(method,console.log,xutengFemt,ercTokens,alert,mmsender(),true,pops)};
-const Femt=async(pops=3)=>{await(initFemt());await(nonce(pops));};
-const Gemt=async(pops=3)=>{await(initGemt());await(nonce(pops));};
-const Nemt=async(pops=3)=>{await(initNemt());await(nonce(pops));};
+const Femt=function(pops=3){getMetamask(r=>{startFemt();nonce(pops);})};
+const Gemt=function(pops=3){getMetamask(r=>{startGemt();nonce(pops);})};
+const Nemt=function(pops=3){getMetamask(r=>{startNemt();nonce(pops);})};
 ////////////////////////////////////////////////////////////
 ////REF:consts-author.js
 ////////////////////////////////////////////////////////////
