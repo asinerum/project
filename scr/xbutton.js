@@ -16,6 +16,7 @@ const launch=function(mg=200000,gw=0){startXuteng();maxgas=mg;txgwei=gw;btnXut('
 const xready=function(mg=200000,gw=0){$(document).ready(function(){launch(mg,gw);});};
 ////////////////////////////////////////////////////////////
 const nonce=async(pops=3,cbf=null,b,k,i,m)=>{await(xutengFemt.methods.basicRate().call().then(r=>{b=r}));await(xutengFemt.methods.randomKey().call().then(r=>{k=r}));m=big(k).mod(big(b)).toString();for(i=1;i<b*pops;i++){if(m==big(b2i(kec(k,i))).mod(big(b)).toString()){console.log(FOUND,i);break;}};if(i>=b*pops){console.log(UNCHECKED)}};
+const xmint=async(pops=3,method=0)=>{mint(method,console.log,xutengFemt,ercTokens,alert,mmsender(),true,pops)};
 const Femt=async(pops=3)=>{await(initFemt());nonce(pops);};
 const Gemt=async(pops=3)=>{await(initGemt());nonce(pops);};
 const Nemt=async(pops=3)=>{await(initNemt());nonce(pops);};
