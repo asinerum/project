@@ -1704,11 +1704,11 @@ const startNemt=function(gas=1200000,abi=ABINEMT,addr=NEMT[network].addr){return
 const startLeft=function(gas=1200000,abi=ABILEFT,addr=LEFT[network].addr){return(startFemt(gas,abi,addr))};
 const startExet=function(gas=1200000,abi=ABIEXET,addr=EXET[network].addr){return(startFemt(gas,abi,addr))};
 ////////////////////////////////////////////////////////////[5]
-const initFemt=async()=>{await(startXuteng());startFemt();};
-const initGemt=async()=>{await(startXuteng());startGemt();};
-const initNemt=async()=>{await(startXuteng());startNemt();};
-const initLeft=async()=>{await(startXuteng());startLeft();};
-const initExet=async()=>{await(startXuteng());startExet();};
+const initFemt=async()=>{await(getProvider());startFemt();};
+const initGemt=async()=>{await(getProvider());startGemt();};
+const initNemt=async()=>{await(getProvider());startNemt();};
+const initLeft=async()=>{await(getProvider());startLeft();};
+const initExet=async()=>{await(getProvider());startExet();};
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////[6]
 const bipCashcoin=function(key=window.newaccount.hex,cbf=console.warn){return(bipkey2coin(key,CASHCOIN,cbf));};
