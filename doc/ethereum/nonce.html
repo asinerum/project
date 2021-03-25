@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<html lang="en">
+<head>
+<title>ETHEREUM TRANSACTION NONCE EXPLANATION</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+<link href="https://cdn.jsdelivr.net/gh/asinerum/project/gui/fonts.css" rel="stylesheet" type="text/css"/>
+<link href="https://cdn.jsdelivr.net/gh/asinerum/project/gui/style.css" rel="stylesheet" type="text/css"/>
+<link href="https://cdn.jsdelivr.net/gh/asinerum/project/favicon.ico" rel="icon" type="image/x-icon"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.6/angular.min.js"></script>
+</head>
+<body class="private">
+<div class="body" id="body">
+<img class="banner" src="https://cdn.jsdelivr.net/gh/asinerum/project/gui/asinerum.jpg" id="_img_banner"/>
+<br/>
+<br/>
+<a name="MEAN"></a>
+<div class="header" id="_header_meaning">WHAT IS A NONCE</div>
+<hr class="cp"/>
+<div>
+<p>In Ethereum, every transaction has a nonce. The nonce is the number of transactions sent from a given address.</p>
+<p>In English, a nonce is a number that can only be used once. In cryptography, a nonce is a one-time code selected in a random or pseudo-random manner that is used to securely transmit a main password, preventing replay attacks.</p>
+<p>Each time you send a transaction, the nonce value increases by 1. There are rules about what transactions are considered valid transactions, and the nonce is used to enforce some of these rules.</p>
+<p>Transactions must be in order. You cannot have a transaction with a nonce of 1 mined before one with a nonce of 0.</p>
+<p>Source: <a href="https://kb.myetherwallet.com/zh/transactions/what-is-nonce/">https://kb.myetherwallet.com/zh/transactions/what-is-nonce</a></p>
+</div>
+<hr class="cp"/>
+<br/>
+<a name="GET"></a>
+<div class="header" id="_header_howto">TO GET A NONCE MANUALLY</div>
+<hr class="cp"/>
+<div>
+<p>To create an Ethereum transaction manually, you need a valid nonce.</p>
+<p>To get a nonce manually, you should use some third-party service known as API or proxy.</p>
+<p>We suggest the following endpoints:</p>
+<p><a target="_blank" href="https://www.blockcypher.com/dev/ethereum/#introduction">(i) Blockcypher Ethereum API</a></p>
+<p>Example: <a target="_blank" href="https://api.blockcypher.com/v1/eth/main/addrs/0xAb5801a7D398351b8bE11C439e05C5B3259aeC9B">https://api.blockcypher.com/v1/eth/main/addrs/0xAb5801a7D398351b8bE11C439e05C5B3259aeC9B</a></p>
+<p>Where 0xAb5801a7D398351b8bE11C439e05C5B3259aeC9B is your own address.</p>
+<p>The result is:</p>
+<p><img class="inline" src="https://cdn.jsdelivr.net/gh/asinerum/project/doc/ethereum/nonce-api1.gif"/></p>
+<p><a target="_blank" href="https://etherscan.io/apis">(ii) Etherscan Ethereum API</a></p>
+<p>Example: <a target="_blank" href="https://api.etherscan.io/api?module=proxy&action=eth_getTransactionCount&address=0xAb5801a7D398351b8bE11C439e05C5B3259aeC9B">https://api.etherscan.io/api?module=proxy&action=eth_getTransactionCount&address=0xAb5801a7D398351b8bE11C439e05C5B3259aeC9B</a></p>
+<p>The result is:</p>
+<p><img class="inline" src="https://cdn.jsdelivr.net/gh/asinerum/project/doc/ethereum/nonce-api2.gif"/></p>
+</div>
+<hr class="cp"/>
+<br/>
+<div class="footer" id="_header_copyright">(C)2019 ASINERUM INTERNATIONAL PROJECT</div>
+</div>
+</body>
+</html>
