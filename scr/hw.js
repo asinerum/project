@@ -14,6 +14,8 @@ const ALERTS={en:{CANCELED,CHECKED,DONE,ERROR,FAILED,FOUND,INVALID,OK,UNCHECKED,
 const DOCGASPRICE='<a href="https://asinerum.github.io/project/doc/ethereum/gasprice" target="_blank">GAS PRICE</a>';
 const DOCGASLIMIT='<a href="https://asinerum.github.io/project/doc/ethereum/gaslimit" target="_blank">GAS LIMIT</a>';
 const DOCETXNONCE='<a href="https://asinerum.github.io/project/doc/ethereum/nonce" target="_blank">TX NONCE</a>';
+const DOCBTCINPUT='<a href="https://asinerum.github.io/project/doc/bitcoin/inputs" target="_blank">INPUT DATA</a>';
+const DOCBTCTXFEE='<a href="https://asinerum.github.io/project/doc/bitcoin/fee" target="_blank">FEE</a>';
 ////////////////////////////////////////////////////////////
 const CAPCLASSCOIN='<span class="coin">COIN</span>';
 const CAPNODISCLOS='<span class="textwarn">without disclosing</span>';
@@ -27,7 +29,6 @@ const LNKETHGASFEE='<a href="https://etherscan.io/gastracker" target="_blank">tr
 const LNKUSERNONCE='<a href="https://kb.myetherwallet.com/en/transactions/what-is-nonce" target="_blank">transaction nonce</a>';
 const LNKEXOFFLINE='<a href="https://asinerum.github.io/project/raweth">offline approach</a>';
 const LNKBXOFFLINE='<a href="https://asinerum.github.io/project/rawbit">offline approach</a>';
-const LNKBTCCYPHER='<a href="https://asinerum.github.io/project/doc/bitcoin/inputs" target="_blank">INPUT DATA</a>';
 const NOTEEXGASFEE='EXCLUDING GAS FEE';
 ////////////////////////////////////////////////////////////
 const LABELS={en:{
@@ -223,8 +224,8 @@ _label_Ofrsel5Pay: `XUT TO DEPOSIT`,
 _label_Ofrsel6Rec: `${CAPCLASSCOIN} TO RECEIVE`,
 _label_RawBxCAddr: `CHANGE ADDRESS`,
 _label_RawBxChain: `BITCOIN CHAIN ID`,
-_label_RawBxInput: `ACCOUNT ${LNKBTCCYPHER}`,
-_label_RawBxPrice: `TRANSACTION FEE`,
+_label_RawBxInput: `ACCOUNT ${DOCBTCINPUT}`,
+_label_RawBxPrice: `TRANSACTION ${DOCBTCTXFEE}`,
 _label_RawTxChain: `ETHEREUM CHAIN ID`,
 _label_RawTxEther: `AMOUNT TO BE SENT`,
 _label_RawTxLimit: `${DOCGASLIMIT} USAGE`,
