@@ -1613,6 +1613,7 @@ const Menu=function(element){self=this;
  self.goAuthNetFix=function(){selectNet(network);}
  self.goAuthGasWei=function(){txgwei=g2(_txgwei);}
  self.goAuthGasMax=function(){maxgas=g2(_maxgas);}
+ self.goRawBxValue=function(){db('change',gv('exp_btc'));}
  self.goRawExToken=function(){PROXIES[0].setApiKey(gv('token'),network)}
  self.goRawBxToken=function(){BROXIES[0].setApiKey(gv('token'),network)}
  self.goRawBxChain=function(){switchBtc(gv(_network));swapBtcId(network)}
