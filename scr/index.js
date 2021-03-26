@@ -28,7 +28,7 @@ var keypairs={};
 var password='';
 var senderPte='';
 var senderId='test';
-var sender=ADDRESSES[senderId];
+var sender='';
 var accountOptions=optnAccount();
 ////////////////////////////////////////////////////////////
 var txreceipt={};
