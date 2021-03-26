@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<html lang="en">
+<head>
+<title>BITCOIN TRANSACTION INPUT EXPLANATION</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+<link href="https://cdn.jsdelivr.net/gh/asinerum/project/gui/fonts.css" rel="stylesheet" type="text/css"/>
+<link href="https://cdn.jsdelivr.net/gh/asinerum/project/gui/style.css" rel="stylesheet" type="text/css"/>
+<link href="https://cdn.jsdelivr.net/gh/asinerum/project/favicon.ico" rel="icon" type="image/x-icon"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.6/angular.min.js"></script>
+</head>
+<body class="private">
+<div class="body" id="body">
+<img class="banner" src="https://cdn.jsdelivr.net/gh/asinerum/project/gui/asinerum.jpg" id="_img_banner"/>
+<br/>
+<br/>
+<a name="MEAN"></a>
+<div class="header" id="_header_meaning">WHAT ARE BITCOIN INPUT AND OUTPUT</div>
+<hr class="cp"/>
+<div>
+<p>In Bitcoin and its altcoin copies, every transaction requires at least one input and one output.</p>
+<p>A Bitcoin transaction input is a Bitcoin address (aka sender) from which the money has to be transferred, and a transaction output is an address (aka recipient) to which the money has to be credited.</p>
+<p>Each time you make a transaction, its input values must be collected from the sender(s), and all output values must be defined by you.</p>
+<p>Source: <a href="https://www.thebalance.com/how-does-a-bitcoin-transaction-work-391213">https://www.thebalance.com/how-does-a-bitcoin-transaction-work-391213</a></p>
+</div>
+<hr class="cp"/>
+<br/>
+<a name="GET"></a>
+<div class="header" id="_header_howto">TO COLLECT BITCOIN TRANSACTION INPUTS</div>
+<hr class="cp"/>
+<div>
+<p>To create a Bitcoin transaction manually, first you need to collect all transaction inputs.</p>
+<p>To collect transaction inputs manually, you should use some third-party service known as API or proxy.</p>
+<p>We suggest the following endpoint:</p>
+<p><a target="_blank" href="https://www.blockcypher.com/dev/bitcoin/#introduction">Blockcypher Bitcoin API</a></p>
+<p>BTC Example: <a target="_blank" href="https://api.blockcypher.com/v1/btc/main/addrs/1CXsNnd148Dv7Nj9p4oTBYkVJ8NDvghac5">https://api.blockcypher.com/v1/btc/main/addrs/1CXsNnd148Dv7Nj9p4oTBYkVJ8NDvghac5</a></p>
+<p>Where <span class="textnotice">1CXsNnd148Dv7Nj9p4oTBYkVJ8NDvghac5</span> is your own Bitcoin (BTC) address.</p>
+<p>LTC Example: <a target="_blank" href="https://api.blockcypher.com/v1/ltc/main/addrs/LWkpdzvq8nTyNBRJzCnkTZpFWLjW6x29Yc">https://api.blockcypher.com/v1/ltc/main/addrs/LWkpdzvq8nTyNBRJzCnkTZpFWLjW6x29Yc</a></p>
+<p>Where <span class="textnotice">LWkpdzvq8nTyNBRJzCnkTZpFWLjW6x29Yc</span> is your own Litecoin (LTC) address.</p>
+<p>DASH Example: <a target="_blank" href="https://api.blockcypher.com/v1/dash/main/addrs/XnDiD3Gu1qSWGKKjfx7g35SH8TwuzjtX4U">https://api.blockcypher.com/v1/dash/main/addrs/XnDiD3Gu1qSWGKKjfx7g35SH8TwuzjtX4U</a></p>
+<p>Where <span class="textnotice">XnDiD3Gu1qSWGKKjfx7g35SH8TwuzjtX4U</span> is your own Dashcoin (DASH) address.</p>
+<p>DOGE Example: <a target="_blank" href="https://api.blockcypher.com/v1/doge/main/addrs/DGfxv3ZeMY8CeNukYeo1jJv6BG6XGQrRFE">https://api.blockcypher.com/v1/doge/main/addrs/DGfxv3ZeMY8CeNukYeo1jJv6BG6XGQrRFE</a></p>
+<p>Where <span class="textnotice">DGfxv3ZeMY8CeNukYeo1jJv6BG6XGQrRFE</span> is your own Dogecoin (DOGE) address.</p>
+<p>The result looks like:</p>
+<p><img width="80%" src="https://cdn.jsdelivr.net/gh/asinerum/project/doc/bitcoin/input-api1.gif"/></p>
+<p>Click Raw Data tab on the result screen and copy the data there:</p>
+<p><img width="80%" src="https://cdn.jsdelivr.net/gh/asinerum/project/doc/bitcoin/input-api1raw.gif"/></p>
+</div>
+<hr class="cp"/>
+<br/>
+<div class="footer" id="_header_copyright">(C)2019 ASINERUM INTERNATIONAL PROJECT</div>
+</div>
+</body>
+</html>
