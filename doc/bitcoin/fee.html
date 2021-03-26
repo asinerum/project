@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<html lang="en">
+<head>
+<title>BITCOIN TRANSACTION FEE EXPLANATION</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+<link href="https://cdn.jsdelivr.net/gh/asinerum/project/gui/fonts.css" rel="stylesheet" type="text/css"/>
+<link href="https://cdn.jsdelivr.net/gh/asinerum/project/gui/style.css" rel="stylesheet" type="text/css"/>
+<link href="https://cdn.jsdelivr.net/gh/asinerum/project/favicon.ico" rel="icon" type="image/x-icon"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.6/angular.min.js"></script>
+</head>
+<body class="private">
+<div class="body" id="body">
+<img class="banner" src="https://cdn.jsdelivr.net/gh/asinerum/project/gui/asinerum.jpg" id="_img_banner"/>
+<br/>
+<br/>
+<a name="MEAN"></a>
+<div class="header" id="_header_meaning">WHAT IS BITCOIN TRANSACTION FEE</div>
+<hr class="cp"/>
+<div>
+<p>In Bitcoin and its altcoin copies, every transaction requires a fee.</p>
+<p>Bitcoin miners propose their mining price based on supply and demand for processing Bitcoin transactions, measured in units of satoshi per byte (sat/b).</p>
+<p>Thus Bitcoin transaction fee is calculated by the size of transaction (in byte) and the mining price which can be customized by advanced users.</p>
+<p>Basic Bitcoin transactions with 1 input and 2 outputs are typically of 250 bytes of data.</p>
+<p>So if the medium mining price is 27,500 sat/kb, your transaction fee can be set to 0.00007 BTC.</p>
+<p>Source: <a href="https://support.blockchain.com/hc/en-us/articles/360000939883-Explaining-bitcoin-transaction-fees">https://support.blockchain.com</a></p>
+</div>
+<hr class="cp"/>
+<br/>
+<a name="GET"></a>
+<div class="header" id="_header_howto">TO ESTIMATE BITCOIN TRANSACTION FEE</div>
+<hr class="cp"/>
+<div>
+<p>To create a Bitcoin transaction manually, you are about to set the transaction fee you are willing to pay.</p>
+<p>To get proposed mining price, you should use some third-party service known as API or proxy.</p>
+<p>We suggest the following endpoint:</p>
+<p><a target="_blank" href="https://www.blockcypher.com/dev/bitcoin/#introduction">Blockcypher Bitcoin API</a></p>
+<p>BTC Endpoint: <a target="_blank" href="https://api.blockcypher.com/v1/btc/main">https://api.blockcypher.com/v1/btc/main</a></p>
+<p>LTC Endpoint: <a target="_blank" href="https://api.blockcypher.com/v1/ltc/main">https://api.blockcypher.com/v1/ltc/main</a></p>
+<p>DASH Endpoint: <a target="_blank" href="https://api.blockcypher.com/v1/dash/main">https://api.blockcypher.com/v1/dash/main</a></p>
+<p>DOGE Endpoint: <a target="_blank" href="https://api.blockcypher.com/v1/doge/main">https://api.blockcypher.com/v1/doge/main</a></p>
+<p>The result looks like:</p>
+<p><img width="80%" src="https://cdn.jsdelivr.net/gh/asinerum/project/doc/bitcoin/fee-api1.gif"/></p>
+<p>The above mining price of 40,035 sat/kb produces the transaction fee of 0.0001 BTC.</p>
+</div>
+<hr class="cp"/>
+<br/>
+<div class="footer" id="_header_copyright">(C)2019 ASINERUM INTERNATIONAL PROJECT</div>
+</div>
+</body>
+</html>
