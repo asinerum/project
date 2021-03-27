@@ -999,6 +999,9 @@ const createSimpleRef=function(frm='ethref',uts=lotnow().lotstamp,min=0,max=0,ty
 const Contract=function(scid='usdt'){return(_Contract(EXTOKENS[scid]().abi,EXTOKENS[scid]().addr));};
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
+String.prototype.escape=function(){return(this.replace(/"/g,'\\"'))};
+const safeJSON=function(keys,vals,i=0,a=[]){if(keys.length!=vals.length)throw(null);for(;i<keys.length;i++)a.push(`"${keys[i]}":"${vals[i].toString().escape()}"`);return('{'+a.join(',')+'}');};
+////////////////////////////////////////////////////////////
 const trim=function(s){if(s)return(s.replace(/^\s+|\s+$/g,BLANK));return(BLANK);};
 const errCode=function(e){if(e!=null){e=e.toString();if(e.indexOf(']')>0)return(hi_alert_data);if(e.indexOf(OxOO)>0)return(hi_prompt_err);if(e.indexOf(RECEIPT)>0)return(hi_prompt_rct);e=(e.substring(e.lastIndexOf(HASH)));if(e){return(e);}else{return(0);}}return(null);};
 const funcName=function(){return(funcName.caller.name);};
