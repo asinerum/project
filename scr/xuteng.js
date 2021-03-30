@@ -1021,6 +1021,7 @@ const w2s=function(n,dec=5,len=22){n=n2s(fromWei(n),dec);return(n.length<len?n:A
 const s2w=function(s){return(toWei(s2n(s).toString()));};
 const toHex=function(s){return(web3.utils.toHex(s));};
 const toHash=function(s){return(web3.utils.keccak256(s,{encoding:HEX}));};
+const solHash=function(...args){return(web3.utils.soliditySha3(...args));};
 const jtoHash=function(j){return(toHash(JSON.stringify(j)));};
 const toWei=function(n){return(web3.utils.toWei(n.toString(),ETHER));};
 const gtoWei=function(n){return(web3.utils.toWei(n.toString(),GWEI));};
