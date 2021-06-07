@@ -6,7 +6,7 @@ USAGE:
 
 2. Download this app's source code from Github repository to your working folder;
 
-3. Initialize NODEJS workspace in the working folder by running console command	"npm init";
+3. Initialize NODEJS workspace in the working folder by running console command	"npm install";
 
 4. Run console command "node send.js";
 
