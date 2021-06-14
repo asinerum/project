@@ -656,6 +656,7 @@ const _WasmModule=function(dat){return(new WebAssembly.Module(dat))};
 const _WasmInstance=function(module,imports){return(new WebAssembly.Instance(module,imports))};
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
+const txDef=function(addr,cbf=console.log,t={}){web3.eth.getTransactionCount(addr).then(r=>{t.nonce=r;return(web3.eth.net.getId())}).then(r=>{t.chainId=r;return(web3.eth.getGasPrice())}).then(r=>{t.gasPrice=r;return(t)}).then(r=>{cbf(null,r)})};
 const xutengCall=function(method,args=[],status=TEST,out=TEST,cbf=console.log,cbo=dw){showLoad(status);xuteng.methods[method].apply(this,args).call().then(data=>{showOkay(status);cbo(out,data);cbf(null,data)}).catch(err=>{showError(status);cbf(err,null)});};
 const xutengSend=function(method,args=[],eth=0,status=TEST,out=TEST,cbf=console.log,cbo=dw){showLoad(status);xuteng.methods[method].apply(this,args).send(mmsender(eth)).then(data=>{showOkay(status);cbo(out,data);cbf(null,data)}).catch(err=>{showError(status);cbf(err,null)});};
 const xutengRaws=function(method,args=[],eth=0,status=TEST,out=TEST,cbf=console.log){showLoad(status);sendingFunc=xuteng.methods[method].apply(this,args);sendingAbi=sendingFunc.encodeABI();sendingEth=eth?eth:0;txsend(0,out,status,cbf);};
@@ -916,9 +917,10 @@ const setSending=function(func,eth){sendingFunc=func;sendingAbi=sendingFunc.enco
 ////////////////////////////////////////////////////////////
 const webProvider=function(rpc){return(web3.eth.setProvider(rpc))};
 const webAccount=function(key){return(web3.eth.accounts.wallet.add(keyAccount(key)))};
+const webDeploy=function(from,data,gas,gasPrice=null/*WEI:DECIMAL*/,cbf=console.log){return(webSend(from,null,0,data,gas,gasPrice,cbf))};
 const webSend=function(from,to,value='0'/*WEI:DECIMAL*/,data=HEXINIT,gas=maxgas,gasPrice=null/*WEI:DECIMAL*/,cbf=console.log){return(web3.eth.sendTransaction({from,to,gas,gasPrice,value,data},cbf))};
 const webSign=function(from,to,value='0'/*WEI:DECIMAL*/,data=HEXINIT,gas=maxgas,gasPrice=null/*WEI:DECIMAL*/,cbf=console.log){for(acc of Object.values(web3.eth.accounts.wallet)){if(acc.address==from){return(acc.signTransaction({from,to,gas,gasPrice,value,data},cbf))}};return(cbf(FAILED,null))};
-const webRaw=function(from,to,value='0'/*WEI:DECIMAL*/,data=HEXINIT,gas=maxgas,gasPrice=null/*WEI:DECIMAL*/,cbf=console.log){webSign(from,to,value,data,gas,gasPrice,function(err,res){if(res){return(cbf(res.rawTransaction))};return(cbf(err.toString()))})};
+const webRaws=function(from,to,value='0'/*WEI:DECIMAL*/,data=HEXINIT,gas=maxgas,gasPrice=null/*WEI:DECIMAL*/,cbf=console.log){webSign(from,to,value,data,gas,gasPrice,function(err,res){if(res){return(cbf(res.rawTransaction))};return(cbf(err.toString()))})};
 ////////////////////////////////////////////////////////////
 const send=function(divG,divH,divS,cbf=console.log){showLoad(divS);txsend(divG,divH,divS,cbf);};
 const txsend=function(divG,divH,divS,cbf=console.log,cfm=true,run=true,x){sendingFunc.estimateGas({from:sender,value:s2wHex(sendingEth)}).then(gas=>{estgas=gas;gasfee=fromGwei(estgas*txgwei);if(cfm&&!accepted(divS))return;web3.eth.getTransactionCount(sender).then(nonce=>{nonce=nonce.toString(16);x=txraw(sendingAbi,nonce,sendingEth,0);if(!run)return(cbf(null,x));web3.eth.sendSignedTransaction(x).on(RECEIPT,receipt=>{txreceipt=receipt;if(cbf)cbf(null,txreceipt);console.log(txreceipt);dw(divG,txreceipt.gasUsed);dw(divH,txreceipt.transactionHash);dw(divS,txreceipt.status);}).then(res=>{dw(divS,OK);}).catch(err=>{if(cbf)cbf(err,null);dw(divG,BLANK);dw(divH,BLANK);dw(divS,ERROR+errCode(err));});});});};

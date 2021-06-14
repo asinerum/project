@@ -1,4 +1,5 @@
 ////////////////////////////////////////////////////////////
+const txDef=function(addr,cbf=console.log,t={}){web3.eth.getTransactionCount(addr).then(r=>{t.nonce=r;return(web3.eth.net.getId())}).then(r=>{t.chainId=r;return(web3.eth.getGasPrice())}).then(r=>{t.gasPrice=r;return(t)}).then(r=>{cbf(null,r)})};
 const xutengCall=function(method,args=[],status=TEST,out=TEST,cbf=console.log,cbo=dw){showLoad(status);xuteng.methods[method].apply(this,args).call().then(data=>{showOkay(status);cbo(out,data);cbf(null,data)}).catch(err=>{showError(status);cbf(err,null)});};
 const xutengSend=function(method,args=[],eth=0,status=TEST,out=TEST,cbf=console.log,cbo=dw){showLoad(status);xuteng.methods[method].apply(this,args).send(mmsender(eth)).then(data=>{showOkay(status);cbo(out,data);cbf(null,data)}).catch(err=>{showError(status);cbf(err,null)});};
 const xutengRaws=function(method,args=[],eth=0,status=TEST,out=TEST,cbf=console.log){showLoad(status);sendingFunc=xuteng.methods[method].apply(this,args);sendingAbi=sendingFunc.encodeABI();sendingEth=eth?eth:0;txsend(0,out,status,cbf);};
