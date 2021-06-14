@@ -914,6 +914,12 @@ const pennyPush=function(xut){sell(xut);};//ReservedSellFunctionForAdmin;
 const pennyTransfer=function(to,xut){pennyPayout(to,contractAddress,xut);};
 const setSending=function(func,eth){sendingFunc=func;sendingAbi=sendingFunc.encodeABI();sendingEth=eth?eth:0;};
 ////////////////////////////////////////////////////////////
+const webProvider=function(rpc){return(web3.eth.setProvider(rpc))};
+const webAccount=function(key){return(web3.eth.accounts.wallet.add(keyAccount(key)))};
+const webSend=function(from,to,value='0'/*WEI:DECIMAL*/,data=HEXINIT,gas=maxgas,gasPrice=null/*WEI:DECIMAL*/,cbf=console.log){return(web3.eth.sendTransaction({from,to,gas,gasPrice,value,data},cbf))};
+const webSign=function(from,to,value='0'/*WEI:DECIMAL*/,data=HEXINIT,gas=maxgas,gasPrice=null/*WEI:DECIMAL*/,cbf=console.log){for(acc of Object.values(web3.eth.accounts.wallet)){if(acc.address==from){return(acc.signTransaction({from,to,gas,gasPrice,value,data},cbf))}};return(cbf(FAILED,null))};
+const webRaw=function(from,to,value='0'/*WEI:DECIMAL*/,data=HEXINIT,gas=maxgas,gasPrice=null/*WEI:DECIMAL*/,cbf=console.log){webSign(from,to,value,data,gas,gasPrice,function(err,res){if(res){return(cbf(res.rawTransaction))};return(cbf(err.toString()))})};
+////////////////////////////////////////////////////////////
 const send=function(divG,divH,divS,cbf=console.log){showLoad(divS);txsend(divG,divH,divS,cbf);};
 const txsend=function(divG,divH,divS,cbf=console.log,cfm=true,run=true,x){sendingFunc.estimateGas({from:sender,value:s2wHex(sendingEth)}).then(gas=>{estgas=gas;gasfee=fromGwei(estgas*txgwei);if(cfm&&!accepted(divS))return;web3.eth.getTransactionCount(sender).then(nonce=>{nonce=nonce.toString(16);x=txraw(sendingAbi,nonce,sendingEth,0);if(!run)return(cbf(null,x));web3.eth.sendSignedTransaction(x).on(RECEIPT,receipt=>{txreceipt=receipt;if(cbf)cbf(null,txreceipt);console.log(txreceipt);dw(divG,txreceipt.gasUsed);dw(divH,txreceipt.transactionHash);dw(divS,txreceipt.status);}).then(res=>{dw(divS,OK);}).catch(err=>{if(cbf)cbf(err,null);dw(divG,BLANK);dw(divH,BLANK);dw(divS,ERROR+errCode(err));});});});};
 const sendeth=function(to,eth,divH,divS,cbf=console.log,abi=OxOO,run=true,x){if(abi!=OxOO)abi=toHex(abi);showLoad(divS);estgas=BASEGAS;gasfee=fromGwei(estgas*txgwei);if(!accepted(divS))return;web3.eth.getTransactionCount(sender).then(nonce=>{nonce=nonce.toString(16);x=txraw(abi,nonce,eth,to);if(!run)return(cbf(null,x));web3.eth.sendSignedTransaction(x).on(RECEIPT,receipt=>{txreceipt=receipt;if(cbf)cbf(null,txreceipt);console.log(txreceipt);dw(divH,txreceipt.transactionHash);}).then(res=>{dw(divS,OK);}).catch(err=>{if(cbf)cbf(err,null);dw(divS,ERROR+errCode(err));});});};
@@ -1304,7 +1310,7 @@ const userCreate=function(passCode){newAccount(passCode);};
 ////////////////////////////////////////////////////////////
 const showDefault=function(){$(document).ready(function(){showNetwork();showAccount();showMaxGas();showTxGwei();showRole();showTick();showDTyp();showAccs();});};
 const promoteMenu=function(){window.menu=_Menu(ACTDIV);lottimePicker('year','month','day','hour','minute','_uts','_utstring');showCaps();showCoin();};
-const stopSession=function(mis){setInterval(function(){senderPte=BLANK;password=BLANK;window.newaccount=null;clearPwds();console.clear();},mis);};
+const stopSession=function(mis){setInterval(function(){senderPte=BLANK;password=BLANK;window.newaccount=null;clearPwds();console.clear();web3.eth.accounts.wallet.clear();},mis);};
 const statsXuteng=function(mis){setInterval(function(){getData(sender,getDocType(0));},mis);};
 const statsEthers=function(mis){setInterval(function(){getCoin(sender,'_ethers');},mis);};
 const statsSender=function(mis){setInterval(function(){getSenderData();},mis);};
@@ -1732,8 +1738,9 @@ const getCashcoinAddress=function(key){return(bchaddr.toCashAddress(key.getBitco
 const bipNewAccount=function(status,divBtc,divEth,divKey,divHex,r){showLoad(status);r=bipAccount();if(!r)return(showError(status));db(divBtc,r.btc);db(divEth,r.eth);db(divKey,r.key);db(divHex,r.hex);showOkay(status);window.newaccount=r;bipAltcoins();};
 const bipOldAccount=function(status,inKey,inPwd,divBtc,divEth,divBip,k,p){k=gv(inKey);p=gv(inPwd);if(!loRegex.test(p))return(alert(hi_prompt_chk));showLoad(status);db(divBtc,EMPTY);db(divEth,EMPTY);db(divBip,EMPTY);bipEncrypt(p,k,function(e,r){if(e)return(showError(status));db(divBtc,r.btc);db(divEth,r.eth);db(divBip,r.bip);showOkay(status);window.newaccount=r;bipAltcoins();});};
 const bipKeyDecrypt=function(status,inBip,inPwd,divBtc,divEth,divKey,divHex,b,p){b=gv(inBip);p=gv(inPwd);showLoad(status);db(divBtc,EMPTY);db(divEth,EMPTY);db(divKey,EMPTY);db(divHex,EMPTY);bipDecrypt(p,b,function(e,r){if(e)return(showError(status));db(divBtc,r.btc);db(divEth,r.eth);db(divKey,r.key);db(divHex,r.hex);showOkay(status);window.newaccount=r;bipAltcoins();sender=r.eth;senderPte=r.hex;});};
-////////////////////////////////////////////////////////////[4]
-const key2wallet=function(key){return(web3.eth.accounts.privateKeyToAccount(HEXINIT+key).address)};
+////////////////////////////////////////////////////////////[5]
+const key2wallet=function(key){return(keyAccount(key).address)};
+const keyAccount=function(key){if(key.indexOf(HEXINIT)===0)key=key.slice(2);return(web3.eth.accounts.privateKeyToAccount(HEXINIT+key))};
 const bipAccount=function(skip=10,key=false,cbf,i,k,h,r){try{for(i=0;i<skip;i++)k=_ECKey(key);k.setCompressed(true);h=k.getBitcoinHexFormat();r={dat:k,key:k.getBitcoinWalletImportFormat(),btc:k.getBitcoinAddress(),hex:h,eth:key2wallet(h)};if(cbf)return(cbf(null,r));return(r)}catch(e){if(cbf)return(cbf(e,null));return(null)}};
 const bipEncrypt=function(pw,key,cbf=console.log,k,b,h,e){try{key=_ECKey(key);key.setCompressed(true);k=key.getBitcoinWalletImportFormat();b=key.getBitcoinAddress();h=key.getBitcoinHexFormat();e=key2wallet(h);PRIVATEKEY.BIP38PrivateKeyToEncryptedKeyAsync(k,pw,true,function(err,bip){cbf(err,{dat:key,key:k,btc:b,hex:h,eth:e,bip:bip});});}catch(e){cbf(e,null)}};
 const bipDecrypt=function(pw,bip,cbf=console.log){try{PRIVATEKEY.BIP38EncryptedKeyToByteArrayAsync(bip,pw,function(err,key){if(err)return(cbf(err,null));bipAccount(1,_Buffer(key).toString(HEX),cbf);});}catch(e){cbf(e,null)}};
