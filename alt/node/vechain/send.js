@@ -56,6 +56,10 @@ let sender;
 let recipient;
 let amount;
 let gas;
+const fs = require("fs");
+const log = function(data){
+  fs.appendFileSync("log.txt",Date()+"\r\n"+data+"\r\n");
+};
 const prompt = require("prompt");
 prompt.start();
 prompt.get(input,function(err,result){
@@ -93,8 +97,8 @@ prompt.get(input,function(err,result){
             to: recipient,
             gas: gas,
             value: web3.utils.toWei(String(amount))})
-            .then(console.log)
-            .catch(err=>console.log(err.toString()));
+            .then(r=>{log(r);console.log(r)})
+            .catch(err=>{log(err.toString());console.log(err.toString())});
           });
         });
       });
