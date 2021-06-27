@@ -2,4 +2,5 @@
 stopSession(sestime);
 chooseNet(MAINNET);
 showExChain();
+dx('network',hashParam('chain'));
 ////////////////////////////////////////////////////////////
