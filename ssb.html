@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<html lang="en">
+<head>
+<title>ASINERUM SOLANA BETA COIN SENDER</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+<link href="https://cdn.jsdelivr.net/gh/asinerum/project/gui/fonts.css" rel="stylesheet" type="text/css"/>
+<link href="https://cdn.jsdelivr.net/gh/asinerum/project/gui/style.css" rel="stylesheet" type="text/css"/>
+<link href="https://cdn.jsdelivr.net/gh/asinerum/project/favicon.ico" rel="icon" type="image/x-icon"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/asinerum/project/scr/_web3js.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/asinerum/project/scr/_ethereumjs-tx.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/asinerum/project/scr/_solanaweb3.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/asinerum/project/scr/_bitcoinjs.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/asinerum/project/scr/_decimal.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/asinerum/project/scr/_axios.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/asinerum/project/scr/_bip.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/asinerum/project/scr/_cash.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/asinerum/project/scr/_dash.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/asinerum/project/scr/_lite.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/asinerum/project/scr/_qrcode.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/asinerum/project/scr/xuteng.js"></script>
+</head>
+<body class="private">
+<div class="body" id="body">
+<img class="banner" src="https://cdn.jsdelivr.net/gh/asinerum/project/gui/asinerum.jpg" id="_img_banner"/>
+<br/>
+<br/>
+<a name="KEYS"></a>
+<div class="header" id="_header_SolUnlock">SELECT SOLANA API ENDPOINT AND DECRYPT KEYSTORE</div>
+<hr class="cp"/>
+<div>
+<table class="cover">
+<tr><td class="buttoner"><span class="trlab" id="_label_AuthKstRpc">?</span></td><td><input disabled class="address" value="https://api.mainnet-beta.solana.com" id="rpcs"/></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_BipeDecBip">?</span></td><td><input class="address" value="?" id="keystore"/></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_BipeDecPwd">?</span></td><td><input type="password" class="address" value="xxx" id="password"/></td></tr>
+<tr><td class="buttoner"><a class="button" data-action="Bip2Unlock" id="_button_BipDecrypt">?</a></td><td>SOLANA&nbsp;COIN&nbsp;<span class="result" id="wallet">WALLET</span></td></tr>
+</table>
+<div class="result" id="_keystore_status"></div>
+<div class="result" id="_help_keystore"></div>
+</div>
+<hr class="cp"/>
+<br/>
+<a name="COIN"></a>
+<div class="header" id="_header_sendSol">PERSONAL SOLANA BALANCE</div>
+<hr class="cp"/>
+<div>
+<table class="cover">
+<tr><td class="buttoner"><span class="trlab" id="_label_AuthSumSol">SOL BALANCE</span></td><td><span id="bgether">&nbsp;<span id="_sols">?</span>&nbsp;</span></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_AuthAdrSol">SOL RECEIVER</span></td><td><input type="text" class="long" value="" id="to"/></td></tr>
+<tr><td class="buttoner"><a class="button" data-action="AuthPaySol" id="_button_AuthPaySol">SEND SOL</a></td><td><input type="text" class="money" value="0" id="sol"/>&nbsp;SOL</td></tr>
+</table>
+<div class="result" id="_sendeth_status"></div>
+<div class="result" id="_sendeth_hash"></div>
+</div>
+<hr class="cp"/>
+<br/>
+<div class="footer" id="_header_copyright">(C)</div>
+</div>
+<script src="./startSession.js"></script>
+<script src="./menu.js"></script>
+</body>
+</html>
