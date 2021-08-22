@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<html lang="en">
+<head>
+<title>ASINERUM SOLANA PAPER WALLET GENERATOR</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+<link href="https://cdn.jsdelivr.net/gh/asinerum/project/gui/fonts.css" rel="stylesheet" type="text/css"/>
+<link href="https://cdn.jsdelivr.net/gh/asinerum/project/gui/style.css" rel="stylesheet" type="text/css"/>
+<link href="https://cdn.jsdelivr.net/gh/asinerum/project/favicon.ico" rel="icon" type="image/x-icon"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/asinerum/project/scr/_web3js.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/asinerum/project/scr/_ethereumjs-tx.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/asinerum/project/scr/_solanaweb3.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/asinerum/project/scr/_bitcoinjs.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/asinerum/project/scr/_decimal.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/asinerum/project/scr/_axios.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/asinerum/project/scr/_bip.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/asinerum/project/scr/_cash.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/asinerum/project/scr/_dash.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/asinerum/project/scr/_lite.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/asinerum/project/scr/_qrcode.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/asinerum/project/scr/xuteng.js"></script>
+</head>
+<body class="private">
+<div class="body" id="body">
+<img class="banner" src="https://cdn.jsdelivr.net/gh/asinerum/project/gui/asinerum.jpg" id="_img_banner"/>
+<br/>
+<br/>
+<a name="ACCOUNT"></a>
+<div class="header" id="_header_BipAccount">CREATE ACCOUNT</div>
+<hr class="cp"/>
+<div>
+<table class="cover">
+<tr><td class="buttoner"><a class="button" data-action="Bip2AccNew" id="_button_BipeAccNew">?</a></td><td><span class="textnotice" id="_label_BipeAccNew"></span></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_Bip2AccSol">SOLANA WALLET</span></td><td><input type="text" class="address" value="" id="new_sol"/></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_Bip2AccKey">SOLANA PRIVATE KEY</span></td><td><input type="text" class="copy" value="" id="new_key"/></td></tr>
+<tr><td class="buttoner"><span class="label" id="_label_BipCaution">?</span></td><td><span class="textnotice" id="_note_BipCaution">?</span></td></tr>
+</table>
+<div class="result" id="_account_status"><span id="_note_BipAccount">?</span></div>
+<div class="result" id="_help_account"></div>
+</div>
+<hr class="cp"/>
+<br/>
+<a name="ENCODE"></a>
+<div class="header" id="_header_BipEncrypt">ENCRYPT PRIVATE KEY</div>
+<hr class="cp"/>
+<div>
+<table class="cover">
+<tr><td class="buttoner"><span class="trlab" id="_label_Bip2OldKey">SOLANA PRIVATE KEY</span></td><td><input type="text" class="copy" value="" id="old_key"/></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_BipeEncPwd">?</span></td><td><input type="password" class="address" value="" id="enc_pwd"/></td></tr>
+<tr><td class="buttoner"><a class="button" data-action="Bip2Encrpt" id="_button_BipEncrypt">?</a></td><td><span class="textnotice" id="_label_BipEncrypt"></span></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_Bip2OldSol">SOLANA WALLET</span></td><td><input type="text" class="address" value="" id="old_sol"/></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_BipeEncBip">?</span></td><td><input type="text" class="address" value="" id="enc_bip"/></td></tr>
+<tr><td class="buttoner"><span class="label" id="_label_BipWarning">?</span></td><td><span class="textnotice" id="_note_BipWarning">?</span></td></tr>
+</table>
+<div class="result" id="_encrypt_status"><span id="_note_BipEncrypt">?</span></div>
+<div class="result" id="_help_encrypt"></div>
+</div>
+<hr class="cp"/>
+<br/>
+<a name="DECODE"></a>
+<div class="header" id="_header_BipDecrypt">DECRYPT ENCRYPTED KEY</div>
+<hr class="cp"/>
+<div>
+<table class="cover">
+<tr><td class="buttoner"><span class="trlab" id="_label_BipeDecBip">?</span></td><td><input type="text" class="address" value="" id="dec_bip"/></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_BipeDecPwd">?</span></td><td><input type="password" class="address" value="" id="dec_pwd"/></td></tr>
+<tr><td class="buttoner"><a class="button" data-action="Bip2Decrpt" id="_button_BipDecrypt">?</a></td><td><span class="textnotice" id="_label_BipDecrypt"></span></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_Bip2ExpSol">SOLANA WALLET</span></td><td><input type="text" class="address" value="" id="exp_sol"/></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_Bip2ExpKey">SOLANA PRIVATE KEY</span></td><td><input type="text" class="copy" value="" id="exp_key"/></td></tr>
+</table>
+<div class="result" id="_decrypt_status"></div>
+<div class="result" id="_help_decrypt"></div>
+</div>
+<hr class="cp"/>
+<br/>
+<div class="footer" id="_header_copyright">(C)</div>
+</div>
+<script src="./startSession.js"></script>
+<script src="./menu.js"></script>
+</body>
+</html>
