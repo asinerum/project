@@ -11,6 +11,10 @@ const solTransfer=async(kp,addr,sol,tx=null)=>{if(!window.solana)solConnect();tx
 const solEncrypt=function(pw,key,cbf=console.log,res=null){bipEncrypt(pw,key.slice(0,64),function(e,r){if(e)return(cbf(e,null));res=r.bip;bipEncrypt(pw,key.slice(64,128),function(e,r){cbf(e,res+r.bip)})})};
 const solDecrypt=function(pw,bip,cbf=console.log,res=null){bipDecrypt(pw,bip.slice(0,58),function(e,r){if(e)return(cbf(e,null));res=r.hex;bipDecrypt(pw,bip.slice(58,116),function(e,r){cbf(e,res+r.hex)})})};
 ////////////////////////////////////////////////////////////
+const bipSolNewAddr=function(status,outSol,outKey,a){a=solAccPair(solAccount());db(outSol,a.address);db(outKey,a.privateKey)};
+const bipSolOldAddr=function(status,inKey,inPwd,outSol,outBip,k){showLoad(status);db(outSol,EMPTY);db(outBip,EMPTY);k=gv(inKey);solEncrypt(gv(inPwd),k,function(e,r){if(e)return(showError(status));db(outSol,solAccPair(solRecount(k)).address);db(outBip,r);showOkay(status)})};
+const bipSolDecAddr=function(status,inBip,inPwd,expSol,expKey){showLoad(status);db(expSol,EMPTY);db(expKey,EMPTY);solDecrypt(gv(inPwd),gv(inBip),function(e,r){if(e)return(showError(status));db(expSol,solAccPair(solRecount(r)).address);db(expKey,r);showOkay(status)})};
+////////////////////////////////////////////////////////////
 const bipSolDecrypt=function(status,inBip,inPwd,divAcc,divSol,divRpc='rpcs'){showLoad(status);db(divAcc,EMPTY);solConnect(gv(divRpc));solDecrypt(gv(inPwd),gv(inBip),function(e,r){if(e)return(showError(status));senderPte=r;window.newaccount=solRecount(senderPte);sender=window.newaccount.publicKey.toString();db(divAcc,sender);showOkay(status);solBalance(sender).then(r=>db(divSol,r/1000000000)).catch(e=>showError(divSol))})};
 const bipSolTransfer=function(status,divTo,divAmt,divSol){showLoad(status);solTransfer(window.newaccount,gv(divTo),gv(divAmt)).then(r=>{db(status,r);solBalance(window.newaccount.publicKey.toString()).then(r=>db(divSol,r/1000000000)).catch(e=>showError(divSol))}).catch(e=>db(status,e.toString()))};
 ////////////////////////////////////////////////////////////

@@ -1655,6 +1655,9 @@ const Menu=function(element){self=this;
  self.onBipEncrypt=function(){bipOldAccount('_encrypt_status','old_key','enc_pwd','old_btc','old_eth','enc_bip');}
  self.onBipDecrypt=function(){bipKeyDecrypt('_decrypt_status','dec_bip','dec_pwd','exp_btc','exp_eth','exp_key','exp_hex');}
  self.onBipeUnlock=function(){bipKeyDecrypt('_keystore_status','keystore','password','100','wallet','200','300');}
+ self.onBip2AccNew=function(){bipSolNewAddr('_account_status','new_sol','new_key');}
+ self.onBip2Encrpt=function(){bipSolOldAddr('_encrypt_status','old_key','enc_pwd','old_sol','enc_bip');}
+ self.onBip2Decrpt=function(){bipSolDecAddr('_decrypt_status','dec_bip','dec_pwd','exp_sol','exp_key');}
  self.onBip2Unlock=function(){bipSolDecrypt('_keystore_status','keystore','password','wallet','_sols');}
  self.onAuthPaySol=function(){bipSolTransfer('_sendeth_status','to','sol','_sols');}
  self.onRawTxDoBtc=function(){dbm(['txdata','txlink'],EMPTY);swapBtcId(gv(_network));if(noLogin())return;rawSetBtcTx(gv('exp_btc'),newaccount.key,gv('to'),gv('btc'),gv('network'),gv('fee'),'_txdata_status','txdata')}
@@ -1761,6 +1764,10 @@ const solTransfer=async(kp,addr,sol,tx=null)=>{if(!window.solana)solConnect();tx
 ////////////////////////////////////////////////////////////
 const solEncrypt=function(pw,key,cbf=console.log,res=null){bipEncrypt(pw,key.slice(0,64),function(e,r){if(e)return(cbf(e,null));res=r.bip;bipEncrypt(pw,key.slice(64,128),function(e,r){cbf(e,res+r.bip)})})};
 const solDecrypt=function(pw,bip,cbf=console.log,res=null){bipDecrypt(pw,bip.slice(0,58),function(e,r){if(e)return(cbf(e,null));res=r.hex;bipDecrypt(pw,bip.slice(58,116),function(e,r){cbf(e,res+r.hex)})})};
+////////////////////////////////////////////////////////////
+const bipSolNewAddr=function(status,outSol,outKey,a){a=solAccPair(solAccount());db(outSol,a.address);db(outKey,a.privateKey)};
+const bipSolOldAddr=function(status,inKey,inPwd,outSol,outBip,k){showLoad(status);db(outSol,EMPTY);db(outBip,EMPTY);k=gv(inKey);solEncrypt(gv(inPwd),k,function(e,r){if(e)return(showError(status));db(outSol,solAccPair(solRecount(k)).address);db(outBip,r);showOkay(status)})};
+const bipSolDecAddr=function(status,inBip,inPwd,expSol,expKey){showLoad(status);db(expSol,EMPTY);db(expKey,EMPTY);solDecrypt(gv(inPwd),gv(inBip),function(e,r){if(e)return(showError(status));db(expSol,solAccPair(solRecount(r)).address);db(expKey,r);showOkay(status)})};
 ////////////////////////////////////////////////////////////
 const bipSolDecrypt=function(status,inBip,inPwd,divAcc,divSol,divRpc='rpcs'){showLoad(status);db(divAcc,EMPTY);solConnect(gv(divRpc));solDecrypt(gv(inPwd),gv(inBip),function(e,r){if(e)return(showError(status));senderPte=r;window.newaccount=solRecount(senderPte);sender=window.newaccount.publicKey.toString();db(divAcc,sender);showOkay(status);solBalance(sender).then(r=>db(divSol,r/1000000000)).catch(e=>showError(divSol))})};
 const bipSolTransfer=function(status,divTo,divAmt,divSol){showLoad(status);solTransfer(window.newaccount,gv(divTo),gv(divAmt)).then(r=>{db(status,r);solBalance(window.newaccount.publicKey.toString()).then(r=>db(divSol,r/1000000000)).catch(e=>showError(divSol))}).catch(e=>db(status,e.toString()))};
