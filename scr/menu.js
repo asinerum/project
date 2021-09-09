@@ -86,6 +86,12 @@ const Menu=function(element){self=this;
  self.onBip2Decrpt=function(){bipSolDecAddr('_decrypt_status','dec_bip','dec_pwd','exp_sol','exp_key');}
  self.onBip2Unlock=function(){bipSolDecrypt('_keystore_status','keystore','password','wallet','_sols');}
  self.onAuthPaySol=function(){bipSolTransfer('_sendeth_status','to','sol','_sols');}
+ self.onBip3AccNew=function(){bipAlgoNewAddr('_account_status','new_algo','new_key');}
+ self.onBip3Encrpt=function(){bipAlgoOldAddr('_encrypt_status','old_key','enc_pwd','old_algo','enc_bip');}
+ self.onBip3Decrpt=function(){bipAlgoDecAddr('_decrypt_status','dec_bip','dec_pwd','exp_algo','exp_key');}
+ self.onBip3Unlock=function(){bipAlgoDecrypt('_keystore_status','keystore','password','wallet','_algos','rpcs','apikey','idxs');}
+ self.onAuthPayAgr=function(){bipAlgoTransfer('_sendeth_status','to','algo','_algos','note');}
+ self.onAuthRefAgr=function(){bipAlgoRefresh('_algos');}
  self.onRawTxDoBtc=function(){dbm(['txdata','txlink'],EMPTY);swapBtcId(gv(_network));if(noLogin())return;rawSetBtcTx(gv('exp_btc'),newaccount.key,gv('to'),gv('btc'),gv('network'),gv('fee'),'_txdata_status','txdata')}
  self.onRawPureBtc=function(){dbm(['txdata','txlink'],EMPTY);swapBtcId(gv(_network));if(noLogin())return;rawPopBtcTx(gv('input'),gv('exp_btc'),newaccount.key,gv('to'),gv('btc'),gv('network'),gv('fee'),'_txdata_status','txdata')}
  self.onRawTxDoEth=function(){dbm(['txdata','txlink'],EMPTY);if(noLogin())return;rawPayEther(gv('exp_eth'),window.newaccount.hex,gv(_sendTo),gv(_sendVal),gv(_smessage),g2(_txgwei),g2(_maxgas),'_txdata_status','txdata')}

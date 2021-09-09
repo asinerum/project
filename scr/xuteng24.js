@@ -1660,6 +1660,12 @@ const Menu=function(element){self=this;
  self.onBip2Decrpt=function(){bipSolDecAddr('_decrypt_status','dec_bip','dec_pwd','exp_sol','exp_key');}
  self.onBip2Unlock=function(){bipSolDecrypt('_keystore_status','keystore','password','wallet','_sols');}
  self.onAuthPaySol=function(){bipSolTransfer('_sendeth_status','to','sol','_sols');}
+ self.onBip3AccNew=function(){bipAlgoNewAddr('_account_status','new_algo','new_key');}
+ self.onBip3Encrpt=function(){bipAlgoOldAddr('_encrypt_status','old_key','enc_pwd','old_algo','enc_bip');}
+ self.onBip3Decrpt=function(){bipAlgoDecAddr('_decrypt_status','dec_bip','dec_pwd','exp_algo','exp_key');}
+ self.onBip3Unlock=function(){bipAlgoDecrypt('_keystore_status','keystore','password','wallet','_algos','rpcs','apikey','idxs');}
+ self.onAuthPayAgr=function(){bipAlgoTransfer('_sendeth_status','to','algo','_algos','note');}
+ self.onAuthRefAgr=function(){bipAlgoRefresh('_algos');}
  self.onRawTxDoBtc=function(){dbm(['txdata','txlink'],EMPTY);swapBtcId(gv(_network));if(noLogin())return;rawSetBtcTx(gv('exp_btc'),newaccount.key,gv('to'),gv('btc'),gv('network'),gv('fee'),'_txdata_status','txdata')}
  self.onRawPureBtc=function(){dbm(['txdata','txlink'],EMPTY);swapBtcId(gv(_network));if(noLogin())return;rawPopBtcTx(gv('input'),gv('exp_btc'),newaccount.key,gv('to'),gv('btc'),gv('network'),gv('fee'),'_txdata_status','txdata')}
  self.onRawTxDoEth=function(){dbm(['txdata','txlink'],EMPTY);if(noLogin())return;rawPayEther(gv('exp_eth'),window.newaccount.hex,gv(_sendTo),gv(_sendVal),gv(_smessage),g2(_txgwei),g2(_maxgas),'_txdata_status','txdata')}
@@ -1771,4 +1777,22 @@ const bipSolDecAddr=function(status,inBip,inPwd,expSol,expKey){showLoad(status);
 ////////////////////////////////////////////////////////////
 const bipSolDecrypt=function(status,inBip,inPwd,divAcc,divSol,divRpc='rpcs'){showLoad(status);db(divAcc,EMPTY);solConnect(gv(divRpc));solDecrypt(gv(inPwd),gv(inBip),function(e,r){if(e)return(showError(status));senderPte=r;window.newaccount=solRecount(senderPte);sender=window.newaccount.publicKey.toString();db(divAcc,sender);showOkay(status);solBalance(sender).then(r=>db(divSol,r/1000000000)).catch(e=>showError(divSol))})};
 const bipSolTransfer=function(status,divTo,divAmt,divSol){showLoad(status);solTransfer(window.newaccount,gv(divTo),gv(divAmt)).then(r=>{db(status,r);solBalance(window.newaccount.publicKey.toString()).then(r=>db(divSol,r/1000000000)).catch(e=>showError(divSol))}).catch(e=>db(status,e.toString()))};
+////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////
+const algoAccount=function(){window.newaccount=algosdk.generateAccount();return(window.newaccount)};
+const algoAccPair=function(kp=window.newaccount){return({address:kp.addr,privateKey:Buffer.from(kp.sk).toString('hex')})};
+const algoRecount=function(k64){window.newaccount=algosdk.mnemonicToSecretKey(algosdk.secretKeyToMnemonic(Uint8Array.from(Buffer.from(k64,'hex'))));return(window.newaccount)};
+////////////////////////////////////////////////////////////
+const algoConnect=async(token='',port='',api='https://mainnet-algorand.api.purestake.io/ps2',idx='https://mainnet-algorand.api.purestake.io/idx2')=>{token={'X-API-Key':token};window.algoindex=new algosdk.Indexer(token,idx,port);window.algoclient=new algosdk.Algodv2(token,api,port);return(window.algoclient.getTransactionParams().do())};
+const algoConTest=async(token='',port='',api='https://testnet-algorand.api.purestake.io/ps2',idx='https://testnet-algorand.api.purestake.io/idx2')=>{return(algoConnect(token,port,api,idx))};
+const algoBalance=async(addr,client=window.algoclient)=>{window.algoinfo=await(client.accountInformation(addr).do());return(window.algoinfo.amount)};
+const algoTransfer=async(addr,algo,note='',kp=window.newaccount,client=window.algoclient,params=null,tx=null)=>{params=await(client.getTransactionParams().do());tx={from:kp.addr,to:addr,fee:1,amount:algo*1000000,firstRound:params.firstRound,lastRound:params.lastRound,genesisID:params.genesisID,genesisHash:params.genesisHash,note:Uint8Array.from(Buffer.from(note))};return(await(client.sendRawTransaction(algosdk.signTransaction(tx,kp.sk).blob).do()))};/*{txId:"xxx"}*/
+////////////////////////////////////////////////////////////
+const bipAlgoNewAddr=function(status,outAlgo,outKey,a){a=algoAccPair(algoAccount());db(outAlgo,a.address);db(outKey,a.privateKey)};
+const bipAlgoOldAddr=function(status,inKey,inPwd,outAlgo,outBip,k){showLoad(status);db(outAlgo,EMPTY);db(outBip,EMPTY);k=gv(inKey);solEncrypt(gv(inPwd),k,function(e,r){if(e)return(showError(status));db(outAlgo,algoAccPair(algoRecount(k)).address);db(outBip,r);showOkay(status)})};
+const bipAlgoDecAddr=function(status,inBip,inPwd,expAlgo,expKey){showLoad(status);db(expAlgo,EMPTY);db(expKey,EMPTY);solDecrypt(gv(inPwd),gv(inBip),function(e,r){if(e)return(showError(status));db(expAlgo,algoAccPair(algoRecount(r)).address);db(expKey,r);showOkay(status)})};
+////////////////////////////////////////////////////////////
+const bipAlgoRefresh=function(divAlgo='_algos'){algoBalance(sender).then(r=>db(divAlgo,r/1000000)).catch(e=>showError(divAlgo))};
+const bipAlgoDecrypt=function(status,inBip,inPwd,divAcc,divAlgo,divRpc='rpcs',divToken='token',divIndex='indexer'){showLoad(status);db(divAcc,EMPTY);algoConnect(gv(divToken),EMPTY,gv(divRpc),gv(divIndex)).then(solDecrypt(gv(inPwd),gv(inBip),function(e,r){if(e)return(showError(status));senderPte=r;window.newaccount=algoRecount(senderPte);sender=window.newaccount.addr;db(divAcc,sender);showOkay(status);bipAlgoRefresh(divAlgo)})).catch(e=>showCancel(divAlgo))};
+const bipAlgoTransfer=function(status,divTo,divAmt,divAlgo,divNote='note'){showLoad(status);algoTransfer(gv(divTo),gv(divAmt),gv(divNote)).then(r=>{db(status,r.txId);bipAlgoRefresh(divAlgo)}).catch(e=>db(status,e.toString()))};
 ////////////////////////////////////////////////////////////
