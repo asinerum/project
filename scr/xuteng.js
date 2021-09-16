@@ -1882,6 +1882,7 @@ const DOCBTCTXFEE='<a href="https://asinerum.github.io/project/doc/bitcoin/fee" 
 const CAPCLASSCOIN='<span class="coin">COIN</span>';
 const CAPNODISCLOS='<span class="textwarn">without disclosing</span>';
 const CAPBIP38EKEY='<span class="textwarn">bip38 encrypted key</span>';
+const LNKITLICENSE='<a href="https://asinerum.github.io/project/LICENSE" target="_blank">MIT LICENSE</a>';
 const LNKBTCPUSHTX='<a href="https://www.blockchain.com/btc/pushtx" target="_blank">broadcasting services</a>';
 const LNKETHPUSHTX='<a href="https://etherscan.io/pushtx" target="_blank">broadcasting services</a>';
 const LNKGITWALLET='<a href="https://asinerum.github.io/project/wallet" target="_blank">github repository</a>';
@@ -2191,7 +2192,7 @@ _label_Wallet8Mem: `MEMBERS`,
 _label_Wallet9Fee: `MEMBER FEE`,
 _note_BipAccount: `BE SURE THAT NOBODY CAN SEE YOUR SCREEN THEN CLICK CREATE`,
 _note_BipAdAbout: `CLIENT SIDE PAPER WALLET GENERATOR`,
-_note_BipAdRight: `FREE TO USE FOR ANY PURPOSE WITH NO WARRANTY`,
+_note_BipAdRight: `FREE TO USE UNDER ${LNKITLICENSE}`,
 _note_BipAdUsage: `PAGES SHOULD BE SAVED AND SEEN OFFLINE`,
 _note_BipCaution: `PRIVATE KEYS MUST BE KEPT SAFE AND SECRET`,
 _note_BipEncrypt: `TIPS: ENCRYPTED KEY SHOULD BE PRINTED TO PAPER`,
