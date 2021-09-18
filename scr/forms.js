@@ -29,6 +29,7 @@ const fromWei=function(w){return(web3.utils.fromWei(w.toString(),ETHER));};
 const fromGwei=function(g){return(fromWei(gtoWei(g)));};
 const gfromWei=function(w){return(web3.utils.fromWei(w.toString(),GWEI));};
 const fromHex=function(h){return(web3.utils.hexToNumberString(h));};
+const fromNum=function(n){return(web3.utils.numberToHex(n));};
 const fromWHex=function(h){return(fromWei(fromHex(h)));};
 const s2wHex=function(s){return(toHex(s2w(s)));};
 const g2wHex=function(g){return(toHex(gtoWei(g)));};

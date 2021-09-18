@@ -1039,6 +1039,7 @@ const fromWei=function(w){return(web3.utils.fromWei(w.toString(),ETHER));};
 const fromGwei=function(g){return(fromWei(gtoWei(g)));};
 const gfromWei=function(w){return(web3.utils.fromWei(w.toString(),GWEI));};
 const fromHex=function(h){return(web3.utils.hexToNumberString(h));};
+const fromNum=function(n){return(web3.utils.numberToHex(n));};
 const fromWHex=function(h){return(fromWei(fromHex(h)));};
 const s2wHex=function(s){return(toHex(s2w(s)));};
 const g2wHex=function(g){return(toHex(gtoWei(g)));};
@@ -1652,9 +1653,9 @@ const Menu=function(element){self=this;
  self.onUserAaAddr=function(){if(avalid(gv('_aowner')))return(alert(ERROR));mm_ping(toHash(gv('alias').toLowerCase()),g2('atype'));}
  self.onUserAAlias=function(){dwAddrAliasInfo(gv('alias'),'_ahash','_aowner','_address');}
  self.onUserDomain=function(){dwDomainRegInfo(gv('domain'),'_downer','_dexp','dip','dnote');}
- self.onBipeAccNew=function(){bipNewAccount('_account_status','new_btc','new_eth','new_key','new_hex');}
- self.onBipEncrypt=function(){bipOldAccount('_encrypt_status','old_key','enc_pwd','old_btc','old_eth','enc_bip');}
- self.onBipDecrypt=function(){bipKeyDecrypt('_decrypt_status','dec_bip','dec_pwd','exp_btc','exp_eth','exp_key','exp_hex');}
+ self.onBipeAccNew=function(){bipNewAccount('_account_status','new_btc','new_eth','new_key','new_hex','new_web');}
+ self.onBipEncrypt=function(){bipOldAccount('_encrypt_status','old_key','enc_pwd','old_btc','old_eth','enc_bip','old_web');}
+ self.onBipDecrypt=function(){bipKeyDecrypt('_decrypt_status','dec_bip','dec_pwd','exp_btc','exp_eth','exp_key','exp_hex','exp_web');}
  self.onBipeUnlock=function(){bipKeyDecrypt('_keystore_status','keystore','password','100','wallet','200','300');}
  self.onBip2AccNew=function(){bipSolNewAddr('_account_status','new_sol','new_key');}
  self.onBip2Encrpt=function(){bipSolOldAddr('_encrypt_status','old_key','enc_pwd','old_sol','enc_bip');}
@@ -1749,9 +1750,9 @@ const bipLiteCoin=function(key=window.newaccount.dat.priv,cbf=console.warn,a,k){
 const bipAltcoins=function(key=window.newaccount.dat.priv,cbf=console.warn){bipCashCoin(key,cbf);bipDashcoin(key,cbf);bipDogecoin(key,cbf);bipLitecoin(key,cbf);bipTestcoin(key,cbf);};
 const getCashcoinAddress=function(key){return(bchaddr.toCashAddress(key.getBitcoinAddress()).split(COLON)[1]);};
 ////////////////////////////////////////////////////////////[3]
-const bipNewAccount=function(status,divBtc,divEth,divKey,divHex,r){showLoad(status);r=bipAccount();if(!r)return(showError(status));db(divBtc,r.btc);db(divEth,r.eth);db(divKey,r.key);db(divHex,r.hex);showOkay(status);window.newaccount=r;bipAltcoins();};
-const bipOldAccount=function(status,inKey,inPwd,divBtc,divEth,divBip,k,p){k=gv(inKey);p=gv(inPwd);if(!loRegex.test(p))return(alert(hi_prompt_chk));showLoad(status);db(divBtc,EMPTY);db(divEth,EMPTY);db(divBip,EMPTY);bipEncrypt(p,k,function(e,r){if(e)return(showError(status));db(divBtc,r.btc);db(divEth,r.eth);db(divBip,r.bip);showOkay(status);window.newaccount=r;bipAltcoins();});};
-const bipKeyDecrypt=function(status,inBip,inPwd,divBtc,divEth,divKey,divHex,b,p){b=gv(inBip);p=gv(inPwd);showLoad(status);db(divBtc,EMPTY);db(divEth,EMPTY);db(divKey,EMPTY);db(divHex,EMPTY);bipDecrypt(p,b,function(e,r){if(e)return(showError(status));db(divBtc,r.btc);db(divEth,r.eth);db(divKey,r.key);db(divHex,r.hex);showOkay(status);window.newaccount=r;bipAltcoins();sender=r.eth;senderPte=r.hex;});};
+const bipNewAccount=function(status,divBtc,divEth,divKey,divHex,divWeb,r){showLoad(status);r=bipAccount();if(!r)return(showError(status));db(divBtc,r.btc);db(divEth,r.eth);db(divWeb,fromHex(r.eth));db(divKey,r.key);db(divHex,r.hex);showOkay(status);window.newaccount=r;bipAltcoins();};
+const bipOldAccount=function(status,inKey,inPwd,divBtc,divEth,divBip,divWeb,k,p){k=gv(inKey);p=gv(inPwd);if(!loRegex.test(p))return(alert(hi_prompt_chk));showLoad(status);db(divBtc,EMPTY);db(divEth,EMPTY);db(divBip,EMPTY);bipEncrypt(p,k,function(e,r){if(e)return(showError(status));db(divBtc,r.btc);db(divEth,r.eth);db(divWeb,fromHex(r.eth));db(divBip,r.bip);showOkay(status);window.newaccount=r;bipAltcoins();});};
+const bipKeyDecrypt=function(status,inBip,inPwd,divBtc,divEth,divKey,divHex,divWeb,b,p){b=gv(inBip);p=gv(inPwd);showLoad(status);db(divBtc,EMPTY);db(divEth,EMPTY);db(divKey,EMPTY);db(divHex,EMPTY);bipDecrypt(p,b,function(e,r){if(e)return(showError(status));db(divBtc,r.btc);db(divEth,r.eth);db(divWeb,fromHex(r.eth));db(divKey,r.key);db(divHex,r.hex);showOkay(status);window.newaccount=r;bipAltcoins();sender=r.eth;senderPte=r.hex;});};
 ////////////////////////////////////////////////////////////[5]
 const key2wallet=function(key){return(keyAccount(key).address)};
 const keyAccount=function(key){if(key.indexOf(HEXINIT)===0)key=key.slice(2);return(web3.eth.accounts.privateKeyToAccount(HEXINIT+key))};
@@ -2008,10 +2009,10 @@ _label_AllowToSel: `USER CAN SELL`,
 _label_AllowToTrs: `USER TRANSFER`,
 _label_AllowToTrx: `USER EXCHANGE`,
 _label_AuthAccKey: `NEW PRIVATE KEY`,
-_label_AuthAdrBnb: `BNB RECEIVER`,
-_label_AuthAdrEtc: `ETC RECEIVER`,
-_label_AuthAdrEth: `${CAPCLASSCOIN} RECEIVER`,
-_label_AuthAdrXut: `XUT RECEIVER`,
+_label_AuthAdrBnb: `BNB RECIPIENT`,
+_label_AuthAdrEtc: `ETC RECIPIENT`,
+_label_AuthAdrEth: `${CAPCLASSCOIN} RECIPIENT`,
+_label_AuthAdrXut: `XUT RECIPIENT`,
 _label_AuthGasMax: `${DOCGASLIMIT}`,
 _label_AuthGasWei: `${DOCGASPRICE}`,
 _label_AuthKstNet: `NETWORK`,
@@ -2019,6 +2020,7 @@ _label_AuthKstPwd: `PASSWORD`,
 _label_AuthKstRpc: `RPC SERVER`,
 _label_AuthKstore: `V3 KEYSTORE`,
 _label_AuthorAddr: `ETHEREUM WALLET`,
+_label_AuthorAWeb: `WEBCOIN WALLET`,
 _label_AuthSigMsg: `MESSAGE`,
 _label_AuthSigUsr: `SIGNATORY ADDRESS`,
 _label_AuthSumBnb: `BNB BALANCE`,
@@ -2028,6 +2030,7 @@ _label_AuthSumXut: `XUT BALANCE`,
 _label_BipAdAbout: `ABOUT`,
 _label_BipAdPrBtc: `BTC DONATION`,
 _label_BipAdPrEth: `ETH & BNB DONATION`,
+_label_BipAdPrWeb: `WEB DONATION`,
 _label_BipAdPrLtc: `LTC DONATION`,
 _label_BipAdPrDsh: `DASH DONATION`,
 _label_BipAdPrDog: `DOGE DONATION`,
@@ -2036,7 +2039,8 @@ _label_BipAdUsage: `USAGE`,
 _label_BipCaution: `CAUTION`,
 _label_BipeAccBtc: `BITCOIN WALLET`,
 _label_BipeAccEth: `ETHEREUM WALLET`,
-_label_BipeAccHex: `ETH PRIVATE KEY`,
+_label_BipeAccWeb: `WEBCOIN WALLET`,
+_label_BipeAccHex: `ETH/WEB PRIVATE KEY`,
 _label_BipeAccKey: `BTC PRIVATE KEY`,
 _label_BipeDecBip: `BIP38 ENCRYPTED KEY`,
 _label_BipeDecPwd: `PASSCODE TO DECRYPT`,
@@ -2044,10 +2048,12 @@ _label_BipeEncBip: `BIP38 ENCRYPTED KEY`,
 _label_BipeEncPwd: `PASSCODE TO ENCRYPT`,
 _label_BipeExpBtc: `BITCOIN WALLET`,
 _label_BipeExpEth: `ETHEREUM WALLET`,
-_label_BipeExpHex: `ETH PRIVATE KEY`,
+_label_BipeExpWeb: `WEBCOIN WALLET`,
+_label_BipeExpHex: `ETH/WEB PRIVATE KEY`,
 _label_BipeExpKey: `BTC PRIVATE KEY`,
 _label_BipeOldBtc: `BITCOIN WALLET`,
 _label_BipeOldEth: `ETHEREUM WALLET`,
+_label_BipeOldWeb: `WEBCOIN WALLET`,
 _label_BipeOldKey: `BTC/ETH PRIVATE KEY`,
 _label_BipPrereqHead: `!`,
 _label_BipTargetHead: `!`,
@@ -2174,10 +2180,10 @@ _label_UserExHome: `USER DOMAIN`,
 _label_UserPsName: `SCREEN NAME`,
 _label_UserPsText: `FILE`,
 _label_UserPstyle: `STYLE`,
-_label_UserRefEth: `NOTE TO RECEIVER`,
-_label_UserRefXut: `NOTE TO RECEIVER`,
-_label_UserTgtXut: `RECEIVER WALLET`,
-_label_UserTgtEth: `RECEIVER WALLET`,
+_label_UserRefEth: `NOTE TO RECIPIENT`,
+_label_UserRefXut: `NOTE TO RECIPIENT`,
+_label_UserTgtXut: `RECIPIENT WALLET`,
+_label_UserTgtEth: `RECIPIENT WALLET`,
 _label_UserTxAddr: `STORAGE ADDRESS`,
 _label_UserTxData: `SENDER DATA`,
 _label_UserTxNote: `SENDER NOTE`,
@@ -2220,6 +2226,32 @@ _note_UserDomReg: `${NOTEEXGASFEE}, USERS ONLY`,
 _note_UserSetDom: `${NOTEEXGASFEE}`,
 _note_UserSetPro: `${NOTEEXGASFEE}`,
 _note_XutXut: `${NOTEEXGASFEE}`,
+_button_AuthPayAgr: `SEND ALGO`,
+_button_AuthPaySol: `SEND SOL`,
+_header_AgrUnlock: `SELECT ALGORAND API ENDPOINT AND DECRYPT KEYSTORE`,
+_header_SolUnlock: `SELECT SOLANA API ENDPOINT AND DECRYPT KEYSTORE`,
+_header_sendAgr: `PERSONAL ALGORAND BALANCE`,
+_header_sendSol: `PERSONAL SOLANA BALANCE`,
+_label_AuthAdrAgr: `ALGO RECIPIENT`,
+_label_AuthAdrSol: `SOL RECIPIENT`,
+_label_AuthKstApi: `API KEY`,
+_label_AuthKstIdx: `INDEX SERVER`,
+_label_AuthSumAgr: `ALGO BALANCE`,
+_label_AuthSumSol: `SOL BALANCE`,
+_label_Bip2AccKey: `SOLANA PRIVATE KEY`,
+_label_Bip2AccSol: `SOLANA WALLET`,
+_label_Bip2ExpKey: `SOLANA PRIVATE KEY`,
+_label_Bip2ExpSol: `SOLANA WALLET`,
+_label_Bip2OldKey: `SOLANA PRIVATE KEY`,
+_label_Bip2OldSol: `SOLANA WALLET`,
+_label_Bip3AccAgr: `ALGORAND WALLET`,
+_label_Bip3AccKey: `ALGORAND PRIVATE KEY`,
+_label_Bip3ExpAgr: `ALGORAND WALLET`,
+_label_Bip3ExpKey: `ALGORAND PRIVATE KEY`,
+_label_Bip3OldAgr: `ALGORAND WALLET`,
+_label_Bip3OldKey: `ALGORAND PRIVATE KEY`,
+_label_BipAdPrAgr: `ALGORAND DONATION`,
+_label_BipAdPrSol: `SOLANA DONATION`,
 }}//////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
