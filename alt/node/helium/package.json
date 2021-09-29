@@ -1,0 +1,12 @@
+{
+  "dependencies": {
+    "@helium/crypto": "^3.38.0",
+    "@helium/crypto-react-native": "^3.9.0",
+    "@helium/currency": "^3.25.1",
+    "@helium/http": "^3.43.0",
+    "@helium/proto": "^1.4.0",
+    "@helium/transactions": "^3.38.0",
+    "bip39": "^3.0.4",
+    "prompt": "^1.1.0"
+  }
+}
