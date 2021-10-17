@@ -51,8 +51,7 @@ const NEMT={
 mainnet:{ncid:1,addr:'0x208871E7f29C0C0e131Dc275f1FCfc9e73C2b06e',hash:'0xe7a06b31a4ea68e0611fc28bd6a176d1179b15a4ac4a056430ff2c89bd80700b',rpcs:'https://mainnet.rpc.fiews.io/v1/free',bcls:'private',scan:'https://etherscan.io/token/'},
 rinkeby:{ncid:4,addr:'0x3D6C8E2C2ae17726386231f99169C9d69a20F104',hash:'0x0bf18f0780882431aa0ddd5a6929d6654a5dbe00b7ba2dc6aef1849442856770',rpcs:'https://rinkeby.rpc.fiews.io/v1/free',bcls:'team',scan:'https://rinkeby.etherscan.io/token/'},
 ropsten:{ncid:3,addr:'0x45EbbFb3b3DFeb2e1DeD3429C4E04aA31B18a9e1',hash:'0x0a298e1e745ca09513d62908ef60cdf843cf7213f33a134770574a5b235c9a9a',rpcs:'https://ropsten.rpc.fiews.io/v1/free',bcls:'group',scan:'https://ropsten.etherscan.io/token/'},
-//binance:{ncid:56,addr:'0xc9dDF5d5adBA8711F106953B97987B02F8EAe5e4',hash:'0x79cfec17f40779886ba1c88549927c0cfb56866f84b79b02f47c78c3a63b306d',rpcs:'https://bsc-dataseed.binance.org/',bcls:'private',scan:'https://www.bscscan.com/token/'},
-binance:{ncid:56,addr:'0xE4Dd3e84CC0464D0E4eb65a13D70367Dc0F03730',hash:'0x6cf6371991c55b04f0d299527c60834d47addd4fd6b8296e3702cd300f3ba561',rpcs:'https://bsc-dataseed.binance.org/',bcls:'private',scan:'https://www.bscscan.com/token/'},
+binance:{ncid:56,addr:'0xE4Dd3e84CC0464D0E4eb65a13D70367Dc0F03730',hash:'0x6cf6371991c55b04f0d299527c60834d47addd4fd6b8296e3702cd300f3ba561',rpcs:'https://bsc-dataseed.binance.org/',bcls:'private',scan:'https://www.bscscan.com/token/'},//V2
 classic:{ncid:61,addr:'0x050010e67858E4B71f6D79359ad950e614863e0d',hash:'0xe63a60272577195cf05bbef7a30b736597e4255ff34288d55aa80d58f8fee610',rpcs:'https://www.ethercluster.com/etc/',bcls:'private',scan:'https://etcblockexplorer.com/token/'},
 };
 ////////////////////////////////////////////////////////////
@@ -60,8 +59,7 @@ const GEMT={
 mainnet:{ncid:1,addr:'0x4f8e54e2e840561e5aa8a296ad5f7b0ae18e6eff',hash:'0xadf8c72399b53b3486b665798b6599109a7c6ed33593d65c0354504d0bac92c8',rpcs:'https://mainnet.rpc.fiews.io/v1/free',bcls:'private',scan:'https://etherscan.io/token/'},
 rinkeby:{ncid:4,addr:'0x70538eF05E51CdA13E7Cc393A550838eB137688E',hash:'0x17c98761e4122b545bbd8459fcd5d76ce55f19fdf9819f6347cb9ebac146cc68',rpcs:'https://rinkeby.rpc.fiews.io/v1/free',bcls:'team',scan:'https://rinkeby.etherscan.io/token/'},
 ropsten:{ncid:3,addr:'0xB2f5036F69E05B030688Ce065a98fD0e6cF3f40a',hash:'0x106de1840dccc8c6cd158bf6a976ba0007dd31ea0d62e479aad162b036bb867e',rpcs:'https://ropsten.rpc.fiews.io/v1/free',bcls:'group',scan:'https://ropsten.etherscan.io/token/'},
-//binance:{ncid:56,addr:'0x872Bc37697f45526fc0C960E19654c8714dB6957',hash:'0x061787e0dbb8074ee4aeaf57cf6f1badaffd5e2c8a1afa8f6ee52511ca15bf82',rpcs:'https://bsc-dataseed.binance.org/',bcls:'private',scan:'https://www.bscscan.com/token/'},
-binance:{ncid:56,addr:'0xFABd0b52fA0b096254e3B420523192638e1B28fC',hash:'0x0a15c6fd5406bd9cc2115796fbf72c9215a1073f31efb7ea7e1c7358ab839ea0',rpcs:'https://bsc-dataseed.binance.org/',bcls:'private',scan:'https://www.bscscan.com/token/'},
+binance:{ncid:56,addr:'0xFABd0b52fA0b096254e3B420523192638e1B28fC',hash:'0x0a15c6fd5406bd9cc2115796fbf72c9215a1073f31efb7ea7e1c7358ab839ea0',rpcs:'https://bsc-dataseed.binance.org/',bcls:'private',scan:'https://www.bscscan.com/token/'},//V2
 classic:{ncid:61,addr:'0xc9dDF5d5adBA8711F106953B97987B02F8EAe5e4',hash:'0xad8c60417f5266e28906fdc6a5b2dc050abfe75a999623153589fbd2a0d721a4',rpcs:'https://www.ethercluster.com/etc/',bcls:'private',scan:'https://etcblockexplorer.com/token/'},
 };
 ////////////////////////////////////////////////////////////
