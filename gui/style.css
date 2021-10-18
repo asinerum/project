@@ -248,27 +248,27 @@ iframe{
  border:4px solid #728a71;
  width:240px;
  padding:10px;}
-input.ob{
+.ob{
  border-radius:6px;
  border:1px solid #f0ad26;
- color:#a0d18c;
+ color:#333333;
  width:230px;
  margin:2px;
  padding:5px;}
-input.ob:focus{
+.ob:focus{
  outline:none;
- border:1px solid #a0d18c;
+ border:1px solid #728a71;
  color:#f0ad26;}
-input.gb{
+.gb{
  border-radius:6px;
  border:1px solid #728a71;
- color:#a0d18c;
+ color:#333333;
  width:230px;
  margin:2px;
  padding:5px;}
-input.gb:focus{
+.gb:focus{
  outline:none;
- border:1px solid #a0d18c;
+ border:1px solid #f0ad26;
  color:#728a71;}
 .label{
  background-color:#A5AC20;
