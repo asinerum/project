@@ -251,6 +251,7 @@ iframe{
 .ob{
  border-radius:6px;
  border:1px solid #f0ad26;
+ box-sizing:border-box;
  color:#333333;
  width:230px;
  margin:2px;
@@ -262,6 +263,7 @@ iframe{
 .gb{
  border-radius:6px;
  border:1px solid #728a71;
+ box-sizing:border-box;
  color:#333333;
  width:230px;
  margin:2px;
