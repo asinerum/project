@@ -80,17 +80,17 @@ classic:{ncid:61,addr:'0xDEA0c8bAF81975876F4AF9FC2a1fC4F3A67e039B',hash:'0xb3df5
 ////////////////////////////////////////////////////////////
 const NEMT={
 mainnet:{ncid:1,addr:'0x208871E7f29C0C0e131Dc275f1FCfc9e73C2b06e',hash:'0xe7a06b31a4ea68e0611fc28bd6a176d1179b15a4ac4a056430ff2c89bd80700b',rpcs:'https://mainnet.rpc.fiews.io/v1/free',bcls:'private',scan:'https://etherscan.io/token/'},
-rinkeby:{ncid:4,addr:'0x361aB358f005752CdeeF9799e9c9Cbeb6f9922dA',hash:'0x53800e50c3901dcdd5f662b47326f90b08451b37001f08487d1a3e776cfcb6b2',rpcs:'https://rinkeby.rpc.fiews.io/v1/free',bcls:'team',scan:'https://rinkeby.etherscan.io/token/'},
+rinkeby:{ncid:4,addr:'0x60689075d9AcDeA0D1b3C49dF401c93062852664',hash:'0x21eeb1aa9a0c94140c8c3e26e40a1875cbb598eb53ac364af58628391a7249be',rpcs:'https://rinkeby.rpc.fiews.io/v1/free',bcls:'team',scan:'https://rinkeby.etherscan.io/token/'},
 ropsten:{ncid:3,addr:'0x45EbbFb3b3DFeb2e1DeD3429C4E04aA31B18a9e1',hash:'0x0a298e1e745ca09513d62908ef60cdf843cf7213f33a134770574a5b235c9a9a',rpcs:'https://ropsten.rpc.fiews.io/v1/free',bcls:'group',scan:'https://ropsten.etherscan.io/token/'},
-binance:{ncid:56,addr:'0x1505320136e2c7fC9BdBC65B81E7F365692FE06b',hash:'0xf9cfbe023ce038a96b3bc485e1042ad6353995f5fb93d99617aa4a4691277b5f',rpcs:'https://bsc-dataseed.binance.org/',bcls:'private',scan:'https://www.bscscan.com/token/'},//V2
+binance:{ncid:56,addr:'0x27e89CCB01d5af51edC770C112E5AB161B6A48fC',hash:'0xe69d500d10ba6932333b8d642386cfab9a38b048795d5cd9b3165a42b724f9d0',rpcs:'https://bsc-dataseed.binance.org/',bcls:'private',scan:'https://www.bscscan.com/token/'},//V2
 classic:{ncid:61,addr:'0x050010e67858E4B71f6D79359ad950e614863e0d',hash:'0xe63a60272577195cf05bbef7a30b736597e4255ff34288d55aa80d58f8fee610',rpcs:'https://www.ethercluster.com/etc/',bcls:'private',scan:'https://etcblockexplorer.com/token/'},
 };
 ////////////////////////////////////////////////////////////
 const GEMT={
 mainnet:{ncid:1,addr:'0x4f8e54e2e840561e5aa8a296ad5f7b0ae18e6eff',hash:'0xadf8c72399b53b3486b665798b6599109a7c6ed33593d65c0354504d0bac92c8',rpcs:'https://mainnet.rpc.fiews.io/v1/free',bcls:'private',scan:'https://etherscan.io/token/'},
-rinkeby:{ncid:4,addr:'0x7254AE43A7699d040ed0575a8F7E688c5CC4A5B0',hash:'0xb55a952edfc8bbf1dc74f6107a5253b61239d514867321a31b1a583aaffdf1e0',rpcs:'https://rinkeby.rpc.fiews.io/v1/free',bcls:'team',scan:'https://rinkeby.etherscan.io/token/'},
+rinkeby:{ncid:4,addr:'0x31d96FEFA04b6946f65555A3D543e0D2440B485E',hash:'0x34a6806e4c80bb7441d8cfabee31553492aec509a36b596e6366dfe2583ef249',rpcs:'https://rinkeby.rpc.fiews.io/v1/free',bcls:'team',scan:'https://rinkeby.etherscan.io/token/'},
 ropsten:{ncid:3,addr:'0xB2f5036F69E05B030688Ce065a98fD0e6cF3f40a',hash:'0x106de1840dccc8c6cd158bf6a976ba0007dd31ea0d62e479aad162b036bb867e',rpcs:'https://ropsten.rpc.fiews.io/v1/free',bcls:'group',scan:'https://ropsten.etherscan.io/token/'},
-binance:{ncid:56,addr:'0x07ebc245427CfD72Ab672604b78cbE1e507477bd',hash:'0x76e81eaf25feffec624166dc883be12a2ff5428cbd91203c228c85a088c9a477',rpcs:'https://bsc-dataseed.binance.org/',bcls:'private',scan:'https://www.bscscan.com/token/'},//V2
+binance:{ncid:56,addr:'0xF4B43f44aAec79F6417958e6ab392293A6F11F3E',hash:'0x741d62b40d0f1a30ecef2ccd31add537573a6248bb2270b2bbec9f793de89573',rpcs:'https://bsc-dataseed.binance.org/',bcls:'private',scan:'https://www.bscscan.com/token/'},//V2
 classic:{ncid:61,addr:'0xc9dDF5d5adBA8711F106953B97987B02F8EAe5e4',hash:'0xad8c60417f5266e28906fdc6a5b2dc050abfe75a999623153589fbd2a0d721a4',rpcs:'https://www.ethercluster.com/etc/',bcls:'private',scan:'https://etcblockexplorer.com/token/'},
 };
 ////////////////////////////////////////////////////////////
@@ -2284,7 +2284,7 @@ const cmtXut=function(str,a,b,i){a=str.match(/\[xut\](.*?)\[\/xut\]/g);b=str.mat
 const launch=function(mg=200000,gw=0){startXuteng();maxgas=mg;txgwei=gw;btnXut('b','xut-');btnXut('b','etx-');btnXut('b','eth-');btnXut('b','xga-');btnXut('b','xgt-');btnXut('b','xtx-');};
 const xready=function(mg=200000,gw=0){$(document).ready(function(){launch(mg,gw);});};
 ////////////////////////////////////////////////////////////
-const nonce=async(pops=3,cbf=null,b,k,i,m)=>{await(xutengFemt.methods.basicRate().call().then(r=>{b=r}));await(xutengFemt.methods.randomKey().call().then(r=>{k=r}));m=big(k).mod(big(b)).toString();for(i=1;i<b*pops;i++){if(m==big(b2i(kec(k,i))).mod(big(b)).toString()){console.log(FOUND,i);break;}};if(i>=b*pops){console.log(UNCHECKED)}};
+const nonce=async(pops=3,kc=kec,b,k,i,m)=>{await(xutengFemt.methods.basicRate().call().then(r=>{b=r}));await(xutengFemt.methods.randomKey().call().then(r=>{k=r}));m=big(k).mod(big(b)).toString();for(i=1;i<b*pops;i++){if(m==big(b2i(kc(k,i))).mod(big(b)).toString()){console.log(FOUND,i);break;}};if(i>=b*pops){console.log(UNCHECKED)}};
 const xmint=async(pops=3,method=0,kc=kec)=>{mint(method,console.log,xutengFemt,ercTokens,alert,mmsender(),true,pops,kc)};
 const Femt=function(pops=3){getMetamask(r=>{startFemt();nonce(pops);})};
 const Gemt=function(pops=3){getMetamask(r=>{startGemt();nonce(pops);})};
