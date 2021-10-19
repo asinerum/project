@@ -1324,9 +1324,9 @@ const onChainChanged=function(){ethereum.on('chainChanged',r=>{r=fromHex(r);meta
 const getMetamask=function(cbo){if(window.ethereum){window.web3=_Ethereum(ethereum);metaMainnet(cbo)}else{alert(hi_alert_metamasks)}};
 ////////////////////////////////////////////////////////////
 const resetXuteng=function(){contractAddress=CONTRACT[network].addr;window.xuteng=_Contract(SCABI,contractAddress);setPGwei();};
-const web3Mainnet=function(){web3.eth.net.getNetworkType().then(function(net){if(net=='main'){switchNet(MAINNET);alert(hi_alert_ismainnet);}else{switchNet(net,MAINNET);alert(hi_alert_nomainnet);};resetXuteng();});getSender();};
+const web3Mainnet=function(cbo){web3.eth.net.getNetworkType().then(function(net){if(net=='main'){switchNet(MAINNET);alert(hi_alert_ismainnet);}else{switchNet(net,MAINNET);alert(hi_alert_nomainnet);};resetXuteng();getSender();if(cbo)cbo(net)})};
 const metaMainnet=function(cbo){ethereum.request({method:'eth_requestAccounts'}).then(r=>{window.sender=r[0];ethereum.request({method:'eth_chainId'}).then(r=>{metaRefresh(fromHex(r));onAccountsChanged();onChainChanged();if(cbo)cbo(r)})})};
-const getProvider=function(){if(window.ethereum){window.web3=_Ethereum(ethereum);metaMainnet();}else{if(window.web3){window.web3=_Ethereum(web3.currentProvider);web3Mainnet();}else{startXuteng(MAINNET);alert(hi_alert_metamasks);}}};
+const getProvider=function(cbo){if(window.ethereum){window.web3=_Ethereum(ethereum);metaMainnet(cbo);}else{if(window.web3){window.web3=_Ethereum(web3.currentProvider);web3Mainnet(cbo);}else{startXuteng(MAINNET);alert(hi_alert_metamasks);}}};
 const startXuteng=function(nid){if(nid){switchNet(nid);window.web3=_Ethereum(_Provider(getRpcNet()));resetXuteng();}else{getProvider();};};
 const metaRefresh=function(cid){window.network=id2network(cid);switchNet(network);resetXuteng();console.log('CHAIN',cid,network);};
 ////////////////////////////////////////////////////////////
