@@ -312,6 +312,9 @@ iframe{
  width:240px;
  padding:10px;}
 .ob{
+ white-space:nowrap;
+ text-overflow:ellipsis;
+ overflow:hidden;
  border-radius:6px;
  border:1px solid #f0ad26;
  box-sizing:border-box;
@@ -324,6 +327,9 @@ iframe{
  border:1px solid #728a71;
  color:#f0ad26;}
 .gb{
+ white-space:nowrap;
+ text-overflow:ellipsis;
+ overflow:hidden;
  border-radius:6px;
  border:1px solid #728a71;
  box-sizing:border-box;
