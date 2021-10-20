@@ -100,6 +100,69 @@ iframe{
  width:100%;
  height:auto;
  frameborder:0;}
+.turn{
+ content:url(turn.gif);
+ width:16px;
+ height:16px;
+ border:none;
+ cursor:pointer;}
+.stop{
+ content:url(stop.gif);
+ width:16px;
+ height:16px;
+ border:none;
+ cursor:pointer;}
+.play{
+ content:url(button.gif);
+ width:16px;
+ height:16px;
+ border:none;
+ cursor:pointer;}
+.pause{
+ content:url(mark.gif);
+ width:16px;
+ height:16px;
+ border:none;
+ cursor:pointer;}
+.forward{
+ content:url(right.gif);
+ width:16px;
+ height:16px;
+ border:none;
+ cursor:pointer;}
+.backward{
+ content:url(left.gif);
+ width:16px;
+ height:16px;
+ border:none;
+ cursor:pointer;}
+.open{
+ content:url(open.gif);
+ width:16px;
+ height:16px;
+ border:none;
+ cursor:pointer;}
+.close{
+ content:url(close.gif);
+ width:16px;
+ height:16px;
+ border:none;
+ cursor:pointer;}
+.tick{
+ content:url(tick.gif);
+ width:16px;
+ height:16px;
+ border:none;
+ cursor:pointer;}
+.cash{
+ content:url(money.gif);
+ width:16px;
+ height:16px;
+ border:none;
+ cursor:pointer;}
+.onmouse{
+ border:none;
+ cursor:pointer;}
 .tleft{
  text-align:left;}
 .tright{
