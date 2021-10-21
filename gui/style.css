@@ -101,70 +101,70 @@ iframe{
  height:auto;
  frameborder:0;}
 .turn{
- background-image:url(turn.gif);
+ background-image:url(https://cdn.jsdelivr.net/gh/asinerum/project/gui/turn.gif);
  background-size:16px;
  width:16px;
  height:16px;
  border:none;
  cursor:pointer;}
 .stop{
- background-image:url(stop.gif);
+ background-image:url(https://cdn.jsdelivr.net/gh/asinerum/project/gui/stop.gif);
  background-size:16px;
  width:16px;
  height:16px;
  border:none;
  cursor:pointer;}
 .play{
- background-image:url(button.gif);
+ background-image:url(https://cdn.jsdelivr.net/gh/asinerum/project/gui/button.gif);
  background-size:16px;
  width:16px;
  height:16px;
  border:none;
  cursor:pointer;}
 .pause{
- background-image:url(mark.gif);
+ background-image:url(https://cdn.jsdelivr.net/gh/asinerum/project/gui/mark.gif);
  background-size:16px;
  width:16px;
  height:16px;
  border:none;
  cursor:pointer;}
 .forward{
- background-image:url(right.gif);
+ background-image:url(https://cdn.jsdelivr.net/gh/asinerum/project/gui/right.gif);
  background-size:16px;
  width:16px;
  height:16px;
  border:none;
  cursor:pointer;}
 .backward{
- background-image:url(left.gif);
+ background-image:url(https://cdn.jsdelivr.net/gh/asinerum/project/gui/left.gif);
  background-size:16px;
  width:16px;
  height:16px;
  border:none;
  cursor:pointer;}
 .open{
- background-image:url(open.gif);
+ background-image:url(https://cdn.jsdelivr.net/gh/asinerum/project/gui/open.gif);
  background-size:16px;
  width:16px;
  height:16px;
  border:none;
  cursor:pointer;}
 .close{
- background-image:url(close.gif);
+ background-image:url(https://cdn.jsdelivr.net/gh/asinerum/project/gui/close.gif);
  background-size:16px;
  width:16px;
  height:16px;
  border:none;
  cursor:pointer;}
 .tick{
- background-image:url(tick.gif);
+ background-image:url(https://cdn.jsdelivr.net/gh/asinerum/project/gui/tick.gif);
  background-size:16px;
  width:16px;
  height:16px;
  border:none;
  cursor:pointer;}
 .cash{
- background-image:url(money.gif);
+ background-image:url(https://cdn.jsdelivr.net/gh/asinerum/project/gui/money.gif);
  background-size:16px;
  width:16px;
  height:16px;
@@ -310,13 +310,13 @@ iframe{
  margin:2px;
  padding:5px;}
 .obox{
- background-image:url(obg.gif);
+ background-image:url(https://cdn.jsdelivr.net/gh/asinerum/project/gui/obg.gif);
  border-radius:25px;
  border:4px solid #f0ad26;
  width:240px;
  padding:10px;}
 .gbox{
- background-image:url(gbg.gif);
+ background-image:url(https://cdn.jsdelivr.net/gh/asinerum/project/gui/gbg.gif);
  border-radius:25px;
  border:4px solid #728a71;
  width:240px;
