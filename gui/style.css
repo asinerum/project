@@ -101,61 +101,71 @@ iframe{
  height:auto;
  frameborder:0;}
 .turn{
- content:url(turn.gif);
+ background-image:url(turn.gif);
+ background-size:16px;
  width:16px;
  height:16px;
  border:none;
  cursor:pointer;}
 .stop{
- content:url(stop.gif);
+ background-image:url(stop.gif);
+ background-size:16px;
  width:16px;
  height:16px;
  border:none;
  cursor:pointer;}
 .play{
- content:url(button.gif);
+ background-image:url(button.gif);
+ background-size:16px;
  width:16px;
  height:16px;
  border:none;
  cursor:pointer;}
 .pause{
- content:url(mark.gif);
+ background-image:url(mark.gif);
+ background-size:16px;
  width:16px;
  height:16px;
  border:none;
  cursor:pointer;}
 .forward{
- content:url(right.gif);
+ background-image:url(right.gif);
+ background-size:16px;
  width:16px;
  height:16px;
  border:none;
  cursor:pointer;}
 .backward{
- content:url(left.gif);
+ background-image:url(left.gif);
+ background-size:16px;
  width:16px;
  height:16px;
  border:none;
  cursor:pointer;}
 .open{
- content:url(open.gif);
+ background-image:url(open.gif);
+ background-size:16px;
  width:16px;
  height:16px;
  border:none;
  cursor:pointer;}
 .close{
- content:url(close.gif);
+ background-image:url(close.gif);
+ background-size:16px;
  width:16px;
  height:16px;
  border:none;
  cursor:pointer;}
 .tick{
- content:url(tick.gif);
+ background-image:url(tick.gif);
+ background-size:16px;
  width:16px;
  height:16px;
  border:none;
  cursor:pointer;}
 .cash{
- content:url(money.gif);
+ background-image:url(money.gif);
+ background-size:16px;
  width:16px;
  height:16px;
  border:none;
@@ -300,13 +310,13 @@ iframe{
  margin:2px;
  padding:5px;}
 .obox{
- background:url(obg.gif);
+ background-image:url(obg.gif);
  border-radius:25px;
  border:4px solid #f0ad26;
  width:240px;
  padding:10px;}
 .gbox{
- background:url(gbg.gif);
+ background-image:url(gbg.gif);
  border-radius:25px;
  border:4px solid #728a71;
  width:240px;
