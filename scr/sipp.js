@@ -26,14 +26,6 @@ ercSend(xutengFemt,MPROGRAM,[i,bAprToPetri(r),s2w(a)],s2w(eth),status,null,funct
 ////////////////////////////////////////////////////////////
 const bAprToPetri=function(apr){return(Math.round(10**9*apr/100/YEARSECONDS));};
 const bPetriToApr=function(spr){return(YEARSECONDS*100*spr/10**9);};
-const checkResult=function(err,res,status){if(err){showError(status);throw(err.toString())};if(!res){showCancel(status);throw(ERROR)};};
-const positiveInt=function(n){return(Number.isInteger(Number(n))&&n>0);};
-const positiveNum=function(n){return(Number(n)&&n>0);};
-const numsInRange=function(n,rl,rh){return(n>rl&&n<rh);};
-const showAddress=function(addr){if(addr==ZEROADDR)return('N/A');return(addr.toLowerCase());};
-const showAddrUrl=function(addr){return('<a target="_blank" href="'+EXCHAINS[network].scan+'/address/'+addr+'">'+showAddress(addr)+'</a>');};
-const showItemAge=function(stamp,say=_days){if(stamp==0)return('N/A');return(Math.floor((nowDate()-stamp)/(3600*24))+SPACE+say);};
-const twoHexEqual=function(h1,h2){return(fromHex(h1)===fromHex(h2));};
 ////////////////////////////////////////////////////////////
 window.menu.onDefiProgDraw=function(){if(positiveInt(gv('pro_id'))&&confirm(_warnPrgDraw))return(defiProgStop('form_status','pro_id',true));}
 window.menu.onDefiProgGain=function(){defiProgGain('form_status','pro_id');}

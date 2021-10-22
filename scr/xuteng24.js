@@ -1062,6 +1062,11 @@ const hiRegex=_Regex('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{
 const loRegex=_Regex('^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})');
 const hashRegex=_Regex('^0x([A-Fa-f0-9]{64})$');
 ////////////////////////////////////////////////////////////
+const numsInRange=function(n,rl,rh){return(n>rl&&n<rh);};
+const positiveNum=function(n){return(Number(n)&&n>0);};
+const positiveInt=function(n){return(Number.isInteger(Number(n))&&n>0);};
+const twoHexEqual=function(h1,h2){return(fromHex(h1)===fromHex(h2));};
+////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
 const clearTags=function(tag='input'){$(COLON+tag).val(EMPTY);};
 const clearPwds=function(){$('input:password').val(SYMBOL);};
@@ -1113,6 +1118,7 @@ const mw=function(d,w){dw(d,w,DOT);};
 const mt=function(d,t){dt(d,t,DOT);};
 const db=function(d,s){dw(d,s);dv(d,s);};
 const dbm=function(md,s){md.forEach((item)=>{db(item,s)});};
+const dbh=function(indiv,param,fc=null){param=hashParam(param);if(!param)return;db(indiv,param);if(fc)fc();};
 ////////////////////////////////////////////////////////////
 const dr=function(d,r,ob){if(!ob)ob=HASH;$(ob+d).prop('href',r);};
 const dc=function(d,c,ob){if(!ob)ob=HASH;$(ob+d).prop('checked',c);};
@@ -1244,6 +1250,11 @@ const showOkay=function(div=TEST){dw(div,OK);};
 const showError=function(div=TEST){dw(div,ERROR);};
 const showCancel=function(div=TEST){dw(div,CANCELED);};
 const showLoad=function(div=TEST){dw(div,'<img\tsrc="https://cdn.jsdelivr.net/gh/asinerum/project/loading.gif"/>');};
+////////////////////////////////////////////////////////////
+const checkResult=function(err,res,status){if(err){showError(status);throw(err.toString())};if(!res){showCancel(status);throw(ERROR)};};
+const showAddress=function(addr){if(addr==ZEROADDR)return('N/A');return(addr.toLowerCase());};
+const showAddrUrl=function(addr){return('<a target="_blank" href="'+EXCHAINS[network].scan+'/address/'+addr+'">'+showAddress(addr)+'</a>');};
+const showItemAge=function(stamp,say=_days){if(stamp==0)return('N/A');return(Math.floor((nowDate()-stamp)/(3600*24))+SPACE+say);};
 ////////////////////////////////////////////////////////////
 const netStyle=function(){networkStyle=CONTRACT[network].bcls;setStyle('body',networkStyle);};
 const accepted=function(divS){if(confirm(hi_prompt_fee+NEWLINE+gasfee+SPACE+COIN))return(true);dw(divS,CANCELED);return(false);};

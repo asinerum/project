@@ -4,6 +4,11 @@ const showError=function(div=TEST){dw(div,ERROR);};
 const showCancel=function(div=TEST){dw(div,CANCELED);};
 const showLoad=function(div=TEST){dw(div,'<img\tsrc="https://cdn.jsdelivr.net/gh/asinerum/project/loading.gif"/>');};
 ////////////////////////////////////////////////////////////
+const checkResult=function(err,res,status){if(err){showError(status);throw(err.toString())};if(!res){showCancel(status);throw(ERROR)};};
+const showAddress=function(addr){if(addr==ZEROADDR)return('N/A');return(addr.toLowerCase());};
+const showAddrUrl=function(addr){return('<a target="_blank" href="'+EXCHAINS[network].scan+'/address/'+addr+'">'+showAddress(addr)+'</a>');};
+const showItemAge=function(stamp,say=_days){if(stamp==0)return('N/A');return(Math.floor((nowDate()-stamp)/(3600*24))+SPACE+say);};
+////////////////////////////////////////////////////////////
 const netStyle=function(){networkStyle=CONTRACT[network].bcls;setStyle('body',networkStyle);};
 const accepted=function(divS){if(confirm(hi_prompt_fee+NEWLINE+gasfee+SPACE+COIN))return(true);dw(divS,CANCELED);return(false);};
 ////////////////////////////////////////////////////////////

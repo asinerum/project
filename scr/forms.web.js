@@ -49,6 +49,7 @@ const mw=function(d,w){dw(d,w,DOT);};
 const mt=function(d,t){dt(d,t,DOT);};
 const db=function(d,s){dw(d,s);dv(d,s);};
 const dbm=function(md,s){md.forEach((item)=>{db(item,s)});};
+const dbh=function(indiv,param,fc=null){param=hashParam(param);if(!param)return;db(indiv,param);if(fc)fc();};
 ////////////////////////////////////////////////////////////
 const dr=function(d,r,ob){if(!ob)ob=HASH;$(ob+d).prop('href',r);};
 const dc=function(d,c,ob){if(!ob)ob=HASH;$(ob+d).prop('checked',c);};

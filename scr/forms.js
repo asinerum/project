@@ -52,3 +52,8 @@ const hiRegex=_Regex('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{
 const loRegex=_Regex('^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})');
 const hashRegex=_Regex('^0x([A-Fa-f0-9]{64})$');
 ////////////////////////////////////////////////////////////
+const numsInRange=function(n,rl,rh){return(n>rl&&n<rh);};
+const positiveNum=function(n){return(Number(n)&&n>0);};
+const positiveInt=function(n){return(Number.isInteger(Number(n))&&n>0);};
+const twoHexEqual=function(h1,h2){return(fromHex(h1)===fromHex(h2));};
+////////////////////////////////////////////////////////////
