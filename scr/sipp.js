@@ -32,7 +32,7 @@ window.menu.onDefiProgGain=function(){defiProgGain('form_status','pro_id');}
 window.menu.onDefiProgJoin=function(){defiProgJoin('form_status','pro_gemt');}
 window.menu.onDefiProgOpen=function(){defiProgOpen('form_status','pro_id','pro_apr','pro_gemt');}
 window.menu.onDefiProgRead=function(){defiProgRead('form_status','pro_id','pro_apr','pro_gemt');}
-window.menu.onDefiProgReId=function(){defiProgRead('form_status','pro_id','_pro_apr','_pro_sum','_pro_age','_pro_own','_pro_amt','_pro_agi');}
+window.menu.onDefiProgReId=function(){defiProgRead('form_status','pro_id','pro_apr','pro_sum','pro_age','pro_own','pro_amt','pro_agi');}
 window.menu.onDefiProgStop=function(){if(positiveInt(gv('pro_id'))&&confirm(_warnPrgStop))return(defiProgStop('form_status','pro_id',false));}
 ////////////////////////////////////////////////////////////
 window.menu.goDefiProgIdno=function(){if(!positiveInt(gv('pro_id')))return(alert(_warnPrgIdno));}
