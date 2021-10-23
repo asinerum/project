@@ -23,8 +23,7 @@ const _Option=function(txt,val){return(new Option(txt,val))};
 const _Promise=function(res,rej){return(new Promise(res,rej))};
 const _Encoder=function(code='utf-8'){return(new TextEncoder(code))};
 const _Decoder=function(code='utf-8'){return(new TextDecoder(code))};
-////////////////////////////////////////////////////////////[7]
-const big=function(val){return(new web3.utils.BN(val))};
+////////////////////////////////////////////////////////////[6]
 const _Web3=function(){return(new Web3())};/*WithNoProvider*/
 const _Ethereum=function(provider){return(new Web3(provider))};
 const _Provider=function(rpc){return(new Web3.providers.HttpProvider(rpc))};

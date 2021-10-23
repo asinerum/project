@@ -1,4 +1,17 @@
 ////////////////////////////////////////////////////////////
+const big=function(val){return(new web3.utils.BN(val))};
+String.prototype.add=function(bnum){return(big(this.toString()).add(big(bnum)).toString())};
+String.prototype.div=function(bnum){return(big(this.toString()).div(big(bnum)).toString())};
+String.prototype.mod=function(bnum){return(big(this.toString()).mod(big(bnum)).toString())};
+String.prototype.mul=function(bnum){return(big(this.toString()).mul(big(bnum)).toString())};
+String.prototype.pow=function(bnum){return(big(this.toString()).pow(big(bnum)).toString())};
+String.prototype.sus=function(bnum){return(big(this.toString()).sub(big(bnum)).toString())};
+String.prototype.eq=function(bnum){return(big(this.toString()).eq(big(bnum)))};
+String.prototype.ge=function(bnum){return(big(this.toString()).gte(big(bnum)))};
+String.prototype.gt=function(bnum){return(big(this.toString()).gt(big(bnum)))};
+String.prototype.le=function(bnum){return(big(this.toString()).lte(big(bnum)))};
+String.prototype.lt=function(bnum){return(big(this.toString()).lt(big(bnum)))};
+////////////////////////////////////////////////////////////
 String.prototype.escape=function(){return(this.replace(/"/g,'\\"'))};
 const safeJSON=function(keys,vals,i=0,a=[]){if(keys.length!=vals.length)throw(null);for(;i<keys.length;i++)a.push(`"${keys[i]}":"${vals[i].toString().escape()}"`);return('{'+a.join(',')+'}');};
 ////////////////////////////////////////////////////////////

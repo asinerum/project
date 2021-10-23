@@ -642,8 +642,7 @@ const _Option=function(txt,val){return(new Option(txt,val))};
 const _Promise=function(res,rej){return(new Promise(res,rej))};
 const _Encoder=function(code='utf-8'){return(new TextEncoder(code))};
 const _Decoder=function(code='utf-8'){return(new TextDecoder(code))};
-////////////////////////////////////////////////////////////[7]
-const big=function(val){return(new web3.utils.BN(val))};
+////////////////////////////////////////////////////////////[6]
 const _Web3=function(){return(new Web3())};/*WithNoProvider*/
 const _Ethereum=function(provider){return(new Web3(provider))};
 const _Provider=function(rpc){return(new Web3.providers.HttpProvider(rpc))};
@@ -1008,6 +1007,19 @@ const createSimpleRef=function(frm='ethref',uts=lotnow().lotstamp,min=0,max=0,ty
 ////////////////////////////////////////////////////////////[1]
 const Contract=function(scid='usdt'){return(_Contract(EXTOKENS[scid]().abi,EXTOKENS[scid]().addr));};
 ////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////
+const big=function(val){return(new web3.utils.BN(val))};
+String.prototype.add=function(bnum){return(big(this.toString()).add(big(bnum)).toString())};
+String.prototype.div=function(bnum){return(big(this.toString()).div(big(bnum)).toString())};
+String.prototype.mod=function(bnum){return(big(this.toString()).mod(big(bnum)).toString())};
+String.prototype.mul=function(bnum){return(big(this.toString()).mul(big(bnum)).toString())};
+String.prototype.pow=function(bnum){return(big(this.toString()).pow(big(bnum)).toString())};
+String.prototype.sus=function(bnum){return(big(this.toString()).sub(big(bnum)).toString())};
+String.prototype.eq=function(bnum){return(big(this.toString()).eq(big(bnum)))};
+String.prototype.ge=function(bnum){return(big(this.toString()).gte(big(bnum)))};
+String.prototype.gt=function(bnum){return(big(this.toString()).gt(big(bnum)))};
+String.prototype.le=function(bnum){return(big(this.toString()).lte(big(bnum)))};
+String.prototype.lt=function(bnum){return(big(this.toString()).lt(big(bnum)))};
 ////////////////////////////////////////////////////////////
 String.prototype.escape=function(){return(this.replace(/"/g,'\\"'))};
 const safeJSON=function(keys,vals,i=0,a=[]){if(keys.length!=vals.length)throw(null);for(;i<keys.length;i++)a.push(`"${keys[i]}":"${vals[i].toString().escape()}"`);return('{'+a.join(',')+'}');};
