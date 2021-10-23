@@ -1,10 +1,10 @@
 ﻿////////////////////////////////////////////////////////////
 const defiProgGain=function(status,divId,i){
-showLoad(status);i=Number(gv(divId));if(!window.investor||window.investor.refno!=i)return(dw(status,_errInput));if(window.investor.amount<=0||window.investor.amount>=window.investor.value)return(dw(status,_errClear));
+showLoad(status);i=Number(gv(divId));if(!window.investor||window.investor.refno!=i)return(dw(status,_errInput));if(window.investor.amount.le(0)||window.investor.amount.ge(window.investor.value))return(dw(status,_errClear));
 ercSend(xutengFemt,MPROGWDR,[i],0,status,null,function(err,res){checkResult(err,res,status);console.warn('WITHDRAWAL_RECEIPT',res);});};
 ////////////////////////////////////////////////////////////
 const defiProgJoin=function(status,divAmount,a){
-showLoad(status);a=s2n(gv(divAmount));if(!positiveNum(a)||!window.investor)return(dw(status,_errInput));if(window.investor.start!=0||window.investor.value<=0)return(dw(status,_errInvst));
+showLoad(status);a=s2n(gv(divAmount));if(!positiveNum(a)||!window.investor)return(dw(status,_errInput));if(window.investor.start!=0||window.investor.value.le(0))return(dw(status,_errInvst));
 ercCall(xutengFemt,MBALANCE,[sender],status,null,function(err,res){checkResult(err,res,status);console.warn('INVESTOR_BALANCE',w2s(res,9));if(fromWei(res)<a)return(dw(status,_errDepos));
 ercSend(xutengFemt,MPROGPAY,[window.investor.refno,s2w(a)],0,status,null,function(err,res){checkResult(err,res,status);console.warn('INVESTMENT_RECEIPT',res);});});};
 ////////////////////////////////////////////////////////////
