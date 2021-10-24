@@ -1307,6 +1307,7 @@ const optnAccount=function(t=BLANK){Object.keys(ADDRESSES).forEach(function(key)
 ////////////////////////////////////////////////////////////
 const showCoin=function(cls='coin'){if(EXCHAINS[network])COIN=EXCHAINS[network].coin;else{if(BXCHAINS[network])COIN=BXCHAINS[network].coin;}mw(cls,COIN);};
 const showCaps=function(lang='en'){Object.keys(LABELS[lang]).forEach(function(key){dw(key,LABELS[lang][key]);});};
+const showInPH=function(lang='en'){Object.keys(PLACES[lang]).forEach(function(key){dattr(key,'placeholder',PLACES[lang][key]);});};
 const showRole=function(t=BLANK){Object.keys(ROLES).forEach(function(key){t+='<option\tvalue="'+ROLES[key]+'">'+key+'</option>';});console.log(t);dw(_roleVal,t);};
 const showTick=function(t=BLANK){Object.keys(TICKS).forEach(function(key){t+='<option\tvalue="'+TICKS[key]+'">'+key+'</option>';});console.log(t);dw(_tickVal,t);};
 const showDTyp=function(t=BLANK){Object.keys(TYPES).forEach(function(key){t+='<option\tvalue="'+TYPES[key]+'">'+key+'</option>';});console.log(t);dw(_refType,t);};
@@ -1336,7 +1337,7 @@ const userImport=function(passCode,privKey){oldAccount(passCode,0,0,0,privKey);}
 const userCreate=function(passCode){newAccount(passCode);};
 ////////////////////////////////////////////////////////////
 const showDefault=function(){$(document).ready(function(){showNetwork();showAccount();showMaxGas();showTxGwei();showRole();showTick();showDTyp();showAccs();});};
-const promoteMenu=function(){window.menu=_Menu(ACTDIV);lottimePicker('year','month','day','hour','minute','_uts','_utstring');showCaps();showCoin();};
+const promoteMenu=function(){window.menu=_Menu(ACTDIV);lottimePicker('year','month','day','hour','minute','_uts','_utstring');showCaps();showCoin();showInPH();};
 const stopSession=function(mis){setInterval(function(){senderPte=BLANK;password=BLANK;window.newaccount=null;clearPwds();console.clear();web3.eth.accounts.wallet.clear();},mis);};
 const statsXuteng=function(mis){setInterval(function(){getData(sender,getDocType(0));},mis);};
 const statsEthers=function(mis){setInterval(function(){getCoin(sender,'_ethers');},mis);};
@@ -1922,6 +1923,7 @@ const LNKEXOFFLINE='<a href="https://asinerum.github.io/project/raweth">offline 
 const LNKBXOFFLINE='<a href="https://asinerum.github.io/project/rawbit">offline approach</a>';
 const NOTEEXGASFEE='EXCLUDING GAS FEE';
 ////////////////////////////////////////////////////////////
+const PLACES={en:{}};
 const LABELS={en:{
 _button_AuthAccExp: `EXPORT PRIVATE KEY`,
 _button_AuthAccImp: `IMPORT PRIVATE KEY`,

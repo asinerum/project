@@ -29,7 +29,7 @@ let _warnPrgDraw = `You are about to half redeem this one`;
 let _warnPrgIdno = `Program ID must be a positive integer`;
 let _warnPrgInit = `Deposit amounts must be larger than 0`;
 let _warnPrgNOwn = `You are not the owner of this program`;
-let _warnPrgRate = `APR in ${PROGMINRATE}-${PROGMAXRATE}%`;
+let _warnPrgRate = `APR must be between ${PROGMINRATE}-${PROGMAXRATE}%`;
 let _warnPrgStop = `You are deciding to stop this program`;
 ////////////////////////////////////////////////////////////
 LABELS.en._button_DefiProgDraw = `HALF REDEEM`;

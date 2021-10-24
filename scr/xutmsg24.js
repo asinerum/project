@@ -94,6 +94,7 @@ const LNKEXOFFLINE='<a href="https://asinerum.github.io/project/raweth">offline 
 const LNKBXOFFLINE='<a href="https://asinerum.github.io/project/rawbit">offline approach</a>';
 const NOTEEXGASFEE='EXCLUDING GAS FEE';
 ////////////////////////////////////////////////////////////
+const PLACES={en:{}};
 const LABELS={en:{
 _button_AuthAccExp: `EXPORT PRIVATE KEY`,
 _button_AuthAccImp: `IMPORT PRIVATE KEY`,
