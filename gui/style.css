@@ -351,6 +351,52 @@ iframe{
  outline:none;
  border:1px solid #f0ad26;
  color:#728a71;}
+.vbox{
+ background-image:url(vbg.gif);
+ border-radius:25px;
+ border:4px solid #957ea6;
+ width:240px;
+ padding:10px;}
+.vb{
+ white-space:nowrap;
+ text-overflow:ellipsis;
+ overflow:hidden;
+ border-radius:6px;
+ border:1px solid #957ea6;
+ box-sizing:border-box;
+ color:#333333;
+ width:230px;
+ margin:2px;
+ padding:5px;}
+.vb:focus{
+ outline:none;
+ border:1px solid #f0ad26;
+ color:#957ea6;}
+.vbutton{
+ background-color:#957ea6;
+ border-radius:6px;
+ width:220px;
+ border:none;
+ color:white;
+ text-align:center;
+ text-decoration:bold;
+ font-family:GARAMOND;
+ display:inline-block;
+ margin:2px;
+ padding:5px;
+ cursor:pointer;}
+.vhead{
+ background-color:#957ea6;
+ border-radius:6px;
+ width:220px;
+ border:none;
+ color:white;
+ text-align:center;
+ text-decoration:bold;
+ font-family:GARAMOND;
+ display:inline-block;
+ margin:2px;
+ padding:5px;}
 .label{
  background-color:#A5AC20;
  border-radius:6px;
