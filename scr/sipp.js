@@ -1,4 +1,4 @@
-﻿////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////
 const defiProgGain=function(status,divId,i){
 showLoad(status);i=Number(gv(divId));if(!window.investor||window.investor.refno!=i)return(dw(status,_errInput));if(window.investor.amount.le(0)||window.investor.amount.ge(window.investor.value))return(dw(status,_errClear));
 ercSend(xutengFemt,MPROGWDR,[i],0,status,null,function(err,res){checkResult(err,res,status);console.warn('WITHDRAWAL_RECEIPT',res);});};
