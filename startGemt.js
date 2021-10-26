@@ -1,4 +1,4 @@
 ////////////////////////////////////////////////////////////
-getMetamask(function(){startGemt();dbh('pro_id','id',menu.onDefiProgReId)});
+getMetamask(function(){startGemt();promoteMenu();dbh('pro_id','id',menu.onDefiProgReId)});
 txgwei=0;
 ////////////////////////////////////////////////////////////
