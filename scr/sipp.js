@@ -1,10 +1,10 @@
 ////////////////////////////////////////////////////////////
 const defiProgGain=function(status,divId,i){
-showLoad(status);i=Number(gv(divId));if(!window.investor||window.investor.refno!=i)return(dw(status,_errInput));if(window.investor.amount.le(0)||window.investor.amount.ge(window.investor.value))return(dw(status,_errClear));
+showLoad(status);i=Number(gv(divId));if(!window.investor||window.investor.refno!=i||!window.investor.amount)return(dw(status,_errInput));if(window.investor.amount.le(0)||window.investor.amount.ge(window.investor.value))return(dw(status,_errClear));
 ercSend(xutengFemt,MPROGWDR,[i],0,status,null,function(err,res){checkResult(err,res,status);console.warn('WITHDRAWAL_RECEIPT',res);});};
 ////////////////////////////////////////////////////////////
 const defiProgJoin=function(status,divAmount,a){
-showLoad(status);a=s2n(gv(divAmount));if(!positiveNum(a)||!window.investor)return(dw(status,_errInput));if(window.investor.start!=0||window.investor.value.le(0))return(dw(status,_errInvst));
+showLoad(status);a=s2n(gv(divAmount));if(!positiveNum(a)||!window.investor||!window.investor.value)return(dw(status,_errInput));if(window.investor.start!=0||window.investor.value.le(0))return(dw(status,_errInvst));
 ercCall(xutengFemt,MBALANCE,[sender],status,null,function(err,res){checkResult(err,res,status);console.warn('INVESTOR_BALANCE',w2s(res,9));if(fromWei(res)<a)return(dw(status,_errDepos));
 ercSend(xutengFemt,MPROGPAY,[window.investor.refno,s2w(a)],0,status,null,function(err,res){checkResult(err,res,status);console.warn('INVESTMENT_RECEIPT',res);});});};
 ////////////////////////////////////////////////////////////
@@ -22,7 +22,7 @@ const defiProgOpen=function(status,divId,divRate,divAmount,eth=0,i,r,a){
 showLoad(status);i=Number(gv(divId));r=s2n(gv(divRate));a=s2n(gv(divAmount));if(!positiveInt(i)||!positiveNum(a)||!numsInRange(r,PROGMINRATE,PROGMAXRATE))return(dw(status,_errInput));
 ercCall(xutengFemt,MPROGGET,[i],status,null,function(err,res){checkResult(err,res,status);console.warn('PROGRAM_DATA',res);if(res.maker!=ZEROADDR)return(dw(status,_errIdNot));
 ercCall(xutengFemt,MBALANCE,[sender],status,null,function(err,res){checkResult(err,res,status);console.warn('PROGRAMER_BALANCE',w2s(res,9));if(fromWei(res)<a)return(dw(status,_errDepos));
-ercSend(xutengFemt,MPROGRAM,[i,bAprToPetri(r),s2w(a)],s2w(eth),status,null,function(err,res){checkResult(err,res,status);console.warn('PROGRAM_CREATION_RECEIPT',res);});});});};
+ercSend(xutengFemt,MPROGRAM,[i,bAprToPetri(r),s2w(a)],eth,status,null,function(err,res){checkResult(err,res,status);console.warn('PROGRAM_CREATION_RECEIPT',res);});});});};
 ////////////////////////////////////////////////////////////
 const bAprToPetri=function(apr){return(Math.round(10**9*apr/100/YEARSECONDS));};
 const bPetriToApr=function(spr){return(YEARSECONDS*100*spr/10**9);};

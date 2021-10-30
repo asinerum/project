@@ -5,9 +5,10 @@ const showCancel=function(div=TEST){dw(div,CANCELED);};
 const showLoad=function(div=TEST){dw(div,'<img\tsrc="https://cdn.jsdelivr.net/gh/asinerum/project/loading.gif"/>');};
 ////////////////////////////////////////////////////////////
 const checkResult=function(err,res,status){if(err){showError(status);throw(err.toString())};if(!res){showCancel(status);throw(ERROR)};};
-const showAddress=function(addr){if(addr==ZEROADDR)return('N/A');return(addr.toLowerCase());};
+const showAddress=function(addr){if(addr==ZEROADDR)return('N/D');return(addr.toLowerCase());};
 const showAddrUrl=function(addr){return('<a target="_blank" href="'+EXCHAINS[network].scan+'/address/'+addr+'">'+showAddress(addr)+'</a>');};
-const showItemAge=function(stamp,say=_days){if(stamp==0)return('N/A');return(Math.floor((nowDate()-stamp)/(3600*24))+SPACE+say);};
+const showItemAge=function(stamp,past=true,say='days'){if(stamp==0)return('N/S');return((past?1:-1)*Math.floor((nowDate()-stamp)/(3600*24))+SPACE+say);};
+const daysToStamp=function(days=0,stamp=nowDate()){return(stamp+days*24*3600);};
 ////////////////////////////////////////////////////////////
 const netStyle=function(){networkStyle=CONTRACT[network].bcls;setStyle('body',networkStyle);};
 const accepted=function(divS){if(confirm(hi_prompt_fee+NEWLINE+gasfee+SPACE+COIN))return(true);dw(divS,CANCELED);return(false);};
@@ -17,7 +18,7 @@ const launchNet=function(nid){if(!nid)nid=hashParam(ARGWNET);selectNet(nid);};/*
 const selectNet=function(nid){switchNet(nid);startXuteng(network);};/*LoadNetworkParamsAndConnectRPC*/
 const chooseNet=function(nid){switchNet(nid);window.web3=_Web3();};/*LoadNetworkParamsAndPureWeb3Lib*/
 const switchBtc=function(nid,dnid){if(!dnid)dnid=BITCOIN;if(BXCHAINS[nid]){window.network=nid}else{window.network=dnid};window.btcnet=network;return(network);};
-const switchNet=function(nid,dnid){if(!dnid)dnid=MAINNET;if(EXCHAINS[nid]){window.network=nid}else{window.network=dnid};netStyle();changeNet();showCoin();return(network);};/*LoadNetworkNameAndPageLayout*/
+const switchNet=function(nid,dnid){if(!dnid)dnid=MAINNET;if(EXCHAINS[nid]){window.network=nid}else{window.network=dnid};netStyle();changeNet();showCoin();showInPH();return(network);};/*LoadNetworkNameAndPageLayout*/
 const changeNet=function(){contractAddress=CONTRACT[network].addr;networkChainId=CONTRACT[network].ncid;networkStyle=CONTRACT[network].bcls;contractScanner=CONTRACT[network].scan+contractAddress;mr('bgxutengscan',contractScanner);};/*LoadGlobalVarsOnly*/
 const getRpcNet=function(){window.rpcServer=gv(_rpcs);if(!window.rpcServer)window.rpcServer=CONTRACT[network].rpcs;return(rpcServer);};/*UpdateNewRPCEndpoint*/
 const getSender=function(){web3.eth.getAccounts().then((accounts)=>{sender=accounts[0];});};/*UpdateUserWalletAddress*/
@@ -47,8 +48,8 @@ const showAccount=function(t=BLANK){Object.keys(ADDRESSES).forEach(function(key)
 const optnAccount=function(t=BLANK){Object.keys(ADDRESSES).forEach(function(key){t+='<option\tvalue="'+ADDRESSES[key]+'">'+key+':&nbsp;'+ADDRESSES[key]+'</option>';});return(t);};
 ////////////////////////////////////////////////////////////
 const showCoin=function(cls='coin'){if(EXCHAINS[network])COIN=EXCHAINS[network].coin;else{if(BXCHAINS[network])COIN=BXCHAINS[network].coin;}mw(cls,COIN);};
+const showInPH=function(lang='en'){Object.keys(PLACES[lang]).forEach(function(key){dattr(key,'placeholder',PLACES[lang][key].replace(/coin\$/gi,COIN));});};
 const showCaps=function(lang='en'){Object.keys(LABELS[lang]).forEach(function(key){dw(key,LABELS[lang][key]);});};
-const showInPH=function(lang='en'){Object.keys(PLACES[lang]).forEach(function(key){dattr(key,'placeholder',PLACES[lang][key]);});};
 const showRole=function(t=BLANK){Object.keys(ROLES).forEach(function(key){t+='<option\tvalue="'+ROLES[key]+'">'+key+'</option>';});console.log(t);dw(_roleVal,t);};
 const showTick=function(t=BLANK){Object.keys(TICKS).forEach(function(key){t+='<option\tvalue="'+TICKS[key]+'">'+key+'</option>';});console.log(t);dw(_tickVal,t);};
 const showDTyp=function(t=BLANK){Object.keys(TYPES).forEach(function(key){t+='<option\tvalue="'+TYPES[key]+'">'+key+'</option>';});console.log(t);dw(_refType,t);};

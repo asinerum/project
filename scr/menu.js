@@ -110,5 +110,6 @@ const Menu=function(element){self=this;
  self.onAuthGetSel=self.onGetSel;
  self.onAuthGetOfr=self.onGetOfr;
  self.onAuthGetReq=self.onGetReq;
+ self.onClearInput=clearTags;
 };//////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////

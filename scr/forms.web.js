@@ -57,6 +57,7 @@ const dx=function(d,v,ob){if(!ob)ob=HASH;$(ob+d).val(v).change();};
 const dv=function(d,v,ob){if(!ob)ob=HASH;$(ob+d).val(v);};
 const dw=function(d,w,ob){if(!ob)ob=HASH;$(ob+d).html(w);};
 const dt=function(d,t,ob){if(!ob)ob=HASH;$(ob+d).text(t);};
+const dz=function(d,v,ob){dx(d,v,ob);dt(d,v,ob)};
 ////////////////////////////////////////////////////////////
 const wrong=function(chk,msg){if(!chk){alert(msg);return(true);}return(false);};
 const reask=function(chk,msg){if(chk)return(confirm(msg));return(true);};

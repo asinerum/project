@@ -1009,6 +1009,10 @@ const Contract=function(scid='usdt'){return(_Contract(EXTOKENS[scid]().abi,EXTOK
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
 const big=function(val){return(new web3.utils.BN(val))};
+String.prototype.t2e=function(tpe){return(s2n(this)/s2n(tpe))};/*tpe=pcv=pcp*/
+String.prototype.e2t=function(tpe){return(s2n(tpe)*s2n(this))};/*tpe=pcv=pcp*/
+String.prototype.p2w=function(ppe){return(String(10**18).mul(this.toString()).div(String(ppe)))};
+String.prototype.w2p=function(ppe){return(String(ppe).mul(this.toString()).div(String(10**18)))};
 String.prototype.add=function(bnum){return(big(this.toString()).add(big(bnum)).toString())};
 String.prototype.div=function(bnum){return(big(this.toString()).div(big(bnum)).toString())};
 String.prototype.mod=function(bnum){return(big(this.toString()).mod(big(bnum)).toString())};
@@ -1038,7 +1042,7 @@ const nlarge=function(n,s){n=s2n(n);s=s2n(s);return(n>s&&s>=0);};
 ////////////////////////////////////////////////////////////
 const wrd=function(o,v){return(Object.keys(o).find(key=>o[key]==v));};
 const n2s=function(n,d){if(!n)return(ZERO);if(!d)d=0;n=n.toString().split(DOT);n[0]=n[0].replace(/\B(?=(\d{3})+(?!\d))/g,COMMA);n[1]=n[1]?DOT+n[1].substr(0,d):EMPTY;return(n[0]+n[1]);};
-const s2n=function(s){s=parseFloat(s.toString().replace(/[^\d\.\-]/g,EMPTY));if(isNaN(s))return(0);return(s);};
+const s2n=function(s=0){if(!s)return(0);s=parseFloat(s.toString().replace(/[^\d\.\-]/g,EMPTY));if(isNaN(s))return(0);return(s);};
 const w2s=function(n,dec=5,len=22){n=n2s(fromWei(n),dec);return(n.length<len?n:ASK);};
 const s2w=function(s){return(toWei(s2n(s).toString()));};
 const toHex=function(s){return(web3.utils.toHex(s));};
@@ -1138,6 +1142,7 @@ const dx=function(d,v,ob){if(!ob)ob=HASH;$(ob+d).val(v).change();};
 const dv=function(d,v,ob){if(!ob)ob=HASH;$(ob+d).val(v);};
 const dw=function(d,w,ob){if(!ob)ob=HASH;$(ob+d).html(w);};
 const dt=function(d,t,ob){if(!ob)ob=HASH;$(ob+d).text(t);};
+const dz=function(d,v,ob){dx(d,v,ob);dt(d,v,ob)};
 ////////////////////////////////////////////////////////////
 const wrong=function(chk,msg){if(!chk){alert(msg);return(true);}return(false);};
 const reask=function(chk,msg){if(chk)return(confirm(msg));return(true);};
@@ -1264,9 +1269,10 @@ const showCancel=function(div=TEST){dw(div,CANCELED);};
 const showLoad=function(div=TEST){dw(div,'<img\tsrc="https://cdn.jsdelivr.net/gh/asinerum/project/loading.gif"/>');};
 ////////////////////////////////////////////////////////////
 const checkResult=function(err,res,status){if(err){showError(status);throw(err.toString())};if(!res){showCancel(status);throw(ERROR)};};
-const showAddress=function(addr){if(addr==ZEROADDR)return('N/A');return(addr.toLowerCase());};
+const showAddress=function(addr){if(addr==ZEROADDR)return('N/D');return(addr.toLowerCase());};
 const showAddrUrl=function(addr){return('<a target="_blank" href="'+EXCHAINS[network].scan+'/address/'+addr+'">'+showAddress(addr)+'</a>');};
-const showItemAge=function(stamp,say=_days){if(stamp==0)return('N/A');return(Math.floor((nowDate()-stamp)/(3600*24))+SPACE+say);};
+const showItemAge=function(stamp,past=true,say='days'){if(stamp==0)return('N/S');return((past?1:-1)*Math.floor((nowDate()-stamp)/(3600*24))+SPACE+say);};
+const daysToStamp=function(days=0,stamp=nowDate()){return(stamp+days*24*3600);};
 ////////////////////////////////////////////////////////////
 const netStyle=function(){networkStyle=CONTRACT[network].bcls;setStyle('body',networkStyle);};
 const accepted=function(divS){if(confirm(hi_prompt_fee+NEWLINE+gasfee+SPACE+COIN))return(true);dw(divS,CANCELED);return(false);};
@@ -1276,7 +1282,7 @@ const launchNet=function(nid){if(!nid)nid=hashParam(ARGWNET);selectNet(nid);};/*
 const selectNet=function(nid){switchNet(nid);startXuteng(network);};/*LoadNetworkParamsAndConnectRPC*/
 const chooseNet=function(nid){switchNet(nid);window.web3=_Web3();};/*LoadNetworkParamsAndPureWeb3Lib*/
 const switchBtc=function(nid,dnid){if(!dnid)dnid=BITCOIN;if(BXCHAINS[nid]){window.network=nid}else{window.network=dnid};window.btcnet=network;return(network);};
-const switchNet=function(nid,dnid){if(!dnid)dnid=MAINNET;if(EXCHAINS[nid]){window.network=nid}else{window.network=dnid};netStyle();changeNet();showCoin();return(network);};/*LoadNetworkNameAndPageLayout*/
+const switchNet=function(nid,dnid){if(!dnid)dnid=MAINNET;if(EXCHAINS[nid]){window.network=nid}else{window.network=dnid};netStyle();changeNet();showCoin();showInPH();return(network);};/*LoadNetworkNameAndPageLayout*/
 const changeNet=function(){contractAddress=CONTRACT[network].addr;networkChainId=CONTRACT[network].ncid;networkStyle=CONTRACT[network].bcls;contractScanner=CONTRACT[network].scan+contractAddress;mr('bgxutengscan',contractScanner);};/*LoadGlobalVarsOnly*/
 const getRpcNet=function(){window.rpcServer=gv(_rpcs);if(!window.rpcServer)window.rpcServer=CONTRACT[network].rpcs;return(rpcServer);};/*UpdateNewRPCEndpoint*/
 const getSender=function(){web3.eth.getAccounts().then((accounts)=>{sender=accounts[0];});};/*UpdateUserWalletAddress*/
@@ -1306,8 +1312,8 @@ const showAccount=function(t=BLANK){Object.keys(ADDRESSES).forEach(function(key)
 const optnAccount=function(t=BLANK){Object.keys(ADDRESSES).forEach(function(key){t+='<option\tvalue="'+ADDRESSES[key]+'">'+key+':&nbsp;'+ADDRESSES[key]+'</option>';});return(t);};
 ////////////////////////////////////////////////////////////
 const showCoin=function(cls='coin'){if(EXCHAINS[network])COIN=EXCHAINS[network].coin;else{if(BXCHAINS[network])COIN=BXCHAINS[network].coin;}mw(cls,COIN);};
+const showInPH=function(lang='en'){Object.keys(PLACES[lang]).forEach(function(key){dattr(key,'placeholder',PLACES[lang][key].replace(/coin\$/gi,COIN));});};
 const showCaps=function(lang='en'){Object.keys(LABELS[lang]).forEach(function(key){dw(key,LABELS[lang][key]);});};
-const showInPH=function(lang='en'){Object.keys(PLACES[lang]).forEach(function(key){dattr(key,'placeholder',PLACES[lang][key]);});};
 const showRole=function(t=BLANK){Object.keys(ROLES).forEach(function(key){t+='<option\tvalue="'+ROLES[key]+'">'+key+'</option>';});console.log(t);dw(_roleVal,t);};
 const showTick=function(t=BLANK){Object.keys(TICKS).forEach(function(key){t+='<option\tvalue="'+TICKS[key]+'">'+key+'</option>';});console.log(t);dw(_tickVal,t);};
 const showDTyp=function(t=BLANK){Object.keys(TYPES).forEach(function(key){t+='<option\tvalue="'+TYPES[key]+'">'+key+'</option>';});console.log(t);dw(_refType,t);};
@@ -1710,6 +1716,7 @@ const Menu=function(element){self=this;
  self.onAuthGetSel=self.onGetSel;
  self.onAuthGetOfr=self.onGetOfr;
  self.onAuthGetReq=self.onGetReq;
+ self.onClearInput=clearTags;
 };//////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////[3]
@@ -1734,7 +1741,8 @@ const setWasmString=function(str,pointer=0,ins,b,i){if(!ins)ins=window.wasmInsta
 const getWasmString=function(pointer,len,ins,b,i,s){if(!ins)ins=window.wasmInstance;b=(new Uint8Array(ins.exports.memory.buffer,pointer,len));s='';for(i=0;i<len;i++)s+=String.fromCharCode(b[i]);return(s);};
 const getWasmStrEnd=function(pointer,ins,b,i,s){/**/if(!ins)ins=window.wasmInstance;b=(new Uint8Array(ins.exports.memory.buffer,pointer));s='';for(i=0;b[i];i++)s+=String.fromCharCode(b[i]);return(s);};
 ////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////[2]
+////////////////////////////////////////////////////////////[3]
+const ercCoin=function(addr=sender,status=TEST,out=TEST,cbf=console.log,cbo=dw){showLoad(status);web3.eth.getBalance(addr).then(data=>{showOkay(status);cbo(out,data);cbf(null,data)}).catch(err=>{showError(status);cbf(err,null)});};
 const ercList=function(sc=xutengFemt,event='Transfer',bfrom,bto,filter={},status=TEST,out=TEST,cbf=console.log,cbo=dw){showLoad(status);sc.getPastEvents(event,{filter:filter,fromBlock:bfrom,toBlock:bto}).then(data=>{showOkay(status);cbo(out,data);cbf(null,data)}).catch(err=>{showError(status);cbf(err,null)});};
 const ercPage=function(sc=xutengFemt,event='Transfer',day=[],page=1,filter={},status=TEST,out=TEST,cbf=console.log,cbo=dw,items=2000,func=null){showLoad(status);func=async(b)=>{if(day)b=toDate(day[0],day[1],day[2]);if(b&&b<nowDate()-60){if(!window.blocknum)await(getBStop(0,b));b=window.blocknum+items*(page-1)}else{if(!window.lastblock)window.lastblock=await(web3.eth.getBlockNumber());b=window.lastblock-items*page};if(!Number(b))throw(ERROR);console.warn('FROM',b,'TO',b+items);return(sc.getPastEvents(event,{filter:filter,fromBlock:b,toBlock:b+items}))};func().then(data=>{showOkay(status);cbo(out,data);cbf(null,data)}).catch(e=>{showError(status);cbf(e,null)});};
 ////////////////////////////////////////////////////////////[3]

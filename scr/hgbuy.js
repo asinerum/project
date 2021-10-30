@@ -1,4 +1,4 @@
 ////////////////////////////////////////////////////////////
-PLACES.en.pro_id = `Program ID`;
-PLACES.en.pro_gemt = `Amount to invest {${_progMoney}}`;
+PLACES.en.pro_id = `Offer ID`;
+PLACES.en.pro_gemt = `Amount of ${_progMoney} to buy`;
 ////////////////////////////////////////////////////////////
