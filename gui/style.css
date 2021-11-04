@@ -323,7 +323,7 @@ textarea.code{
  border:1px solid #f0ad26;
  box-sizing:border-box;
  color:#333333;
- width:230px;
+ width:240px;
  margin:2px;
  padding:5px;}
 .ob:focus{
@@ -338,7 +338,7 @@ textarea.code{
  border:1px solid #728a71;
  box-sizing:border-box;
  color:#333333;
- width:230px;
+ width:240px;
  margin:2px;
  padding:5px;}
 .gb:focus{
@@ -353,7 +353,7 @@ textarea.code{
  border:1px solid #957ea6;
  box-sizing:border-box;
  color:#333333;
- width:230px;
+ width:240px;
  margin:2px;
  padding:5px;}
 .vb:focus{
