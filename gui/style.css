@@ -173,6 +173,20 @@ textarea.code{
  height:16px;
  border:none;
  cursor:pointer;}
+.buy{
+ background-image:url(right.gif);
+ background-size:12px;
+ width:12px;
+ height:12px;
+ border:none;
+ cursor:pointer;}
+.sell{
+ background-image:url(left.gif);
+ background-size:12px;
+ width:12px;
+ height:12px;
+ border:none;
+ cursor:pointer;}
 /*=======================================*/
 .onmouse{
  border:none;
