@@ -1,6 +1,7 @@
 ////////////////////////////////////////////////////////////
 const MBALANCE = 'balanceOf';
 const MPROGGET = 'markets';
+const MPROGNOS = 'refnos';
 const MPROGPAY = 'acquire';
 const MPROGRAM = 'post';
 const MPROGSTP = 'unpost';
@@ -12,6 +13,8 @@ let _progMoney = 'GEMT9';
 ////////////////////////////////////////////////////////////
 let _errCoins = `"CoinsNotEnough"`;
 let _errDepos = `"TokensNotEnough"`;
+let _errFinds = `"SearchFinished"`;
+let _errFound = `"ItemNotFound"`;
 let _errIdNot = `"IdNotAvailable"`;
 let _errInput = `"InputNotValid"`;
 let _errInvst = `"TradeNotAllowed"`;

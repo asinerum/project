@@ -5,6 +5,7 @@ const PROGMAXRATE = 200;
 const MBALANCE = 'balanceOf';
 const MPROGGET = 'programs';
 const MPROGINV = 'invests';
+const MPROGNOS = 'refnos';
 const MPROGPAY = 'invest';
 const MPROGRAM = 'program';
 const MPROGSTP = 'close';
