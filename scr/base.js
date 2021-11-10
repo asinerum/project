@@ -52,6 +52,16 @@ rinkeby:{ncid:4,addr:'0x6be92F3e494B3CDb50Add6f8A068444594Fde3F8',hash:'0xf24f04
 binance:{ncid:56,addr:'0x4DF3F72FD5dd33584fdC38284CE3d72961725BcD',hash:'0x2a32b5605bdd779dde9a11c8600bdf2f5f4be58ad3ccdf3e8eac75fc2b23c4a6',rpcs:'https://bsc-dataseed.binance.org/',bcls:'private',scan:'https://www.bscscan.com/token/'},
 };
 ////////////////////////////////////////////////////////////
+const ADDR_ESTATES={
+binance:{
+ MMB:'0x4DF3F72FD5dd33584fdC38284CE3d72961725BcD',
+ CEB:'0x4f8E54e2E840561e5Aa8a296ad5F7b0AE18e6Eff',
+ DMB:'0x17634BDcC40c6Bad899D4bB0d825641ec8370f1D',
+ EPB:'0x01Cc92E9f84331fDE572a39E0633B13043d79941',
+ DMAB:'0x3c9dfD4FF78b5aC62F55bBd41B525D0c100F8A1E',
+ WTCB:'0x021e3Ddf28C84B15e5Ab6269da72ec9b816993D7',},
+};
+////////////////////////////////////////////////////////////
 const NEMT={
 mainnet:{ncid:1,addr:'0x208871E7f29C0C0e131Dc275f1FCfc9e73C2b06e',hash:'0xe7a06b31a4ea68e0611fc28bd6a176d1179b15a4ac4a056430ff2c89bd80700b',rpcs:'https://mainnet.rpc.fiews.io/v1/free',bcls:'private',scan:'https://etherscan.io/token/'},
 rinkeby:{ncid:4,addr:'0x3534BF9421F4C3881600E280642E897d789e7f46',hash:'0x3a2fafbd5b5b81f12e9d4f70b8b287e5b933341d14c495820d077ab094c5acd3',rpcs:'https://rinkeby.rpc.fiews.io/v1/free',bcls:'team',scan:'https://rinkeby.etherscan.io/token/'},//V9

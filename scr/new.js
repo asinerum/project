@@ -7,7 +7,8 @@ const _Decimal=function(num){return(new Decimal(num))};
 const _Integer=function(dat,base){return(new BigInteger(dat,base))};
 const _Address=function(hash){return(new Bitcoin.Address(hash))};
 const _ECKey=function(key){return(new Bitcoin.ECKey(key))};
-const _QRCode=function(typ,ec){return(new QRCode(typ,ec))};
+const _QRCode=function(typ,ec){return(new QRCode(typ,ec))};/*deprecated*/
+const _QR=function(div,text,width=60,height=width){return(new QRCode(document.getElementById(div),{text,width,height}))};
 const _CashKey=function(key){return(_ECKey(key))};
 const _DashKey=function(key){return(new Dashcoin.ECKey(key))};
 const _LiteKey=function(key){return(new Litecoin.ECKey(key))};
