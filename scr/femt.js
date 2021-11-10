@@ -1,3 +1,5 @@
+////////////////////////////////////////////////////////////[1]
+const deployEstate=function(status,name,symb,b64,author,price,sale=false,form=0){mdeploy(status,ABIESTATES,BCESTATES,[name,symb,form,b64,author,price,sale]);};
 ////////////////////////////////////////////////////////////[3]
 const popEmitValue=async(sc=xutengFemt,event='Transfer',filter={},revorder=true,status=TEST,cbf=console.log,step=500000,logs=[],i)=>{showLoad(status);await(popEmit(sc,event,filter,status,null,function(err,res){takeResValue(err,res,logs,revorder)},db,window.blockmark,step));cbf(null,logs);return(logs);};
 const getEmitValue=async(sc=xutengFemt,event='Transfer',filter={},revorder=true,status=TEST,cbf=console.log,logs=[],i)=>{showLoad(status);await(getEmit(sc,event,filter,status,null,function(err,res){takeResValue(err,res,logs,revorder)}));cbf(null,logs);return(logs);};
