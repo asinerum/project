@@ -2,6 +2,8 @@
 const clearTags=function(tag='input'){$(COLON+tag).val(EMPTY);};
 const clearPwds=function(){$('input:password').val(SYMBOL);};
 ////////////////////////////////////////////////////////////
+const sha256=async(data,algorithm='SHA-256',main=null,a,b)=>{main=async(m)=>{b=await(crypto.subtle.digest(algorithm,m));a=Array.from(_Uint8(b));return(a.map(b=>b.toString(16).padStart(2,'0')).join(''))};if(_Instance(data,Blob)){b=await(data.arrayBuffer());a=_Uint8(b);return(await(main(a)))};b=_Encoder(null);a=b.encode(data);return(await(main(a)))};
+const getSha=function(divFile,algorithm='SHA-256',r){r=document.querySelector(HASH+divFile);if(!r)throw(ERROR);return(sha256(r.files[0],algorithm))};/*promise*/
 const base64=function(file,r){return(_Promise((resolve,reject)=>{r=_FileReader();r.readAsDataURL(file);r.onload=()=>resolve(r.result);r.onerror=error=>reject(error)}))};/*promise*/
 const getB64=async(divFile,pure=true,r)=>{r=document.querySelector(HASH+divFile).files[0];if(!r)return(null);r=await(base64(r));if(!r)return(null);if(!pure)return(r);return(r.split(COMMA)[1])};
 ////////////////////////////////////////////////////////////

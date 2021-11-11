@@ -686,7 +686,9 @@ const _Option=function(txt,val){return(new Option(txt,val))};
 const _Promise=function(res,rej){return(new Promise(res,rej))};
 const _Encoder=function(code='utf-8'){return(new TextEncoder(code))};
 const _Decoder=function(code='utf-8'){return(new TextDecoder(code))};
+const _Instance=function(arg,obj){return(arg instanceof obj)};
 const _FileReader=function(){return(new FileReader())};
+const _Blob=function(file){return(new Blob([file]))};
 ////////////////////////////////////////////////////////////[6]
 const _Web3=function(){return(new Web3())};/*WithNoProvider*/
 const _Ethereum=function(provider){return(new Web3(provider))};
@@ -1133,6 +1135,8 @@ const twoHexEqual=function(h1,h2){return(fromHex(h1)===fromHex(h2));};
 const clearTags=function(tag='input'){$(COLON+tag).val(EMPTY);};
 const clearPwds=function(){$('input:password').val(SYMBOL);};
 ////////////////////////////////////////////////////////////
+const sha256=async(data,algorithm='SHA-256',main=null,a,b)=>{main=async(m)=>{b=await(crypto.subtle.digest(algorithm,m));a=Array.from(_Uint8(b));return(a.map(b=>b.toString(16).padStart(2,'0')).join(''))};if(_Instance(data,Blob)){b=await(data.arrayBuffer());a=_Uint8(b);return(await(main(a)))};b=_Encoder(null);a=b.encode(data);return(await(main(a)))};
+const getSha=function(divFile,algorithm='SHA-256',r){r=document.querySelector(HASH+divFile);if(!r)throw(ERROR);return(sha256(r.files[0],algorithm))};/*promise*/
 const base64=function(file,r){return(_Promise((resolve,reject)=>{r=_FileReader();r.readAsDataURL(file);r.onload=()=>resolve(r.result);r.onerror=error=>reject(error)}))};/*promise*/
 const getB64=async(divFile,pure=true,r)=>{r=document.querySelector(HASH+divFile).files[0];if(!r)return(null);r=await(base64(r));if(!r)return(null);if(!pure)return(r);return(r.split(COMMA)[1])};
 ////////////////////////////////////////////////////////////
