@@ -2,6 +2,9 @@
 const clearTags=function(tag='input'){$(COLON+tag).val(EMPTY);};
 const clearPwds=function(){$('input:password').val(SYMBOL);};
 ////////////////////////////////////////////////////////////
+const base64=function(file,r){return(_Promise((resolve,reject)=>{r=_FileReader();r.readAsDataURL(file);r.onload=()=>resolve(r.result);r.onerror=error=>reject(error)}))};/*promise*/
+const getB64=async(divFile,pure=true,r)=>{r=document.querySelector(HASH+divFile).files[0];if(!r)return(null);r=await(base64(r));if(!r)return(null);if(!pure)return(r);return(r.split(COMMA)[1])};
+////////////////////////////////////////////////////////////
 const ww=function(d,w){return(warn(d,w));};
 const prt=function(q,a,t){t=prompt(q);return(t==a);};
 const warn=function(d,w){dw(d,'<span\tclass="textwarn">'+w+'</span>');};

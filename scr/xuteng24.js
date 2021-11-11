@@ -345,6 +345,27 @@ tree:201,
 url:211,
 vote:221};
 ////////////////////////////////////////////////////////////
+const CTYPES={
+img:0,//B64
+htm:1,
+xml:2,
+txt:3,
+t64:4,//B64
+zip:5,//B64
+hex:6,
+json:7,
+wasm:8,//B64
+js:9,
+id:10,
+dna:11,
+name:12,
+hash:13,
+ipfs:14,
+vid:15,//MP4
+aud:16,//MP3
+txh:130,//HASH
+mid:160};//MID
+////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
 const _network='network';
 const _account='account';
@@ -665,6 +686,7 @@ const _Option=function(txt,val){return(new Option(txt,val))};
 const _Promise=function(res,rej){return(new Promise(res,rej))};
 const _Encoder=function(code='utf-8'){return(new TextEncoder(code))};
 const _Decoder=function(code='utf-8'){return(new TextDecoder(code))};
+const _FileReader=function(){return(new FileReader())};
 ////////////////////////////////////////////////////////////[6]
 const _Web3=function(){return(new Web3())};/*WithNoProvider*/
 const _Ethereum=function(provider){return(new Web3(provider))};
@@ -951,7 +973,6 @@ const sendeth2sys=function(eth,divH,divS,cbf=console.log){sendeth(contractAddres
 ////////////////////////////////////////////////////////////
 const rawtx=function(abi,nonce,eth=0,to=null,d){d={data:abi,nonce:HEXINIT+nonce,value:s2wHex(eth),gasPrice:g2wHex(txgwei),gasLimit:toHex(maxgas),from:sender,chainId:CONTRACT[network].ncid};if(to)d.to=to;d=_Transaction(d);d.sign(_Buffer(senderPte));return(HEXINIT+d.serialize().toString(HEX))};
 const xsend=function(abi,gas,eth=0,to=null,divS=TEST,cbf=console.log,run=true,x){showLoad(divS);maxgas=gas;estgas=gas;gasfee=fromGwei(estgas*txgwei);web3.eth.getTransactionCount(sender).then(nonce=>{nonce=nonce.toString(16);x=rawtx(abi,nonce,eth,to);if(!run)return(cbf(null,x));web3.eth.sendSignedTransaction(x).on(RECEIPT,receipt=>{txreceipt=receipt;if(cbf)cbf(null,txreceipt,_hash,receipt.transactionHash,_address,receipt.contractAddress);console.log(txreceipt);}).then(res=>{dw(divS,OK);}).catch(err=>{if(cbf)cbf(err,null);dw(divS,ERROR+errCode(err))})})};
-const mdeploy=function(status,abi,code,args=[],gas=3000000,eth=0){showLoad(status);window.currentgas=maxgas;maxgas=gas;_Contract(abi).deploy({data:code,arguments:args}).send(mmsender(eth,null)).then(r=>{showOkay(status);console.warn(r);maxgas=window.currentgas}).catch(e=>{showError(status);console.error(e)})};
 const deploy=function(abi,code,args=[],gas){xsend(_Contract(abi).deploy({data:code,arguments:args}).encodeABI(),gas)};
 const deploi=function(bytecode,gas=3000000,divS=TEST,cbf=console.log){xsend(bytecode,gas,0,null,divS,cbf)};
 ////////////////////////////////////////////////////////////
@@ -980,6 +1001,7 @@ const xutengDirectRemitFor=function(to=BLANK,xut=0,ref=BLANK,cbf=console.log,sta
 ////////////////////////////////////////////////////////////
 const mmresult=function(err,hash,fname){if(err){err=ERROR+errCode(err);lastTxHash[fname]=BLANK;}else{err=hash;lastTxHash[fname]=hash;};mw(lastTxHashClass,err);dw(fname,err);};
 const mmsender=function(eth,to=contractAddress,ref=null){if(ref){ref=toHex(ref);}else{ref=OxOO;};return({from:sender,to:to,value:(eth?s2w(eth):0),gasPrice:gtoWei(txgwei),gas:maxgas,data:ref});};
+const mmdeploy=function(status,abi,code,args=[],gas=3000000,eth=0){showLoad(status);window.currentgas=maxgas;maxgas=gas;_Contract(abi).deploy({data:code,arguments:args}).send(mmsender(eth,null)).then(r=>{showOkay(status);console.warn(r);maxgas=window.currentgas}).catch(e=>{showError(status);console.error(e)})};
 const mm_sendeth=function(to,eth,ref=null,n){;;if(!n)n=funcName();web3.eth.sendTransaction(mmsender(eth,to,ref),function(err,hash){mmresult(err,hash,n);});};
 ////////////////////////////////////////////////////////////
 const mm_buy=function(eth,n){;;if(!n)n=funcName();xuteng.methods.buy().send(mmsender(eth),function(err,hash){mmresult(err,hash,n);});};
@@ -1110,6 +1132,9 @@ const twoHexEqual=function(h1,h2){return(fromHex(h1)===fromHex(h2));};
 ////////////////////////////////////////////////////////////
 const clearTags=function(tag='input'){$(COLON+tag).val(EMPTY);};
 const clearPwds=function(){$('input:password').val(SYMBOL);};
+////////////////////////////////////////////////////////////
+const base64=function(file,r){return(_Promise((resolve,reject)=>{r=_FileReader();r.readAsDataURL(file);r.onload=()=>resolve(r.result);r.onerror=error=>reject(error)}))};/*promise*/
+const getB64=async(divFile,pure=true,r)=>{r=document.querySelector(HASH+divFile).files[0];if(!r)return(null);r=await(base64(r));if(!r)return(null);if(!pure)return(r);return(r.split(COMMA)[1])};
 ////////////////////////////////////////////////////////////
 const ww=function(d,w){return(warn(d,w));};
 const prt=function(q,a,t){t=prompt(q);return(t==a);};
@@ -1767,7 +1792,7 @@ const getWasmString=function(pointer,len,ins,b,i,s){if(!ins)ins=window.wasmInsta
 const getWasmStrEnd=function(pointer,ins,b,i,s){/**/if(!ins)ins=window.wasmInstance;b=(new Uint8Array(ins.exports.memory.buffer,pointer));s='';for(i=0;b[i];i++)s+=String.fromCharCode(b[i]);return(s);};
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////[1]
-const deployEstate=function(status,name,symb,b64,author,price,sale=false,form=0){mdeploy(status,ABIESTATES,BCESTATES,[name,symb,form,b64,author,price,sale]);};
+const deployEstate=function(status,name,symb,b64,author,price,sale=false,form=0){mmdeploy(status,ABIESTATES,BCESTATES,[name,symb,form,b64,author,price,sale]);};
 ////////////////////////////////////////////////////////////[3]
 const popEmitValue=async(sc=xutengFemt,event='Transfer',filter={},revorder=true,status=TEST,cbf=console.log,step=500000,logs=[],i)=>{showLoad(status);await(popEmit(sc,event,filter,status,null,function(err,res){takeResValue(err,res,logs,revorder)},db,window.blockmark,step));cbf(null,logs);return(logs);};
 const getEmitValue=async(sc=xutengFemt,event='Transfer',filter={},revorder=true,status=TEST,cbf=console.log,logs=[],i)=>{showLoad(status);await(getEmit(sc,event,filter,status,null,function(err,res){takeResValue(err,res,logs,revorder)}));cbf(null,logs);return(logs);};

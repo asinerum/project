@@ -1,6 +1,7 @@
 ////////////////////////////////////////////////////////////
 const mmresult=function(err,hash,fname){if(err){err=ERROR+errCode(err);lastTxHash[fname]=BLANK;}else{err=hash;lastTxHash[fname]=hash;};mw(lastTxHashClass,err);dw(fname,err);};
 const mmsender=function(eth,to=contractAddress,ref=null){if(ref){ref=toHex(ref);}else{ref=OxOO;};return({from:sender,to:to,value:(eth?s2w(eth):0),gasPrice:gtoWei(txgwei),gas:maxgas,data:ref});};
+const mmdeploy=function(status,abi,code,args=[],gas=3000000,eth=0){showLoad(status);window.currentgas=maxgas;maxgas=gas;_Contract(abi).deploy({data:code,arguments:args}).send(mmsender(eth,null)).then(r=>{showOkay(status);console.warn(r);maxgas=window.currentgas}).catch(e=>{showError(status);console.error(e)})};
 const mm_sendeth=function(to,eth,ref=null,n){;;if(!n)n=funcName();web3.eth.sendTransaction(mmsender(eth,to,ref),function(err,hash){mmresult(err,hash,n);});};
 ////////////////////////////////////////////////////////////
 const mm_buy=function(eth,n){;;if(!n)n=funcName();xuteng.methods.buy().send(mmsender(eth),function(err,hash){mmresult(err,hash,n);});};
