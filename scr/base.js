@@ -47,6 +47,11 @@ binance:{ncid:56,addr:'0x050010e67858E4B71f6D79359ad950e614863e0d',hash:'0x06d52
 classic:{ncid:61,addr:'0xDEA0c8bAF81975876F4AF9FC2a1fC4F3A67e039B',hash:'0xb3df5f5695a4c0bf5b33dc86ec95d5db504d2031916a4f14e9483603e5381189',rpcs:'https://www.ethercluster.com/etc/',bcls:'private',scan:'https://etcblockexplorer.com/token/'},
 };
 ////////////////////////////////////////////////////////////
+const ASSETS={
+rinkeby:{ncid:4,addr:'0xadf520419B9C2B9c1360637AB85aF653E46CcfC5',hash:'0x6b91ac371ba444aee7e2b763deda7d51c8024ab43ac0929fa9ab0f0f8fabefc0',rpcs:'https://rinkeby.rpc.fiews.io/v1/free',bcls:'team',scan:'https://rinkeby.etherscan.io/token/'},
+binance:{ncid:56,addr:'0x25542198F36dE291EE51d783313242fB24aA7703',hash:'0x639433fc962439b683c90f2c60a591024623a6cb6af7e63aa01e6deb8b4d9d50',rpcs:'https://bsc-dataseed.binance.org/',bcls:'private',scan:'https://www.bscscan.com/token/'},
+};
+////////////////////////////////////////////////////////////
 const ESTATE={
 rinkeby:{ncid:4,addr:'0x6be92F3e494B3CDb50Add6f8A068444594Fde3F8',hash:'0xf24f04a23f671e4bb3c182e5aa9a1a99e13881059eaaa92c13eafc162ec82e50',rpcs:'https://rinkeby.rpc.fiews.io/v1/free',bcls:'team',scan:'https://rinkeby.etherscan.io/token/'},
 binance:{ncid:56,addr:'0x4DF3F72FD5dd33584fdC38284CE3d72961725BcD',hash:'0x2a32b5605bdd779dde9a11c8600bdf2f5f4be58ad3ccdf3e8eac75fc2b23c4a6',rpcs:'https://bsc-dataseed.binance.org/',bcls:'private',scan:'https://www.bscscan.com/token/'},
