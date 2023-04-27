@@ -1,7 +1,8 @@
+const destination = "one1dqhuyswa7fjwlc2nkemcxg0aj8sdes4xjq0fam";
 const networkId = "HmyMainnet"; //"HmyTestnet"
 const endpoint = "https://api.s0.t.hmny.io";
 const shardId = 0; //Mandatory
-const gwPrice = 1; //Gwei
+const gwPrice = 30; //Gwei
 const sepline = "/////////////////////////////";
 const input =
 [
@@ -33,6 +34,7 @@ const send =
     name: "recipient",
     description: "Recipient's wallet address",
     message: "A wallet address must be Harmony valid",
+    default: destination,
     pattern: /^one([a-z0-9]{39})$/,
     required: true,
   },
@@ -46,6 +48,13 @@ const send =
     name: "gas",
     description: "Gas limit (ENTER for default value)",
     default: 21000,
+    pattern: /^[0-9]*$/,
+    required: true,
+  },
+  {
+    name: "gwei",
+    description: "Gas price in Gwei (ENTER for default value)",
+    default: gwPrice,
     pattern: /^[0-9]*$/,
     required: true,
   },
@@ -64,6 +73,7 @@ let sender;
 let recipient;
 let amount;
 let gas;
+let gwei;
 let txn;
 const {Harmony} = require("@harmony-js/core");
 const {ChainID,ChainType,hexToNumber,numberToHex,fromWei,Units,Unit} = require("@harmony-js/utils");
@@ -95,10 +105,12 @@ prompt.get(input,function(err,result){
           recipient = result.recipient;
           amount = result.amount;
           gas = result.gas;
+          gwei = result.gwei;
           console.log(sepline);
           console.log("Recipient:",recipient);
           console.log("Amount:",amount);
           console.log("Gas:",gas);
+          console.log("Gwei:",gwei);
           console.log(sepline);
           prompt.get(wait,function(err,result){
             if(err){return(console.log(err.toString()))}
@@ -109,7 +121,7 @@ prompt.get(input,function(err,result){
               gasLimit: gas,
               shardID: shardId,
               toShardID: shardId,
-              gasPrice: new hmy.utils.Unit(gwPrice).asGwei().toWei(),
+              gasPrice: new hmy.utils.Unit(gwei).asGwei().toWei(),
             });
             hmy.wallet.signTransaction(txn).then(signed=>{return(hmy.blockchain.sendTransaction(signed))})
             .then(txhash=>{if(txhash.error)return(console.log(txhash.error.message));log(txhash.result);console.log(txhash)})
