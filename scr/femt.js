@@ -1,4 +1,6 @@
 ////////////////////////////////////////////////////////////[1]
+const deployTSC=function(key,name,symb,b64,author=LABELS.en._header_copyright,price=1,sale=false,gas=3000000,nid='binance',abi=ABIESTATES,code=BCESTATES){if(!key)return(deployEstate('test',name,symb,b64,author,price,sale));arouseKey(key);startBTSC(ESTATE[nid].addr);ercFuncCall('name').then(r=>console.log(TEST,r));return(deploy(abi,code,[name,symb,0,b64,author,price,sale],gas))};
+const deployTSC20=function(key,name,symb,b64,author=LABELS.en._header_copyright,price=1,sale=false,gas=3500000,nid='binance'){return(deployTSC(key,name,symb,b64,author,price,sale,gas,nid,ABIESTATE,BCESTATE))};
 const deployEstate=function(status,name,symb,b64,author,price,sale=false,form=0){mmdeploy(status,ABIESTATES,BCESTATES,[name,symb,form,b64,author,price,sale]);};
 ////////////////////////////////////////////////////////////[3]
 const popEmitValue=async(sc=xutengFemt,event='Transfer',filter={},revorder=true,status=TEST,cbf=console.log,step=500000,logs=[],i)=>{showLoad(status);await(popEmit(sc,event,filter,status,null,function(err,res){takeResValue(err,res,logs,revorder)},db,window.blockmark,step));cbf(null,logs);return(logs);};
@@ -39,6 +41,7 @@ const pmine=function(pops){mint(0,console.log,xutengFemt,ercTokens,alert,mmsende
 const funcMine=function(contract,nonce,method){return(method?contract.methods.mine(method,nonce):contract.methods.mine(nonce))};
 const argsMine=function(nonce,method){return(method?[method,nonce]:[nonce])};
 ////////////////////////////////////////////////////////////[7]
+const arouseKey=function(key,save=true,s){s=key2wallet(key);if(save){sender=s,senderPte=key};return([s,key])};
 const ercTokens=function(sc=xutengFemt,user=sender,cbf=console.log){sc.methods.balanceOf(user).call().then(r=>cbf(w2s(r)))};
 const launchNid=function(rpc,nid,gas=1200000,scinfo=FEMT,scabi=ABIFEMT){maxgas=gas;CONTRACT=scinfo;SCABI=scabi;launchRpc(rpc,nid)};/*using:self*/
 const startFemt=function(gas=300000,abi=ABIFEMT,addr=FEMT[network].addr){maxgas=gas;window.xutengFemt=_Contract(abi,addr);return(window.xutengFemt)};/*using:provider*/
@@ -47,4 +50,5 @@ const startNemt=function(gas=300000,abi=ABINEMT,addr=NEMT[network].addr){return(
 const startLeft=function(gas=300000,abi=ABILEFT,addr=LEFT[network].addr){return(startFemt(gas,abi,addr))};
 const startExet=function(gas=300000,abi=ABIEXET,addr=EXET[network].addr){return(startFemt(gas,abi,addr))};
 const startNTSC=function(addr,gas=3000000,abi=ABIESTATES){return(startFemt(gas,abi,addr))};
+const startBTSC=function(addr,nid='binance'){startXuteng(nid);return(startNTSC(addr))};
 ////////////////////////////////////////////////////////////
