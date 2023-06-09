@@ -1,4 +1,6 @@
 ////////////////////////////////////////////////////////////[1]
+const tsc=function(adiv,dpre='tsc-',func=db){try{return(new Tsc(adiv,dpre,func,['price'],['forSale'],'name','symbol','owner','content','price','forSale'))}catch(e){alert(ERROR )}};
+const Tsc=function(adiv,dpre='tsc-',func=db,weis=[],bools=[],...args){startBTSC(gv(adiv));this.str=(a,v)=>{return(weis.includes(a)?w2s(v):(bools.includes(a)?(v?'yes':'no'):v))};args.forEach(arg=>{ercFuncCall(arg).then(r=>func(`${dpre}${arg}`,this.str(arg,r)))})};
 const deployTSC=function(key,name,symb,b64,author=LABELS.en._header_copyright,price=1,sale=false,gas=3000000,nid='binance',abi=ABIESTATES,code=BCESTATES){if(!key)return(deployEstate('test',name,symb,b64,author,price,sale));arouseKey(key);startBTSC(ESTATE[nid].addr);ercFuncCall('name').then(r=>console.log(TEST,r));return(deploy(abi,code,[name,symb,0,b64,author,price,sale],gas))};
 const deployTSC20=function(key,name,symb,b64,author=LABELS.en._header_copyright,price=1,sale=false,gas=3500000,nid='binance'){return(deployTSC(key,name,symb,b64,author,price,sale,gas,nid,ABIESTATE,BCESTATE))};
 const deployEstate=function(status,name,symb,b64,author,price,sale=false,form=0){mmdeploy(status,ABIESTATES,BCESTATES,[name,symb,form,b64,author,price,sale]);};
