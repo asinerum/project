@@ -1808,8 +1808,14 @@ const getWasmString=function(pointer,len,ins,b,i,s){if(!ins)ins=window.wasmInsta
 const getWasmStrEnd=function(pointer,ins,b,i,s){/**/if(!ins)ins=window.wasmInstance;b=(new Uint8Array(ins.exports.memory.buffer,pointer));s='';for(i=0;b[i];i++)s+=String.fromCharCode(b[i]);return(s);};
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////[1]
-const tsc=function(adiv='tsc-address',dpre='tsc-',func=db,sd='tsc-name'){if(sd)showLoad(sd);try{return(new Tsc(adiv,dpre,func,['price'],['forSale'],['content'],'name','symbol','owner','content','price','forSale'))}catch(e){alert(ERROR)}};
-const Tsc=function(adiv='tsc-address',dpre='tsc-',func=db,weis=[],bools=[],imgs=[],...args){startBTSC(gv(adiv));this.set=(d,a,v)=>{document.getElementById(d).setAttribute(a,v)};this.img=(a,v)=>{this.set(`${dpre}${a}`,'src',`data:image/png;base64,${v}`)};this.str=(a,v)=>{return(weis.includes(a)?w2s(v):(bools.includes(a)?(v?'yes':'no'):v))};args.forEach(arg=>{ercFuncCall(arg).then(r=>{if(imgs.includes(arg)){this.img(arg,r)}else{func(`${dpre}${arg}`,this.str(arg,r))}})})};
+const set=function(d,a,v){document.getElementById(d).setAttribute(a,v)};
+const i64=function(cnt,val,pre='tsc-',iid='data:image/png;base64,',att='src'){set(`${pre}${cnt}`,att,`${iid}${val}`)};
+const b64=function(s){if(s===''||s.trim()==='')return(false);try{return(btoa(atob(s))==s)}catch(e){return(false)}};
+const Out=function(data,to=ZEROADDR,eth=0,cbf=console.log,set=setInput){if(set)data=set(data);return(PayEther(to,eth,data,cbf,txgwei,maxgas,0,sender,EMPTY,false,false))};
+const out=function(data,to=ZEROADDR,eth=0,cbf=console.log,set=setInput){if(set)data=set(data);return(PayEther(to,eth,data,cbf,txgwei,maxgas,0,sender,senderPte,true,true))};
+const tsc=function(adiv='tsc-address',dpre='tsc-',func=db,sd='tsc-name'){if(sd)showLoad(sd);try{return(Tsc(adiv,dpre,func,['price'],['forSale'],['content'],null,'name','symbol','owner','content','price','forSale'))}catch(e){alert(ERROR)}};
+const Tsc=function(adiv='tsc-address',dpre='tsc-',func=db,weis=[],bools=[],imgs=[],addr,...args){if(!addr)addr=gv(adiv);startBTSC(addr);args.forEach(arg=>{ercFuncCall(arg).then(r=>{if(imgs.includes(arg)){if(b64(r))i64(arg,r,dpre);if(r.slice(0,3)=='tx:')gtx(r.slice(3),function(e,o){if(o)i64(arg,o,dpre,'')})}else{func(`${dpre}${arg}`,weis.includes(arg)?w2s(r):(bools.includes(arg)?(r?'yes':'no'):r))}})})};
+const gtx=function(tx,cbf=console.log){web3.eth.getTransaction(tx,function(err,result){if(err||!result||!result.input)return(cbf(err,null));this.cut=(str)=>{return(hexUtf(strCut(str,'7b226f626a22','7d')))};this.obj=(str)=>{return(JSON.parse(this.cut(str)))};cbf(null,this.obj(result.input).obj)})};
 const deployTSC=function(key,name,symb,b64,author=LABELS.en._header_copyright,price=1,sale=false,gas=3000000,nid='binance',abi=ABIESTATES,code=BCESTATES){if(!key)return(deployEstate('test',name,symb,b64,author,price,sale));arouseKey(key);startBTSC(ESTATE[nid].addr);ercFuncCall('name').then(r=>console.log(TEST,r));return(deploy(abi,code,[name,symb,0,b64,author,price,sale],gas))};
 const deployTSC20=function(key,name,symb,b64,author=LABELS.en._header_copyright,price=1,sale=false,gas=3500000,nid='binance'){return(deployTSC(key,name,symb,b64,author,price,sale,gas,nid,ABIESTATE,BCESTATE))};
 const deployEstate=function(status,name,symb,b64,author,price,sale=false,form=0){mmdeploy(status,ABIESTATES,BCESTATES,[name,symb,form,b64,author,price,sale]);};
@@ -1839,6 +1845,7 @@ const ercSend=function(sc=xutengFemt,method,args=[],eth=0,status=TEST,out=TEST,c
 const ercRaws=function(sc=xutengFemt,method,args=[],eth=0,status=TEST,out=TEST,cbf=console.log,cfm=true){showLoad(status);sendingFunc=sc.methods[method].apply(this,args);sendingAbi=sendingFunc.encodeABI();sendingEth=eth?eth:0;txsend(0,out,status,cbf,cfm);};
 ////////////////////////////////////////////////////////////[5]
 const byt=function(hex){return(web3.utils.hexToBytes(hex))};
+const kek=function(num,nce){return(kex(num,nce,'uint256',fromHex(sender)))};
 const kec=function(num,nce){return(web3.utils.keccak256(web3.eth.abi.encodeParameters(['uint256','uint256'],[num,nce])))};
 const kex=function(num,nce,key='address',val=sender){return(web3.utils.keccak256(web3.eth.abi.encodeParameters([key,'uint256','uint256'],[val,num,nce])))};
 const b2i=function(hex,n,i){n=big(0);hex=byt(hex);for(i=0;i<hex.length;i++){n=n.add(big(hex[i]).mul(big(16).pow(big(i*2)).add(big(1))))};return(n.toString())};
