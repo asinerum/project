@@ -53,6 +53,7 @@ ropsten:{coin:'ROP',ncid:3,rpcs:'',scan:'https://ropsten.etherscan.io/',api:'htt
 binance:{coin:'BNB',ncid:56,rpcs:'https://bsc-dataseed.binance.org/',scan:'https://www.bscscan.com/',api:'https://api.bscscan.com/api?',push:'https://bscscan.com/pushtx'},
 classic:{coin:'ETC',ncid:61,rpcs:'https://www.ethercluster.com/etc/',scan:'https://etcblockexplorer.com/',api:'',push:''},
 fantom:{coin:'FTM',ncid:250,rpcs:'https://rpc.ftm.tools/',scan:'https://ftmscan.com/',api:'https://api.ftmscan.com/api?',push:'https://ftmscan.com/pushtx'},
+local:{coin:'TEST',ncid:10000,rpcs:'http://localhost:8545'},
 };
 ////////////////////////////////////////////////////////////
 const USDC={
@@ -138,6 +139,7 @@ ropsten:{ncid:3,addr:'0x9F57B97a6723b1620A6360af33B28d006806EC0d',hash:'0x73dba8
 binance:{ncid:56,addr:'0x1a2944F9FE6adD404F9A1Ee0E12be5c8671ea224',hash:'0x7eae323a5c3f05f049237199e34a84e466bbc5d8faec59be9ef644ff05d2f4da',rpcs:'https://bsc-dataseed.binance.org/',bcls:'private',scan:'https://www.bscscan.com/token/'},
 classic:{ncid:61,addr:'0xd827007Dda5AdEC1548171945d639ac156CfAd59',hash:'0x66dbbd972497dd0183b291f4ccd17de6159ba95ecdef65d636f41da3f5771e74',rpcs:'https://www.ethercluster.com/etc/',bcls:'private',scan:'https://etcblockexplorer.com/token/'},
 fantom:{ncid:250,addr:'',rpcs:'https://rpc.ftm.tools/',scan:'https://ftmscan.com/token/'},
+local:{ncid:10000,addr:'0x0000000000000000000000000000000000000000',rpcs:'http://localhost:8545'},
 };
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
@@ -165,6 +167,7 @@ const PROXIES=[
 {/*https://etherscan.io/apis#proxy*/
 getTransactionCount:function(addr,ncid=MAINNET){return(`${EXCHAINS[ncid].api}module=proxy&action=eth_getTransactionCount&address=${addr}&apikey=${EXCHAINS[ncid].token?EXCHAINS[ncid].token:BLANK}`)},
 getContractDecimals:function(addr,ncid=MAINNET){return(`${EXCHAINS[ncid].api}module=proxy&action=eth_call&to=${addr}&data=0x313ce567&tag=latest&apikey=${EXCHAINS[ncid].token?EXCHAINS[ncid].token:BLANK}`)},
+getContractCreation:function(addr,ncid=MAINNET){return(`${EXCHAINS[ncid].api}module=contract&action=getcontractcreation&contractaddresses=${addr}&apikey=${EXCHAINS[ncid].token?EXCHAINS[ncid].token:BLANK}`)},
 getTokenTotalSupply:function(addr,ncid=MAINNET){return(`${EXCHAINS[ncid].api}module=proxy&action=eth_call&to=${addr}&data=0x18160ddd&tag=latest&apikey=${EXCHAINS[ncid].token?EXCHAINS[ncid].token:BLANK}`)},
 getUserTokenBalance:function(addr,acc,ncid=MAINNET){return(`${EXCHAINS[ncid].api}module=account&action=tokenbalance&contractaddress=${addr}&address=${acc}&tag=latest&apikey=${EXCHAINS[ncid].token?EXCHAINS[ncid].token:BLANK}`)},
 getUserEtherBalance:function(acc,ncid=MAINNET){return(`${EXCHAINS[ncid].api}module=account&action=balance&address=${acc}&tag=latest&apikey=${EXCHAINS[ncid].token?EXCHAINS[ncid].token:BLANK}`)},
@@ -1425,6 +1428,7 @@ const metaMainnet=function(cbo){ethereum.request({method:'eth_requestAccounts'})
 const getProvider=function(cbo){if(window.ethereum){window.web3=_Ethereum(ethereum);metaMainnet(cbo);}else{if(window.web3){window.web3=_Ethereum(web3.currentProvider);web3Mainnet(cbo);}else{startXuteng(MAINNET);alert(hi_alert_metamasks);}}};
 const startXuteng=function(nid){if(nid){switchNet(nid);window.web3=_Ethereum(_Provider(getRpcNet()));resetXuteng();}else{getProvider();};};
 const metaRefresh=function(cid){window.network=id2network(cid);switchNet(network);resetXuteng();console.log('CHAIN',cid,network);};
+const switchLocal=function(){switchNet('local');window.web3=_Ethereum(_Provider(getRpcNet()));return(web3);};
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
 const author_getAccount=function(){showLoad('_keystore_status');setTimeout(function(){getAccount(null);},2000);};
@@ -1814,11 +1818,12 @@ const b64=function(s){if(s===''||s.trim()==='')return(false);try{return(btoa(ato
 const Out=function(data,to=ZEROADDR,eth=0,cbf=console.log,set=setInput){if(set)data=set(data);return(PayEther(to,eth,data,cbf,txgwei,maxgas,0,sender,EMPTY,false,false))};
 const out=function(data,to=ZEROADDR,eth=0,cbf=console.log,set=setInput){if(set)data=set(data);return(PayEther(to,eth,data,cbf,txgwei,maxgas,0,sender,senderPte,true,true))};
 const tsc=function(adiv='tsc-address',dpre='tsc-',func=db,sd='tsc-name'){if(sd)showLoad(sd);try{return(Tsc(adiv,dpre,func,['price'],['forSale'],['content'],null,'name','symbol','owner','content','price','forSale'))}catch(e){alert(ERROR)}};
-const Tsc=function(adiv='tsc-address',dpre='tsc-',func=db,weis=[],bools=[],imgs=[],addr,...args){if(!addr)addr=gv(adiv);startBTSC(addr);args.forEach(arg=>{ercFuncCall(arg).then(r=>{if(imgs.includes(arg)){if(b64(r))i64(arg,r,dpre);if(r.slice(0,3)=='tx:')gtx(r.slice(3),function(e,o){if(o)i64(arg,o,dpre,'')})}else{func(`${dpre}${arg}`,weis.includes(arg)?w2s(r):(bools.includes(arg)?(r?'yes':'no'):r))}})})};
-const gtx=function(tx,cbf=console.log){web3.eth.getTransaction(tx,function(err,result){if(err||!result||!result.input)return(cbf(err,null));this.cut=(str)=>{return(hexUtf(strCut(str,'7b226f626a22','7d')))};this.obj=(str)=>{return(JSON.parse(this.cut(str)))};cbf(null,this.obj(result.input).obj)})};
+const Tsc=function(adiv='tsc-address',dpre='tsc-',func=db,weis=[],bools=[],imgs=[],addr,...args){if(!addr)addr=gv(adiv);startBTSC(addr);args.forEach(arg=>{ercFuncCall(arg).then(r=>{if(imgs.includes(arg)){if(b64(r))i64(arg,r,dpre);if(r.slice(0,3)=='tx:')gtx(r.slice(3),function(e,o,u){if(o)i64(arg,o,dpre,'');func(`${dpre}tx-from`,u)})}else{func(`${dpre}${arg}`,weis.includes(arg)?w2s(r):(bools.includes(arg)?(r?'yes':'no'):r))}})})};
+const gtx=function(tx,cbf=console.log){web3.eth.getTransaction(tx,function(err,result){if(err||!result||!result.input)return(cbf(err,null));this.cut=(str)=>{return(hexUtf(strCut(str,'7b226f626a22','7d')))};this.obj=(str)=>{return(JSON.parse(this.cut(str)))};cbf(null,this.obj(result.input).obj,result.from)})};
 const deployTSC=function(key,name,symb,b64,author=LABELS.en._header_copyright,price=1,sale=false,gas=3000000,nid='binance',abi=ABIESTATES,code=BCESTATES){if(!key)return(deployEstate('test',name,symb,b64,author,price,sale));arouseKey(key);startBTSC(ESTATE[nid].addr);ercFuncCall('name').then(r=>console.log(TEST,r));return(deploy(abi,code,[name,symb,0,b64,author,price,sale],gas))};
 const deployTSC20=function(key,name,symb,b64,author=LABELS.en._header_copyright,price=1,sale=false,gas=3500000,nid='binance'){return(deployTSC(key,name,symb,b64,author,price,sale,gas,nid,ABIESTATE,BCESTATE))};
 const deployEstate=function(status,name,symb,b64,author,price,sale=false,form=0){mmdeploy(status,ABIESTATES,BCESTATES,[name,symb,form,b64,author,price,sale]);};
+const deployEstateContent=function(b64,plugin=true,cbf=console.log,pre='data:image/png;base64',fn=plugin?Out:out){return(fn(`${pre},${b64}`,ZEROADDR,0,cbf))};
 ////////////////////////////////////////////////////////////[3]
 const popEmitValue=async(sc=xutengFemt,event='Transfer',filter={},revorder=true,status=TEST,cbf=console.log,step=500000,logs=[],i)=>{showLoad(status);await(popEmit(sc,event,filter,status,null,function(err,res){takeResValue(err,res,logs,revorder)},db,window.blockmark,step));cbf(null,logs);return(logs);};
 const getEmitValue=async(sc=xutengFemt,event='Transfer',filter={},revorder=true,status=TEST,cbf=console.log,logs=[],i)=>{showLoad(status);await(getEmit(sc,event,filter,status,null,function(err,res){takeResValue(err,res,logs,revorder)}));cbf(null,logs);return(logs);};

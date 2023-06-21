@@ -95,4 +95,5 @@ const metaMainnet=function(cbo){ethereum.request({method:'eth_requestAccounts'})
 const getProvider=function(cbo){if(window.ethereum){window.web3=_Ethereum(ethereum);metaMainnet(cbo);}else{if(window.web3){window.web3=_Ethereum(web3.currentProvider);web3Mainnet(cbo);}else{startXuteng(MAINNET);alert(hi_alert_metamasks);}}};
 const startXuteng=function(nid){if(nid){switchNet(nid);window.web3=_Ethereum(_Provider(getRpcNet()));resetXuteng();}else{getProvider();};};
 const metaRefresh=function(cid){window.network=id2network(cid);switchNet(network);resetXuteng();console.log('CHAIN',cid,network);};
+const switchLocal=function(){switchNet('local');window.web3=_Ethereum(_Provider(getRpcNet()));return(web3);};
 ////////////////////////////////////////////////////////////
