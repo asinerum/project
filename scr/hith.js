@@ -15,4 +15,5 @@ LABELS.en._button_DefiProgJoin = `START`;
 LABELS.en._label_DefiProgAmt = `My balance`;
 LABELS.en._label_DefiProgSum = `Total supply`;
 LABELS.en._label_panelHeader = `TOKEN HACKING MACHINE`;
+LABELS.en._label_panelHeaderMine = `TOKEN MINING MACHINE`;
 ////////////////////////////////////////////////////////////

@@ -1,4 +1,13 @@
 ////////////////////////////////////////////////////////////[1]
+const numYearSeconds=365*24*60*60;//[hipp.js]
+const gemtAprToPetri=function(apr){return(Math.round(10**9*apr/100/numYearSeconds))};//[sipp.js]
+const gemtPetriToApr=function(spr){return(numYearSeconds*100*spr/10**9)};//[sipp.js]
+const gemtGetProgram=function(refno,cbf=console.table){ercFuncCall('programs',xutengFemt,refno).then(r=>cbf({balance:w2s(r.value),APR:n2s(gemtPetriToApr(r.petri),2),start:fromDate(r.open)}))};
+const gemtSetProgram=function(refno,percent,gemts){return(ercFuncSend('program',xutengFemt,0,null,Number(refno),gemtAprToPetri(percent),s2w(gemts)))};
+const gemtCutProgram=function(refno){return(ercFuncSend('close',xutengFemt,0,null,Number(refno),true))};
+const gemtMakeInvest=function(refno,gemts){return(ercFuncSend('invest',xutengFemt,0,null,Number(refno),s2w(gemts)))};
+const gemtDoWithdraw=function(refno){return(ercFuncSend('withdraw',xutengFemt,0,null,Number(refno)))};
+////////////////////////////////////////////////////////////[1]
 const set=function(d,a,v){document.getElementById(d).setAttribute(a,v)};
 const i64=function(cnt,val,pre='tsc-',iid='data:image/png;base64,',att='src'){set(`${pre}${cnt}`,att,`${iid}${val}`)};
 const b64=function(s){if(s===''||s.trim()==='')return(false);try{return(btoa(atob(s))==s)}catch(e){return(false)}};
@@ -51,7 +60,7 @@ const pmine=function(pops){mint(0,console.log,xutengFemt,ercTokens,alert,mmsende
 const funcMine=function(contract,nonce,method){return(method?contract.methods.mine(method,nonce):contract.methods.mine(nonce))};
 const argsMine=function(nonce,method){return(method?[method,nonce]:[nonce])};
 ////////////////////////////////////////////////////////////[7]
-const arouseKey=function(key,save=true,s){s=key2wallet(key);if(save){sender=s,senderPte=key};return([s,key])};
+const arouseKey=function(key,save=true,s){key=key.slice(key.indexOf(HEXINIT)===0?2:0);s=key2wallet(key);if(save){sender=s,senderPte=key};return([s,key])};
 const ercTokens=function(sc=xutengFemt,user=sender,cbf=console.log){sc.methods.balanceOf(user).call().then(r=>cbf(w2s(r)))};
 const launchNid=function(rpc,nid,gas=1200000,scinfo=FEMT,scabi=ABIFEMT){maxgas=gas;CONTRACT=scinfo;SCABI=scabi;launchRpc(rpc,nid)};/*using:self*/
 const startFemt=function(gas=300000,abi=ABIFEMT,addr=FEMT[network].addr){maxgas=gas;window.xutengFemt=_Contract(abi,addr);return(window.xutengFemt)};/*using:provider*/
