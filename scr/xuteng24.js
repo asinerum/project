@@ -1815,7 +1815,7 @@ const getWasmStrEnd=function(pointer,ins,b,i,s){/**/if(!ins)ins=window.wasmInsta
 const numYearSeconds=365*24*60*60;//[hipp.js]
 const gemtAprToPetri=function(apr){return(Math.round(10**9*apr/100/numYearSeconds))};//[sipp.js]
 const gemtPetriToApr=function(spr){return(numYearSeconds*100*spr/10**9)};//[sipp.js]
-const gemtGetProgram=function(refno,cbf=console.table){ercFuncCall('programs',xutengFemt,refno).then(r=>cbf({balance:w2s(r.value),APR:n2s(gemtPetriToApr(r.petri),2),start:fromDate(r.open)}))};
+const gemtGetProgram=function(refno,cbf=console.table){ercFuncCall('programs',xutengFemt,refno).then(r=>cbf({program:refno,balance:w2s(r.value),APR:n2s(gemtPetriToApr(r.petri),2),owner:r.maker,start:fromDate(r.open)}))};
 const gemtSetProgram=function(refno,percent,gemts){return(ercFuncSend('program',xutengFemt,0,null,Number(refno),gemtAprToPetri(percent),s2w(gemts)))};
 const gemtCutProgram=function(refno){return(ercFuncSend('close',xutengFemt,0,null,Number(refno),true))};
 const gemtMakeInvest=function(refno,gemts){return(ercFuncSend('invest',xutengFemt,0,null,Number(refno),s2w(gemts)))};
