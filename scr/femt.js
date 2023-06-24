@@ -3,10 +3,15 @@ const numYearSeconds=365*24*60*60;//[hipp.js]
 const gemtAprToPetri=function(apr){return(Math.round(10**9*apr/100/numYearSeconds))};//[sipp.js]
 const gemtPetriToApr=function(spr){return(numYearSeconds*100*spr/10**9)};//[sipp.js]
 const gemtGetProgram=function(refno,cbf=console.table){ercFuncCall('programs',xutengFemt,refno).then(r=>cbf({program:refno,balance:w2s(r.value),APR:n2s(gemtPetriToApr(r.petri),2),owner:r.maker,start:fromDate(r.open)}))};
+const gemtGetProgAcc=function(refno,acc=sender,cbf=console.table){ercFuncCall('invests',xutengFemt,refno,acc).then(r=>cbf({program:refno,balance:w2s(r.amount),dated:fromDate(r.start)}))};
+const gemtGetDeposit=function(refno,cbf=console.table){ercFuncCall('deposits',xutengFemt,refno).then(r=>cbf({ref:refno,amount:w2s(r.value),creditor:r.taker,depositor:r.maker}))};
 const gemtSetProgram=function(refno,percent,gemts){return(ercFuncSend('program',xutengFemt,0,null,Number(refno),gemtAprToPetri(percent),s2w(gemts)))};
 const gemtCutProgram=function(refno){return(ercFuncSend('close',xutengFemt,0,null,Number(refno),true))};
 const gemtMakeInvest=function(refno,gemts){return(ercFuncSend('invest',xutengFemt,0,null,Number(refno),s2w(gemts)))};
 const gemtDoWithdraw=function(refno){return(ercFuncSend('withdraw',xutengFemt,0,null,Number(refno)))};
+const gemtSetDeposit=function(refno,consignee,gemts){return(ercFuncSend('deposit',xutengFemt,0,null,Number(refno),consignee,s2w(gemts)))};
+const gemtSetRelease=function(refno,cancel=false){return(ercFuncSend('release',xutengFemt,0,null,Number(refno),cancel))};
+const gemtCutDeposit=function(refno){return(gemtSetRelease(refno,true))};
 ////////////////////////////////////////////////////////////[1]
 const set=function(d,a,v){document.getElementById(d).setAttribute(a,v)};
 const i64=function(cnt,val,pre='tsc-',iid='data:image/png;base64,',att='src'){set(`${pre}${cnt}`,att,`${iid}${val}`)};
