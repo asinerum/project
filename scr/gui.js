@@ -89,7 +89,9 @@ const onAccountsChanged=function(){ethereum.on('accountsChanged',r=>{window.send
 const onChainChanged=function(){ethereum.on('chainChanged',r=>{r=fromHex(r);metaRefresh(r)});};
 const getMetamask=function(cbo){if(window.ethereum){window.web3=_Ethereum(ethereum);metaMainnet(cbo)}else{alert(hi_alert_metamasks)}};
 ////////////////////////////////////////////////////////////
-const resetXuteng=function(){contractAddress=CONTRACT[network].addr;window.xuteng=_Contract(SCABI,contractAddress);setPGwei();};
+const forceXuteng=function(addr,abi){window.exContractAddress=addr;window.exSCABI=abi;resetXuteng();};
+const clearXuteng=function(){delete(window.exContractAddress);delete(window.exSCABI);resetXuteng();};
+const resetXuteng=function(){contractAddress=window.exContractAddress?window.exContractAddress:CONTRACT[network].addr;if(window.exSCABI)SCABI=window.exSCABI;window.xuteng=_Contract(SCABI,contractAddress);setPGwei();};
 const web3Mainnet=function(cbo){web3.eth.net.getNetworkType().then(function(net){if(net=='main'){switchNet(MAINNET);alert(hi_alert_ismainnet);}else{switchNet(net,MAINNET);alert(hi_alert_nomainnet);};resetXuteng();getSender();if(cbo)cbo(net)})};
 const metaMainnet=function(cbo){ethereum.request({method:'eth_requestAccounts'}).then(r=>{window.sender=r[0];ethereum.request({method:'eth_chainId'}).then(r=>{metaRefresh(fromHex(r));onAccountsChanged();onChainChanged();if(cbo)cbo(r)})})};
 const getProvider=function(cbo){if(window.ethereum){window.web3=_Ethereum(ethereum);metaMainnet(cbo);}else{if(window.web3){window.web3=_Ethereum(web3.currentProvider);web3Mainnet(cbo);}else{startXuteng(MAINNET);alert(hi_alert_metamasks);}}};
