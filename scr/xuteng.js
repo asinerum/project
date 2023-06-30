@@ -1814,6 +1814,18 @@ const getWasmString=function(pointer,len,ins,b,i,s){if(!ins)ins=window.wasmInsta
 const getWasmStrEnd=function(pointer,ins,b,i,s){/**/if(!ins)ins=window.wasmInstance;b=(new Uint8Array(ins.exports.memory.buffer,pointer));s='';for(i=0;b[i];i++)s+=String.fromCharCode(b[i]);return(s);};
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////[1]
+const rset=function(func,data,...args){console.log(`[${func}]`,args,NEWLINE,NEWLINE,data)};
+const call=function(func,...args){ercFuncCall(func,xutengFemt,...args).then(r=>rset(func,r,args))};
+const pick=function(func,...args){ercFuncCall(func,xutengFemt,...args).then(r=>rset(func,w2s(r),args))};
+const make=function(func,...args){exec(func,0,...args)};
+const exec=function(func,eth=0,...args){ercFuncSend(func,xutengFemt,eth,null,...args).then(r=>rset(func,r,args))};
+const emit=function(event,from=0,to='latest'){xutengFemt.getPastEvents(event,{fromBlock:from,toBlock:to}).then(console.log)};
+const Emit=function(event,range=5000){web3.eth.getBlockNumber().then(r=>emit(event,r-range,r))};
+const ethers=function(addr){eth.getBalance(addr).then(r=>rset('coinBalance',w2s(r)))};
+const tokens=function(addr){pick('balanceOf',addr)};
+const struct=function(func,calls=[],picks=[],...args){ercFuncCall(func,xutengFemt,...args).then(r=>{calls.forEach(t=>console.log(`${t}:`,r[t],NEWLINE));picks.forEach(n=>console.log(`${n}:`,w2s(r[n]),NEWLINE))})};
+const market=function(refno){struct('markets',['buytoken','maker'],['value','ppe'],refno)};
+////////////////////////////////////////////////////////////[1]
 const numYearSeconds=365*24*60*60;//[hipp.js]
 const gemtAprToPetri=function(apr){return(Math.round(10**9*apr/100/numYearSeconds))};//[sipp.js]
 const gemtPetriToApr=function(spr){return(numYearSeconds*100*spr/10**9)};//[sipp.js]
