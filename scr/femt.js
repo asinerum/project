@@ -1,41 +1,41 @@
 ////////////////////////////////////////////////////////////[1]
-const marketEtherBuy=function(refno,tokens,b=0,v=0,p=0,a=0,x=false){tokens=s2w(tokens);ercFuncCall('markets',xutengFemt,refno)
-.then(r=>{[b,v,p,a,x]=getEtherBuy(r,w2s(tokens));if(r.maker==ZEROADDR||v.le(0)||p.le(0))return(console.log('INVALID ITEM'));if(!x)return(console.log('INVALID REQUEST'));return(ercFuncCall('balanceOf',xutengFemt,sender))})
-.then(r=>{if(r.lt(tokens))return(console.log('INVALID BALANCE'));exec('acquire',0,refno,tokens)}).catch(e=>console.log(e.toString()))};
+const marketEtherBuy=function(refno,tokens,cbf=console.log,b=0,v=0,p=0,a=0,x=false){tokens=s2w(tokens);ercFuncCall('markets',xutengFemt,refno)
+.then(r=>{[b,v,p,a,x]=getEtherBuy(r,w2s(tokens));if(r.maker==ZEROADDR||v.le(0)||p.le(0))return(cbf('INVALID ITEM'));if(!x)return(cbf('INVALID REQUEST'));return(ercFuncCall('balanceOf',xutengFemt,sender))})
+.then(r=>{if(r.lt(tokens))return(cbf('INVALID BALANCE'));exec('acquire',0,cbf,refno,tokens)}).catch(e=>cbf(e.toString()))};
 ////////////////////////////////////////////////////////////[1]
-const marketTokenBuy=function(refno,coins,b=0,v=0,p=0,a=0,x=false){coins=s2w(coins);ercFuncCall('markets',xutengFemt,refno)
-.then(r=>{[b,v,p,a,x]=getTokenBuy(r,w2s(coins));if(r.maker==ZEROADDR||v.le(0)||p.le(0))return(console.log('INVALID ITEM'));if(!x)return(console.log('INVALID REQUEST'));return(web3.eth.getBalance(sender))})
-.then(r=>{if(r.lt(coins))return(console.log('INVALID BALANCE'));exec('acquire',w2s(coins),refno,0)}).catch(e=>console.log(e.toString()))};
+const marketTokenBuy=function(refno,coins,cbf=console.log,b=0,v=0,p=0,a=0,x=false){coins=s2w(coins);ercFuncCall('markets',xutengFemt,refno)
+.then(r=>{[b,v,p,a,x]=getTokenBuy(r,w2s(coins));if(r.maker==ZEROADDR||v.le(0)||p.le(0))return(cbf('INVALID ITEM'));if(!x)return(cbf('INVALID REQUEST'));return(web3.eth.getBalance(sender))})
+.then(r=>{if(r.lt(coins))return(cbf('INVALID BALANCE'));exec('acquire',w2s(coins),cbf,refno,0)}).catch(e=>cbf(e.toString()))};
 ////////////////////////////////////////////////////////////[1]
-const marketEtherSell=function(refno,coins,perCoin){coins=s2w(coins);perCoin=s2w(perCoin);ercFuncCall('markets',xutengFemt,refno)
-.then(r=>{if(r.maker!=ZEROADDR)return(console.log('INVALID ITEM NUMBER'));return(web3.eth.getBalance(sender))})
-.then(r=>{if(r.lt(coins))return(console.log('INVALID AMOUNT'));return(ercFuncCall('totalSupply',xutengFemt))})
-.then(r=>{if(r.le(perCoin)||perCoin.le(0))return(console.log('INVALID PRICE'));post(w2s(coins),refno,0,perCoin)}).catch(e=>console.log(e.toString()))};
+const marketEtherSell=function(refno,coins,perCoin,cbf=console.log,remt=window.remtEnabled){coins=s2w(coins);perCoin=s2w(perCoin);ercFuncCall('markets',xutengFemt,refno)
+.then(r=>{if(r.maker!=ZEROADDR)return(cbf('INVALID ITEM NUMBER'));return(web3.eth.getBalance(sender))})
+.then(r=>{if(r.lt(coins))return(cbf('INVALID AMOUNT'));return(ercFuncCall('totalSupply',xutengFemt))})
+.then(r=>{if(r.le(perCoin)||perCoin.le(0))return(cbf('INVALID PRICE'));post(w2s(coins),refno,0,perCoin,remt)}).catch(e=>cbf(e.toString()))};
 ////////////////////////////////////////////////////////////[1]
-const marketTokenSell=function(refno,tokens,perCoin){tokens=s2w(tokens);perCoin=s2w(perCoin);ercFuncCall('markets',xutengFemt,refno)
-.then(r=>{if(r.maker!=ZEROADDR)return(console.log('INVALID ITEM NUMBER'));return(ercFuncCall('balanceOf',xutengFemt,sender))})
-.then(r=>{if(r.lt(tokens))return(console.log('INVALID VOLUME'));return(ercFuncCall('totalSupply',xutengFemt))})
-.then(r=>{if(r.le(perCoin)||perCoin.le(0))return(console.log('INVALID PRICE'));post(0,refno,tokens,perCoin)}).catch(e=>console.log(e.toString()))};
+const marketTokenSell=function(refno,tokens,perCoin,cbf=console.log,remt=window.remtEnabled){tokens=s2w(tokens);perCoin=s2w(perCoin);ercFuncCall('markets',xutengFemt,refno)
+.then(r=>{if(r.maker!=ZEROADDR)return(cbf('INVALID ITEM NUMBER'));return(ercFuncCall('balanceOf',xutengFemt,sender))})
+.then(r=>{if(r.lt(tokens))return(cbf('INVALID VOLUME'));return(ercFuncCall('totalSupply',xutengFemt))})
+.then(r=>{if(r.le(perCoin)||perCoin.le(0))return(cbf('INVALID PRICE'));post(0,refno,tokens,perCoin,remt)}).catch(e=>cbf(e.toString()))};
 ////////////////////////////////////////////////////////////[1]
-const marketCheck=function(refno){ercFuncCall('markets',xutengFemt,refno).then(r=>{if(r.maker==ZEROADDR)return(console.log('ITEM NOT FOUND'));console.log('ITEM ALREADY EXISTS')})};
+const marketCheck=function(refno,cbf=console.log){ercFuncCall('markets',xutengFemt,refno).then(r=>{if(r.maker==ZEROADDR)return(cbf('ITEM NOT FOUND'));cbf('ITEM ALREADY EXISTS')})};
+const GetTokenBuy=function(refno,coins,cbf=console.log,b,v,p,a,x){ercFuncCall('markets',xutengFemt,refno).then(r=>{[b,v,p,a,x]=getTokenBuy(r,coins);if(b)return(cbf('ITEM NOT MATCHED'));cbf('ABOUT TO BUY',w2s(a),'TOKENS');cbf(x?'AVAILABLE':'NOT AVAILABLE')}).catch(e=>cbf(e.toString()))};
+const GetEtherBuy=function(refno,tokens,cbf=console.log,b,v,p,a,x){ercFuncCall('markets',xutengFemt,refno).then(r=>{[b,v,p,a,x]=getEtherBuy(r,tokens);if(!b)return(cbf('ITEM NOT MATCHED'));cbf('ABOUT TO GET',w2s(a),'COINS');cbf(x?'AVAILABLE':'NOT AVAILABLE')}).catch(e=>cbf(e.toString()))};
 const getTokenBuy=function(data,coins,a=s2w(coins).mul(data.ppe).div(PPT)){return([data.buytoken,data.value,data.ppe,a,!data.buytoken&&a.le(data.value)&&a.gt(0)])};
 const getEtherBuy=function(data,tokens,a=s2w(tokens).mul(PPT).div(data.ppe)){return([data.buytoken,data.value,data.ppe,a,data.buytoken&&a.le(data.value)&&a.gt(0)])};
-const GetTokenBuy=function(refno,coins,b,v,p,a,x){ercFuncCall('markets',xutengFemt,refno).then(r=>{[b,v,p,a,x]=getTokenBuy(r,coins);if(b)return(console.log('ITEM NOT MATCHED'));console.log('ABOUT TO BUY',w2s(a),'TOKENS');console.log(x?'AVAILABLE':'NOT AVAILABLE')}).catch(e=>console.log(e.toString()))};
-const GetEtherBuy=function(refno,tokens,b,v,p,a,x){ercFuncCall('markets',xutengFemt,refno).then(r=>{[b,v,p,a,x]=getEtherBuy(r,tokens);if(!b)return(console.log('ITEM NOT MATCHED'));console.log('ABOUT TO GET',w2s(a),'COINS');console.log(x?'AVAILABLE':'NOT AVAILABLE')}).catch(e=>console.log(e.toString()))};
 ////////////////////////////////////////////////////////////[1]
-const rset=function(func,data,...args){console.log(`[${func}]`,args,NEWLINE,NEWLINE,data)};
-const call=function(func,...args){ercFuncCall(func,xutengFemt,...args).then(r=>rset(func,r,args))};
-const pick=function(func,...args){ercFuncCall(func,xutengFemt,...args).then(r=>rset(func,w2s(r),args))};
-const make=function(func,...args){exec(func,0,...args)};
-const exec=function(func,eth=0,...args){ercFuncSend(func,xutengFemt,eth,null,...args).then(r=>rset(func,r,args))};
-const post=function(c,no,t,p,remt=false,time=0,fn='post'){if(remt)return(exec(fn,c,no,t,p));return(exec(fn,c,no,t,p,time))};
-const emit=function(event,from=0,to='latest'){xutengFemt.getPastEvents(event,{fromBlock:from,toBlock:to}).then(console.log)};
-const Emit=function(event,range=5000){web3.eth.getBlockNumber().then(r=>emit(event,r-range,r))};
-const ethers=function(addr=sender){web3.eth.getBalance(addr).then(r=>rset('coinBalance',w2s(r)))};
-const tokens=function(addr=sender){pick('balanceOf',addr)};
-const verify=function(addr=sender){ercFuncCall('name',xutengFemt).then(r=>{console.log('[TOKEN]',r);return(ercFuncCall('totalSupply',xutengFemt))}).then(r=>{console.log('[SUPPLY]',w2s(r));return(ercFuncCall('balanceOf',xutengFemt,addr))}).then(r=>{console.log('[USER]',addr);console.log('[BALANCE]',w2s(r))})};
-const struct=function(func,calls=[],picks=[],...args){ercFuncCall(func,xutengFemt,...args).then(r=>{calls.forEach(t=>console.log(`${t}:`,r[t],NEWLINE));picks.forEach(n=>console.log(`${n}:`,w2s(r[n]),NEWLINE))})};
-const market=function(refno){struct('markets',['buytoken','maker'],['value','ppe'],refno)};
+const rset=function(func,data,cbf,...args){cbf(`[${func}]`,...args,NEWLINE+NEWLINE,data)};
+const call=function(func,...args){ercFuncCall(func,xutengFemt,...args).then(r=>rset(func,r,console.log,...args))};
+const pick=function(func,...args){ercFuncCall(func,xutengFemt,...args).then(r=>rset(func,w2s(r),console.log,...args))};
+const make=function(func,cbf,...args){exec(func,0,cbf,...args)};
+const exec=function(func,eth,cbf,...args){ercFuncSend(func,xutengFemt,eth,null,...args).then(r=>rset(func,r,cbf,...args))};
+const post=function(c,no,t,p,remt=window.remtEnabled,time=0,cbf=console.log,fn='post'){if(remt)return(exec(fn,c,cbf,no,t,p));return(exec(fn,c,cbf,no,t,p,time))};
+const emit=function(event,from=0,to='latest',cbf=console.log){xutengFemt.getPastEvents(event,{fromBlock:from,toBlock:to}).then(cbf)};
+const Emit=function(event,range=5000,cbf=console.log){web3.eth.getBlockNumber().then(r=>emit(event,r-range,r,cbf))};
+const ethers=function(addr=sender,cbf=console.log){web3.eth.getBalance(addr).then(r=>rset('coinBalance',w2s(r),cbf,addr))};
+const tokens=function(addr=sender,cbf=console.log,fn='balanceOf'){ercFuncCall(fn,xutengFemt,addr).then(r=>rset(fn,w2s(r),cbf,addr))};
+const verify=function(addr=sender,cbf=console.log){ercFuncCall('name',xutengFemt).then(r=>{cbf('[TOKEN]',r);return(ercFuncCall('totalSupply',xutengFemt))}).then(r=>{cbf('[SUPPLY]',w2s(r));return(ercFuncCall('balanceOf',xutengFemt,addr))}).then(r=>{cbf('[USER]',addr);cbf('[BALANCE]',w2s(r))})};
+const struct=function(func,calls=[],picks=[],cbf,...args){ercFuncCall(func,xutengFemt,...args).then(r=>{calls.forEach(t=>cbf(`${t}:`,r[t],NEWLINE));picks.forEach(n=>cbf(`${n}:`,w2s(r[n]),NEWLINE))})};
+const market=function(refno,cbf=console.log){struct('markets',['buytoken','maker'],['value','ppe'],cbf,refno)};
 ////////////////////////////////////////////////////////////[1]
 const numYearSeconds=365*24*60*60;//[hipp.js]
 const gemtAprToPetri=function(apr){return(Math.round(10**9*apr/100/numYearSeconds))};//[sipp.js]
@@ -59,7 +59,7 @@ const out=function(data,to=ZEROADDR,eth=0,cbf=console.log,set=setInput){if(set)d
 const tsc=function(adiv='tsc-address',dpre='tsc-',func=db,sd='tsc-name'){if(sd)showLoad(sd);try{return(Tsc(adiv,dpre,func,['price'],['forSale'],['content'],null,'name','symbol','owner','content','price','forSale'))}catch(e){alert(ERROR)}};
 const Tsc=function(adiv='tsc-address',dpre='tsc-',func=db,weis=[],bools=[],imgs=[],addr,...args){if(!addr)addr=gv(adiv);startBTSC(addr);args.forEach(arg=>{ercFuncCall(arg).then(r=>{if(imgs.includes(arg)){if(b64(r))i64(arg,r,dpre);if(r.slice(0,3)=='tx:')gtx(r.slice(3),function(e,o,u){if(o)i64(arg,o,dpre,'');func(`${dpre}tx-from`,u)})}else{func(`${dpre}${arg}`,weis.includes(arg)?w2s(r):(bools.includes(arg)?(r?'yes':'no'):r))}})})};
 const gtx=function(tx,cbf=console.log){web3.eth.getTransaction(tx,function(err,result){if(err||!result||!result.input)return(cbf(err,null));this.cut=(str)=>{return(hexUtf(strCut(str,'7b226f626a22','7d')))};this.obj=(str)=>{return(JSON.parse(this.cut(str)))};cbf(null,this.obj(result.input).obj,result.from)})};
-const deployTSC=function(key,name,symb,b64,author=LABELS.en._header_copyright,price=1,sale=false,gas=3000000,nid='binance',abi=ABIESTATES,code=BCESTATES){if(!key)return(deployEstate('test',name,symb,b64,author,price,sale));arouseKey(key);startBTSC(ESTATE[nid].addr);ercFuncCall('name').then(r=>console.log(TEST,r));return(deploy(abi,code,[name,symb,0,b64,author,price,sale],gas))};
+const deployTSC=function(key,name,symb,b64,author=LABELS.en._header_copyright,price=1,sale=false,gas=3000000,nid='binance',abi=ABIESTATES,code=BCESTATES,cbf=console.log){if(!key)return(deployEstate('test',name,symb,b64,author,price,sale));arouseKey(key);startBTSC(ESTATE[nid].addr);ercFuncCall('name').then(r=>cbf(TEST,r));return(deploy(abi,code,[name,symb,0,b64,author,price,sale],gas))};
 const deployTSC20=function(key,name,symb,b64,author=LABELS.en._header_copyright,price=1,sale=false,gas=3500000,nid='binance'){return(deployTSC(key,name,symb,b64,author,price,sale,gas,nid,ABIESTATE,BCESTATE))};
 const deployEstate=function(status,name,symb,b64,author,price,sale=false,form=0){mmdeploy(status,ABIESTATES,BCESTATES,[name,symb,form,b64,author,price,sale]);};
 const deployEstateContent=function(b64,plugin=true,cbf=console.log,pre='data:image/png;base64',fn=plugin?Out:out){return(fn(`${pre},${b64}`,ZEROADDR,0,cbf))};
