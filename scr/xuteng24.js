@@ -1827,12 +1827,12 @@ const marketTokenBuy=function(refno,coins,b=0,v=0,p=0,a=0,x=false){coins=s2w(coi
 const marketEtherSell=function(refno,coins,perCoin){coins=s2w(coins);perCoin=s2w(perCoin);ercFuncCall('markets',xutengFemt,refno)
 .then(r=>{if(r.maker!=ZEROADDR)return(console.log('INVALID ITEM NUMBER'));return(eth.getBalance(sender))})
 .then(r=>{if(r.lt(coins))return(console.log('INVALID AMOUNT'));return(ercFuncCall('totalSupply',xutengFemt))})
-.then(r=>{if(r.le(perCoin)||perCoin.le(0))return(console.log('INVALID PRICE'));exec('post',w2s(coins),refno,0,perCoin)}).catch(e=>console.log(e.toString()))};
+.then(r=>{if(r.le(perCoin)||perCoin.le(0))return(console.log('INVALID PRICE'));post(w2s(coins),refno,0,perCoin)}).catch(e=>console.log(e.toString()))};
 ////////////////////////////////////////////////////////////[1]
 const marketTokenSell=function(refno,tokens,perCoin){tokens=s2w(tokens);perCoin=s2w(perCoin);ercFuncCall('markets',xutengFemt,refno)
 .then(r=>{if(r.maker!=ZEROADDR)return(console.log('INVALID ITEM NUMBER'));return(ercFuncCall('balanceOf',xutengFemt,sender))})
 .then(r=>{if(r.lt(tokens))return(console.log('INVALID VOLUME'));return(ercFuncCall('totalSupply',xutengFemt))})
-.then(r=>{if(r.le(perCoin)||perCoin.le(0))return(console.log('INVALID PRICE'));exec('post',0,refno,tokens,perCoin)}).catch(e=>console.log(e.toString()))};
+.then(r=>{if(r.le(perCoin)||perCoin.le(0))return(console.log('INVALID PRICE'));post(0,refno,tokens,perCoin)}).catch(e=>console.log(e.toString()))};
 ////////////////////////////////////////////////////////////[1]
 const marketCheck=function(refno){ercFuncCall('markets',xutengFemt,refno).then(r=>{if(r.maker==ZEROADDR)return(console.log('ITEM NOT FOUND'));console.log('ITEM ALREADY EXISTS')})};
 const getTokenBuy=function(data,coins,a=s2w(coins).mul(data.ppe).div(PPT)){return([data.buytoken,data.value,data.ppe,a,!data.buytoken&&a.le(data.value)&&a.gt(0)])};
@@ -1845,6 +1845,7 @@ const call=function(func,...args){ercFuncCall(func,xutengFemt,...args).then(r=>r
 const pick=function(func,...args){ercFuncCall(func,xutengFemt,...args).then(r=>rset(func,w2s(r),args))};
 const make=function(func,...args){exec(func,0,...args)};
 const exec=function(func,eth=0,...args){ercFuncSend(func,xutengFemt,eth,null,...args).then(r=>rset(func,r,args))};
+const post=function(c,no,t,p,remt=false,time=0,fn='post'){if(remt)return(exec(fn,c,no,t,p));return(exec(fn,c,no,t,p,time))};
 const emit=function(event,from=0,to='latest'){xutengFemt.getPastEvents(event,{fromBlock:from,toBlock:to}).then(console.log)};
 const Emit=function(event,range=5000){web3.eth.getBlockNumber().then(r=>emit(event,r-range,r))};
 const ethers=function(addr=sender){eth.getBalance(addr).then(r=>rset('coinBalance',w2s(r)))};
