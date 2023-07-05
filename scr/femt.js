@@ -1,4 +1,13 @@
 ////////////////////////////////////////////////////////////[1]
+const PayTokens=function(tid=GEMT,tos=[],tokens=[],ref='',nid='binance',doc='pmt',cbf=console.log,s=tokens.sum()){setTToken(tid,nid);ercFuncCall('balanceOf',xutengFemt,sender)
+.then(r=>{if(r.lt(s2w(s)))return(cbf('BALANCE NOT ENOUGH'));return(ercFuncCall('allowance',xutengFemt,sender,setBroker(true,nid)))})
+.then(r=>{if(r.lt(s2w(s)))return(cbf('ALLOWANCE NOT ENOUGH'));exec('transfer',0,cbf,tid[nid].addr,tos,setWeiArr(tokens),setInput({[doc]:ref}))}).catch(e=>cbf(e.toString()))};
+////////////////////////////////////////////////////////////[1]
+const PayEthers=function(tos=[],ethers=[],ref='',nid='binance',doc='pmt',cbf=console.log,s=ethers.sum()){setBroker(false,nid);web3.eth.getBalance(sender).then(r=>{if(r.lt(s2w(s)))return(cbf('COIN BALANCE NOT ENOUGH'));exec('transfer',s,cbf,tos,setWeiArr(ethers),setInput({[doc]:ref}))})};
+const setBroker=function(token=true,nid='binance',abi=token?ABIBROKER:ABIBROKERE,broker=token?BROKER[nid]:BROKERE[nid]){xutengFemt=_Contract(abi,broker.addr);return(broker.addr)};
+const setTToken=function(tid=GEMT,nid='binance'){xutengFemt=_Contract(ABIERC20,tid[nid].addr);return(tid[nid].addr)};
+const setWeiArr=function(vals=[]){Object.keys(vals).forEach(i=>{vals[i]=s2w(vals[i])});return(vals)};
+////////////////////////////////////////////////////////////[1]
 const marketEtherBuy=function(refno,tokens,cbf=console.log,b=0,v=0,p=0,a=0,x=false){tokens=s2w(tokens);ercFuncCall('markets',xutengFemt,refno)
 .then(r=>{[b,v,p,a,x]=getEtherBuy(r,w2s(tokens));if(r.maker==ZEROADDR||v.le(0)||p.le(0))return(cbf('INVALID ITEM'));if(!x)return(cbf('INVALID REQUEST'));return(ercFuncCall('balanceOf',xutengFemt,sender))})
 .then(r=>{if(r.lt(tokens))return(cbf('INVALID BALANCE'));exec('acquire',0,cbf,refno,tokens)}).catch(e=>cbf(e.toString()))};

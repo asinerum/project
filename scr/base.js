@@ -33,6 +33,18 @@ binance:{ncid:56,addr:'0x55d398326f99059ff775485246999027b3197955',rpcs:'https:/
 classic:{ncid:61,addr:'',rpcs:'https://www.ethercluster.com/etc/',scan:'https://etcblockexplorer.com/token/'},
 };
 ////////////////////////////////////////////////////////////
+const BROKER={
+mainnet:{ncid:1,addr:'',hash:'',rpcs:'',bcls:'private',scan:'https://etherscan.io/token/'},
+binance:{ncid:56,addr:'0x3bf2d00592ec4916ef3d84e5d9891c743c1afad1',hash:'0x7ce9aeb94db0fdd7edc5ebca1918923120b6cfd9cef3b6678ee2181737f13eee',rpcs:'https://bsc-dataseed.binance.org/',bcls:'private',scan:'https://www.bscscan.com/token/'},
+classic:{ncid:61,addr:'',hash:'',rpcs:'https://www.ethercluster.com/etc/',bcls:'private',scan:'https://etcblockexplorer.com/token/'},
+};
+////////////////////////////////////////////////////////////
+const BROKERE={
+mainnet:{ncid:1,addr:'',hash:'',rpcs:'',bcls:'private',scan:'https://etherscan.io/token/'},
+binance:{ncid:56,addr:'0x74380dc60deee5dd182901b22ccf84ea1f55d3c1',hash:'0x4baec6090e6e3e7b825dc39fc7dead32d82c915b1f9be0e1e81473894fb1a6da',rpcs:'https://bsc-dataseed.binance.org/',bcls:'private',scan:'https://www.bscscan.com/token/'},
+classic:{ncid:61,addr:'',hash:'',rpcs:'https://www.ethercluster.com/etc/',bcls:'private',scan:'https://etcblockexplorer.com/token/'},
+};
+////////////////////////////////////////////////////////////
 const EXET={
 mainnet:{ncid:1,addr:'0x28e5fe0ad29597dc290c055eef59c4f582a7a056',hash:'0x3334fb84cfb2977e743a6c0b54b4a10e2f457b0773e2ba13cce2b4d4c23de367',rpcs:'https://mainnet.rpc.fiews.io/v1/free',bcls:'private',scan:'https://etherscan.io/token/'},
 rinkeby:{ncid:4,addr:'0xE9d7FDDF9F36BD1cD2a77B31a91cD069ef012Ab0',hash:'0x91b258a158a68f8f995c7ef3a1447bd2476b5aabd5f822faede996390681bfd3',rpcs:'https://rinkeby.rpc.fiews.io/v1/free',bcls:'team',scan:'https://rinkeby.etherscan.io/token/'},
