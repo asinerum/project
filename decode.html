@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<html lang="en">
+<head>
+<title>ASINERUM PRIVATE KEY DECRYPTION TOOL</title>
+<link href="https://cdn.jsdelivr.net/gh/asinerum/project/favicon.ico" rel="icon" type="image/x-icon"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+<link href="https://cdn.jsdelivr.net/gh/asinerum/project/gui/fonts.css" rel="stylesheet" type="text/css"/>
+<link href="https://cdn.jsdelivr.net/gh/asinerum/project/gui/style.css" rel="stylesheet" type="text/css"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/asinerum/project/scr/_ethereumjs-tx.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/asinerum/project/scr/_web3js.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/asinerum/project/scr/_bip.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/asinerum/project/scr/xuteng.js"></script>
+</head>
+<body class="private">
+<div class="body" id="body">
+<img class="banner" src="https://cdn.jsdelivr.net/gh/asinerum/project/gui/asinerum.jpg" id="_img_banner"/>
+<br/>
+<br/>
+<a name="KEYS"></a>
+<div class="header" id="_header_keystore_decode">TOP SECRET: UNLOCKING V3 KEYSTORE</div>
+<hr class="cp"/>
+<div>
+<table class="cover">
+<tr><td class="buttoner"><span class="trlab" id="_label_AuthKstPwd">?</span></td><td><input type="password" class="address" value="xxx" id="password_v3ks"/></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_AuthKstore">?</span></td><td><textarea class="longfat" id="keystore_v3ks"></textarea><br/>
+   <a class="link" data-action="AuthCpyKst" id="_button_AuthCpyKst">?</a>&nbsp;
+   <a class="link" data-action="AuthCokGet" id="_button_AuthCokGet">?</a>&nbsp;
+   <a class="link" data-action="AuthCokSet" id="_button_AuthCokSet">?</a>&nbsp;
+   <a class="link" data-action="AuthCokDel" id="_button_AuthCokDel">?</a>&nbsp;</td></tr>
+<tr><td class="buttoner"><a class="button" data-action="V3ksDecode" id="_button_AuthKstDec">?</a></td><td></td></tr>
+</table>
+<div class="result" id="_keystore_status"></div>
+<div class="result" id="_help_keystore"></div>
+</div>
+<hr class="cp"/>
+<br/>
+<a name="KEYS"></a>
+<div class="header" id="_header_BipUnlock_decode">TOP SECRET: DECRYPTING BIP38 KEYSTORE</div>
+<hr class="cp"/>
+<div>
+<table class="cover">
+<tr><td class="buttoner"><span class="trlab" id="_label_BipeDecBip">?</span></td><td><input class="address" value="?" id="keystore_bipe"/></td></tr>
+<tr><td class="buttoner"><span class="trlab" id="_label_BipeDecPwd">?</span></td><td><input type="password" class="address" value="xxx" id="password_bipe"/></td></tr>
+<tr><td class="buttoner"><a class="button" data-action="BipeDecode" id="_button_BipDecrypt">?</a></td></tr>
+</table>
+<div class="result" id="_keystore_status_bipe"></div>
+<div class="result" id="_help_keystore_bipe"></div>
+</div>
+<hr class="cp"/>
+<br/>
+<div class="footer" id="_header_copyright">(C)</div>
+</div>
+<script src="https://cdn.jsdelivr.net/gh/asinerum/project/startPure.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/asinerum/project/menu.js"></script>
+</body>
+</html>
