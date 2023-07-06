@@ -22,3 +22,8 @@ const bipAccount=function(skip=10,key=false,cbf,i,k,h,r){try{for(i=0;i<skip;i++)
 const bipEncrypt=function(pw,key,cbf=console.log,k,b,h,e){try{key=_ECKey(key);key.setCompressed(true);k=key.getBitcoinWalletImportFormat();b=key.getBitcoinAddress();h=key.getBitcoinHexFormat();e=key2wallet(h);PRIVATEKEY.BIP38PrivateKeyToEncryptedKeyAsync(k,pw,true,function(err,bip){cbf(err,{dat:key,key:k,btc:b,hex:h,eth:e,bip:bip});});}catch(e){cbf(e,null)}};
 const bipDecrypt=function(pw,bip,cbf=console.log){try{PRIVATEKEY.BIP38EncryptedKeyToByteArrayAsync(bip,pw,function(err,key){if(err)return(cbf(err,null));bipAccount(1,_Buffer(key).toString(HEX),cbf);});}catch(e){cbf(e,null)}};
 ////////////////////////////////////////////////////////////
+const bipeDecode=function(ks,pw,save=true,cbf=console.log){if(!pw)pw=gv('password_bipe');if(!ks)ks=gv('keystore_bipe');try{PRIVATEKEY.BIP38EncryptedKeyToByteArrayAsync(ks,pw,function(err,key){if(err)return(cbf(err,null));key=_Buffer(key).toString(HEX);[ks,]=arouseKey(key,save),cbf(null,{address:ks,privateKey:key})})}catch(e){cbf(e,null)}};
+const v3ksDecode=function(ks,pw,save=true,cbf=console.log){if(!pw)pw=gv('password_v3ks');if(!ks)ks=gv('keystore_v3ks');try{if(!ks.crypto)ks=JSON.parse(ks);ks=web3.eth.accounts.decrypt(ks,pw);if(save){sender=ks.address;senderPte=ks.privateKey};cbf(null,ks)}catch(e){return(cbf(e,null))}};
+const BipeDecode=function(sd='_keystore_status_bipe'){showLoad(sd);bipeDecode(null,null,true,function(e,r){db(sd,e?e.toString():r.address)})};
+const V3ksDecode=function(sd='_keystore_status'){showLoad(sd);v3ksDecode(null,null,true,function(e,r){db(sd,e?e.toString():r.address)})};
+////////////////////////////////////////////////////////////

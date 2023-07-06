@@ -1721,6 +1721,8 @@ const Menu=function(element){self=this;
  self.goXutBuy=function(){dv(_eth2send,(g2(_xut2gain)/gn(_sellingTpe)));}
  self.goXutSel=function(){dv(_eth2gain,(g2(_xut2send)/gn(_buyingTpe)));}
  self.goUtcGet=function(){getUts('year','month','day','hour','minute','_uts','_utstring');}
+ self.onBipeDecode=function(){BipeDecode('_keystore_status_bipe')};
+ self.onV3ksDecode=function(){V3ksDecode('_keystore_status')};
  self.onAuthKstDec=function(){author_getAccount();}
  self.onAuthAccNew=function(){author_newAccount();}
  self.onAuthAccImp=function(){author_oldAccount();}
@@ -1921,6 +1923,7 @@ const ercFabi=function(funcName,sc=xutengFemt,...args){return(sc.methods[funcNam
 const ercFgas=function(funcName,sc=xutengFemt,...args){return(sc.methods[funcName](...args).estimateGas());};/*promise*/
 const ercEgas=function(funcName,sc=xutengFemt,status=TEST,out=TEST,cbf=console.log,cbo=dw,...args){showLoad(status);ercFgas(funcName,sc,...args).then(data=>{showOkay(status);cbo(out,data);cbf(null,data)}).catch(err=>{showError(status);cbf(err,null)});};
 const ercFuncSend=function(funcName,sc=xutengFemt,eth=0,options=null,...args){if(!options)options=mmsender(eth);return(ercFunc(funcName,sc,...args).send(options));};/*promise*/
+const ercFuncRaws=function(funcName,sc=xutengFemt,eth=0,options=null,...args){if(!options)options=mmsender(eth);return(ercRaws(sc,funcName,args))};/*promise*/
 const ercFuncCall=function(funcName,sc=xutengFemt,...args){return(ercFunc(funcName,sc,...args).call());};/*promise*/
 ////////////////////////////////////////////////////////////[3]
 const ercCoin=function(addr=sender,status=TEST,out=TEST,cbf=console.log,cbo=dw){showLoad(status);web3.eth.getBalance(addr).then(data=>{showOkay(status);cbo(out,data);cbf(null,data)}).catch(err=>{showError(status);cbf(err,null)});};
@@ -1980,6 +1983,11 @@ const keyAccount=function(key){if(key.indexOf(HEXINIT)===0)key=key.slice(2);retu
 const bipAccount=function(skip=10,key=false,cbf,i,k,h,r){try{for(i=0;i<skip;i++)k=_ECKey(key);k.setCompressed(true);h=k.getBitcoinHexFormat();r={dat:k,key:k.getBitcoinWalletImportFormat(),btc:k.getBitcoinAddress(),hex:h,eth:key2wallet(h)};if(cbf)return(cbf(null,r));return(r)}catch(e){if(cbf)return(cbf(e,null));return(null)}};
 const bipEncrypt=function(pw,key,cbf=console.log,k,b,h,e){try{key=_ECKey(key);key.setCompressed(true);k=key.getBitcoinWalletImportFormat();b=key.getBitcoinAddress();h=key.getBitcoinHexFormat();e=key2wallet(h);PRIVATEKEY.BIP38PrivateKeyToEncryptedKeyAsync(k,pw,true,function(err,bip){cbf(err,{dat:key,key:k,btc:b,hex:h,eth:e,bip:bip});});}catch(e){cbf(e,null)}};
 const bipDecrypt=function(pw,bip,cbf=console.log){try{PRIVATEKEY.BIP38EncryptedKeyToByteArrayAsync(bip,pw,function(err,key){if(err)return(cbf(err,null));bipAccount(1,_Buffer(key).toString(HEX),cbf);});}catch(e){cbf(e,null)}};
+////////////////////////////////////////////////////////////
+const bipeDecode=function(ks,pw,save=true,cbf=console.log){if(!pw)pw=gv('password_bipe');if(!ks)ks=gv('keystore_bipe');try{PRIVATEKEY.BIP38EncryptedKeyToByteArrayAsync(ks,pw,function(err,key){if(err)return(cbf(err,null));key=_Buffer(key).toString(HEX);[ks,]=arouseKey(key,save),cbf(null,{address:ks,privateKey:key})})}catch(e){cbf(e,null)}};
+const v3ksDecode=function(ks,pw,save=true,cbf=console.log){if(!pw)pw=gv('password_v3ks');if(!ks)ks=gv('keystore_v3ks');try{if(!ks.crypto)ks=JSON.parse(ks);ks=web3.eth.accounts.decrypt(ks,pw);if(save){sender=ks.address;senderPte=ks.privateKey};cbf(null,ks)}catch(e){return(cbf(e,null))}};
+const BipeDecode=function(sd='_keystore_status_bipe'){showLoad(sd);bipeDecode(null,null,true,function(e,r){db(sd,e?e.toString():r.address)})};
+const V3ksDecode=function(sd='_keystore_status'){showLoad(sd);v3ksDecode(null,null,true,function(e,r){db(sd,e?e.toString():r.address)})};
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
 const solAccount=function(kp){if(!kp)return(new solanaWeb3.Keypair());return(new solanaWeb3.Account(kp.secretKey))};

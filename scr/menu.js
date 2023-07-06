@@ -24,6 +24,8 @@ const Menu=function(element){self=this;
  self.goXutBuy=function(){dv(_eth2send,(g2(_xut2gain)/gn(_sellingTpe)));}
  self.goXutSel=function(){dv(_eth2gain,(g2(_xut2send)/gn(_buyingTpe)));}
  self.goUtcGet=function(){getUts('year','month','day','hour','minute','_uts','_utstring');}
+ self.onBipeDecode=function(){BipeDecode('_keystore_status_bipe')};
+ self.onV3ksDecode=function(){V3ksDecode('_keystore_status')};
  self.onAuthKstDec=function(){author_getAccount();}
  self.onAuthAccNew=function(){author_newAccount();}
  self.onAuthAccImp=function(){author_oldAccount();}
