@@ -58,7 +58,7 @@ const gemtMakeInvest=function(refno,gemts,fn=ercFuncSend){return(fn('invest',xut
 const gemtDoWithdraw=function(refno,fn=ercFuncSend){return(fn('withdraw',xutengFemt,0,null,Number(refno)))};
 const gemtSetDeposit=function(refno,consignee,gemts,fn=ercFuncSend){return(fn('deposit',xutengFemt,0,null,Number(refno),consignee,s2w(gemts)))};
 const gemtSetRelease=function(refno,cancel=false,fn=ercFuncSend){return(fn('release',xutengFemt,0,null,Number(refno),cancel))};
-const gemtCutDeposit=function(refno){return(gemtSetRelease(refno,true))};
+const gemtCutDeposit=function(refno,fn=ercFuncSend){return(gemtSetRelease(refno,true,fn))};
 ////////////////////////////////////////////////////////////[1]
 const gemtRawDeposit=function(refno,consignee,gemts){return(gemtSetDeposit(refno,consignee,gemts,ercFuncRaws))};
 const gemtRawRelease=function(refno,cancel=false){return(gemtSetRelease(refno,cancel,ercFuncRaws))};
