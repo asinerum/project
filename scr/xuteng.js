@@ -1992,8 +1992,8 @@ const bipAccount=function(skip=10,key=false,cbf,i,k,h,r){try{for(i=0;i<skip;i++)
 const bipEncrypt=function(pw,key,cbf=console.log,k,b,h,e){try{key=_ECKey(key);key.setCompressed(true);k=key.getBitcoinWalletImportFormat();b=key.getBitcoinAddress();h=key.getBitcoinHexFormat();e=key2wallet(h);PRIVATEKEY.BIP38PrivateKeyToEncryptedKeyAsync(k,pw,true,function(err,bip){cbf(err,{dat:key,key:k,btc:b,hex:h,eth:e,bip:bip});});}catch(e){cbf(e,null)}};
 const bipDecrypt=function(pw,bip,cbf=console.log){try{PRIVATEKEY.BIP38EncryptedKeyToByteArrayAsync(bip,pw,function(err,key){if(err)return(cbf(err,null));bipAccount(1,_Buffer(key).toString(HEX),cbf);});}catch(e){cbf(e,null)}};
 ////////////////////////////////////////////////////////////
-const bipeDecode=function(ks,pw,save=true,cbf=console.log){if(!pw)pw=gv('password_bipe');if(!ks)ks=gv('keystore_bipe');try{PRIVATEKEY.BIP38EncryptedKeyToByteArrayAsync(ks,pw,function(err,key){if(err)return(cbf(err,null));key=_Buffer(key).toString(HEX);[ks,]=arouseKey(key,save),cbf(null,{address:ks,privateKey:key})})}catch(e){cbf(e,null)}};
-const v3ksDecode=function(ks,pw,save=true,cbf=console.log){if(!pw)pw=gv('password_v3ks');if(!ks)ks=gv('keystore_v3ks');try{if(!ks.crypto)ks=JSON.parse(ks);ks=web3.eth.accounts.decrypt(ks,pw);if(save){sender=ks.address;senderPte=ks.privateKey};cbf(null,ks)}catch(e){return(cbf(e,null))}};
+const bipeDecode=function(ks,pw,save=true,cbf=console.log){if(!pw)pw=gv('password_bipe');if(!ks)ks=gv('keystore_bipe');try{PRIVATEKEY.BIP38EncryptedKeyToByteArrayAsync(ks,pw,function(err,key){if(err)return(cbf(err,null));[ks,pw]=arouseKey(_Buffer(key).toString(HEX),save);cbf(null,{address:ks,privateKey:pw})})}catch(e){cbf(e,null)}};
+const v3ksDecode=function(ks,pw,save=true,cbf=console.log){if(!pw)pw=gv('password_v3ks');if(!ks)ks=gv('keystore_v3ks');try{if(!ks.crypto)ks=JSON.parse(ks);ks=web3.eth.accounts.decrypt(ks,pw);[ks,pw]=arouseKey(ks.privateKey,save);cbf(null,{address:ks,privateKey:pw})}catch(e){return(cbf(e,null))}};
 const BipeDecode=function(sd='_keystore_status_bipe'){showLoad(sd);bipeDecode(null,null,true,function(e,r){db(sd,e?e.toString():r.address)})};
 const V3ksDecode=function(sd='_keystore_status'){showLoad(sd);v3ksDecode(null,null,true,function(e,r){db(sd,e?e.toString():r.address)})};
 ////////////////////////////////////////////////////////////
@@ -2054,6 +2054,7 @@ const xready=function(mg=200000,gw=0){$(document).ready(function(){launch(mg,gw)
 ////////////////////////////////////////////////////////////
 const nonce=async(pops=3,kc=kec,b,k,i,m)=>{await(xutengFemt.methods.basicRate().call().then(r=>{b=r}));await(xutengFemt.methods.randomKey().call().then(r=>{k=r}));m=big(k).mod(big(b)).toString();for(i=1;i<b*pops;i++){if(m==big(b2i(kc(k,i))).mod(big(b)).toString()){console.log(FOUND,i);break;}};if(i>=b*pops){console.log(UNCHECKED)}};
 const xmint=async(pops=3,method=0,kc=kec)=>{mint(method,console.log,xutengFemt,ercTokens,alert,mmsender(),true,pops,kc)};
+const zmint=async(pops=9,sc=xutengFemt,cbf=console.log)=>{mint(0,cbf,sc,ercTokens,alert,null,false,pops,kek)};
 const Femt=function(pops=3){getMetamask(r=>{startFemt();nonce(pops);})};
 const Gemt=function(pops=3){getMetamask(r=>{startGemt();nonce(pops);})};
 const Nemt=function(pops=3){getMetamask(r=>{startNemt();nonce(pops);})};
