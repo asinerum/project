@@ -1968,6 +1968,10 @@ const startExet=function(gas=300000,abi=ABIEXET,addr=EXET[network].addr){return(
 const startNTSC=function(addr,gas=3000000,abi=ABIESTATES){return(startFemt(gas,abi,addr))};
 const startBTSC=function(addr,nid='binance'){startXuteng(nid);return(startNTSC(addr))};
 ////////////////////////////////////////////////////////////
+const startFemtRpc=function(nid='binance',gas=300000,femt=FEMT,abi=ABIFEMT){launchNid(EXCHAINS[nid].rpcs,nid,gas,femt,abi);xutengFemt=xuteng};
+const startGemtRpc=function(nid='binance',gas=300000){startFemtRpc(nid,gas,GEMT,ABIGEMT)};
+const startNemtRpc=function(nid='binance',gas=300000){startFemtRpc(nid,gas,NEMT,ABINEMT)};
+////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////[6]
 const bipCashcoin=function(key=window.newaccount.hex,cbf=console.warn){return(bipkey2coin(key,CASHCOIN,cbf));};
 const bipDashcoin=function(key=window.newaccount.hex,cbf=console.warn){return(bipkey2coin(key,DASHCOIN,cbf));};
