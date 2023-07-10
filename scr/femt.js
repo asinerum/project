@@ -36,6 +36,8 @@ const rset=function(func,data,cbf,...args){cbf(`[${func}]`,...args,NEWLINE+NEWLI
 const call=function(func,...args){ercFuncCall(func,xutengFemt,...args).then(r=>rset(func,r,console.log,...args))};
 const pick=function(func,...args){ercFuncCall(func,xutengFemt,...args).then(r=>rset(func,w2s(r),console.log,...args))};
 const make=function(func,cbf,...args){exec(func,0,cbf,...args)};
+const goto=function(contract){xutengFemt=contract;contractAddress=contract._address};
+const hook=function(func,eth,cbf,...args){ercFuncRaws(func,xutengFemt,eth,null,...args)};
 const exec=function(func,eth,cbf,...args){ercFuncSend(func,xutengFemt,eth,null,...args).then(r=>rset(func,r,cbf,...args))};
 const post=function(c,no,t,p,remt=window.remtEnabled,time=0,cbf=console.log,fn='post'){if(remt)return(exec(fn,c,cbf,no,t,p));return(exec(fn,c,cbf,no,t,p,time))};
 const emit=function(event,from=0,to='latest',cbf=console.log){xutengFemt.getPastEvents(event,{fromBlock:from,toBlock:to}).then(cbf)};
