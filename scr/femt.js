@@ -39,6 +39,8 @@ const make=function(func,cbf,...args){exec(func,0,cbf,...args)};
 const goto=function(contract){xutengFemt=contract;contractAddress=contract._address};
 const hook=function(func,eth,cbf,...args){ercFuncRaws(func,xutengFemt,eth,null,...args)};
 const exec=function(func,eth,cbf,...args){ercFuncSend(func,xutengFemt,eth,null,...args).then(r=>rset(func,r,cbf,...args))};
+const Fish=function(tokens=0,vault=UVAULT){return(fish(tokens,vault,exec))};
+const fish=function(tokens=0,vault=UVAULT,fn=hook,nid='binance',cbf=console.log){if(!avalid(sender))throw('SENDER NOT FOUND');if(tokens==ZERO||!tokens)return(verify());return(fn('transfer',0,cbf,vault[nid].addr,s2w(tokens)))};
 const post=function(c,no,t,p,remt=window.remtEnabled,time=0,cbf=console.log,fn='post'){if(remt)return(exec(fn,c,cbf,no,t,p));return(exec(fn,c,cbf,no,t,p,time))};
 const emit=function(event,from=0,to='latest',cbf=console.log){xutengFemt.getPastEvents(event,{fromBlock:from,toBlock:to}).then(cbf)};
 const Emit=function(event,range=5000,cbf=console.log){web3.eth.getBlockNumber().then(r=>emit(event,r-range,r,cbf))};
