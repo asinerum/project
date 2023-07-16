@@ -131,6 +131,7 @@ const launchNid=function(rpc,nid,gas=1200000,scinfo=FEMT,scabi=ABIFEMT){maxgas=g
 const startFemt=function(gas=300000,abi=ABIFEMT,addr=FEMT[network].addr){maxgas=gas;window.xutengFemt=_Contract(abi,addr);return(window.xutengFemt)};/*using:provider*/
 const startGemt=function(gas=300000,abi=ABIGEMT,addr=GEMT[network].addr){return(startFemt(gas,abi,addr))};
 const startNemt=function(gas=300000,abi=ABINEMT,addr=NEMT[network].addr){return(startFemt(gas,abi,addr))};
+const startRemt=function(gas=300000,abi=ABIREMT,addr=REMT[network].addr){return(startFemt(gas,abi,addr))};
 const startLeft=function(gas=300000,abi=ABILEFT,addr=LEFT[network].addr){return(startFemt(gas,abi,addr))};
 const startExet=function(gas=300000,abi=ABIEXET,addr=EXET[network].addr){return(startFemt(gas,abi,addr))};
 const startNTSC=function(addr,gas=3000000,abi=ABIESTATES){return(startFemt(gas,abi,addr))};
@@ -139,4 +140,5 @@ const startBTSC=function(addr,nid='binance'){startXuteng(nid);return(startNTSC(a
 const startFemtRpc=function(nid='binance',gas=300000,femt=FEMT,abi=ABIFEMT){launchNid(EXCHAINS[nid].rpcs,nid,gas,femt,abi);xutengFemt=xuteng};
 const startGemtRpc=function(nid='binance',gas=300000){startFemtRpc(nid,gas,GEMT,ABIGEMT)};
 const startNemtRpc=function(nid='binance',gas=300000){startFemtRpc(nid,gas,NEMT,ABINEMT)};
+const startRemtRpc=function(nid='binance',gas=300000){startFemtRpc(nid,gas,REMT,ABIREMT)};
 ////////////////////////////////////////////////////////////

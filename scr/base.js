@@ -33,6 +33,12 @@ binance:{ncid:56,addr:'0x55d398326f99059ff775485246999027b3197955',rpcs:'https:/
 classic:{ncid:61,addr:'',rpcs:'https://www.ethercluster.com/etc/',scan:'https://etcblockexplorer.com/token/'},
 };
 ////////////////////////////////////////////////////////////
+const REMT={
+mainnet:{ncid:1,addr:'',hash:'',rpcs:'',bcls:'private',scan:'https://etherscan.io/token/'},
+binance:{ncid:56,addr:'0x3E86E647FC2BE17266071f8047b8B1c755D589fe',hash:'0xf4afcdbb311e3402e375a0fcfb308db23c64561b1fc899664bdca208f6b84311',rpcs:'https://bsc-dataseed.binance.org/',bcls:'private',scan:'https://www.bscscan.com/token/'},
+classic:{ncid:61,addr:'',hash:'',rpcs:'https://www.ethercluster.com/etc/',bcls:'private',scan:'https://etcblockexplorer.com/token/'},
+};
+////////////////////////////////////////////////////////////
 const VAULT={
 mainnet:{ncid:1,addr:'',hash:'',rpcs:'',bcls:'private',scan:'https://etherscan.io/token/'},
 binance:{ncid:56,addr:'0x1F30496BFD02FF62C0AB721F01a0e9b6764f730E',hash:'0xdcd411c977b1a4eb0ae7ee837e401eddb94cd4639215fc70d7603724aec02285',rpcs:'https://bsc-dataseed.binance.org/',bcls:'private',scan:'https://www.bscscan.com/token/'},
