@@ -1,5 +1,5 @@
 ////////////////////////////////////////////////////////////
-const tokenAllowed=function(token){return([_progMoney,_martMoney].includes(token))};
+const tokenAllowed=function(token){return([_progMoney,_martMoney,_rareMoney].includes(token))};
 ////////////////////////////////////////////////////////////
 const defiProgJoinMine=function(status,divToken,divId,k,i){
 showLoad(status);k=gv(divToken);i=s2n(gv(divId));if(!tokenAllowed(k))return(dw(status,_errInput));
@@ -11,7 +11,7 @@ showLoad(status);k=gv(divToken);i=s2n(gv(divId));if(!tokenAllowed(k)||!positiveN
 ercSend(xutengFemt,MPROGRAM,[i],0,status,null,function(err,res){checkResult(err,res,status);window.menu.onDefiProgLoad();console.warn('TRANSACTION_RECEIPT',res);});};
 ////////////////////////////////////////////////////////////
 const defiProgLoad=function(status,divToken,outBalance,outSupply,dec=5,k){
-showLoad(status);k=gv(divToken);if(!tokenAllowed(k))return(dw(status,_errInput));if(k==_progMoney)startGemt();if(k==_martMoney)startNemt();
+showLoad(status);k=gv(divToken);if(!tokenAllowed(k))return(dw(status,_errInput));if(k==_progMoney)startGemt();if(k==_martMoney)startNemt();if(k==_rareMoney)startRemt();
 ercCall(xutengFemt,MBALANCE,[sender],status,null,function(err,res){checkResult(err,res,status);db(outBalance,w2s(res,dec));});
 ercCall(xutengFemt,MTSUPPLY,[],status,null,function(err,res){checkResult(err,res,status);db(outSupply,w2s(res,dec));});};
 ////////////////////////////////////////////////////////////
