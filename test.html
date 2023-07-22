@@ -2,30 +2,23 @@
 <meta charset="utf-8">
 <html>
   <head>
-  <link href="https://cdn.jsdelivr.net/gh/asinerum/project/favicon.ico" rel="icon" type="image/x-icon"/>
-  <link href="https://cdn.jsdelivr.net/gh/asinerum/project/gui/_trumbowyg.css" rel="stylesheet" type="text/css"/>
-  <link href="https://cdn.jsdelivr.net/gh/asinerum/project/gui/fonts.css" rel="stylesheet" type="text/css"/>
-  <link href="https://cdn.jsdelivr.net/gh/asinerum/project/gui/style.css" rel="stylesheet" type="text/css"/>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+  <link rel="stylesheet" type="text/css" href="https://asinerum.github.io/project/gui/fonts.css"/>
+  <link rel="stylesheet" type="text/css" href="https://asinerum.github.io/project/gui/style.css"/>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.6/angular.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/gh/asinerum/project/scr/_web3js.js"></script>
-  <script src="https://cdn.jsdelivr.net/gh/asinerum/project/scr/_ethereumjs-tx.js"></script>
-  <script src="https://cdn.jsdelivr.net/gh/asinerum/project/scr/_trumbowyg.min.js"></script>
+  <script src='https://cdn.jsdelivr.net/gh/asinerum/project/scr/_web3js.js' type='text/javascript'></script>
+  <script src='https://cdn.jsdelivr.net/gh/asinerum/project/scr/_ethereumjs-tx.js' type='text/javascript'></script>
   <script src="https://cdn.jsdelivr.net/gh/asinerum/project/scr/_bitcoinjs.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/asinerum/project/scr/_decimal.js"></script>
-  <script src="https://cdn.jsdelivr.net/gh/asinerum/project/scr/_axios.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/asinerum/project/scr/_bip.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/asinerum/project/scr/_cash.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/asinerum/project/scr/_dash.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/asinerum/project/scr/_lite.js"></script>
   <script src="https://cdn.jsdelivr.net/gh/asinerum/project/scr/_qrcode.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/synaptic@1.1.4/dist/synaptic.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjs@6.6.4/dist/math.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@0.8/dist/teachablemachine-image.min.js"></script>
-  <script src="https://unpkg.com/keras-js"></script>
-  <script src="https://unpkg.com/@solana/web3.js@latest/lib/index.iife.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/asinerum/project/scr/_axios.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/asinerum/project/scr/_solc.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/asinerum/project/scr/_eruda.js"></script>
   <script src="https://asinerum.github.io/project/scr/xuteng.js"></script>
   </head>
   <body>
@@ -42,24 +35,24 @@
   <div class="textdate">
   CONNECT TO AN ETHEREUM TEST NODE
   <br/>
-  <i class="fa fa-caret-right"></i> launchRpc("https://ropsten-rpc.linkpool.io","ropsten");
+  <i class="fa fa-caret-right"></i> launchRpc(`https://ropsten-rpc.linkpool.io`,`ropsten`);
   <br/>
   <br/>
   CREATE YOUR NEW WALLET IF YOU HAVE NONE
   <br/>
-  <i class="fa fa-caret-right"></i> userCreate("your_secret_passcode");
+  <i class="fa fa-caret-right"></i> userCreate(`your_secret_passcode`);
   <br/>
-  <i class="fa fa-caret-right"></i> userImport("new_secret_passcode", "existing_private_key");
+  <i class="fa fa-caret-right"></i> userImport(`new_secret_passcode`, `existing_private_key`);
   <br/>
   <br/>
   UNLOCK YOUR WALLET WITH SECRET PASSCODE
   <br/>
-  <i class="fa fa-caret-right"></i> userUnlock("your_secret_passcode", "your_keystore");
+  <i class="fa fa-caret-right"></i> userUnlock(`your_secret_passcode`, `your_keystore`);
   <br/>
   <br/>
   START YOUR WORKING SESSION
   <br/>
-  <i class="fa fa-caret-right"></i> getData("your_ethereum_wallet", 1);
+  <i class="fa fa-caret-right"></i> getData(`your_ethereum_wallet`, 1);
   <br/>
   <i class="fa fa-caret-right"></i> getData(sender, 1);
   <br/>
@@ -82,5 +75,6 @@
   <br/>
   <br/>
   </div>
+  <script>eruda.init();</script>
   </body>
 </html>
