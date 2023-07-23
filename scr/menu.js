@@ -113,5 +113,10 @@ const Menu=function(element){self=this;
  self.onAuthGetOfr=self.onGetOfr;
  self.onAuthGetReq=self.onGetReq;
  self.onClearInput=clearTags;
+ self.onDefiHackProgJoinMine=function(){defiHackProgJoinMine('form_status','pro_token','pro_id_mine');}
+ self.onDefiHackProgJoin=function(){defiHackProgJoin('form_status','pro_token','pro_id');}
+ self.onDefiHackProgLoad=function(){defiHackProgLoad('form_status','pro_token','pro_amt','pro_sum');}
+ self.goDefiHackProgIdno=function(){if(!positiveInt(gv('pro_id')))return(alert(_warnPrgIdno));}
+ self.goDefiHackProgLoad=function(){if(!tokenAllowed(gv('pro_token')))return(alert(_warnPrgCoin));self.onDefiHackProgLoad()}
 };//////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////

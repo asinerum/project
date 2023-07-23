@@ -717,6 +717,64 @@ live:0,
 stop:-4,
 dead:-8};
 ////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////
+const MPROGRAM = 'mine';//
+const MPROHYIP = 'program';
+const MPROPOST = 'post';
+////////////////////////////////////////////////////////////
+const MPROGDAT = 'markets';
+const MPROGGET = 'programs';//
+////////////////////////////////////////////////////////////
+const MPROGBUY = 'acquire';
+const MPROGPAY = 'invest';//
+////////////////////////////////////////////////////////////
+const MPROGCLR = 'unpost';
+const MPROGSTP = 'close';//
+////////////////////////////////////////////////////////////
+const MPROGINV = 'invests';
+const MPROGNOS = 'refnos';
+const MPROGWDR = 'withdraw';
+////////////////////////////////////////////////////////////
+const MBALANCE = 'balanceOf';
+const MTSUPPLY = 'totalSupply';
+////////////////////////////////////////////////////////////
+const PROGMINRATE = 3;
+const PROGMAXRATE = 200;
+////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////
+let _days = 'days';
+let _martMoney = 'NEMT9';
+let _progMoney = 'GEMT9';
+let _rareMoney = 'REMT9';
+////////////////////////////////////////////////////////////
+let _errClear = `"RedeemNotAllowed"`;
+let _errCoins = `"CoinsNotEnough"`;
+let _errDepos = `"TokensNotEnough"`;
+let _errFinds = `"SearchFinished"`;
+let _errFound = `"ItemNotFound"`;
+let _errIdNot = `"IdNotAvailable"`;
+let _errInput = `"InputNotValid"`;
+let _errInvst = `"ActionNotAllowed"`;
+let _errItNon = `"ItemDoesNotFit"`;
+let _errItNot = `"ItemDoesNotExist"`;
+let _errOwner = `"ActionNotAllowed"`;
+let _errValim = `"ValueExceedsLimit"`;
+let _errValue = `"ItemHasNoValue"`;
+let _errXTime = `"ActionNowImproper"`;
+////////////////////////////////////////////////////////////
+let _warnPrgCoin = `Hacked token must be ${_progMoney} or ${_martMoney} or ${_rareMoney}`;
+let _warnPrgDraw = `You are about to half redeem this one`;
+let _warnPrgIdno = `ID or Ref Number must be a positive integer`;
+let _warnPrgInit = `Amount value must be larger than 0`;
+let _warnPrgNOwn = `You are not the owner of this object`;
+let _warnPrgPrix = `Tokens-per-coin price must be positive`;
+let _warnPrgPrvt = `Coins-per-token price must be positive`;
+let _warnPrgRate = `APR must be between ${PROGMINRATE}-${PROGMAXRATE}%`;
+let _warnPrgRvrc = `Coins-per-token rate is calculated below`;
+let _warnPrgRvrt = `Tokens-per-coin rate is calculated above`;
+let _warnPrgSAge = `Trade expiration must be in future time`;
+let _warnPrgStop = `You are about to stop/cancel this object`;
+////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////[14]
 const _Menu=function(div=ACTDIV){return(new Menu(document.getElementById(div)))};
 const _Time=function(){return(new Date().getTime())};
@@ -1834,6 +1892,11 @@ const Menu=function(element){self=this;
  self.onAuthGetOfr=self.onGetOfr;
  self.onAuthGetReq=self.onGetReq;
  self.onClearInput=clearTags;
+ self.onDefiHackProgJoinMine=function(){defiHackProgJoinMine('form_status','pro_token','pro_id_mine');}
+ self.onDefiHackProgJoin=function(){defiHackProgJoin('form_status','pro_token','pro_id');}
+ self.onDefiHackProgLoad=function(){defiHackProgLoad('form_status','pro_token','pro_amt','pro_sum');}
+ self.goDefiHackProgIdno=function(){if(!positiveInt(gv('pro_id')))return(alert(_warnPrgIdno));}
+ self.goDefiHackProgLoad=function(){if(!tokenAllowed(gv('pro_token')))return(alert(_warnPrgCoin));self.onDefiHackProgLoad()}
 };//////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////[3]
@@ -1858,6 +1921,22 @@ const setWasmString=function(str,pointer=0,ins,b,i){if(!ins)ins=window.wasmInsta
 const getWasmString=function(pointer,len,ins,b,i,s){if(!ins)ins=window.wasmInstance;b=(new Uint8Array(ins.exports.memory.buffer,pointer,len));s='';for(i=0;i<len;i++)s+=String.fromCharCode(b[i]);return(s);};
 const getWasmStrEnd=function(pointer,ins,b,i,s){/**/if(!ins)ins=window.wasmInstance;b=(new Uint8Array(ins.exports.memory.buffer,pointer));s='';for(i=0;b[i];i++)s+=String.fromCharCode(b[i]);return(s);};
 ////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////
+const tokenAllowed=function(token){return([_progMoney,_martMoney,_rareMoney].includes(token))};
+////////////////////////////////////////////////////////////
+const defiHackProgJoin=function(status,divToken,divId,k,i){
+showLoad(status);k=gv(divToken);i=s2n(gv(divId));if(!tokenAllowed(k)||!positiveNum(i))return(dw(status,_errInput));
+ercSend(xutengFemt,MPROGRAM,[i],0,status,null,function(err,res){checkResult(err,res,status);window.menu.onDefiHackProgLoad();console.warn('TRANSACTION_RECEIPT',res);});};
+////////////////////////////////////////////////////////////
+const defiHackProgJoinMine=function(status,divToken,divId,k,i){
+showLoad(status);k=gv(divToken);i=s2n(gv(divId));if(!tokenAllowed(k))return(dw(status,_errInput));
+if(!positiveNum(i))return(mint(0,function(tokens){window.menu.onDefiHackProgLoad();console.warn('TOKENS',tokens)},xutengFemt,ercTokens,alert,mmsender(),true,10,kek));
+ercSend(xutengFemt,MPROGRAM,[i],0,status,null,function(err,res){checkResult(err,res,status);window.menu.onDefiHackProgLoad();console.warn('TRANSACTION_RECEIPT',res);});};
+////////////////////////////////////////////////////////////
+const defiHackProgLoad=function(status,divToken,outBalance,outSupply,dec=5,k){
+showLoad(status);k=gv(divToken);if(!tokenAllowed(k))return(dw(status,_errInput));if(k==_progMoney)startGemt();if(k==_martMoney)startNemt();if(k==_rareMoney)startRemt();
+ercCall(xutengFemt,MBALANCE,[sender],status,null,function(err,res){checkResult(err,res,status);db(outBalance,w2s(res,dec));});
+ercCall(xutengFemt,MTSUPPLY,[],status,null,function(err,res){checkResult(err,res,status);db(outSupply,w2s(res,dec));});};
 ////////////////////////////////////////////////////////////[1]
 const PayTokens=function(tid=GEMT,tos=[],tokens=[],ref='',nid='binance',doc='pmt',cbf=console.log,s=tokens.sum()){setTToken(tid,nid);ercFuncCall('balanceOf',xutengFemt,sender)
 .then(r=>{if(r.lt(s2w(s)))return(cbf('BALANCE NOT ENOUGH'));return(ercFuncCall('allowance',xutengFemt,sender,setBroker(true,nid)))})
@@ -1910,9 +1989,8 @@ const verify=function(addr=sender,cbf=console.log){ercFuncCall('name',xutengFemt
 const struct=function(func,calls=[],picks=[],cbf,...args){ercFuncCall(func,xutengFemt,...args).then(r=>{calls.forEach(t=>cbf(`${t}:`,r[t],NEWLINE));picks.forEach(n=>cbf(`${n}:`,w2s(r[n]),NEWLINE))})};
 const market=function(refno,cbf=console.log){struct('markets',['buytoken','maker'],['value','ppe'],cbf,refno)};
 ////////////////////////////////////////////////////////////[1]
-const numYearSeconds=365*24*60*60;//[hipp.js]
-const gemtAprToPetri=function(apr){return(Math.round(10**9*apr/100/numYearSeconds))};//[sipp.js]
-const gemtPetriToApr=function(spr){return(numYearSeconds*100*spr/10**9)};//[sipp.js]
+const gemtAprToPetri=function(apr){return(Math.round(10**9*apr/100/ANNSEC))};//[sipp.js]
+const gemtPetriToApr=function(spr){return(ANNSEC*100*spr/10**9)};//[sipp.js]
 const gemtGetProgram=function(refno,cbf=console.table){ercFuncCall('programs',xutengFemt,refno).then(r=>cbf({program:refno,balance:w2s(r.value),APR:n2s(gemtPetriToApr(r.petri),2),owner:r.maker,start:fromDate(r.open)}))};
 const gemtGetProgAcc=function(refno,acc=sender,cbf=console.table){ercFuncCall('invests',xutengFemt,refno,acc).then(r=>cbf({program:refno,balance:w2s(r.amount),dated:fromDate(r.start)}))};
 const gemtGetDeposit=function(refno,cbf=console.table){ercFuncCall('deposits',xutengFemt,refno).then(r=>cbf({ref:refno,amount:w2s(r.value),creditor:r.taker,depositor:r.maker}))};
@@ -2205,7 +2283,33 @@ const LNKEXOFFLINE='<a href="https://asinerum.github.io/project/raweth">offline 
 const LNKBXOFFLINE='<a href="https://asinerum.github.io/project/rawbit">offline approach</a>';
 const NOTEEXGASFEE='EXCLUDING GAS FEE';
 ////////////////////////////////////////////////////////////
-const PLACES={en:{}};
+////////////////////////////////////////////////////////////
+const PLACES={en:{
+pro_id: `Guess the secret number`,
+pro_id_mine: `Enter the nonce number`,
+pro_buy_id: `Offer ID`,
+pro_buy_gemt: `Amount of ${_progMoney} to buy`,
+pro_sell_id: `Order ID`,
+pro_sell_gemt: `Amount of ${_progMoney} to sell`,
+pro_sell_conv: `Number of Coin$ to receive`,
+pro_program_id: `Program Unique ID`,
+pro_program_apr: `Annual Percentage Rate {%}`,
+pro_program_gemt: `Initial Deposit {${_progMoney}}`,
+pro_invest_id: `Program ID`,
+pro_invest_gemt: `Amount to invest {${_progMoney}}`,
+pro_offer_id: `Offer Unique ID`,
+pro_offer_apr: `Price: ${_progMoney} per one Coin$`,
+pro_offer_rev: `Price: Coin$ per one ${_progMoney}`,
+pro_offer_age: `Live sale expires in {days}`,
+pro_offer_gemt: `Amount of ${_progMoney} to offer`,
+pro_order_id: `Order Unique ID`,
+pro_order_apr: `Price: ${_progMoney} per one Coin$`,
+pro_order_rev: `Price: Coin$ per one ${_progMoney}`,
+pro_order_age: `Purchase expires in {days}`,
+pro_order_gemt: `Amount of ${_progMoney} to order`,
+pro_order_conv: `Number of Coin$ to deposit`,
+}}//////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////
 const LABELS={en:{
 _button_AuthAccExp: `EXPORT PRIVATE KEY`,
 _button_AuthAccImp: `IMPORT PRIVATE KEY`,
@@ -2536,7 +2640,7 @@ _note_UserDocSet: `${NOTEEXGASFEE}`,
 _note_UserDomReg: `${NOTEEXGASFEE}, USERS ONLY`,
 _note_UserSetDom: `${NOTEEXGASFEE}`,
 _note_UserSetPro: `${NOTEEXGASFEE}`,
-_note_XutXut: `${NOTEEXGASFEE}`,
+_note_XutXut: `${NOTEEXGASFEE}`,///
 _button_AuthPayAgr: `SEND ALGO`,
 _button_AuthPaySol: `SEND SOL`,
 _header_AgrUnlock: `SELECT ALGORAND API ENDPOINT AND DECRYPT KEYSTORE`,
@@ -2562,7 +2666,55 @@ _label_Bip3ExpKey: `ALGORAND PRIVATE KEY`,
 _label_Bip3OldAgr: `ALGORAND WALLET`,
 _label_Bip3OldKey: `ALGORAND PRIVATE KEY`,
 _label_BipAdPrAgr: `ALGORAND DONATION`,
-_label_BipAdPrSol: `SOLANA DONATION`,
+_label_BipAdPrSol: `SOLANA DONATION`,///
+_button_hack_DefiProgJoin: `START`,
+_button_offer_DefiProgJoin: `BUY`,
+_button_offer_DefiProgOpen: `CREATE OFFER`,
+_button_offer_DefiProgStop: `CANCEL OFFER`,
+_button_offers_DefiProgNext: `MORE RESULTS`,
+_button_order_DefiProgJoin: `SELL`,
+_button_order_DefiProgOpen: `CREATE ORDER`,
+_button_order_DefiProgStop: `CANCEL ORDER`,
+_button_orders_DefiProgNext: `MORE RESULTS`,
+_button_program_DefiProgDraw: `HALF REDEEM`,
+_button_program_DefiProgGain: `REDEEM`,
+_button_program_DefiProgJoin: `INVEST`,
+_button_program_DefiProgOpen: `CREATE PROGRAM`,
+_button_program_DefiProgStop: `STOP PROGRAM`,
+_label_hack_DefiProgAmt: `My balance`,
+_label_hack_DefiProgSum: `Total supply`,
+_label_hack_panelHeader: `TOKEN HACKING MACHINE`,
+_label_hack_panelHeaderMine: `TOKEN MINING MACHINE`,
+_label_offer_DefiProgAge: `Sale expires in`,
+_label_offer_DefiProgAPR: `${CAPCLASSCOIN}/${_progMoney} price`,
+_label_offer_DefiProgOwn: `Supplier`,
+_label_offer_DefiProgSum: `${_progMoney} supply`,
+_label_offer_investor: `${_progMoney} BUYER'S PURCHASE`,
+_label_offer_programer: `${_progMoney} SELLER'S OFFER`,
+_label_offers_DefiProgAge: `Sale expires in`,
+_label_offers_DefiProgAPR: `${CAPCLASSCOIN}/${_progMoney} price`,
+_label_offers_DefiProgOwn: `Supplier`,
+_label_offers_DefiProgSum: `${_progMoney} supply`,
+_label_offers_panelHeader: `${_progMoney} OFFER LISTINGS`,
+_label_order_DefiProgAge: `Purchase expires in`,
+_label_order_DefiProgAPR: `${CAPCLASSCOIN}/${_progMoney} price`,
+_label_order_DefiProgOwn: `Depositor`,
+_label_order_DefiProgSum: `${CAPCLASSCOIN} deposit`,
+_label_order_investor: `${_progMoney} SELLER'S SALE`,
+_label_order_programer: `${_progMoney} BUYER'S ORDER`,
+_label_orders_DefiProgAge: `Purchase expires in`,
+_label_orders_DefiProgAPR: `${CAPCLASSCOIN}/${_progMoney} price`,
+_label_orders_DefiProgOwn: `Depositor`,
+_label_orders_DefiProgSum: `${CAPCLASSCOIN} deposit`,
+_label_orders_panelHeader: `${_progMoney} ORDER LISTINGS`,
+_label_program_DefiProgAge: `Age`,
+_label_program_DefiProgAgi: `My investment age`,
+_label_program_DefiProgAmt: `My invested sum`,
+_label_program_DefiProgAPR: `APR {%}`,
+_label_program_DefiProgOwn: `Owner`,
+_label_program_DefiProgSum: `Balance`,
+_label_program_investor: `INVESTOR'S PANEL`,
+_label_program_programer: `PROGRAMER'S PANEL`,
 }}//////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////

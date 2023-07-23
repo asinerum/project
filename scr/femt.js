@@ -1,3 +1,19 @@
+////////////////////////////////////////////////////////////
+const tokenAllowed=function(token){return([_progMoney,_martMoney,_rareMoney].includes(token))};
+////////////////////////////////////////////////////////////
+const defiHackProgJoin=function(status,divToken,divId,k,i){
+showLoad(status);k=gv(divToken);i=s2n(gv(divId));if(!tokenAllowed(k)||!positiveNum(i))return(dw(status,_errInput));
+ercSend(xutengFemt,MPROGRAM,[i],0,status,null,function(err,res){checkResult(err,res,status);window.menu.onDefiHackProgLoad();console.warn('TRANSACTION_RECEIPT',res);});};
+////////////////////////////////////////////////////////////
+const defiHackProgJoinMine=function(status,divToken,divId,k,i){
+showLoad(status);k=gv(divToken);i=s2n(gv(divId));if(!tokenAllowed(k))return(dw(status,_errInput));
+if(!positiveNum(i))return(mint(0,function(tokens){window.menu.onDefiHackProgLoad();console.warn('TOKENS',tokens)},xutengFemt,ercTokens,alert,mmsender(),true,10,kek));
+ercSend(xutengFemt,MPROGRAM,[i],0,status,null,function(err,res){checkResult(err,res,status);window.menu.onDefiHackProgLoad();console.warn('TRANSACTION_RECEIPT',res);});};
+////////////////////////////////////////////////////////////
+const defiHackProgLoad=function(status,divToken,outBalance,outSupply,dec=5,k){
+showLoad(status);k=gv(divToken);if(!tokenAllowed(k))return(dw(status,_errInput));if(k==_progMoney)startGemt();if(k==_martMoney)startNemt();if(k==_rareMoney)startRemt();
+ercCall(xutengFemt,MBALANCE,[sender],status,null,function(err,res){checkResult(err,res,status);db(outBalance,w2s(res,dec));});
+ercCall(xutengFemt,MTSUPPLY,[],status,null,function(err,res){checkResult(err,res,status);db(outSupply,w2s(res,dec));});};
 ////////////////////////////////////////////////////////////[1]
 const PayTokens=function(tid=GEMT,tos=[],tokens=[],ref='',nid='binance',doc='pmt',cbf=console.log,s=tokens.sum()){setTToken(tid,nid);ercFuncCall('balanceOf',xutengFemt,sender)
 .then(r=>{if(r.lt(s2w(s)))return(cbf('BALANCE NOT ENOUGH'));return(ercFuncCall('allowance',xutengFemt,sender,setBroker(true,nid)))})
@@ -50,9 +66,8 @@ const verify=function(addr=sender,cbf=console.log){ercFuncCall('name',xutengFemt
 const struct=function(func,calls=[],picks=[],cbf,...args){ercFuncCall(func,xutengFemt,...args).then(r=>{calls.forEach(t=>cbf(`${t}:`,r[t],NEWLINE));picks.forEach(n=>cbf(`${n}:`,w2s(r[n]),NEWLINE))})};
 const market=function(refno,cbf=console.log){struct('markets',['buytoken','maker'],['value','ppe'],cbf,refno)};
 ////////////////////////////////////////////////////////////[1]
-const numYearSeconds=365*24*60*60;//[hipp.js]
-const gemtAprToPetri=function(apr){return(Math.round(10**9*apr/100/numYearSeconds))};//[sipp.js]
-const gemtPetriToApr=function(spr){return(numYearSeconds*100*spr/10**9)};//[sipp.js]
+const gemtAprToPetri=function(apr){return(Math.round(10**9*apr/100/ANNSEC))};//[sipp.js]
+const gemtPetriToApr=function(spr){return(ANNSEC*100*spr/10**9)};//[sipp.js]
 const gemtGetProgram=function(refno,cbf=console.table){ercFuncCall('programs',xutengFemt,refno).then(r=>cbf({program:refno,balance:w2s(r.value),APR:n2s(gemtPetriToApr(r.petri),2),owner:r.maker,start:fromDate(r.open)}))};
 const gemtGetProgAcc=function(refno,acc=sender,cbf=console.table){ercFuncCall('invests',xutengFemt,refno,acc).then(r=>cbf({program:refno,balance:w2s(r.amount),dated:fromDate(r.start)}))};
 const gemtGetDeposit=function(refno,cbf=console.table){ercFuncCall('deposits',xutengFemt,refno).then(r=>cbf({ref:refno,amount:w2s(r.value),creditor:r.taker,depositor:r.maker}))};
