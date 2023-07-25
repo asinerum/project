@@ -34,6 +34,10 @@ const NOTEEXGASFEE='EXCLUDING GAS FEE';
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
 const PLACES={en:{
+dig_in_nonce: `manual nonce`,
+dig_keystore: `keystore or private key`,
+dig_passcode: `password to unlock wallet`,
+dig_wait: `waiting time in minutes`,
 pro_id: `Guess the secret number`,
 pro_id_mine: `Enter the nonce number`,
 pro_buy_id: `Offer ID`,
@@ -418,7 +422,8 @@ _label_BipAdPrAgr: `ALGORAND DONATION`,
 _label_BipAdPrSol: `SOLANA DONATION`,///
 _button_dig_DefiJoin: `UNLOCK WALLET`,
 _button_dig_DefiLoad: `RELOAD STATUS`,
-_button_dig_DefiMine: `LAUNCH MINER`,
+_button_dig_DefiMine: `START AUTO MINE`,
+_button_dig_DefiSend: `MINE WITH NONCE`,
 _button_dig_DefiNonce: `CALCULATE NONCE`,
 _button_hack_DefiProgJoin: `START`,
 _button_offer_DefiProgJoin: `BUY`,

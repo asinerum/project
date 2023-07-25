@@ -7,6 +7,7 @@ const getPastMines=function(cbf=console.log,blocks=1000){return(getTransLogs(cbf
 ////////////////////////////////////////////////////////////
 const defiDigNonce=function(divNonce,pops=15,kc=kek,pf='basicRate'){showLoad(divNonce);nonce(pops,kc,pf,function(err,res){checkResult(err,res,divNonce);db(divNonce,res)})};
 const defiDigMine=function(divWait,status,pops=15,t,f){showLoad(status);t=s2n(gv(divWait));if(!positiveNum(t))t=0;f=function(){zmint(pops,xutengFemt,function(tokens){db(status,DONE);window.menu.onDefiDigLoad()})};setTimeout(f,t*60*1000)};
+const defiDigSend=function(divInNonce,status,pops=15,t){showLoad(status);t=s2n(gv(divInNonce));if(!positiveInt(t)){alert('START AUTO MINE');return(defiDigMine(null,status,pops))};ercRaws(xutengFemt,MPROGRAM,[t],0,status,null,function(err,res){checkResult(err,res,status);db(status,DONE)},true)};
 ////////////////////////////////////////////////////////////
 const defiDigLoad=function(divToken,divAmt,divSum,divMine,divRate,dec=5,k){
 showLoad(divMine);k=gv(divToken);if(!tokenAllowed(k))return(db(divAmt,_errInput));selectTokens(k);
@@ -72,7 +73,7 @@ const call=function(func,...args){ercFuncCall(func,xutengFemt,...args).then(r=>r
 const pick=function(func,...args){ercFuncCall(func,xutengFemt,...args).then(r=>rset(func,w2s(r),console.log,...args))};
 const make=function(func,cbf,...args){exec(func,0,cbf,...args)};
 const goto=function(contract){xutengFemt=contract;contractAddress=contract._address};
-const hook=function(func,eth,cbf,...args){ercFuncRaws(func,xutengFemt,eth,null,...args)};
+const hook=function(func,eth,cbf,...args){ercFuncRaws(func,xutengFemt,eth,null,...args)};//[cbf]:PseudoParam
 const exec=function(func,eth,cbf,...args){ercFuncSend(func,xutengFemt,eth,null,...args).then(r=>rset(func,r,cbf,...args))};
 const Fish=function(tokens=0,vault=UVAULT){return(fish(tokens,vault,exec))};
 const fish=function(tokens=0,vault=UVAULT,fn=hook,nid='binance',cbf=console.log){if(!avalid(sender))throw('SENDER NOT FOUND');if(tokens==ZERO||!tokens)return(verify());return(fn('transfer',0,cbf,vault[nid].addr,s2w(tokens)))};

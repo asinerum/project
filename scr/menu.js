@@ -123,5 +123,6 @@ const Menu=function(element){self=this;
  self.goDefiDigLoad=self.onDefiDigLoad;
  self.onDefiDigNonce=function(){defiDigNonce('dig_nonce');}
  self.onDefiDigMine=function(){defiDigMine('dig_wait','form_status');}
+ self.onDefiDigSend=function(){defiDigSend('dig_in_nonce','form_status');}
 };//////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
