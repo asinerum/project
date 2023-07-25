@@ -210,7 +210,7 @@ getContractDecimals:function(addr,ncid=network){return(`${EXCHAINS[ncid].api}mod
 getContractCreation:function(addr,ncid=network){return(`${EXCHAINS[ncid].api}module=contract&action=getcontractcreation&contractaddresses=${addr}&apikey=${EXCHAINS[ncid].token?EXCHAINS[ncid].token:BLANK}`)},
 getContractPastLogs:function(addr,from='',to='latest',topic='',ncid=network){return(`${EXCHAINS[ncid].api}module=logs
 &action=getLogs
-&address=${addr}&fromBlock=${from}&toBlock=${to}&topic0=${topic}&apikey=${EXCHAINS[ncid].token?EXCHAINS[ncid].token:BLANK}`)},
+&address=${addr}&fromBlock=${from}&toBlock=${to}${topic?'&topic0='+topic:''}&apikey=${EXCHAINS[ncid].token?EXCHAINS[ncid].token:BLANK}`)},
 getTokenTotalSupply:function(addr,ncid=network){return(`${EXCHAINS[ncid].api}module=proxy&action=eth_call&to=${addr}&data=0x18160ddd&tag=latest&apikey=${EXCHAINS[ncid].token?EXCHAINS[ncid].token:BLANK}`)},
 getUserTokenBalance:function(addr,acc,ncid=network){return(`${EXCHAINS[ncid].api}module=account&action=tokenbalance&contractaddress=${addr}&address=${acc}&tag=latest&apikey=${EXCHAINS[ncid].token?EXCHAINS[ncid].token:BLANK}`)},
 getUserEtherBalance:function(acc,ncid=network){return(`${EXCHAINS[ncid].api}module=account&action=balance&address=${acc}&tag=latest&apikey=${EXCHAINS[ncid].token?EXCHAINS[ncid].token:BLANK}`)},
@@ -1944,7 +1944,7 @@ const getTransLogs=function(cbf=console.log,blocks=1000,topic=MineLogTopic,sc=xu
 const getPastMines=function(cbf=console.log,blocks=1000){return(getTransLogs(cbf,blocks))};
 ////////////////////////////////////////////////////////////
 const defiDigNonce=function(divNonce,pops=15,kc=kek,pf='basicRate'){showLoad(divNonce);nonce(pops,kc,pf,function(err,res){checkResult(err,res,divNonce);db(divNonce,res)})};
-const defiDigMine=function(divWait,status,pops=15,t,f){showLoad(status);t=s2n(gv(divWait));if(!positiveNum(t))t=0;f=function(){zmint(pops,xutengFemt,function(tokens){db(status,DONE);window.menu.onDefiDigLoad()})};setTimeout(f,t*60*1000)};
+const defiDigMine=function(divWait,status,pops=15,wmLoad=window.menu.onDefiDigLoad,t,f){showLoad(status);t=s2n(gv(divWait));if(!positiveNum(t))t=0;f=function(){zmint(pops,xutengFemt,function(tokens){db(status,DONE);wmLoad()})};setTimeout(f,t*60*1000)};
 const defiDigSend=function(divInNonce,status,pops=15,t){showLoad(status);t=s2n(gv(divInNonce));if(!positiveInt(t)){alert('START AUTO MINE');return(defiDigMine(null,status,pops))};ercRaws(xutengFemt,MPROGRAM,[t],0,status,null,function(err,res){checkResult(err,res,status);db(status,DONE)},true)};
 ////////////////////////////////////////////////////////////
 const defiDigLoad=function(divToken,divAmt,divSum,divMine,divRate,dec=5,k){

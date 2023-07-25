@@ -6,7 +6,7 @@ const getTransLogs=function(cbf=console.log,blocks=1000,topic=MineLogTopic,sc=xu
 const getPastMines=function(cbf=console.log,blocks=1000){return(getTransLogs(cbf,blocks))};
 ////////////////////////////////////////////////////////////
 const defiDigNonce=function(divNonce,pops=15,kc=kek,pf='basicRate'){showLoad(divNonce);nonce(pops,kc,pf,function(err,res){checkResult(err,res,divNonce);db(divNonce,res)})};
-const defiDigMine=function(divWait,status,pops=15,t,f){showLoad(status);t=s2n(gv(divWait));if(!positiveNum(t))t=0;f=function(){zmint(pops,xutengFemt,function(tokens){db(status,DONE);window.menu.onDefiDigLoad()})};setTimeout(f,t*60*1000)};
+const defiDigMine=function(divWait,status,pops=15,wmLoad=window.menu.onDefiDigLoad,t,f){showLoad(status);t=s2n(gv(divWait));if(!positiveNum(t))t=0;f=function(){zmint(pops,xutengFemt,function(tokens){db(status,DONE);wmLoad()})};setTimeout(f,t*60*1000)};
 const defiDigSend=function(divInNonce,status,pops=15,t){showLoad(status);t=s2n(gv(divInNonce));if(!positiveInt(t)){alert('START AUTO MINE');return(defiDigMine(null,status,pops))};ercRaws(xutengFemt,MPROGRAM,[t],0,status,null,function(err,res){checkResult(err,res,status);db(status,DONE)},true)};
 ////////////////////////////////////////////////////////////
 const defiDigLoad=function(divToken,divAmt,divSum,divMine,divRate,dec=5,k){
