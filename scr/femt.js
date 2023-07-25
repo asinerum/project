@@ -1,17 +1,36 @@
 ////////////////////////////////////////////////////////////
+const MineLogTopic='0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef';
 const tokenAllowed=function(token){return([_progMoney,_martMoney,_rareMoney].includes(token))};
+const selectTokens=function(token){if(token==_progMoney)return(startGemt());if(token==_martMoney)return(startNemt());if(token==_rareMoney)return(startRemt())};
+const getTransLogs=function(cbf=console.log,blocks=1000,topic=MineLogTopic,sc=xutengFemt){web3.eth.getBlockNumber().then(block=>{$.getJSON(PROXIES[0].getContractPastLogs(sc._address,block-blocks,block,topic),function(data){if(data.status!='1')return(cbf(UNKNOWN,null));cbf(null,data.result)})})};
+const getPastMines=function(cbf=console.log,blocks=1000){return(getTransLogs(cbf,blocks))};
 ////////////////////////////////////////////////////////////
-const defiHackProgJoin=function(status,divToken,divId,k,i){
+const defiDigNonce=function(divNonce,pops=15,kc=kek,pf='basicRate'){showLoad(divNonce);nonce(pops,kc,pf,function(err,res){checkResult(err,res,divNonce);db(divNonce,res)})};
+const defiDigMine=function(divWait,status,pops=15,t,f){showLoad(status);t=s2n(gv(divWait));if(!positiveNum(t))t=0;f=function(){zmint(pops,xutengFemt,function(tokens){db(status,DONE);window.menu.onDefiDigLoad()})};setTimeout(f,t*60*1000)};
+////////////////////////////////////////////////////////////
+const defiDigLoad=function(divToken,divAmt,divSum,divMine,divRate,dec=5,k){
+showLoad(divMine);k=gv(divToken);if(!tokenAllowed(k))return(db(divAmt,_errInput));selectTokens(k);
+ercCall(xutengFemt,MBALANCE,[sender],divAmt,null,function(err,res){checkResult(err,res,divAmt);db(divAmt,w2s(res,dec));});
+ercCall(xutengFemt,MTSUPPLY,[],divSum,null,function(err,res){checkResult(err,res,divSum);db(divSum,w2s(res,dec));});
+ercCall(xutengFemt,'basicRate',[],divRate,null,function(err,res){checkResult(err,res,divRate);db(divRate,res);});
+getPastMines(function(err,res){checkResult(err,res,divMine);db(divMine,mindif(res[res.length-1].timeStamp));});};
+////////////////////////////////////////////////////////////
+const defiDigJoin=function(divKey,divPwd,divAddr,k,p){showLoad(divAddr);k=gv(divKey);p=gv(divPwd);
+if(k.is3ks()){return(v3ksDecode(k,p,true,function(err,res){checkResult(err,res,divAddr);db(divAddr,res.address)}))};
+if(k.isBip()){return(bipeDecode(k,p,true,function(err,res){checkResult(err,res,divAddr);db(divAddr,res.address)}))};
+if(k.isKey()){arouseKey(k);return(db(divAddr,sender))};db(divAddr,ERROR)};
+////////////////////////////////////////////////////////////
+const defiHackProgJoin=function(status,divToken,divId,wmLoad=window.menu.onDefiHackProgLoad,k,i){
 showLoad(status);k=gv(divToken);i=s2n(gv(divId));if(!tokenAllowed(k)||!positiveNum(i))return(dw(status,_errInput));
-ercSend(xutengFemt,MPROGRAM,[i],0,status,null,function(err,res){checkResult(err,res,status);window.menu.onDefiHackProgLoad();console.warn('TRANSACTION_RECEIPT',res);});};
+ercSend(xutengFemt,MPROGRAM,[i],0,status,null,function(err,res){checkResult(err,res,status);wmLoad();console.warn('TRANSACTION_RECEIPT',res);});};
 ////////////////////////////////////////////////////////////
-const defiHackProgJoinMine=function(status,divToken,divId,k,i){
+const defiHackProgJoinMine=function(status,divToken,divId,wmLoad=window.menu.onDefiHackProgLoad,k,i){
 showLoad(status);k=gv(divToken);i=s2n(gv(divId));if(!tokenAllowed(k))return(dw(status,_errInput));
-if(!positiveNum(i))return(mint(0,function(tokens){window.menu.onDefiHackProgLoad();console.warn('TOKENS',tokens)},xutengFemt,ercTokens,alert,mmsender(),true,10,kek));
-ercSend(xutengFemt,MPROGRAM,[i],0,status,null,function(err,res){checkResult(err,res,status);window.menu.onDefiHackProgLoad();console.warn('TRANSACTION_RECEIPT',res);});};
+if(!positiveNum(i))return(mint(0,function(tokens){wmLoad();console.warn('TOKENS',tokens)},xutengFemt,ercTokens,alert,mmsender(),true,10,kek));
+ercSend(xutengFemt,MPROGRAM,[i],0,status,null,function(err,res){checkResult(err,res,status);wmLoad();console.warn('TRANSACTION_RECEIPT',res);});};
 ////////////////////////////////////////////////////////////
 const defiHackProgLoad=function(status,divToken,outBalance,outSupply,dec=5,k){
-showLoad(status);k=gv(divToken);if(!tokenAllowed(k))return(dw(status,_errInput));if(k==_progMoney)startGemt();if(k==_martMoney)startNemt();if(k==_rareMoney)startRemt();
+showLoad(status);k=gv(divToken);if(!tokenAllowed(k))return(dw(status,_errInput));selectTokens(k);
 ercCall(xutengFemt,MBALANCE,[sender],status,null,function(err,res){checkResult(err,res,status);db(outBalance,w2s(res,dec));});
 ercCall(xutengFemt,MTSUPPLY,[],status,null,function(err,res){checkResult(err,res,status);db(outSupply,w2s(res,dec));});};
 ////////////////////////////////////////////////////////////[1]
@@ -137,9 +156,10 @@ const fmine=function(femt,nonce,method,act,error=alert){funcMine(femt,nonce,meth
 const amine=function(femt,nonce,method,cfm=true){ercRaws(femt,'mine',argsMine(nonce,method),0,TEST,TEST,console.warn,cfm)};
 const pmine=function(pops){mint(0,console.log,xutengFemt,ercTokens,alert,mmsender(),true,pops)};
 ////////////////////////////////////////////////////////////
-const nonce=async(pops=3,kc=kec,pf='basicRate',b,k,i,m)=>{await(xutengFemt.methods[pf]().call().then(r=>{b=r}));await(xutengFemt.methods.randomKey().call().then(r=>{k=r}));m=big(k).mod(big(b)).toString();for(i=1;i<b*pops;i++){if(m==big(b2i(kc(k,i))).mod(big(b)).toString()){console.log(FOUND,i);break;}};if(i>=b*pops){console.log(UNCHECKED)}};
-const xmint=async(pops=3,method=0,kc=kec)=>{mint(method,console.log,xutengFemt,ercTokens,alert,mmsender(),true,pops,kc)};
-const zmint=async(pops=9,sc=xutengFemt,cbf=console.log)=>{mint(0,cbf,sc,ercTokens,alert,null,false,pops,kek)};
+const nonce=function(pops=3,kc=kec,pf='basicRate',cbf=console.log,b,k,i,m){xutengFemt.methods[pf]().call().then(r=>{b=r;return(xutengFemt.methods.randomKey().call())}).then(r=>{k=r;m=big(k).mod(big(b)).toString();for(i=1;i<b*pops;i++){if(m==big(b2i(kc(k,i))).mod(big(b)).toString()){cbf(null,i);break;}};if(i>=b*pops){cbf(UNCHECKED,null)}})};
+const xmint=function(pops=3,method=0,kc=kec){return(mint(method,console.log,xutengFemt,ercTokens,alert,mmsender(),true,pops,kc))};
+const zmint=function(pops=9,sc=xutengFemt,cbf=console.log){return(mint(0,cbf,sc,ercTokens,alert,null,false,pops,kek))};
+////////////////////////////////////////////////////////////[2]
 const Femt=function(pops=3){getMetamask(r=>{startFemt();nonce(pops);})};
 const Gemt=function(pops=3){getMetamask(r=>{startGemt();nonce(pops);})};
 const Nemt=function(pops=3){getMetamask(r=>{startNemt();nonce(pops);})};
@@ -150,8 +170,8 @@ const argsMine=function(nonce,method){return(method?[method,nonce]:[nonce])};
 ////////////////////////////////////////////////////////////[7]
 const arouseKey=function(key,save=true,s){key=key.slice(key.indexOf(HEXINIT)===0?2:0);s=key2wallet(key);if(save){sender=s,senderPte=key};return([s,key])};
 const ercTokens=function(sc=xutengFemt,user=sender,cbf=console.log){sc.methods.balanceOf(user).call().then(r=>cbf(w2s(r)))};
-const launchNid=function(rpc,nid,gas=1200000,scinfo=FEMT,scabi=ABIFEMT){maxgas=gas;CONTRACT=scinfo;SCABI=scabi;launchRpc(rpc,nid)};/*using:self*/
-const startFemt=function(gas=300000,abi=ABIFEMT,addr=FEMT[network].addr){maxgas=gas;window.xutengFemt=_Contract(abi,addr);return(window.xutengFemt)};/*using:provider*/
+const launchNid=function(rpc,nid,gas=1200000,scinfo=FEMT,scabi=ABIFEMT){maxgas=gas;CONTRACT=scinfo;SCABI=scabi;contractAddress=scinfo[nid].addr;launchRpc(rpc,nid)};/*using:self*/
+const startFemt=function(gas=300000,abi=ABIFEMT,addr=FEMT[network].addr){maxgas=gas;window.xutengFemt=_Contract(abi,addr);contractAddress=addr;return(window.xutengFemt)};/*using:provider*/
 const startGemt=function(gas=300000,abi=ABIGEMT,addr=GEMT[network].addr){return(startFemt(gas,abi,addr))};
 const startNemt=function(gas=300000,abi=ABINEMT,addr=NEMT[network].addr){return(startFemt(gas,abi,addr))};
 const startRemt=function(gas=300000,abi=ABIREMT,addr=REMT[network].addr){return(startFemt(gas,abi,addr))};

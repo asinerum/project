@@ -16,6 +16,10 @@ String.prototype.gt=function(bnum){return(big(this.toString()).gt(big(bnum)))};
 String.prototype.le=function(bnum){return(big(this.toString()).lte(big(bnum)))};
 String.prototype.lt=function(bnum){return(big(this.toString()).lt(big(bnum)))};
 ////////////////////////////////////////////////////////////
+String.prototype.is3ks=function(){try{return(avalid(JSON.parse(this).address))}catch(e){return(false)}};
+String.prototype.isKey=function(){return(hvalid(this)||hvalid(HEXINIT+this))};
+String.prototype.isBip=function(){return(bipRegex.test(this))};
+////////////////////////////////////////////////////////////
 String.prototype.escape=function(){return(this.replace(/"/g,'\\"'))};
 Array.prototype.sum=function(){return(this.reduce((a,b)=>(Number(a)+Number(b))))};
 const safeJSON=function(keys,vals,i=0,a=[]){if(keys.length!=vals.length)throw(null);for(;i<keys.length;i++)a.push(`"${keys[i]}":"${vals[i].toString().escape()}"`);return('{'+a.join(',')+'}');};
@@ -62,12 +66,14 @@ const bitChange=function(bal,amt,fee){return(satChange(toSat(bal),toSat(amt),toS
 const setInput=function(obj){return(JSON.stringify({obj:obj}));};
 const getInput=function(tx,cbf=console.log){if(!hvalid(tx))return(cbf(ERROR,null));web3.eth.getTransaction(tx,function(err,result){if(err||!result||!result.input)return(cbf(err,null));cbf(null,hexObj(result.input).obj);});};
 ////////////////////////////////////////////////////////////
+const mindif=function(hextime,dec=1){return(n2s((nowDate()-fromHex(hextime))/60,dec)+SPACE+'mins');};
 const toDate=function(y,m,d){return(parseInt(_Date(Date.UTC(y,m-1,d,0,0,0,0)).getTime()/1000,10));};
 const nowDate=function(){return(parseInt(_Date(0).getTime()/1000,10));};
 const fromDate=function(n){return(_Date(n*1000).toString());};
 ////////////////////////////////////////////////////////////
 const hiRegex=_Regex('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})');
 const loRegex=_Regex('^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})');
+const bipRegex=_Regex('[A-Za-z0-9]{58}');
 const hashRegex=_Regex('^0x([A-Fa-f0-9]{64})$');
 ////////////////////////////////////////////////////////////
 const numsInRange=function(n,rl,rh){return(n>rl&&n<rh);};

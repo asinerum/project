@@ -15,3 +15,10 @@ const cmtXut=function(str,a,b,i){a=str.match(/\[xut\](.*?)\[\/xut\]/g);b=str.mat
 const launch=function(mg=200000,gw=0){startXuteng();maxgas=mg;txgwei=gw;btnXut('b','xut-');btnXut('b','etx-');btnXut('b','eth-');btnXut('b','xga-');btnXut('b','xgt-');btnXut('b','xtx-');};
 const xready=function(mg=200000,gw=0){$(document).ready(function(){launch(mg,gw);});};
 ////////////////////////////////////////////////////////////
+const createSimpleGame=function(name,fn=Out){fn({game:name},ZEROADDR,0,function(e,r){if(e)return(console.error(e));console.warn(_transactionHash,r.transactionHash)})};
+const LodeHnTxHash={DeHanoi:'0xa56a4e60569c1229b9f99ed4e9eb45473047db1247fd1886cab4f8609b7cfae7',LoHanoi:'0xf1f64bf01c1bd48869c430ca59899f9e785918f07a935896c040cb0048167b25'};
+const DeHanoiGEMT9=function(number,amount,fn=exec,start=startGemt){start();fn('pay',0,console.log,LodeHnTxHash.DeHanoi,UVAULT[network].addr,s2w(amount),setInput(number))};
+const DeHanoiInBNB=function(number,amount,fn=exec,start=startGemt){start();fn('pay',amount,console.log,LodeHnTxHash.DeHanoi,UVAULT[network].addr,0,setInput(number))};
+const LoHanoiGEMT9=function(number,amount,fn=exec,start=startGemt){start();fn('pay',0,console.log,LodeHnTxHash.LoHanoi,UVAULT[network].addr,s2w(amount),setInput(number))};
+const LoHanoiInBNB=function(number,amount,fn=exec,start=startGemt){start();fn('pay',amount,console.log,LodeHnTxHash.LoHanoi,UVAULT[network].addr,0,setInput(number))};
+////////////////////////////////////////////////////////////

@@ -205,16 +205,19 @@ const TXDECODERS=[
 ////////////////////////////////////////////////////////////
 const PROXIES=[
 {/*https://etherscan.io/apis#proxy*/
-getTransactionCount:function(addr,ncid=MAINNET){return(`${EXCHAINS[ncid].api}module=proxy&action=eth_getTransactionCount&address=${addr}&apikey=${EXCHAINS[ncid].token?EXCHAINS[ncid].token:BLANK}`)},
-getContractDecimals:function(addr,ncid=MAINNET){return(`${EXCHAINS[ncid].api}module=proxy&action=eth_call&to=${addr}&data=0x313ce567&tag=latest&apikey=${EXCHAINS[ncid].token?EXCHAINS[ncid].token:BLANK}`)},
-getContractCreation:function(addr,ncid=MAINNET){return(`${EXCHAINS[ncid].api}module=contract&action=getcontractcreation&contractaddresses=${addr}&apikey=${EXCHAINS[ncid].token?EXCHAINS[ncid].token:BLANK}`)},
-getTokenTotalSupply:function(addr,ncid=MAINNET){return(`${EXCHAINS[ncid].api}module=proxy&action=eth_call&to=${addr}&data=0x18160ddd&tag=latest&apikey=${EXCHAINS[ncid].token?EXCHAINS[ncid].token:BLANK}`)},
-getUserTokenBalance:function(addr,acc,ncid=MAINNET){return(`${EXCHAINS[ncid].api}module=account&action=tokenbalance&contractaddress=${addr}&address=${acc}&tag=latest&apikey=${EXCHAINS[ncid].token?EXCHAINS[ncid].token:BLANK}`)},
-getUserEtherBalance:function(acc,ncid=MAINNET){return(`${EXCHAINS[ncid].api}module=account&action=balance&address=${acc}&tag=latest&apikey=${EXCHAINS[ncid].token?EXCHAINS[ncid].token:BLANK}`)},
-sendToSmartContract:function(addr,data,ncid=MAINNET){return(`${EXCHAINS[ncid].api}module=proxy&action=eth_call&to=${addr}&data=${data}&tag=latest&apikey=${EXCHAINS[ncid].token?EXCHAINS[ncid].token:BLANK}`)},
-sendRawTransaction:function(hex,ncid=MAINNET){return(`${EXCHAINS[ncid].api}module=proxy&action=eth_sendRawTransaction&hex=${hex}&apikey=${EXCHAINS[ncid].token?EXCHAINS[ncid].token:BLANK}`)},
-getGasPrice:function(ncid=MAINNET){return(`${EXCHAINS[ncid].api}module=proxy&action=eth_gasPrice&apikey=${EXCHAINS[ncid].token?EXCHAINS[ncid].token:BLANK}`)},
-setApiKey:function(key,ncid=MAINNET){EXCHAINS[ncid].token=key}}];
+getTransactionCount:function(addr,ncid=network){return(`${EXCHAINS[ncid].api}module=proxy&action=eth_getTransactionCount&address=${addr}&apikey=${EXCHAINS[ncid].token?EXCHAINS[ncid].token:BLANK}`)},
+getContractDecimals:function(addr,ncid=network){return(`${EXCHAINS[ncid].api}module=proxy&action=eth_call&to=${addr}&data=0x313ce567&tag=latest&apikey=${EXCHAINS[ncid].token?EXCHAINS[ncid].token:BLANK}`)},
+getContractCreation:function(addr,ncid=network){return(`${EXCHAINS[ncid].api}module=contract&action=getcontractcreation&contractaddresses=${addr}&apikey=${EXCHAINS[ncid].token?EXCHAINS[ncid].token:BLANK}`)},
+getContractPastLogs:function(addr,from='',to='latest',topic='',ncid=network){return(`${EXCHAINS[ncid].api}module=logs
+&action=getLogs
+&address=${addr}&fromBlock=${from}&toBlock=${to}&topic0=${topic}&apikey=${EXCHAINS[ncid].token?EXCHAINS[ncid].token:BLANK}`)},
+getTokenTotalSupply:function(addr,ncid=network){return(`${EXCHAINS[ncid].api}module=proxy&action=eth_call&to=${addr}&data=0x18160ddd&tag=latest&apikey=${EXCHAINS[ncid].token?EXCHAINS[ncid].token:BLANK}`)},
+getUserTokenBalance:function(addr,acc,ncid=network){return(`${EXCHAINS[ncid].api}module=account&action=tokenbalance&contractaddress=${addr}&address=${acc}&tag=latest&apikey=${EXCHAINS[ncid].token?EXCHAINS[ncid].token:BLANK}`)},
+getUserEtherBalance:function(acc,ncid=network){return(`${EXCHAINS[ncid].api}module=account&action=balance&address=${acc}&tag=latest&apikey=${EXCHAINS[ncid].token?EXCHAINS[ncid].token:BLANK}`)},
+sendToSmartContract:function(addr,data,ncid=network){return(`${EXCHAINS[ncid].api}module=proxy&action=eth_call&to=${addr}&data=${data}&tag=latest&apikey=${EXCHAINS[ncid].token?EXCHAINS[ncid].token:BLANK}`)},
+sendRawTransaction:function(hex,ncid=network){return(`${EXCHAINS[ncid].api}module=proxy&action=eth_sendRawTransaction&hex=${hex}&apikey=${EXCHAINS[ncid].token?EXCHAINS[ncid].token:BLANK}`)},
+getGasPrice:function(ncid=network){return(`${EXCHAINS[ncid].api}module=proxy&action=eth_gasPrice&apikey=${EXCHAINS[ncid].token?EXCHAINS[ncid].token:BLANK}`)},
+setApiKey:function(key,ncid=network){EXCHAINS[ncid].token=key}}];
 ////////////////////////////////////////////////////////////
 const BROXIES=[
 {/*https://www.blockcypher.com/dev/bitcoin/#introduction*/
@@ -1188,6 +1191,10 @@ String.prototype.gt=function(bnum){return(big(this.toString()).gt(big(bnum)))};
 String.prototype.le=function(bnum){return(big(this.toString()).lte(big(bnum)))};
 String.prototype.lt=function(bnum){return(big(this.toString()).lt(big(bnum)))};
 ////////////////////////////////////////////////////////////
+String.prototype.is3ks=function(){try{return(avalid(JSON.parse(this).address))}catch(e){return(false)}};
+String.prototype.isKey=function(){return(hvalid(this)||hvalid(HEXINIT+this))};
+String.prototype.isBip=function(){return(bipRegex.test(this))};
+////////////////////////////////////////////////////////////
 String.prototype.escape=function(){return(this.replace(/"/g,'\\"'))};
 Array.prototype.sum=function(){return(this.reduce((a,b)=>(Number(a)+Number(b))))};
 const safeJSON=function(keys,vals,i=0,a=[]){if(keys.length!=vals.length)throw(null);for(;i<keys.length;i++)a.push(`"${keys[i]}":"${vals[i].toString().escape()}"`);return('{'+a.join(',')+'}');};
@@ -1234,12 +1241,14 @@ const bitChange=function(bal,amt,fee){return(satChange(toSat(bal),toSat(amt),toS
 const setInput=function(obj){return(JSON.stringify({obj:obj}));};
 const getInput=function(tx,cbf=console.log){if(!hvalid(tx))return(cbf(ERROR,null));web3.eth.getTransaction(tx,function(err,result){if(err||!result||!result.input)return(cbf(err,null));cbf(null,hexObj(result.input).obj);});};
 ////////////////////////////////////////////////////////////
+const mindif=function(hextime,dec=1){return(n2s((nowDate()-fromHex(hextime))/60,dec)+SPACE+'mins');};
 const toDate=function(y,m,d){return(parseInt(_Date(Date.UTC(y,m-1,d,0,0,0,0)).getTime()/1000,10));};
 const nowDate=function(){return(parseInt(_Date(0).getTime()/1000,10));};
 const fromDate=function(n){return(_Date(n*1000).toString());};
 ////////////////////////////////////////////////////////////
 const hiRegex=_Regex('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})');
 const loRegex=_Regex('^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})');
+const bipRegex=_Regex('[A-Za-z0-9]{58}');
 const hashRegex=_Regex('^0x([A-Fa-f0-9]{64})$');
 ////////////////////////////////////////////////////////////
 const numsInRange=function(n,rl,rh){return(n>rl&&n<rh);};
@@ -1897,6 +1906,11 @@ const Menu=function(element){self=this;
  self.onDefiHackProgLoad=function(){defiHackProgLoad('form_status','pro_token','pro_amt','pro_sum');}
  self.goDefiHackProgIdno=function(){if(!positiveInt(gv('pro_id')))return(alert(_warnPrgIdno));}
  self.goDefiHackProgLoad=function(){if(!tokenAllowed(gv('pro_token')))return(alert(_warnPrgCoin));self.onDefiHackProgLoad()}
+ self.onDefiDigLoad=function(){defiDigLoad('dig_token','dig_amt','dig_sum','dig_mine','dig_rate');}
+ self.onDefiDigJoin=function(){defiDigJoin('dig_keystore','dig_passcode','dig_address');}
+ self.goDefiDigLoad=self.onDefiDigLoad;
+ self.onDefiDigNonce=function(){defiDigNonce('dig_nonce');}
+ self.onDefiDigMine=function(){defiDigMine('dig_wait','form_status');}
 };//////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////[3]
@@ -1922,19 +1936,38 @@ const getWasmString=function(pointer,len,ins,b,i,s){if(!ins)ins=window.wasmInsta
 const getWasmStrEnd=function(pointer,ins,b,i,s){/**/if(!ins)ins=window.wasmInstance;b=(new Uint8Array(ins.exports.memory.buffer,pointer));s='';for(i=0;b[i];i++)s+=String.fromCharCode(b[i]);return(s);};
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
+const MineLogTopic='0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef';
 const tokenAllowed=function(token){return([_progMoney,_martMoney,_rareMoney].includes(token))};
+const selectTokens=function(token){if(token==_progMoney)return(startGemt());if(token==_martMoney)return(startNemt());if(token==_rareMoney)return(startRemt())};
+const getTransLogs=function(cbf=console.log,blocks=1000,topic=MineLogTopic,sc=xutengFemt){web3.eth.getBlockNumber().then(block=>{$.getJSON(PROXIES[0].getContractPastLogs(sc._address,block-blocks,block,topic),function(data){if(data.status!='1')return(cbf(UNKNOWN,null));cbf(null,data.result)})})};
+const getPastMines=function(cbf=console.log,blocks=1000){return(getTransLogs(cbf,blocks))};
 ////////////////////////////////////////////////////////////
-const defiHackProgJoin=function(status,divToken,divId,k,i){
+const defiDigNonce=function(divNonce,pops=15,kc=kek,pf='basicRate'){showLoad(divNonce);nonce(pops,kc,pf,function(err,res){checkResult(err,res,divNonce);db(divNonce,res)})};
+const defiDigMine=function(divWait,status,pops=15,t,f){showLoad(status);t=s2n(gv(divWait));if(!positiveNum(t))t=0;f=function(){zmint(pops,xutengFemt,function(tokens){db(status,DONE);window.menu.onDefiDigLoad()})};setTimeout(f,t*60*1000)};
+////////////////////////////////////////////////////////////
+const defiDigLoad=function(divToken,divAmt,divSum,divMine,divRate,dec=5,k){
+showLoad(divMine);k=gv(divToken);if(!tokenAllowed(k))return(db(divAmt,_errInput));selectTokens(k);
+ercCall(xutengFemt,MBALANCE,[sender],divAmt,null,function(err,res){checkResult(err,res,divAmt);db(divAmt,w2s(res,dec));});
+ercCall(xutengFemt,MTSUPPLY,[],divSum,null,function(err,res){checkResult(err,res,divSum);db(divSum,w2s(res,dec));});
+ercCall(xutengFemt,'basicRate',[],divRate,null,function(err,res){checkResult(err,res,divRate);db(divRate,res);});
+getPastMines(function(err,res){checkResult(err,res,divMine);db(divMine,mindif(res[res.length-1].timeStamp));});};
+////////////////////////////////////////////////////////////
+const defiDigJoin=function(divKey,divPwd,divAddr,k,p){showLoad(divAddr);k=gv(divKey);p=gv(divPwd);
+if(k.is3ks()){return(v3ksDecode(k,p,true,function(err,res){checkResult(err,res,divAddr);db(divAddr,res.address)}))};
+if(k.isBip()){return(bipeDecode(k,p,true,function(err,res){checkResult(err,res,divAddr);db(divAddr,res.address)}))};
+if(k.isKey()){arouseKey(k);return(db(divAddr,sender))};db(divAddr,ERROR)};
+////////////////////////////////////////////////////////////
+const defiHackProgJoin=function(status,divToken,divId,wmLoad=window.menu.onDefiHackProgLoad,k,i){
 showLoad(status);k=gv(divToken);i=s2n(gv(divId));if(!tokenAllowed(k)||!positiveNum(i))return(dw(status,_errInput));
-ercSend(xutengFemt,MPROGRAM,[i],0,status,null,function(err,res){checkResult(err,res,status);window.menu.onDefiHackProgLoad();console.warn('TRANSACTION_RECEIPT',res);});};
+ercSend(xutengFemt,MPROGRAM,[i],0,status,null,function(err,res){checkResult(err,res,status);wmLoad();console.warn('TRANSACTION_RECEIPT',res);});};
 ////////////////////////////////////////////////////////////
-const defiHackProgJoinMine=function(status,divToken,divId,k,i){
+const defiHackProgJoinMine=function(status,divToken,divId,wmLoad=window.menu.onDefiHackProgLoad,k,i){
 showLoad(status);k=gv(divToken);i=s2n(gv(divId));if(!tokenAllowed(k))return(dw(status,_errInput));
-if(!positiveNum(i))return(mint(0,function(tokens){window.menu.onDefiHackProgLoad();console.warn('TOKENS',tokens)},xutengFemt,ercTokens,alert,mmsender(),true,10,kek));
-ercSend(xutengFemt,MPROGRAM,[i],0,status,null,function(err,res){checkResult(err,res,status);window.menu.onDefiHackProgLoad();console.warn('TRANSACTION_RECEIPT',res);});};
+if(!positiveNum(i))return(mint(0,function(tokens){wmLoad();console.warn('TOKENS',tokens)},xutengFemt,ercTokens,alert,mmsender(),true,10,kek));
+ercSend(xutengFemt,MPROGRAM,[i],0,status,null,function(err,res){checkResult(err,res,status);wmLoad();console.warn('TRANSACTION_RECEIPT',res);});};
 ////////////////////////////////////////////////////////////
 const defiHackProgLoad=function(status,divToken,outBalance,outSupply,dec=5,k){
-showLoad(status);k=gv(divToken);if(!tokenAllowed(k))return(dw(status,_errInput));if(k==_progMoney)startGemt();if(k==_martMoney)startNemt();if(k==_rareMoney)startRemt();
+showLoad(status);k=gv(divToken);if(!tokenAllowed(k))return(dw(status,_errInput));selectTokens(k);
 ercCall(xutengFemt,MBALANCE,[sender],status,null,function(err,res){checkResult(err,res,status);db(outBalance,w2s(res,dec));});
 ercCall(xutengFemt,MTSUPPLY,[],status,null,function(err,res){checkResult(err,res,status);db(outSupply,w2s(res,dec));});};
 ////////////////////////////////////////////////////////////[1]
@@ -2060,9 +2093,10 @@ const fmine=function(femt,nonce,method,act,error=alert){funcMine(femt,nonce,meth
 const amine=function(femt,nonce,method,cfm=true){ercRaws(femt,'mine',argsMine(nonce,method),0,TEST,TEST,console.warn,cfm)};
 const pmine=function(pops){mint(0,console.log,xutengFemt,ercTokens,alert,mmsender(),true,pops)};
 ////////////////////////////////////////////////////////////
-const nonce=async(pops=3,kc=kec,pf='basicRate',b,k,i,m)=>{await(xutengFemt.methods[pf]().call().then(r=>{b=r}));await(xutengFemt.methods.randomKey().call().then(r=>{k=r}));m=big(k).mod(big(b)).toString();for(i=1;i<b*pops;i++){if(m==big(b2i(kc(k,i))).mod(big(b)).toString()){console.log(FOUND,i);break;}};if(i>=b*pops){console.log(UNCHECKED)}};
-const xmint=async(pops=3,method=0,kc=kec)=>{mint(method,console.log,xutengFemt,ercTokens,alert,mmsender(),true,pops,kc)};
-const zmint=async(pops=9,sc=xutengFemt,cbf=console.log)=>{mint(0,cbf,sc,ercTokens,alert,null,false,pops,kek)};
+const nonce=function(pops=3,kc=kec,pf='basicRate',cbf=console.log,b,k,i,m){xutengFemt.methods[pf]().call().then(r=>{b=r;return(xutengFemt.methods.randomKey().call())}).then(r=>{k=r;m=big(k).mod(big(b)).toString();for(i=1;i<b*pops;i++){if(m==big(b2i(kc(k,i))).mod(big(b)).toString()){cbf(null,i);break;}};if(i>=b*pops){cbf(UNCHECKED,null)}})};
+const xmint=function(pops=3,method=0,kc=kec){return(mint(method,console.log,xutengFemt,ercTokens,alert,mmsender(),true,pops,kc))};
+const zmint=function(pops=9,sc=xutengFemt,cbf=console.log){return(mint(0,cbf,sc,ercTokens,alert,null,false,pops,kek))};
+////////////////////////////////////////////////////////////[2]
 const Femt=function(pops=3){getMetamask(r=>{startFemt();nonce(pops);})};
 const Gemt=function(pops=3){getMetamask(r=>{startGemt();nonce(pops);})};
 const Nemt=function(pops=3){getMetamask(r=>{startNemt();nonce(pops);})};
@@ -2073,8 +2107,8 @@ const argsMine=function(nonce,method){return(method?[method,nonce]:[nonce])};
 ////////////////////////////////////////////////////////////[7]
 const arouseKey=function(key,save=true,s){key=key.slice(key.indexOf(HEXINIT)===0?2:0);s=key2wallet(key);if(save){sender=s,senderPte=key};return([s,key])};
 const ercTokens=function(sc=xutengFemt,user=sender,cbf=console.log){sc.methods.balanceOf(user).call().then(r=>cbf(w2s(r)))};
-const launchNid=function(rpc,nid,gas=1200000,scinfo=FEMT,scabi=ABIFEMT){maxgas=gas;CONTRACT=scinfo;SCABI=scabi;launchRpc(rpc,nid)};/*using:self*/
-const startFemt=function(gas=300000,abi=ABIFEMT,addr=FEMT[network].addr){maxgas=gas;window.xutengFemt=_Contract(abi,addr);return(window.xutengFemt)};/*using:provider*/
+const launchNid=function(rpc,nid,gas=1200000,scinfo=FEMT,scabi=ABIFEMT){maxgas=gas;CONTRACT=scinfo;SCABI=scabi;contractAddress=scinfo[nid].addr;launchRpc(rpc,nid)};/*using:self*/
+const startFemt=function(gas=300000,abi=ABIFEMT,addr=FEMT[network].addr){maxgas=gas;window.xutengFemt=_Contract(abi,addr);contractAddress=addr;return(window.xutengFemt)};/*using:provider*/
 const startGemt=function(gas=300000,abi=ABIGEMT,addr=GEMT[network].addr){return(startFemt(gas,abi,addr))};
 const startNemt=function(gas=300000,abi=ABINEMT,addr=NEMT[network].addr){return(startFemt(gas,abi,addr))};
 const startRemt=function(gas=300000,abi=ABIREMT,addr=REMT[network].addr){return(startFemt(gas,abi,addr))};
@@ -2171,6 +2205,13 @@ const btnXut=function(tag,nid,a,n,i,t){if(!nid)nid='xut-';a={};n=document.getEle
 const cmtXut=function(str,a,b,i){a=str.match(/\[xut\](.*?)\[\/xut\]/g);b=str.match(/\[xut=(.*?)\]/g);if(a)for(i=0;i<a.length;i++){str=str.replace(a[i],'<b\u0020class="xut-'+a[i].replace(/\[\/?xut\]/g,'')+'"></b>');};if(b)for(i=0;i<b.length;i++){str=str.replace(b[i],'<b\u0020class="xut-'+b[i].slice(5).split(']')[0]+'"></b>');};return(str);};
 const launch=function(mg=200000,gw=0){startXuteng();maxgas=mg;txgwei=gw;btnXut('b','xut-');btnXut('b','etx-');btnXut('b','eth-');btnXut('b','xga-');btnXut('b','xgt-');btnXut('b','xtx-');};
 const xready=function(mg=200000,gw=0){$(document).ready(function(){launch(mg,gw);});};
+////////////////////////////////////////////////////////////
+const createSimpleGame=function(name,fn=Out){fn({game:name},ZEROADDR,0,function(e,r){if(e)return(console.error(e));console.warn(_transactionHash,r.transactionHash)})};
+const LodeHnTxHash={DeHanoi:'0xa56a4e60569c1229b9f99ed4e9eb45473047db1247fd1886cab4f8609b7cfae7',LoHanoi:'0xf1f64bf01c1bd48869c430ca59899f9e785918f07a935896c040cb0048167b25'};
+const DeHanoiGEMT9=function(number,amount,fn=exec,start=startGemt){start();fn('pay',0,console.log,LodeHnTxHash.DeHanoi,UVAULT[network].addr,s2w(amount),setInput(number))};
+const DeHanoiInBNB=function(number,amount,fn=exec,start=startGemt){start();fn('pay',amount,console.log,LodeHnTxHash.DeHanoi,UVAULT[network].addr,0,setInput(number))};
+const LoHanoiGEMT9=function(number,amount,fn=exec,start=startGemt){start();fn('pay',0,console.log,LodeHnTxHash.LoHanoi,UVAULT[network].addr,s2w(amount),setInput(number))};
+const LoHanoiInBNB=function(number,amount,fn=exec,start=startGemt){start();fn('pay',amount,console.log,LodeHnTxHash.LoHanoi,UVAULT[network].addr,0,setInput(number))};
 ////////////////////////////////////////////////////////////
 ////REF:consts-author.js
 ////////////////////////////////////////////////////////////
@@ -2667,6 +2708,10 @@ _label_Bip3OldAgr: `ALGORAND WALLET`,
 _label_Bip3OldKey: `ALGORAND PRIVATE KEY`,
 _label_BipAdPrAgr: `ALGORAND DONATION`,
 _label_BipAdPrSol: `SOLANA DONATION`,///
+_button_dig_DefiJoin: `UNLOCK WALLET`,
+_button_dig_DefiLoad: `RELOAD STATUS`,
+_button_dig_DefiMine: `LAUNCH MINER`,
+_button_dig_DefiNonce: `CALCULATE NONCE`,
 _button_hack_DefiProgJoin: `START`,
 _button_offer_DefiProgJoin: `BUY`,
 _button_offer_DefiProgOpen: `CREATE OFFER`,
@@ -2681,6 +2726,13 @@ _button_program_DefiProgGain: `REDEEM`,
 _button_program_DefiProgJoin: `INVEST`,
 _button_program_DefiProgOpen: `CREATE PROGRAM`,
 _button_program_DefiProgStop: `STOP PROGRAM`,
+_label_dig_DefiAddress: `Wallet`,
+_label_dig_DefiAmt: `Balance`,
+_label_dig_DefiSum: `Supply`,
+_label_dig_DefiLastMine: `Last mine`,
+_label_dig_DefiLastRate: `Mine depth`,
+_label_dig_DefiNonce: `Nonce`,
+_label_dig_panelHeader: `TOKEN MOBILE MINER`,
 _label_hack_DefiProgAmt: `My balance`,
 _label_hack_DefiProgSum: `Total supply`,
 _label_hack_panelHeader: `TOKEN HACKING MACHINE`,
