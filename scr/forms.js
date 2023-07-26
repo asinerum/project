@@ -73,7 +73,7 @@ const fromDate=function(n){return(_Date(n*1000).toString());};
 ////////////////////////////////////////////////////////////
 const hiRegex=_Regex('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})');
 const loRegex=_Regex('^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})');
-const bipRegex=_Regex('[A-Za-z0-9]{58}');
+const bipRegex=_Regex('^([A-Za-z0-9]{58})$');
 const hashRegex=_Regex('^0x([A-Fa-f0-9]{64})$');
 ////////////////////////////////////////////////////////////
 const numsInRange=function(n,rl,rh){return(n>rl&&n<rh);};
