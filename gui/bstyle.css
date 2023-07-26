@@ -238,7 +238,7 @@ img.thumbs{
  box-sizing:border-box;
  width:100%;/**/
  margin:2px;
- padding:5px;}
+ padding:10px 5px;}
 .ob:focus{
  outline:none;
  border:1px solid #728a71;
@@ -253,7 +253,7 @@ img.thumbs{
  box-sizing:border-box;
  width:100%;/**/
  margin:2px;
- padding:5px;}
+ padding:12px 5px;}
 .vb:focus{
  outline:none;
  border:1px solid #f0ad26;
@@ -271,7 +271,7 @@ img.thumbs{
  box-sizing:border-box;
  width:100%;/**/
  margin:2px;
- padding:5px;}
+ padding:15px 5px;}
 /*---------------------------------------*/
 .vhead{
  background-color:#735ea6;
@@ -284,7 +284,7 @@ img.thumbs{
  box-sizing:border-box;
  width:100%;/**/
  margin:2px;
- padding:5px;}
+ padding:20px 5px;}
 /*---------------------------------------*/
 /*=======================================*/
 .note{
