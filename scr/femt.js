@@ -73,6 +73,8 @@ const call=function(func,...args){ercFuncCall(func,xutengFemt,...args).then(r=>r
 const pick=function(func,...args){ercFuncCall(func,xutengFemt,...args).then(r=>rset(func,w2s(r),console.log,...args))};
 const make=function(func,cbf,...args){exec(func,0,cbf,...args)};
 const goto=function(contract){xutengFemt=contract;contractAddress=contract._address};
+const toto=function(to,tokens,cfm=true,cbf=console.log){return(ercRaws(xutengFemt,'transfer',[to,s2w(tokens)],0,null,null,cbf,cfm))};
+const coto=function(to,ethers,input={},cbf=console.log){return(out(input,to,ethers,cbf))};
 const hook=function(func,eth,cbf,...args){ercFuncRaws(func,xutengFemt,eth,null,...args)};//[cbf]:PseudoParam
 const exec=function(func,eth,cbf,...args){ercFuncSend(func,xutengFemt,eth,null,...args).then(r=>rset(func,r,cbf,...args))};
 const Fish=function(tokens=0,vault=UVAULT){return(fish(tokens,vault,exec))};
