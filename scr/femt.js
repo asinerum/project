@@ -135,8 +135,9 @@ const ercFunc=function(funcName,sc=xutengFemt,...args){return(sc.methods[funcNam
 const ercFabi=function(funcName,sc=xutengFemt,...args){return(sc.methods[funcName](...args).encodeABI());};
 const ercFgas=function(funcName,sc=xutengFemt,...args){return(sc.methods[funcName](...args).estimateGas());};/*promise*/
 const ercEgas=function(funcName,sc=xutengFemt,status=TEST,out=TEST,cbf=console.log,cbo=dw,...args){showLoad(status);ercFgas(funcName,sc,...args).then(data=>{showOkay(status);cbo(out,data);cbf(null,data)}).catch(err=>{showError(status);cbf(err,null)});};
+////////////////////////////////////////////////////////////[3]
 const ercFuncSend=function(funcName,sc=xutengFemt,eth=0,options=null,...args){if(!options)options=mmsender(eth);return(ercFunc(funcName,sc,...args).send(options));};/*promise*/
-const ercFuncRaws=function(funcName,sc=xutengFemt,eth=0,options=null,...args){if(!options)options=mmsender(eth);return(ercRaws(sc,funcName,args).then(console.log))};/*promise*/
+const ercFuncRaws=function(funcName,sc=xutengFemt,eth=0,options=null,...args){if(!options)options=mmsender(eth);return(ercRaws(sc,funcName,args))};/*promise*/
 const ercFuncCall=function(funcName,sc=xutengFemt,...args){return(ercFunc(funcName,sc,...args).call());};/*promise*/
 ////////////////////////////////////////////////////////////[3]
 const ercCoin=function(addr=sender,status=TEST,out=TEST,cbf=console.log,cbo=dw){showLoad(status);web3.eth.getBalance(addr).then(data=>{showOkay(status);cbo(out,data);cbf(null,data)}).catch(err=>{showError(status);cbf(err,null)});};
