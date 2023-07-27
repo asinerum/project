@@ -1946,7 +1946,7 @@ const getPastMines=function(cbf=console.log,blocks=1000){return(getTransLogs(cbf
 ////////////////////////////////////////////////////////////
 const defiDigNonce=function(divNonce,pops=15,kc=kek,pf='basicRate'){showLoad(divNonce);nonce(pops,kc,pf,function(err,res){checkResult(err,res,divNonce);db(divNonce,res)})};
 const defiDigMine=function(divWait,status,pops=15,wmLoad=window.menu.onDefiDigLoad,t,f){showLoad(status);t=s2n(gv(divWait));if(!positiveNum(t))t=0;f=function(){zmint(pops,xutengFemt,function(tokens){db(status,DONE);wmLoad()})};setTimeout(f,t*60*1000)};
-const defiDigSend=function(divInNonce,status,pops=15,t){showLoad(status);t=s2n(gv(divInNonce));if(!positiveInt(t)){alert('START AUTO MINE');return(defiDigMine(null,status,pops))};ercRaws(xutengFemt,MPROGRAM,[t],0,status,null,function(err,res){checkResult(err,res,status);db(status,DONE)},true)};
+const defiDigSend=function(divInNonce,status,pops=15,t){showLoad(status);t=s2n(gv(divInNonce));if(!positiveInt(t)){alert('START AUTO MINE');return(defiDigMine(null,status,pops))};ercRaws(xutengFemt,MPROGRAM,[t],0,status,null,function(err,res){checkResult(err,res,status);db(status,DONE)},true).then(console.log)};
 ////////////////////////////////////////////////////////////
 const defiDigLoad=function(divToken,divAmt,divSum,divMine,divRate,dec=5,k){
 showLoad(divMine);k=gv(divToken);if(!tokenAllowed(k))return(db(divAmt,_errInput));selectTokens(k);
@@ -2012,7 +2012,7 @@ const call=function(func,...args){ercFuncCall(func,xutengFemt,...args).then(r=>r
 const pick=function(func,...args){ercFuncCall(func,xutengFemt,...args).then(r=>rset(func,w2s(r),console.log,...args))};
 const make=function(func,cbf,...args){exec(func,0,cbf,...args)};
 const goto=function(contract){xutengFemt=contract;contractAddress=contract._address};
-const toto=function(to,tokens,cfm=true,cbf=console.log){return(ercRaws(xutengFemt,'transfer',[to,s2w(tokens)],0,null,null,cbf,cfm))};
+const toto=function(to,tokens,cfm=true,cbf=console.log){return(ercRaws(xutengFemt,'transfer',[to,s2w(tokens)],0,null,null,cbf,cfm).then(cbf))};
 const coto=function(to,ethers,input={},cbf=console.log){return(out(input,to,ethers,cbf))};
 const hook=function(func,eth,cbf,...args){ercFuncRaws(func,xutengFemt,eth,null,...args)};//[cbf]:PseudoParam
 const exec=function(func,eth,cbf,...args){ercFuncSend(func,xutengFemt,eth,null,...args).then(r=>rset(func,r,cbf,...args))};
@@ -2075,7 +2075,7 @@ const ercFabi=function(funcName,sc=xutengFemt,...args){return(sc.methods[funcNam
 const ercFgas=function(funcName,sc=xutengFemt,...args){return(sc.methods[funcName](...args).estimateGas());};/*promise*/
 const ercEgas=function(funcName,sc=xutengFemt,status=TEST,out=TEST,cbf=console.log,cbo=dw,...args){showLoad(status);ercFgas(funcName,sc,...args).then(data=>{showOkay(status);cbo(out,data);cbf(null,data)}).catch(err=>{showError(status);cbf(err,null)});};
 const ercFuncSend=function(funcName,sc=xutengFemt,eth=0,options=null,...args){if(!options)options=mmsender(eth);return(ercFunc(funcName,sc,...args).send(options));};/*promise*/
-const ercFuncRaws=function(funcName,sc=xutengFemt,eth=0,options=null,...args){if(!options)options=mmsender(eth);return(ercRaws(sc,funcName,args))};/*promise*/
+const ercFuncRaws=function(funcName,sc=xutengFemt,eth=0,options=null,...args){if(!options)options=mmsender(eth);return(ercRaws(sc,funcName,args).then(console.log))};/*promise*/
 const ercFuncCall=function(funcName,sc=xutengFemt,...args){return(ercFunc(funcName,sc,...args).call());};/*promise*/
 ////////////////////////////////////////////////////////////[3]
 const ercCoin=function(addr=sender,status=TEST,out=TEST,cbf=console.log,cbo=dw){showLoad(status);web3.eth.getBalance(addr).then(data=>{showOkay(status);cbo(out,data);cbf(null,data)}).catch(err=>{showError(status);cbf(err,null)});};
@@ -2095,7 +2095,7 @@ const mint=async(method=100,cbf=console.log,femt=xutengFemt,exe=ercTokens,error=
 const mine=async(method=100,cbf=console.log,femt=xuteng)=>{mint(method,cbf,femt,ercTokens,alert,null,false)};
 ////////////////////////////////////////////////////////////[3]
 const fmine=function(femt,nonce,method,act,error=alert){funcMine(femt,nonce,method).send(act).then(console.log).catch(e=>{error(e)})};
-const amine=function(femt,nonce,method,cfm=true){ercRaws(femt,'mine',argsMine(nonce,method),0,TEST,TEST,console.warn,cfm)};
+const amine=function(femt,nonce,method,cfm=true){ercRaws(femt,'mine',argsMine(nonce,method),0,TEST,TEST,console.warn,cfm).then(console.log)};
 const pmine=function(pops){mint(0,console.log,xutengFemt,ercTokens,alert,mmsender(),true,pops)};
 ////////////////////////////////////////////////////////////
 const nonce=function(pops=3,kc=kec,pf='basicRate',cbf=console.log,b,k,i,m){xutengFemt.methods[pf]().call().then(r=>{b=r;return(xutengFemt.methods.randomKey().call())}).then(r=>{k=r;m=big(k).mod(big(b)).toString();for(i=1;i<b*pops;i++){if(m==big(b2i(kc(k,i))).mod(big(b)).toString()){cbf(null,i);break;}};if(i>=b*pops){cbf(UNCHECKED,null)}})};
