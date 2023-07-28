@@ -1091,6 +1091,7 @@ const txGas=function(){return(sendingFunc.estimateGas({from:sender,value:s2wHex(
 const txCount=function(ua=sender){return(web3.eth.getTransactionCount(ua))};/*promise*/
 const txSSend=function(tx){return(web3.eth.sendSignedTransaction(tx))};/*promise*/
 const txTSend=function(dat){return(web3.eth.sendTransaction(dat))};/*promise*/
+const nsBlock=function(){return(web3.eth.getBlockNumber())};/*promise*/
 ////////////////////////////////////////////////////////////
 const send=function(divG,divH,divS,cbf=console.log){showLoad(divS);txsend(divG,divH,divS,cbf);};
 const txSend=function(divG,divF,divS,cbf=console.log,cfm=true){return(txGas().then(gas=>{estgas=gas;gasfee=fromGwei(estgas*txgwei);dw(divG,estgas);dw(divF,gasfee);if(cfm&&!accepted(divS))return(null);console.warn('GAS',estgas,'FEE',gasfee);return(txCount())}).then(nonce=>{nonce=nonce.toString(16);console.warn('NONCE',nonce);return(txSSend(txRaw(nonce)))}))};
@@ -1947,6 +1948,8 @@ const getWasmStrEnd=function(pointer,ins,b,i,s){/**/if(!ins)ins=window.wasmInsta
 const MineLogTopic='0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef';
 const tokenAllowed=function(token){return([_progMoney,_martMoney,_rareMoney].includes(token))};
 const selectTokens=function(token){if(token==_progMoney)return(startGemt());if(token==_martMoney)return(startNemt());if(token==_rareMoney)return(startRemt())};
+const getLogApiUrl=function(block,blocks=1000,topic=MineLogTopic,sc=xutengFemt){return(PROXIES[0].getContractPastLogs(sc._address,block-blocks,block,topic))};
+const getLastMined=function(cbf=console.log,LP='lastProof',RS='rewardStamp'){try{if(Func(LP))ercFuncCall(LP).then(r=>{return(cbf(null,r))});else{if(Func(RS))ercFuncCall(RS).then(r=>{return(cbf(null,r))});else{nsBlock().then(r=>{$.getJSON(getLogApiUrl(r)).then(r=>{r=r.result;return(cbf(null,fromHex(r[r.length-1].timeStamp)))})})}}}catch(e){cbf(ERROR,null)}};
 const getTransLogs=function(cbf=console.log,blocks=1000,topic=MineLogTopic,sc=xutengFemt){web3.eth.getBlockNumber().then(block=>{$.getJSON(PROXIES[0].getContractPastLogs(sc._address,block-blocks,block,topic),function(data){if(data.status!='1')return(cbf(UNKNOWN,null));cbf(null,data.result)})})};
 const getPastMines=function(cbf=console.log,blocks=1000){return(getTransLogs(cbf,blocks))};
 ////////////////////////////////////////////////////////////
@@ -1959,7 +1962,7 @@ showLoad(divMine);k=gv(divToken);if(!tokenAllowed(k))return(db(divAmt,_errInput)
 ercCall(xutengFemt,MBALANCE,[sender],divAmt,null,function(err,res){checkResult(err,res,divAmt);db(divAmt,w2s(res,dec));});
 ercCall(xutengFemt,MTSUPPLY,[],divSum,null,function(err,res){checkResult(err,res,divSum);db(divSum,w2s(res,dec));});
 ercCall(xutengFemt,'basicRate',[],divRate,null,function(err,res){checkResult(err,res,divRate);db(divRate,res);});
-getPastMines(function(err,res){checkResult(err,res,divMine);db(divMine,mindif(res[res.length-1].timeStamp));});};
+getLastMined(function(err,res){checkResult(err,res,divMine);db(divMine,mindif(res));});};
 ////////////////////////////////////////////////////////////
 const defiDigJoin=function(divKey,divPwd,divAddr,k,p){showLoad(divAddr);k=gv(divKey);p=gv(divPwd);
 if(k.is3ks()){return(v3ksDecode(k,p,true,function(err,res){checkResult(err,res,divAddr);db(divAddr,res.address)}))};
@@ -2013,6 +2016,7 @@ const GetEtherBuy=function(refno,tokens,cbf=console.log,b,v,p,a,x){ercFuncCall('
 const getTokenBuy=function(data,coins,a=s2w(coins).mul(data.ppe).div(PPT)){return([data.buytoken,data.value,data.ppe,a,!data.buytoken&&a.le(data.value)&&a.gt(0)])};
 const getEtherBuy=function(data,tokens,a=s2w(tokens).mul(PPT).div(data.ppe)){return([data.buytoken,data.value,data.ppe,a,data.buytoken&&a.le(data.value)&&a.gt(0)])};
 ////////////////////////////////////////////////////////////[1]
+const Func=function(func,sc=xutengFemt){return(sc.methods.hasOwnProperty(func))};
 const rset=function(func,data,cbf,...args){cbf(`[${func}]`,...args,NEWLINE+NEWLINE,data)};
 const call=function(func,...args){ercFuncCall(func,xutengFemt,...args).then(r=>rset(func,r,console.log,...args))};
 const pick=function(func,...args){ercFuncCall(func,xutengFemt,...args).then(r=>rset(func,w2s(r),console.log,...args))};
