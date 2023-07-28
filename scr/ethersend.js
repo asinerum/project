@@ -50,8 +50,9 @@ const webRaws=function(from,to,value='0'/*WEI:DECIMAL*/,data=HEXINIT,gas=maxgas,
 ////////////////////////////////////////////////////////////
 const txRaw=function(nonce){return(txraw(sendingAbi,nonce,sendingEth,0))};
 const txGas=function(){return(sendingFunc.estimateGas({from:sender,value:s2wHex(sendingEth)}))};/*promise*/
-const txCount=function(){return(web3.eth.getTransactionCount(sender))};/*promise*/
+const txCount=function(ua=sender){return(web3.eth.getTransactionCount(ua))};/*promise*/
 const txSSend=function(tx){return(web3.eth.sendSignedTransaction(tx))};/*promise*/
+const txTSend=function(dat){return(web3.eth.sendTransaction(dat))};/*promise*/
 ////////////////////////////////////////////////////////////
 const send=function(divG,divH,divS,cbf=console.log){showLoad(divS);txsend(divG,divH,divS,cbf);};
 const txSend=function(divG,divF,divS,cbf=console.log,cfm=true){return(txGas().then(gas=>{estgas=gas;gasfee=fromGwei(estgas*txgwei);dw(divG,estgas);dw(divF,gasfee);if(cfm&&!accepted(divS))return(null);console.warn('GAS',estgas,'FEE',gasfee);return(txCount())}).then(nonce=>{nonce=nonce.toString(16);console.warn('NONCE',nonce);return(txSSend(txRaw(nonce)))}))};
