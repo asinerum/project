@@ -156,14 +156,15 @@ const kek=function(num,nce){return(kex(num,nce,'uint256',fromHex(sender)))};
 const kec=function(num,nce){return(web3.utils.keccak256(web3.eth.abi.encodeParameters(['uint256','uint256'],[num,nce])))};
 const kex=function(num,nce,key='address',val=sender){return(web3.utils.keccak256(web3.eth.abi.encodeParameters([key,'uint256','uint256'],[val,num,nce])))};
 const b2i=function(hex,n,i){n=big(0);hex=byt(hex);for(i=0;i<hex.length;i++){n=n.add(big(hex[i]).mul(big(16).pow(big(i*2)).add(big(1))))};return(n.toString())};
-const mint=async(method=100,cbf=console.log,femt=xutengFemt,exe=ercTokens,error=alert,act=mmsender(),cfm=true,pops=3,kc=kec,pf='basicRate',b,k,i,m)=>{await(femt.methods[pf]().call().then(r=>{b=r}));await(femt.methods.randomKey().call().then(r=>{k=r}));m=big(k).mod(big(b)).toString();for(i=1;i<b*pops;i++){if(m==big(b2i(kc(k,i))).mod(big(b)).toString())break;};if(act){await(fmine(femt,i,method,act,error))}else{await(amine(femt,i,method,cfm))};exe(femt,sender,cbf)};
+const mint=async(method=100,cbf=console.log,femt=xutengFemt,exe=ercTokens,error=alert,act=mmsender(),cfm=true,pops=3,kc=kec,pf='basicRate',b,k,i,m)=>{await(femt.methods[pf]().call().then(r=>{b=r}));await(femt.methods.randomKey().call().then(r=>{k=r}));i=Nonce(b,k,kc,1,b*pops);if(i>b*pops){return(cbf(ERROR))}if(act){await(fmine(femt,i,method,act,error))}else{await(amine(femt,i,method,cfm))};exe(femt,sender,cbf)};
 const mine=async(method=100,cbf=console.log,femt=xuteng)=>{mint(method,cbf,femt,ercTokens,alert,null,false)};
 ////////////////////////////////////////////////////////////[3]
 const fmine=function(femt,nonce,method,act,error=alert){funcMine(femt,nonce,method).send(act).then(console.log).catch(e=>{error(e)})};
 const amine=function(femt,nonce,method,cfm=true){ercRaws(femt,'mine',argsMine(nonce,method),0,TEST,TEST,console.warn,cfm).then(console.log)};
 const pmine=function(pops){mint(0,console.log,xutengFemt,ercTokens,alert,mmsender(),true,pops)};
 ////////////////////////////////////////////////////////////
-const nonce=function(pops=3,kc=kec,pf='basicRate',cbf=console.log,b,k,i,m){xutengFemt.methods[pf]().call().then(r=>{b=r;return(xutengFemt.methods.randomKey().call())}).then(r=>{k=r;m=big(k).mod(big(b)).toString();for(i=1;i<b*pops;i++){if(m==big(b2i(kc(k,i))).mod(big(b)).toString()){cbf(null,i);break;}};if(i>=b*pops){cbf(UNCHECKED,null)}})};
+const Nonce=function(b,k,kc=kec,min=1,max=b*20,i,m){m=big(k).mod(big(b)).toString();for(i=min;i<=max;i++){if(m==big(b2i(kc(k,i))).mod(big(b)).toString()){break}}return(i)};
+const nonce=function(pops=3,kc=kec,pf='basicRate',cbf=console.log,b,k,i,m){xutengFemt.methods[pf]().call().then(r=>{b=r;return(xutengFemt.methods.randomKey().call())}).then(r=>{k=r;i=Nonce(b,k,kc,1,b*pops);if(i<=b*pops){cbf(null,i)}else{cbf(UNCHECKED,null)}})};
 const xmint=function(pops=3,method=0,kc=kec){return(mint(method,console.log,xutengFemt,ercTokens,alert,mmsender(),true,pops,kc))};
 const zmint=function(pops=9,sc=xutengFemt,cbf=console.log){return(mint(0,cbf,sc,ercTokens,alert,null,false,pops,kek))};
 ////////////////////////////////////////////////////////////[2]
