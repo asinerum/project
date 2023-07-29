@@ -1094,7 +1094,7 @@ const txTSend=function(dat){return(web3.eth.sendTransaction(dat))};/*promise*/
 const nsBlock=function(){return(web3.eth.getBlockNumber())};/*promise*/
 ////////////////////////////////////////////////////////////
 const send=function(divG,divH,divS,cbf=console.log){showLoad(divS);txsend(divG,divH,divS,cbf);};
-const txSend=function(divG,divF,divS,cbf=console.log,cfm=true){return(txGas().then(gas=>{estgas=gas;gasfee=fromGwei(estgas*txgwei);dw(divG,estgas);dw(divF,gasfee);if(cfm&&!accepted(divS))return(null);console.warn('GAS',estgas,'FEE',gasfee);return(txCount())}).then(nonce=>{nonce=nonce.toString(16);console.warn('NONCE',nonce);return(txSSend(txRaw(nonce)))}))};
+const txSend=function(divG,divF,divS,wrn=console.warn,cfm=true){return(txGas().then(gas=>{estgas=gas;gasfee=fromGwei(estgas*txgwei);dw(divG,estgas);dw(divF,gasfee);if(cfm&&!accepted(divS))return(null);wrn('GAS',estgas,'FEE',gasfee);return(txCount())}).then(nonce=>{nonce=nonce.toString(16);wrn('NONCE',nonce);return(txSSend(txRaw(nonce)))}))};/*promise*/
 const txsend=function(divG,divH,divS,cbf=console.log,cfm=true,run=true,x){txGas().then(gas=>{estgas=gas;gasfee=fromGwei(estgas*txgwei);if(cfm&&!accepted(divS))return;txCount().then(nonce=>{nonce=nonce.toString(16);x=txRaw(nonce);if(!run)return(cbf(null,x));txSSend(x).on(RECEIPT,receipt=>{txreceipt=receipt;if(cbf)cbf(null,txreceipt);console.log(txreceipt);dw(divG,txreceipt.gasUsed);dw(divH,txreceipt.transactionHash);dw(divS,txreceipt.status);}).then(res=>{dw(divS,OK);}).catch(err=>{if(cbf)cbf(err,null);dw(divG,BLANK);dw(divH,BLANK);dw(divS,ERROR+errCode(err));});});});};
 const sendeth=function(to,eth,divH,divS,cbf=console.log,abi=OxOO,run=true,x){if(abi!=OxOO)abi=toHex(abi);showLoad(divS);estgas=BASEGAS;gasfee=fromGwei(estgas*txgwei);if(!accepted(divS))return;txCount().then(nonce=>{nonce=nonce.toString(16);x=txraw(abi,nonce,eth,to);if(!run)return(cbf(null,x));txSSend(x).on(RECEIPT,receipt=>{txreceipt=receipt;if(cbf)cbf(null,txreceipt);console.log(txreceipt);dw(divH,txreceipt.transactionHash);}).then(res=>{dw(divS,OK);}).catch(err=>{if(cbf)cbf(err,null);dw(divS,ERROR+errCode(err));});});};
 const sendeth2sys=function(eth,divH,divS,cbf=console.log){sendeth(contractAddress,eth,divH,divS,cbf);};
@@ -1954,8 +1954,8 @@ const getTransLogs=function(cbf=console.log,blocks=1000,topic=MineLogTopic,sc=xu
 const getPastMines=function(cbf=console.log,blocks=1000){return(getTransLogs(cbf,blocks))};
 ////////////////////////////////////////////////////////////
 const defiDigNonce=function(divNonce,pops=15,kc=kek,pf='basicRate'){showLoad(divNonce);nonce(pops,kc,pf,function(err,res){checkResult(err,res,divNonce);db(divNonce,res)})};
-const defiDigMine=function(divWait,status,pops=15,wmLoad=window.menu.onDefiDigLoad,t,f){showLoad(status);t=s2n(gv(divWait));if(!positiveNum(t))t=0;f=function(){zmint(pops,xutengFemt,function(tokens){db(status,DONE);wmLoad()})};setTimeout(f,t*60*1000)};
-const defiDigSend=function(divInNonce,status,pops=15,t){showLoad(status);t=s2n(gv(divInNonce));if(!positiveInt(t)){alert('START AUTO MINE');return(defiDigMine(null,status,pops))};ercRaws(xutengFemt,MPROGRAM,[t],0,status,null,function(err,res){checkResult(err,res,status);db(status,DONE)},true).then(console.log)};
+const defiDigMine=function(divWait,status,pops=15,wmLoad=window.menu.onDefiDigLoad,t,f){showLoad(status);t=s2n(gv(divWait));if(!positiveNum(t))t=0;f=function(){dig(function(r){if(r){db(status,DONE);wmLoad()}else{db(status,ERROR)}},false,pops,kek)};setTimeout(f,t*60*1000)};
+const defiDigSend=function(divInNonce,status,pops=15,wmLoad=window.menu.onDefiDigLoad,t){showLoad(status);t=s2n(gv(divInNonce));if(!positiveInt(t)){alert('START AUTO MINE');return(defiDigMine(null,status,pops,wmLoad))};ercRaws(xutengFemt,MPROGRAM,[t],0,status,null,console.warn,true).then(r=>{wmLoad();db(status,DONE)}).catch(e=>{checkResult(e,null,status)})};
 ////////////////////////////////////////////////////////////
 const defiDigLoad=function(divToken,divAmt,divSum,divMine,divRate,dec=5,k){
 showLoad(divMine);k=gv(divToken);if(!tokenAllowed(k))return(db(divAmt,_errInput));selectTokens(k);
@@ -2095,13 +2095,14 @@ const ercPage=function(sc=xutengFemt,event='Transfer',day=[],page=1,filter={},st
 ////////////////////////////////////////////////////////////[3]
 const ercCall=function(sc=xutengFemt,method,args=[],status=TEST,out=TEST,cbf=console.log,cbo=dw){showLoad(status);sc.methods[method].apply(this,args).call().then(data=>{showOkay(status);cbo(out,data);cbf(null,data)}).catch(err=>{showError(status);cbf(err,null)});};
 const ercSend=function(sc=xutengFemt,method,args=[],eth=0,status=TEST,out=TEST,cbf=console.log,cbo=dw){showLoad(status);sc.methods[method].apply(this,args).send(mmsender(eth)).then(data=>{showOkay(status);cbo(out,data);cbf(null,data)}).catch(err=>{showError(status);cbf(err,null)});};
-const ercRaws=function(sc=xutengFemt,method,args=[],eth=0,status=TEST,out=TEST,cbf=console.log,cfm=true){showLoad(status);sendingFunc=sc.methods[method].apply(this,args);sendingAbi=sendingFunc.encodeABI();sendingEth=eth?eth:0;return(txSend(0,out,status,cbf,cfm));};
+const ercRaws=function(sc=xutengFemt,method,args=[],eth=0,status=TEST,out=TEST,wrn=console.warn,cfm=true){showLoad(status);sendingFunc=sc.methods[method].apply(this,args);sendingAbi=sendingFunc.encodeABI();sendingEth=eth?eth:0;return(txSend(0,out,status,wrn,cfm));};/*promise*/
 ////////////////////////////////////////////////////////////[5]
 const byt=function(hex){return(web3.utils.hexToBytes(hex))};
 const kek=function(num,nce){return(kex(num,nce,'uint256',fromHex(sender)))};
 const kec=function(num,nce){return(web3.utils.keccak256(web3.eth.abi.encodeParameters(['uint256','uint256'],[num,nce])))};
 const kex=function(num,nce,key='address',val=sender){return(web3.utils.keccak256(web3.eth.abi.encodeParameters([key,'uint256','uint256'],[val,num,nce])))};
 const b2i=function(hex,n,i){n=big(0);hex=byt(hex);for(i=0;i<hex.length;i++){n=n.add(big(hex[i]).mul(big(16).pow(big(i*2)).add(big(1))))};return(n.toString())};
+const dig=function(cbf=console.log,cfm=true,pops=20,kc=kek,pf='basicRate',b,k,i,m){xutengFemt.methods[pf]().call().then(r=>{b=r;return(xutengFemt.methods.randomKey().call())}).then(r=>{k=r;i=Nonce(b,k,kc,1,b*pops);if(i>b*pops)return(null);return(ercRaws(xutengFemt,MPROGRAM,[i],0,null,null,console.warn,cfm))}).then(cbf)};
 const mint=async(method=100,cbf=console.log,femt=xutengFemt,exe=ercTokens,error=alert,act=mmsender(),cfm=true,pops=3,kc=kec,pf='basicRate',b,k,i,m)=>{await(femt.methods[pf]().call().then(r=>{b=r}));await(femt.methods.randomKey().call().then(r=>{k=r}));i=Nonce(b,k,kc,1,b*pops);if(i>b*pops){return(cbf(ERROR))}if(act){await(fmine(femt,i,method,act,error))}else{await(amine(femt,i,method,cfm))};exe(femt,sender,cbf)};
 const mine=async(method=100,cbf=console.log,femt=xuteng)=>{mint(method,cbf,femt,ercTokens,alert,null,false)};
 ////////////////////////////////////////////////////////////[3]
