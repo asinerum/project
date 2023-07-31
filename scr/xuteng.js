@@ -1913,6 +1913,7 @@ const Menu=function(element){self=this;
  self.onDefiHackProgJoin=function(){defiHackProgJoin('form_status','pro_token','pro_id');}
  self.onDefiHackProgLoad=function(){defiHackProgLoad('form_status','pro_token','pro_amt','pro_sum');}
  self.goDefiHackProgIdno=function(){if(!positiveInt(gv('pro_id')))return(alert(_warnPrgIdno));}
+ self.goDefiHackProgIdnoMine=function(){if(!positiveInt(gv('pro_id_mine')))return(alert(_warnPrgIdno));}
  self.goDefiHackProgLoad=function(){if(!tokenAllowed(gv('pro_token')))return(alert(_warnPrgCoin));self.onDefiHackProgLoad()}
  self.onDefiDigLoad=function(){defiDigLoad('dig_token','dig_amt','dig_sum','dig_mine','dig_rate');}
  self.onDefiDigJoin=function(){defiDigJoin('dig_keystore','dig_passcode','dig_address');}
