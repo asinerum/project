@@ -1946,6 +1946,11 @@ const getWasmString=function(pointer,len,ins,b,i,s){if(!ins)ins=window.wasmInsta
 const getWasmStrEnd=function(pointer,ins,b,i,s){/**/if(!ins)ins=window.wasmInstance;b=(new Uint8Array(ins.exports.memory.buffer,pointer));s='';for(i=0;b[i];i++)s+=String.fromCharCode(b[i]);return(s);};
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
+const gamePctToPetri=function(pct){return(Math.round(10**9*pct/100))};
+const gamePetriToPct=function(upb){return(100*upb/10**9)};
+const gameUnitToPetri=function(unt){return(gamePctToPetri(unt)*100)};
+const gamePetriToUnit=function(upb){return(gamePetriToPct(upb)/100)};
+////////////////////////////////////////////////////////////
 const MineLogTopic='0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef';
 const tokenAllowed=function(token){return([_progMoney,_martMoney,_rareMoney].includes(token))};
 const selectTokens=function(token){if(token==_progMoney)return(startGemt());if(token==_martMoney)return(startNemt());if(token==_rareMoney)return(startRemt())};
@@ -2086,7 +2091,7 @@ const ercFgas=function(funcName,sc=xutengFemt,...args){return(sc.methods[funcNam
 const ercEgas=function(funcName,sc=xutengFemt,status=TEST,out=TEST,cbf=console.log,cbo=dw,...args){showLoad(status);ercFgas(funcName,sc,...args).then(data=>{showOkay(status);cbo(out,data);cbf(null,data)}).catch(err=>{showError(status);cbf(err,null)});};
 ////////////////////////////////////////////////////////////[3]
 const ercFuncSend=function(funcName,sc=xutengFemt,eth=0,options=null,...args){if(!options)options=mmsender(eth);return(ercFunc(funcName,sc,...args).send(options));};/*promise*/
-const ercFuncRaws=function(funcName,sc=xutengFemt,eth=0,options=null,...args){if(!options)options=mmsender(eth);return(ercRaws(sc,funcName,args))};/*promise*/
+const ercFuncRaws=function(funcName,sc=xutengFemt,eth=0,options=null,...args){return(ercRaws(sc,funcName,args,eth))};/*promise[options:pseudo]*/
 const ercFuncCall=function(funcName,sc=xutengFemt,...args){return(ercFunc(funcName,sc,...args).call());};/*promise*/
 ////////////////////////////////////////////////////////////[3]
 const ercCoin=function(addr=sender,status=TEST,out=TEST,cbf=console.log,cbo=dw){showLoad(status);web3.eth.getBalance(addr).then(data=>{showOkay(status);cbo(out,data);cbf(null,data)}).catch(err=>{showError(status);cbf(err,null)});};
