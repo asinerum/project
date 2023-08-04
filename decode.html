@@ -7,12 +7,8 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
 <link href="https://cdn.jsdelivr.net/gh/asinerum/project/gui/fonts.css" rel="stylesheet" type="text/css"/>
 <link href="https://cdn.jsdelivr.net/gh/asinerum/project/gui/style.css" rel="stylesheet" type="text/css"/>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/gh/asinerum/project/scr/_ethereumjs-tx.js"></script>
-<script src="https://cdn.jsdelivr.net/gh/asinerum/project/scr/_web3js.js"></script>
-<script src="https://cdn.jsdelivr.net/gh/asinerum/project/scr/_bip.js"></script>
 <script src="https://cdn.jsdelivr.net/gh/asinerum/project/scr/_eruda.js"></script>
-<script src="https://cdn.jsdelivr.net/gh/asinerum/project/scr/xuteng.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/asinerum/project/base.js"></script>
 </head>
 <body class="private">
 <div class="body" id="body">
@@ -49,8 +45,12 @@
 <br/>
 <div class="footer" id="_header_copyright">(C)</div>
 </div>
-<script src="https://cdn.jsdelivr.net/gh/asinerum/project/startPure.js"></script>
-<script src="https://cdn.jsdelivr.net/gh/asinerum/project/menu.js"></script>
-<script>eruda.init();</script>
+<script>
+eruda.init();
+window.onload=()=>{
+loadLib('https://cdn.jsdelivr.net/gh/asinerum/project/startPure.js');
+loadLib('https://cdn.jsdelivr.net/gh/asinerum/project/menu.js');
+}
+</script>
 </body>
 </html>
