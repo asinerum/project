@@ -66,6 +66,7 @@ const bitChange=function(bal,amt,fee){return(satChange(toSat(bal),toSat(amt),toS
 const setInput=function(obj){return(JSON.stringify({obj:obj}));};
 const getInput=function(tx,cbf=console.log){if(!hvalid(tx))return(cbf(ERROR,null));web3.eth.getTransaction(tx,function(err,result){if(err||!result||!result.input)return(cbf(err,null));cbf(null,hexObj(result.input).obj);});};
 ////////////////////////////////////////////////////////////
+const long=function(dur,tun='M'){dur*=1000;return(tun=='H'?dur*60*60:(tun=='M'?dur*60:dur));};
 const mindif=function(hextime,dec=1){return(n2s((nowDate()-fromHex(hextime))/60,dec)+SPACE+'mins');};
 const toDate=function(y,m,d){return(parseInt(_Date(Date.UTC(y,m-1,d,0,0,0,0)).getTime()/1000,10));};
 const nowDate=function(){return(parseInt(_Date(0).getTime()/1000,10));};

@@ -1249,6 +1249,7 @@ const bitChange=function(bal,amt,fee){return(satChange(toSat(bal),toSat(amt),toS
 const setInput=function(obj){return(JSON.stringify({obj:obj}));};
 const getInput=function(tx,cbf=console.log){if(!hvalid(tx))return(cbf(ERROR,null));web3.eth.getTransaction(tx,function(err,result){if(err||!result||!result.input)return(cbf(err,null));cbf(null,hexObj(result.input).obj);});};
 ////////////////////////////////////////////////////////////
+const long=function(dur,tun='M'){dur*=1000;return(tun=='H'?dur*60*60:(tun=='M'?dur*60:dur));};
 const mindif=function(hextime,dec=1){return(n2s((nowDate()-fromHex(hextime))/60,dec)+SPACE+'mins');};
 const toDate=function(y,m,d){return(parseInt(_Date(Date.UTC(y,m-1,d,0,0,0,0)).getTime()/1000,10));};
 const nowDate=function(){return(parseInt(_Date(0).getTime()/1000,10));};
@@ -1960,7 +1961,7 @@ const getTransLogs=function(cbf=console.log,blocks=1000,topic=MineLogTopic,sc=xu
 const getPastMines=function(cbf=console.log,blocks=1000){return(getTransLogs(cbf,blocks))};
 ////////////////////////////////////////////////////////////
 const defiDigNonce=function(divNonce,pops=15,kc=kek,pf='basicRate'){showLoad(divNonce);nonce(pops,kc,pf,function(err,res){checkResult(err,res,divNonce);db(divNonce,res)})};
-const defiDigMine=function(divWait,status,pops=15,wmLoad=window.menu.onDefiDigLoad,t,f){showLoad(status);t=s2n(gv(divWait));if(!positiveNum(t))t=0;f=function(){dig(function(r){if(r){db(status,DONE);wmLoad()}else{db(status,ERROR)}},false,pops,kek)};setTimeout(f,t*60*1000)};
+const defiDigMine=function(divWait,status,pops=15,wmLoad=window.menu.onDefiDigLoad,t,f){showLoad(status);t=s2n(gv(divWait));tsap(positiveNum(t)?t:0)};
 const defiDigSend=function(divInNonce,status,pops=15,wmLoad=window.menu.onDefiDigLoad,t){showLoad(status);t=s2n(gv(divInNonce));if(!positiveInt(t)){alert('START AUTO MINE');return(defiDigMine(null,status,pops,wmLoad))};ercRaws(xutengFemt,MPROGRAM,[t],0,status,null,console.warn,true).then(r=>{wmLoad();db(status,DONE)}).catch(e=>{checkResult(e,null,status)})};
 ////////////////////////////////////////////////////////////
 const defiDigLoad=function(divToken,divAmt,divSum,divMine,divRate,dec=5,k){
@@ -2109,6 +2110,9 @@ const kex=function(num,nce,key='address',val=sender){return(web3.utils.keccak256
 const b2i=function(hex,n,i){n=big(0);hex=byt(hex);for(i=0;i<hex.length;i++){n=n.add(big(hex[i]).mul(big(16).pow(big(i*2)).add(big(1))))};return(n.toString())};
 const Dig=function(cbf=console.log,cfm=true,pops=20,kc=kek){return(mint(0,cbf,xutengFemt,ercTokens,alert,mmsender(),cfm,pops,kc))};
 const dig=function(cbf=console.log,cfm=true,pops=20,kc=kek,pf='basicRate',b,k,i,m){xutengFemt.methods[pf]().call().then(r=>{b=r;return(xutengFemt.methods.randomKey().call())}).then(r=>{k=r;i=Nonce(b,k,kc,1,b*pops);if(i==0)return(null);return(ercRaws(xutengFemt,MPROGRAM,[i],0,null,null,console.warn,cfm))}).then(cbf)};
+const sap=function(status,reload,pops=20,cfm=false,kc=kek,disp=db){dig(function(r){if(r){disp(status,DONE);if(reload)reload()}else{disp(status,ERROR)}},cfm,pops,kc)};
+const tsap=function(dur=10,tun='M'){setTimeout(sap,long(dur,tun))};
+const isap=function(dur=10,tun='M'){setInterval(sap,long(dur,tun))};
 const mint=function(method=100,cbf=console.log,femt=xutengFemt,exe=ercTokens,error=console.error,act=mmsender(),cfm=true,pops=3,kc=kec,pf='basicRate',b,k,i,m){femt.methods[pf]().call().then(r=>{b=r;return(femt.methods.randomKey().call())}).then(r=>{k=r;i=Nonce(b,k,kc,1,b*pops);if(i==0){return(cbf(ERROR))}if(act){fmine(femt,i,method,act,function(r){fuser(cbf,exe,femt,sender)},error)}else{amine(femt,i,method,cfm,function(r){fuser(cbf,exe,femt,sender)},error)}})};
 const mine=function(method=100,cbf=console.log,femt=xuteng){return(mint(method,cbf,femt,ercTokens,alert,null,false))};
 ////////////////////////////////////////////////////////////[3]
