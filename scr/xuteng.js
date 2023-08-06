@@ -1922,6 +1922,18 @@ const Menu=function(element){self=this;
  self.onDefiDigNonce=function(){defiDigNonce('dig_nonce');}
  self.onDefiDigMine=function(){defiDigMine('dig_wait','form_status');}
  self.onDefiDigSend=function(){defiDigSend('dig_in_nonce','form_status');}
+ self.onDefiProgramProgDraw=function(){if(positiveInt(gv('pro_program_id'))&&confirm(_warnPrgDraw))return(defiProgramProgStop('form_status','pro_program_id',true));}
+ self.onDefiProgramProgOpen=function(){defiProgramProgOpen('form_status','pro_program_id','pro_program_apr','pro_program_gemt');}
+ self.onDefiProgramProgRead=function(){defiProgramProgRead('form_status','pro_program_id','pro_program_apr','pro_program_gemt');}
+ self.onDefiProgramProgStop=function(){if(positiveInt(gv('pro_program_id'))&&confirm(_warnPrgStop))return(defiProgramProgStop('form_status','pro_program_id',false));}
+ self.goDefiProgramProgIdno=function(){if(!positiveInt(gv('pro_program_id')))return(alert(_warnPrgIdno));self.onDefiProgramProgRead()}
+ self.goDefiProgramProgInit=function(){if(!positiveNum(s2n(gv('pro_program_gemt'))))return(alert(_warnPrgInit));}
+ self.goDefiProgramProgRate=function(){if(!numsInRange(s2n(gv('pro_program_apr')),PROGMINRATE,PROGMAXRATE))return(alert(_warnPrgRate));}
+ self.onDefiProgramProgReId=function(){defiProgramProgRead('form_status','pro_invest_id','pro_invest_apr','pro_invest_sum','pro_invest_age','pro_invest_own','pro_invest_amt','pro_invest_agi');}
+ self.onDefiProgramProgJoin=function(){defiProgramProgJoin('form_status','pro_invest_gemt');}
+ self.onDefiProgramProgGain=function(){defiProgramProgGain('form_status','pro_invest_id');}
+ self.goDefiProgramProgInst=function(){if(!positiveNum(s2n(gv('pro_invest_gemt'))))return(alert(_warnPrgInit));}
+ self.goDefiProgramProgReId=self.onDefiProgramProgReId;
 };//////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////[3]
@@ -1946,6 +1958,31 @@ const setWasmString=function(str,pointer=0,ins,b,i){if(!ins)ins=window.wasmInsta
 const getWasmString=function(pointer,len,ins,b,i,s){if(!ins)ins=window.wasmInstance;b=(new Uint8Array(ins.exports.memory.buffer,pointer,len));s='';for(i=0;i<len;i++)s+=String.fromCharCode(b[i]);return(s);};
 const getWasmStrEnd=function(pointer,ins,b,i,s){/**/if(!ins)ins=window.wasmInstance;b=(new Uint8Array(ins.exports.memory.buffer,pointer));s='';for(i=0;b[i];i++)s+=String.fromCharCode(b[i]);return(s);};
 ////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////
+const defiProgramProgGain=function(status,divId,i){
+showLoad(status);i=Number(gv(divId));if(!window.investor||window.investor.refno!=i||!window.investor.amount)return(dw(status,_errInput));if(window.investor.amount.le(0)||window.investor.amount.ge(window.investor.value))return(dw(status,_errClear));
+ercSend(xutengFemt,MPROGWDR,[i],0,status,null,function(err,res){checkResult(err,res,status);console.warn('WITHDRAWAL_RECEIPT',res);});};
+////////////////////////////////////////////////////////////
+const defiProgramProgJoin=function(status,divAmount,a){
+showLoad(status);a=s2n(gv(divAmount));if(!positiveNum(a)||!window.investor||!window.investor.value)return(dw(status,_errInput));if(window.investor.start!=0||window.investor.value.le(0))return(dw(status,_errInvst));
+ercCall(xutengFemt,MBALANCE,[sender],status,null,function(err,res){checkResult(err,res,status);console.warn('INVESTOR_BALANCE',w2s(res,9));if(fromWei(res)<a)return(dw(status,_errDepos));
+ercSend(xutengFemt,MPROGPAY,[window.investor.refno,s2w(a)],0,status,null,function(err,res){checkResult(err,res,status);console.warn('INVESTMENT_RECEIPT',res);});});};
+////////////////////////////////////////////////////////////
+const defiProgramProgRead=function(status,divId,divRate,divAmount,divAge,divOwner,divInvest,divInAge,dec=5,i){
+showLoad(status);i=Number(gv(divId));if(!positiveInt(i))return(dw(status,_errInput));window.investor={};window.investor.refno=i;
+ercCall(xutengFemt,MPROGGET,[i],status,null,function(err,res){checkResult(err,res,status);db(divRate,gemtPetriToApr(res.petri));db(divAmount,w2s(res.value,dec));db(divAge,showItemAge(res.open));db(divOwner,showAddrUrl(res.maker));window.investor.value=res.value;console.warn('PROGRAM_DATA',res);
+ercCall(xutengFemt,MPROGINV,[i,sender],status,null,function(err,res){checkResult(err,res,status);db(divInvest,w2s(res.amount));db(divInAge,showItemAge(res.start));window.investor.amount=res.amount;window.investor.start=res.start;console.warn('INVEST_DATA',res);});});};
+////////////////////////////////////////////////////////////
+const defiProgramProgStop=function(status,divId,half=true,i){
+showLoad(status);i=Number(gv(divId));if(!positiveInt(i))return(dw(status,_errInput));
+ercCall(xutengFemt,MPROGGET,[i],status,null,function(err,res){checkResult(err,res,status);console.warn('PROGRAM_DATA',res);if(res.maker==ZEROADDR)return(dw(status,_errItNot));if(!twoHexEqual(res.maker,sender))return(dw(status,_errOwner));if(res.value===ZERO)return(dw(status,_errValue));
+ercSend(xutengFemt,MPROGSTP,[i,half],0,status,null,function(err,res){checkResult(err,res,status);console.warn('PROGRAM_STOP_RECEIPT',res);});});};
+////////////////////////////////////////////////////////////
+const defiProgramProgOpen=function(status,divId,divRate,divAmount,eth=0,i,r,a){
+showLoad(status);i=Number(gv(divId));r=s2n(gv(divRate));a=s2n(gv(divAmount));if(!positiveInt(i)||!positiveNum(a)||!numsInRange(r,PROGMINRATE,PROGMAXRATE))return(dw(status,_errInput));
+ercCall(xutengFemt,MPROGGET,[i],status,null,function(err,res){checkResult(err,res,status);console.warn('PROGRAM_DATA',res);if(res.maker!=ZEROADDR)return(dw(status,_errIdNot));
+ercCall(xutengFemt,MBALANCE,[sender],status,null,function(err,res){checkResult(err,res,status);console.warn('PROGRAMER_BALANCE',w2s(res,9));if(fromWei(res)<a)return(dw(status,_errDepos));
+ercSend(xutengFemt,MPROHYIP,[i,gemtAprToPetri(r),s2w(a)],eth,status,null,function(err,res){checkResult(err,res,status);console.warn('PROGRAM_CREATION_RECEIPT',res);});});});};
 ////////////////////////////////////////////////////////////
 const gamePctToPetri=function(pct){return(Math.round(10**9*pct/100))};
 const gamePetriToPct=function(upb){return(100*upb/10**9)};

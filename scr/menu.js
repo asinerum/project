@@ -125,5 +125,17 @@ const Menu=function(element){self=this;
  self.onDefiDigNonce=function(){defiDigNonce('dig_nonce');}
  self.onDefiDigMine=function(){defiDigMine('dig_wait','form_status');}
  self.onDefiDigSend=function(){defiDigSend('dig_in_nonce','form_status');}
+ self.onDefiProgramProgDraw=function(){if(positiveInt(gv('pro_program_id'))&&confirm(_warnPrgDraw))return(defiProgramProgStop('form_status','pro_program_id',true));}
+ self.onDefiProgramProgOpen=function(){defiProgramProgOpen('form_status','pro_program_id','pro_program_apr','pro_program_gemt');}
+ self.onDefiProgramProgRead=function(){defiProgramProgRead('form_status','pro_program_id','pro_program_apr','pro_program_gemt');}
+ self.onDefiProgramProgStop=function(){if(positiveInt(gv('pro_program_id'))&&confirm(_warnPrgStop))return(defiProgramProgStop('form_status','pro_program_id',false));}
+ self.goDefiProgramProgIdno=function(){if(!positiveInt(gv('pro_program_id')))return(alert(_warnPrgIdno));self.onDefiProgramProgRead()}
+ self.goDefiProgramProgInit=function(){if(!positiveNum(s2n(gv('pro_program_gemt'))))return(alert(_warnPrgInit));}
+ self.goDefiProgramProgRate=function(){if(!numsInRange(s2n(gv('pro_program_apr')),PROGMINRATE,PROGMAXRATE))return(alert(_warnPrgRate));}
+ self.onDefiProgramProgReId=function(){defiProgramProgRead('form_status','pro_invest_id','pro_invest_apr','pro_invest_sum','pro_invest_age','pro_invest_own','pro_invest_amt','pro_invest_agi');}
+ self.onDefiProgramProgJoin=function(){defiProgramProgJoin('form_status','pro_invest_gemt');}
+ self.onDefiProgramProgGain=function(){defiProgramProgGain('form_status','pro_invest_id');}
+ self.goDefiProgramProgInst=function(){if(!positiveNum(s2n(gv('pro_invest_gemt'))))return(alert(_warnPrgInit));}
+ self.goDefiProgramProgReId=self.onDefiProgramProgReId;
 };//////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
