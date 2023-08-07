@@ -1959,30 +1959,30 @@ const getWasmString=function(pointer,len,ins,b,i,s){if(!ins)ins=window.wasmInsta
 const getWasmStrEnd=function(pointer,ins,b,i,s){/**/if(!ins)ins=window.wasmInstance;b=(new Uint8Array(ins.exports.memory.buffer,pointer));s='';for(i=0;b[i];i++)s+=String.fromCharCode(b[i]);return(s);};
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
-const defiProgramProgGain=function(status,divId,i){
+const defiProgramProgGain=function(status,divId,execute=ercSend,i){
 showLoad(status);i=Number(gv(divId));if(!window.investor||window.investor.refno!=i||!window.investor.amount)return(dw(status,_errInput));if(window.investor.amount.le(0)||window.investor.amount.ge(window.investor.value))return(dw(status,_errClear));
-ercSend(xutengFemt,MPROGWDR,[i],0,status,null,function(err,res){checkResult(err,res,status);console.warn('WITHDRAWAL_RECEIPT',res);});};
+execute(xutengFemt,MPROGWDR,[i],0,status,null,function(err,res){checkResult(err,res,status);console.warn('WITHDRAWAL_RECEIPT',res);});};
 ////////////////////////////////////////////////////////////
-const defiProgramProgJoin=function(status,divAmount,a){
+const defiProgramProgJoin=function(status,divAmount,execute=ercSend,a){
 showLoad(status);a=s2n(gv(divAmount));if(!positiveNum(a)||!window.investor||!window.investor.value)return(dw(status,_errInput));if(window.investor.start!=0||window.investor.value.le(0))return(dw(status,_errInvst));
 ercCall(xutengFemt,MBALANCE,[sender],status,null,function(err,res){checkResult(err,res,status);console.warn('INVESTOR_BALANCE',w2s(res,9));if(fromWei(res)<a)return(dw(status,_errDepos));
-ercSend(xutengFemt,MPROGPAY,[window.investor.refno,s2w(a)],0,status,null,function(err,res){checkResult(err,res,status);console.warn('INVESTMENT_RECEIPT',res);});});};
+execute(xutengFemt,MPROGPAY,[window.investor.refno,s2w(a)],0,status,null,function(err,res){checkResult(err,res,status);console.warn('INVESTMENT_RECEIPT',res);});});};
 ////////////////////////////////////////////////////////////
 const defiProgramProgRead=function(status,divId,divRate,divAmount,divAge,divOwner,divInvest,divInAge,dec=5,i){
 showLoad(status);i=Number(gv(divId));if(!positiveInt(i))return(dw(status,_errInput));window.investor={};window.investor.refno=i;
 ercCall(xutengFemt,MPROGGET,[i],status,null,function(err,res){checkResult(err,res,status);db(divRate,gemtPetriToApr(res.petri));db(divAmount,w2s(res.value,dec));db(divAge,showItemAge(res.open));db(divOwner,showAddrUrl(res.maker));window.investor.value=res.value;console.warn('PROGRAM_DATA',res);
 ercCall(xutengFemt,MPROGINV,[i,sender],status,null,function(err,res){checkResult(err,res,status);db(divInvest,w2s(res.amount));db(divInAge,showItemAge(res.start));window.investor.amount=res.amount;window.investor.start=res.start;console.warn('INVEST_DATA',res);});});};
 ////////////////////////////////////////////////////////////
-const defiProgramProgStop=function(status,divId,half=true,i){
+const defiProgramProgStop=function(status,divId,half=true,execute=ercSend,i){
 showLoad(status);i=Number(gv(divId));if(!positiveInt(i))return(dw(status,_errInput));
 ercCall(xutengFemt,MPROGGET,[i],status,null,function(err,res){checkResult(err,res,status);console.warn('PROGRAM_DATA',res);if(res.maker==ZEROADDR)return(dw(status,_errItNot));if(!twoHexEqual(res.maker,sender))return(dw(status,_errOwner));if(res.value===ZERO)return(dw(status,_errValue));
-ercSend(xutengFemt,MPROGSTP,[i,half],0,status,null,function(err,res){checkResult(err,res,status);console.warn('PROGRAM_STOP_RECEIPT',res);});});};
+execute(xutengFemt,MPROGSTP,[i,half],0,status,null,function(err,res){checkResult(err,res,status);console.warn('PROGRAM_STOP_RECEIPT',res);});});};
 ////////////////////////////////////////////////////////////
-const defiProgramProgOpen=function(status,divId,divRate,divAmount,eth=0,i,r,a){
+const defiProgramProgOpen=function(status,divId,divRate,divAmount,eth=0,execute=ercSend,i,r,a){
 showLoad(status);i=Number(gv(divId));r=s2n(gv(divRate));a=s2n(gv(divAmount));if(!positiveInt(i)||!positiveNum(a)||!numsInRange(r,PROGMINRATE,PROGMAXRATE))return(dw(status,_errInput));
 ercCall(xutengFemt,MPROGGET,[i],status,null,function(err,res){checkResult(err,res,status);console.warn('PROGRAM_DATA',res);if(res.maker!=ZEROADDR)return(dw(status,_errIdNot));
 ercCall(xutengFemt,MBALANCE,[sender],status,null,function(err,res){checkResult(err,res,status);console.warn('PROGRAMER_BALANCE',w2s(res,9));if(fromWei(res)<a)return(dw(status,_errDepos));
-ercSend(xutengFemt,MPROHYIP,[i,gemtAprToPetri(r),s2w(a)],eth,status,null,function(err,res){checkResult(err,res,status);console.warn('PROGRAM_CREATION_RECEIPT',res);});});});};
+execute(xutengFemt,MPROHYIP,[i,gemtAprToPetri(r),s2w(a)],eth,status,null,function(err,res){checkResult(err,res,status);console.warn('PROGRAM_CREATION_RECEIPT',res);});});});};
 ////////////////////////////////////////////////////////////
 const gamePctToPetri=function(pct){return(Math.round(10**9*pct/100))};
 const gamePetriToPct=function(upb){return(100*upb/10**9)};
@@ -2013,13 +2013,13 @@ if(k.is3ks()){return(v3ksDecode(k,p,true,function(err,res){checkResult(err,res,d
 if(k.isBip()){return(bipeDecode(k,p,true,function(err,res){checkResult(err,res,divAddr);db(divAddr,res.address)}))};
 if(k.isKey()){arouseKey(k);return(db(divAddr,sender))};db(divAddr,ERROR)};
 ////////////////////////////////////////////////////////////
-const defiHackProgJoin=function(status,divToken,divId,wmLoad=window.menu.onDefiHackProgLoad,k,i){
+const defiHackProgJoin=function(status,divToken,divId,wmLoad=window.menu.onDefiHackProgLoad,execute=ercSend,k,i){
 showLoad(status);k=gv(divToken);i=s2n(gv(divId));if(!tokenAllowed(k)||!positiveNum(i))return(dw(status,_errInput));
-ercSend(xutengFemt,MPROGRAM,[i],0,status,null,function(err,res){checkResult(err,res,status);wmLoad();console.warn('TRANSACTION_RECEIPT',res);});};
+execute(xutengFemt,MPROGRAM,[i],0,status,null,function(err,res){checkResult(err,res,status);wmLoad();console.warn('TRANSACTION_RECEIPT',res);});};
 ////////////////////////////////////////////////////////////
-const defiHackProgJoinMine=function(status,divToken,divId,wmLoad=window.menu.onDefiHackProgLoad,k,i){
+const defiHackProgJoinMine=function(status,divToken,divId,wmLoad=window.menu.onDefiHackProgLoad,execute=ercSend,k,i){
 showLoad(status);k=gv(divToken);i=s2n(gv(divId));if(!tokenAllowed(k))return(dw(status,_errInput));if(!positiveNum(i))return(Dig(function(tokens){wmLoad()},true,20,kek));
-ercSend(xutengFemt,MPROGRAM,[i],0,status,null,function(err,res){checkResult(err,res,status);wmLoad();console.warn('TRANSACTION_RECEIPT',res);});};
+execute(xutengFemt,MPROGRAM,[i],0,status,null,function(err,res){checkResult(err,res,status);wmLoad();console.warn('TRANSACTION_RECEIPT',res);});};
 ////////////////////////////////////////////////////////////
 const defiHackProgLoad=function(status,divToken,outBalance,outSupply,dec=5,k){
 showLoad(status);k=gv(divToken);if(!tokenAllowed(k))return(dw(status,_errInput));selectTokens(k);
