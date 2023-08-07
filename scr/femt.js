@@ -33,8 +33,12 @@ const MineLogTopic='0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df5
 const tokenAllowed=function(token){return([_progMoney,_martMoney,_rareMoney].includes(token))};
 const selectTokens=function(token){if(token==_progMoney)return(startGemt());if(token==_martMoney)return(startNemt());if(token==_rareMoney)return(startRemt())};
 const getLogApiUrl=function(block,blocks=1000,topic=MineLogTopic,sc=xutengFemt){return(PROXIES[0].getContractPastLogs(sc._address,block-blocks,block,topic))};
+const getAdvApiUrl=function(block,blocks=1000,topic='',afrom='',ato='',sc=xutengFemt){return(PROXIES[0].getContractLastLogs(sc._address,block-blocks,block,topic,afrom,ato))};
 const getLastMined=function(cbf=console.log,LP='lastProof',RS='rewardStamp'){try{if(Func(LP))ercFuncCall(LP).then(r=>{return(cbf(null,r))});else{if(Func(RS))ercFuncCall(RS).then(r=>{return(cbf(null,r))});else{nsBlock().then(r=>{$.getJSON(getLogApiUrl(r)).then(r=>{r=r.result;return(cbf(null,fromHex(r[r.length-1].timeStamp)))})})}}}catch(e){cbf(ERROR,null)}};
-const getTransLogs=function(cbf=console.log,blocks=1000,topic=MineLogTopic,sc=xutengFemt){nsBlock().then(block=>{$.getJSON(getLogApiUrl(block),function(data){if(data.status!='1')return(cbf(UNKNOWN,null));cbf(null,data.result)})})};
+const getTransLogs=function(cbf=console.log,blocks=1000,topic=MineLogTopic,sc=xutengFemt){nsBlock().then(block=>{$.getJSON(getLogApiUrl(block,blocks),function(data){if(data.status!='1')return(cbf(UNKNOWN,null));cbf(null,data.result)})})};
+const getTSendLogs=function(addr,blocks=1000,cbf=console.log,sc=xutengFemt){nsBlock().then(block=>{$.getJSON(getAdvApiUrl(block,blocks,'',h2t(addr),'',sc),function(data){if(data.status!='1')return(cbf(UNKNOWN,null));cbf(null,data.result)})})};
+const getTRecvLogs=function(addr,blocks=1000,cbf=console.log,sc=xutengFemt){nsBlock().then(block=>{$.getJSON(getAdvApiUrl(block,blocks,'','',h2t(addr),sc),function(data){if(data.status!='1')return(cbf(UNKNOWN,null));cbf(null,data.result)})})};
+const getTxTopLogs=function(topic,afrom,ato,blocks=1000,cbf=console.log,sc=xutengFemt){nsBlock().then(block=>{$.getJSON(getAdvApiUrl(block,blocks,h2t(topic),h2t(afrom),h2t(ato),sc),function(data){if(data.status!='1')return(cbf(UNKNOWN,null));cbf(null,data.result)})})};
 const getPastMines=function(cbf=console.log,blocks=1000){return(getTransLogs(cbf,blocks))};
 ////////////////////////////////////////////////////////////
 const defiDigNonce=function(divNonce,pops=15,kc=kek,pf='basicRate'){showLoad(divNonce);nonce(pops,kc,pf,function(err,res){checkResult(err,res,divNonce);db(divNonce,res)})};

@@ -41,7 +41,8 @@ const n2s=function(n,d){if(!n)return(ZERO);if(!d)d=0;n=n.toString().split(DOT);n
 const s2n=function(s=0){if(!s)return(0);s=parseFloat(s.toString().replace(/[^\d\.\-]/g,EMPTY));if(isNaN(s))return(0);return(s);};
 const w2s=function(n,dec=5,len=22){n=n2s(fromWei(n),dec);return(n.length<len?n:ASK);};
 const s2w=function(s){return(toWei(s2n(s).toString()));};
-const toHex=function(s){return(web3.utils.toHex(s));};
+const h2t=function(h){if(!h)return('');return(web3.utils.padLeft(h,64));};
+const toHex=function(s){if(!s)return('0x0');return(web3.utils.toHex(s));};
 const toHash=function(s){return(web3.utils.keccak256(s,{encoding:HEX}));};
 const solHash=function(...args){return(web3.utils.soliditySha3(...args));};
 const jtoHash=function(j){return(toHash(JSON.stringify(j)));};

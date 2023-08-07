@@ -27,6 +27,9 @@ getContractCreation:function(addr,ncid=network){return(`${EXCHAINS[ncid].api}mod
 getContractPastLogs:function(addr,from='',to='latest',topic='',ncid=network){return(`${EXCHAINS[ncid].api}module=logs
 &action=getLogs
 &address=${addr}&fromBlock=${from}&toBlock=${to}${topic?'&topic0='+topic:''}&apikey=${EXCHAINS[ncid].token?EXCHAINS[ncid].token:BLANK}`)},
+getContractLastLogs:function(addr,from='',to='latest',topic='',afrom='',ato='',opr='and',api='',ncid=network,t){t=topic?`&topic0=${topic}`:``;if(t&&(afrom||ato))t+=`&topic0_1_opr=${opr}`;if(afrom)t+=`&topic1=${afrom}`;if(ato)t+=`&topic2=${ato}`;return(`${EXCHAINS[ncid].api}module=logs
+&action=getLogs
+&address=${addr}&fromBlock=${from}&toBlock=${to}${t}&apikey=${api}`)},
 getTokenTotalSupply:function(addr,ncid=network){return(`${EXCHAINS[ncid].api}module=proxy&action=eth_call&to=${addr}&data=0x18160ddd&tag=latest&apikey=${EXCHAINS[ncid].token?EXCHAINS[ncid].token:BLANK}`)},
 getUserTokenBalance:function(addr,acc,ncid=network){return(`${EXCHAINS[ncid].api}module=account&action=tokenbalance&contractaddress=${addr}&address=${acc}&tag=latest&apikey=${EXCHAINS[ncid].token?EXCHAINS[ncid].token:BLANK}`)},
 getUserEtherBalance:function(acc,ncid=network){return(`${EXCHAINS[ncid].api}module=account&action=balance&address=${acc}&tag=latest&apikey=${EXCHAINS[ncid].token?EXCHAINS[ncid].token:BLANK}`)},

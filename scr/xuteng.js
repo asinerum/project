@@ -211,6 +211,9 @@ getContractCreation:function(addr,ncid=network){return(`${EXCHAINS[ncid].api}mod
 getContractPastLogs:function(addr,from='',to='latest',topic='',ncid=network){return(`${EXCHAINS[ncid].api}module=logs
 &action=getLogs
 &address=${addr}&fromBlock=${from}&toBlock=${to}${topic?'&topic0='+topic:''}&apikey=${EXCHAINS[ncid].token?EXCHAINS[ncid].token:BLANK}`)},
+getContractLastLogs:function(addr,from='',to='latest',topic='',afrom='',ato='',opr='and',api='',ncid=network,t){t=topic?`&topic0=${topic}`:``;if(t&&(afrom||ato))t+=`&topic0_1_opr=${opr}`;if(afrom)t+=`&topic1=${afrom}`;if(ato)t+=`&topic2=${ato}`;return(`${EXCHAINS[ncid].api}module=logs
+&action=getLogs
+&address=${addr}&fromBlock=${from}&toBlock=${to}${t}&apikey=${api}`)},
 getTokenTotalSupply:function(addr,ncid=network){return(`${EXCHAINS[ncid].api}module=proxy&action=eth_call&to=${addr}&data=0x18160ddd&tag=latest&apikey=${EXCHAINS[ncid].token?EXCHAINS[ncid].token:BLANK}`)},
 getUserTokenBalance:function(addr,acc,ncid=network){return(`${EXCHAINS[ncid].api}module=account&action=tokenbalance&contractaddress=${addr}&address=${acc}&tag=latest&apikey=${EXCHAINS[ncid].token?EXCHAINS[ncid].token:BLANK}`)},
 getUserEtherBalance:function(acc,ncid=network){return(`${EXCHAINS[ncid].api}module=account&action=balance&address=${acc}&tag=latest&apikey=${EXCHAINS[ncid].token?EXCHAINS[ncid].token:BLANK}`)},
@@ -1224,7 +1227,8 @@ const n2s=function(n,d){if(!n)return(ZERO);if(!d)d=0;n=n.toString().split(DOT);n
 const s2n=function(s=0){if(!s)return(0);s=parseFloat(s.toString().replace(/[^\d\.\-]/g,EMPTY));if(isNaN(s))return(0);return(s);};
 const w2s=function(n,dec=5,len=22){n=n2s(fromWei(n),dec);return(n.length<len?n:ASK);};
 const s2w=function(s){return(toWei(s2n(s).toString()));};
-const toHex=function(s){return(web3.utils.toHex(s));};
+const h2t=function(h){if(!h)return('');return(web3.utils.padLeft(h,64));};
+const toHex=function(s){if(!s)return('0x0');return(web3.utils.toHex(s));};
 const toHash=function(s){return(web3.utils.keccak256(s,{encoding:HEX}));};
 const solHash=function(...args){return(web3.utils.soliditySha3(...args));};
 const jtoHash=function(j){return(toHash(JSON.stringify(j)));};
@@ -1993,8 +1997,12 @@ const MineLogTopic='0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df5
 const tokenAllowed=function(token){return([_progMoney,_martMoney,_rareMoney].includes(token))};
 const selectTokens=function(token){if(token==_progMoney)return(startGemt());if(token==_martMoney)return(startNemt());if(token==_rareMoney)return(startRemt())};
 const getLogApiUrl=function(block,blocks=1000,topic=MineLogTopic,sc=xutengFemt){return(PROXIES[0].getContractPastLogs(sc._address,block-blocks,block,topic))};
+const getAdvApiUrl=function(block,blocks=1000,topic='',afrom='',ato='',sc=xutengFemt){return(PROXIES[0].getContractLastLogs(sc._address,block-blocks,block,topic,afrom,ato))};
 const getLastMined=function(cbf=console.log,LP='lastProof',RS='rewardStamp'){try{if(Func(LP))ercFuncCall(LP).then(r=>{return(cbf(null,r))});else{if(Func(RS))ercFuncCall(RS).then(r=>{return(cbf(null,r))});else{nsBlock().then(r=>{$.getJSON(getLogApiUrl(r)).then(r=>{r=r.result;return(cbf(null,fromHex(r[r.length-1].timeStamp)))})})}}}catch(e){cbf(ERROR,null)}};
-const getTransLogs=function(cbf=console.log,blocks=1000,topic=MineLogTopic,sc=xutengFemt){nsBlock().then(block=>{$.getJSON(getLogApiUrl(block),function(data){if(data.status!='1')return(cbf(UNKNOWN,null));cbf(null,data.result)})})};
+const getTransLogs=function(cbf=console.log,blocks=1000,topic=MineLogTopic,sc=xutengFemt){nsBlock().then(block=>{$.getJSON(getLogApiUrl(block,blocks),function(data){if(data.status!='1')return(cbf(UNKNOWN,null));cbf(null,data.result)})})};
+const getTSendLogs=function(addr,blocks=1000,cbf=console.log,sc=xutengFemt){nsBlock().then(block=>{$.getJSON(getAdvApiUrl(block,blocks,'',h2t(addr),'',sc),function(data){if(data.status!='1')return(cbf(UNKNOWN,null));cbf(null,data.result)})})};
+const getTRecvLogs=function(addr,blocks=1000,cbf=console.log,sc=xutengFemt){nsBlock().then(block=>{$.getJSON(getAdvApiUrl(block,blocks,'','',h2t(addr),sc),function(data){if(data.status!='1')return(cbf(UNKNOWN,null));cbf(null,data.result)})})};
+const getTxTopLogs=function(topic,afrom,ato,blocks=1000,cbf=console.log,sc=xutengFemt){nsBlock().then(block=>{$.getJSON(getAdvApiUrl(block,blocks,h2t(topic),h2t(afrom),h2t(ato),sc),function(data){if(data.status!='1')return(cbf(UNKNOWN,null));cbf(null,data.result)})})};
 const getPastMines=function(cbf=console.log,blocks=1000){return(getTransLogs(cbf,blocks))};
 ////////////////////////////////////////////////////////////
 const defiDigNonce=function(divNonce,pops=15,kc=kek,pf='basicRate'){showLoad(divNonce);nonce(pops,kc,pf,function(err,res){checkResult(err,res,divNonce);db(divNonce,res)})};
@@ -2274,11 +2282,11 @@ const launch=function(mg=200000,gw=0){startXuteng();maxgas=mg;txgwei=gw;btnXut('
 const xready=function(mg=200000,gw=0){$(document).ready(function(){launch(mg,gw);});};
 ////////////////////////////////////////////////////////////
 const createSimpleGame=function(name,fn=Out){fn({game:name},ZEROADDR,0,function(e,r){if(e)return(console.error(e));console.warn(_transactionHash,r.transactionHash)})};
-const LodeHnTxHash={DeHanoi:'0xa56a4e60569c1229b9f99ed4e9eb45473047db1247fd1886cab4f8609b7cfae7',LoHanoi:'0xf1f64bf01c1bd48869c430ca59899f9e785918f07a935896c040cb0048167b25'};
-const DeHanoiGEMT9=function(number,amount,fn=exec,start=startGemt){start();fn('pay',0,console.log,LodeHnTxHash.DeHanoi,UVAULT[network].addr,s2w(amount),setInput(number))};
-const DeHanoiInBNB=function(number,amount,fn=exec,start=startGemt){start();fn('pay',amount,console.log,LodeHnTxHash.DeHanoi,UVAULT[network].addr,0,setInput(number))};
-const LoHanoiGEMT9=function(number,amount,fn=exec,start=startGemt){start();fn('pay',0,console.log,LodeHnTxHash.LoHanoi,UVAULT[network].addr,s2w(amount),setInput(number))};
-const LoHanoiInBNB=function(number,amount,fn=exec,start=startGemt){start();fn('pay',amount,console.log,LodeHnTxHash.LoHanoi,UVAULT[network].addr,0,setInput(number))};
+let LodeHnTxHash={DeHanoi:'0xa56a4e60569c1229b9f99ed4e9eb45473047db1247fd1886cab4f8609b7cfae7',LoHanoi:'0xf1f64bf01c1bd48869c430ca59899f9e785918f07a935896c040cb0048167b25',cashier:null};
+let DeHanoiGEMT9=function(number,amount,to=LodeHnTxHash.cashier?LodeHnTxHash.cashier:UVAULT[network].addr,fn=exec,start=startGemt){start();fn('pay',0,console.log,LodeHnTxHash.DeHanoi,to,s2w(amount),setInput(number))};
+let DeHanoiInBNB=function(number,amount,to=LodeHnTxHash.cashier?LodeHnTxHash.cashier:UVAULT[network].addr,fn=exec,start=startGemt){start();fn('pay',amount,console.log,LodeHnTxHash.DeHanoi,to,0,setInput(number))};
+let LoHanoiGEMT9=function(number,amount,to=LodeHnTxHash.cashier?LodeHnTxHash.cashier:UVAULT[network].addr,fn=exec,start=startGemt){start();fn('pay',0,console.log,LodeHnTxHash.LoHanoi,to,s2w(amount),setInput(number))};
+let LoHanoiInBNB=function(number,amount,to=LodeHnTxHash.cashier?LodeHnTxHash.cashier:UVAULT[network].addr,fn=exec,start=startGemt){start();fn('pay',amount,console.log,LodeHnTxHash.LoHanoi,to,0,setInput(number))};
 ////////////////////////////////////////////////////////////
 ////REF:consts-author.js
 ////////////////////////////////////////////////////////////
