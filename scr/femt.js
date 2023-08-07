@@ -178,6 +178,7 @@ const ercPage=function(sc=xutengFemt,event='Transfer',day=[],page=1,filter={},st
 ////////////////////////////////////////////////////////////[3]
 const ercCall=function(sc=xutengFemt,method,args=[],status=TEST,out=TEST,cbf=console.log,cbo=dw){showLoad(status);sc.methods[method].apply(this,args).call().then(data=>{showOkay(status);cbo(out,data);cbf(null,data)}).catch(err=>{showError(status);cbf(err,null)});};
 const ercSend=function(sc=xutengFemt,method,args=[],eth=0,status=TEST,out=TEST,cbf=console.log,cbo=dw){showLoad(status);sc.methods[method].apply(this,args).send(mmsender(eth)).then(data=>{showOkay(status);cbo(out,data);cbf(null,data)}).catch(err=>{showError(status);cbf(err,null)});};
+const ercsend=function(sc=xutengFemt,method,args=[],eth=0,status=TEST,out=TEST,cbf=console.log,cbo=dw){ercRaws(xutengFemt,method,args,eth,status,out).then(data=>{showOkay(status);cbo(out,data);cbf(null,data)}).catch(err=>{showError(status);cbf(err,null)});};
 const ercRaws=function(sc=xutengFemt,method,args=[],eth=0,status=TEST,out=TEST,wrn=console.warn,cfm=true){showLoad(status);sendingFunc=sc.methods[method].apply(this,args);sendingAbi=sendingFunc.encodeABI();sendingEth=eth?eth:0;return(txSend(0,out,status,wrn,cfm));};/*promise*/
 ////////////////////////////////////////////////////////////[5]
 const byt=function(hex){return(web3.utils.hexToBytes(hex))};
