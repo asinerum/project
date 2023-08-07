@@ -2282,11 +2282,12 @@ const launch=function(mg=200000,gw=0){startXuteng();maxgas=mg;txgwei=gw;btnXut('
 const xready=function(mg=200000,gw=0){$(document).ready(function(){launch(mg,gw);});};
 ////////////////////////////////////////////////////////////
 const createSimpleGame=function(name,fn=Out){fn({game:name},ZEROADDR,0,function(e,r){if(e)return(console.error(e));console.warn(_transactionHash,r.transactionHash)})};
-let LodeHnTxHash={DeHanoi:'0xa56a4e60569c1229b9f99ed4e9eb45473047db1247fd1886cab4f8609b7cfae7',LoHanoi:'0xf1f64bf01c1bd48869c430ca59899f9e785918f07a935896c040cb0048167b25',cashier:null};
-let DeHanoiGEMT9=function(number,amount,to=LodeHnTxHash.cashier?LodeHnTxHash.cashier:UVAULT[network].addr,fn=exec,start=startGemt){start();fn('pay',0,console.log,LodeHnTxHash.DeHanoi,to,s2w(amount),setInput(number))};
-let DeHanoiInBNB=function(number,amount,to=LodeHnTxHash.cashier?LodeHnTxHash.cashier:UVAULT[network].addr,fn=exec,start=startGemt){start();fn('pay',amount,console.log,LodeHnTxHash.DeHanoi,to,0,setInput(number))};
-let LoHanoiGEMT9=function(number,amount,to=LodeHnTxHash.cashier?LodeHnTxHash.cashier:UVAULT[network].addr,fn=exec,start=startGemt){start();fn('pay',0,console.log,LodeHnTxHash.LoHanoi,to,s2w(amount),setInput(number))};
-let LoHanoiInBNB=function(number,amount,to=LodeHnTxHash.cashier?LodeHnTxHash.cashier:UVAULT[network].addr,fn=exec,start=startGemt){start();fn('pay',amount,console.log,LodeHnTxHash.LoHanoi,to,0,setInput(number))};
+let LodeHnTxAddr=function(t=LodeHnTxHash()){return(t.cashier?t.cashier:UVAULT[network].addr)};
+let LodeHnTxHash=function(){return({DeHanoi:'0xa56a4e60569c1229b9f99ed4e9eb45473047db1247fd1886cab4f8609b7cfae7',LoHanoi:'0xf1f64bf01c1bd48869c430ca59899f9e785918f07a935896c040cb0048167b25',cashier:null})};
+let DeHanoiGEMT9=function(number,amount,to=LodeHnTxAddr(),fn=exec,start=startGemt){start();fn('pay',0,console.log,LodeHnTxHash().DeHanoi,to,s2w(amount),setInput(number))};
+let DeHanoiInBNB=function(number,amount,to=LodeHnTxAddr(),fn=exec,start=startGemt){start();fn('pay',amount,console.log,LodeHnTxHash().DeHanoi,to,0,setInput(number))};
+let LoHanoiGEMT9=function(number,amount,to=LodeHnTxAddr(),fn=exec,start=startGemt){start();fn('pay',0,console.log,LodeHnTxHash().LoHanoi,to,s2w(amount),setInput(number))};
+let LoHanoiInBNB=function(number,amount,to=LodeHnTxAddr(),fn=exec,start=startGemt){start();fn('pay',amount,console.log,LodeHnTxHash().LoHanoi,to,0,setInput(number))};
 ////////////////////////////////////////////////////////////
 ////REF:consts-author.js
 ////////////////////////////////////////////////////////////
