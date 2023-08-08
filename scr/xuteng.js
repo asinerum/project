@@ -2160,6 +2160,7 @@ const dig=function(cbf=console.log,cfm=true,pops=20,kc=kek,pf='basicRate',b,k,i,
 const sap=function(status,reload,pops=20,cfm=false,kc=kek,disp=db){dig(function(r){if(r){disp(status,DONE);if(reload)reload()}else{disp(status,ERROR)}},cfm,pops,kc)};
 const tsap=function(dur=10,tun='M'){setTimeout(sap,long(dur,tun))};
 const isap=function(dur=10,tun='M'){setInterval(sap,long(dur,tun))};
+const wsap=function(dur=10,loads=1000,mig=3,cb=console.log){setInterval(function(){cb(loads);loads--;if(loads<0)return(cb('END'));getLastMined(function(e,r){if(e)return(cb(e.toString()));if(s2n(mindif(r))<mig)return(cb('IGNORE'));sap()})},long(dur))};
 const mint=function(method=100,cbf=console.log,femt=xutengFemt,exe=ercTokens,error=console.error,act=mmsender(),cfm=true,pops=3,kc=kec,pf='basicRate',b,k,i,m){femt.methods[pf]().call().then(r=>{b=r;return(femt.methods.randomKey().call())}).then(r=>{k=r;i=Nonce(b,k,kc,1,b*pops);if(i==0){return(cbf(ERROR))}if(act){fmine(femt,i,method,act,function(r){fuser(cbf,exe,femt,sender)},error)}else{amine(femt,i,method,cfm,function(r){fuser(cbf,exe,femt,sender)},error)}})};
 const mine=function(method=100,cbf=console.log,femt=xuteng){return(mint(method,cbf,femt,ercTokens,alert,null,false))};
 ////////////////////////////////////////////////////////////[3]
