@@ -49,6 +49,7 @@ const webSign=function(from,to,value='0'/*WEI:DECIMAL*/,data=HEXINIT,gas=maxgas,
 const webRaws=function(from,to,value='0'/*WEI:DECIMAL*/,data=HEXINIT,gas=maxgas,gasPrice=null/*WEI:DECIMAL*/,cbf=console.log){webSign(from,to,value,data,gas,gasPrice,function(err,res){if(res){return(cbf(res.rawTransaction))};return(cbf(err.toString()))})};
 ////////////////////////////////////////////////////////////
 const txRaw=function(nonce){return(txraw(sendingAbi,nonce,sendingEth,0))};
+const txGet=function(txh){return(web3.eth.getTransaction(txh))};/*promise*/
 const txGas=function(){return(sendingFunc.estimateGas({from:sender,value:s2wHex(sendingEth)}))};/*promise*/
 const txCount=function(ua=sender){return(web3.eth.getTransactionCount(ua))};/*promise*/
 const txSSend=function(tx){return(web3.eth.sendSignedTransaction(tx))};/*promise*/
