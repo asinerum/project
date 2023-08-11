@@ -1264,6 +1264,12 @@ const mindif=function(hextime,dec=1){return(n2s((nowDate()-fromHex(hextime))/60,
 const toDate=function(y,m,d){return(parseInt(_Date(Date.UTC(y,m-1,d,0,0,0,0)).getTime()/1000,10));};
 const nowDate=function(){return(parseInt(_Date(0).getTime()/1000,10));};
 const fromDate=function(n){return(_Date(n*1000).toString());};
+const day=function(){return(_Date(0).getDay())};
+const date=function(){return(_Date(0).getDate())};
+const month=function(){return(_Date(0).getMonth()+1)};
+const year=function(){return(_Date(0).getFullYear())};
+const dateMark=function(mark=10){return(toDate(year(),month(),date())+mark*60*60)};
+const datePast=function(mark=10,days=1){return(toDate(year(),month(),date())+mark*60*60-days*24*60*60)};
 ////////////////////////////////////////////////////////////
 const hiRegex=_Regex('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})');
 const loRegex=_Regex('^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})');
@@ -2290,6 +2296,7 @@ const launch=function(mg=200000,gw=0){startXuteng();maxgas=mg;txgwei=gw;btnXut('
 const xready=function(mg=200000,gw=0){$(document).ready(function(){launch(mg,gw);});};
 ////////////////////////////////////////////////////////////
 const createSimpleGame=function(name,fn=Out){fn({game:name},ZEROADDR,0,function(e,r){if(e)return(console.error(e));console.warn(_transactionHash,r.transactionHash)})};
+const getGemtPayResult=function(start=datePast(10),end=dateMark(10),blocks=10000,to=UVAULT[network].addr,cbf=console.log,t){startGemtRpc();getTRecvLogs(to,blocks,function(e,r){if(e)return(cbf(e.toString(),null));window.gemtPayDues=[];window.gemtPayOverdues=[];r.forEach(i=>{t=i.timeStamp*1;if(t>start&&t<=end){window.gemtPayDues.push(i)}else{window.gemtPayOverdues.push(i)}});cbf(null,{dues:window.gemtPayDues,overdues:window.gemtPayOverdues})})};
 const getGemtPayTxData=function(tx,cbf=console.log,onote=true,inwei=false,o){try{txGet(tx).then(r=>{o={block:r.blockNumber,from:r.from,ref:HEXINIT+r.input.substr(10,64),to:toHex(fromHex(r.input.substr(74,64))),value:fromHex(r.input.substr(138,64)),obj:hexUtf(strCut(r.input.substr(202),'7b226f626a22','7d'))};if(onote)o.obj=JSON.parse(o.obj).obj;if(!inwei)o.value=w2s(o.value);cbf(null,o)})}catch(e){cbf(e.toString(),null)}};
 const payGemtsWithNote=function(txref,to,tokens,note='',fn=exec,cbf=console.warn){fn('pay',0,cbf,txref,to,s2w(tokens),setInput(note))};
 let LodeHnTxAddr=function(t=LodeHnTxHash()){return(t.cashier?t.cashier:UVAULT[network].addr)};

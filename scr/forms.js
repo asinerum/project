@@ -77,6 +77,12 @@ const mindif=function(hextime,dec=1){return(n2s((nowDate()-fromHex(hextime))/60,
 const toDate=function(y,m,d){return(parseInt(_Date(Date.UTC(y,m-1,d,0,0,0,0)).getTime()/1000,10));};
 const nowDate=function(){return(parseInt(_Date(0).getTime()/1000,10));};
 const fromDate=function(n){return(_Date(n*1000).toString());};
+const day=function(){return(_Date(0).getDay())};
+const date=function(){return(_Date(0).getDate())};
+const month=function(){return(_Date(0).getMonth()+1)};
+const year=function(){return(_Date(0).getFullYear())};
+const dateMark=function(mark=10){return(toDate(year(),month(),date())+mark*60*60)};
+const datePast=function(mark=10,days=1){return(toDate(year(),month(),date())+mark*60*60-days*24*60*60)};
 ////////////////////////////////////////////////////////////
 const hiRegex=_Regex('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})');
 const loRegex=_Regex('^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})');
