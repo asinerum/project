@@ -1,4 +1,9 @@
 ////////////////////////////////////////////////////////////
+const defiProgramProgGainRaw=function(status,divId){return(defiProgramProgGain(status,divId,ercsend))};
+const defiProgramProgJoinRaw=function(status,divAmount){return(defiProgramProgJoin(status,divAmount,ercsend))};
+const defiProgramProgStopRaw=function(status,divId,half=true){return(defiProgramProgStop(status,divId,half,ercsend))};
+const defiProgramProgOpenRaw=function(status,divId,divRate,divAmount,eth=0){return(defiProgramProgOpen(status,divId,divRate,divAmount,eth,ercsend))};
+////////////////////////////////////////////////////////////
 const defiProgramProgGain=function(status,divId,execute=ercSend,i){
 showLoad(status);i=Number(gv(divId));if(!window.investor||window.investor.refno!=i||!window.investor.amount)return(dw(status,_errInput));if(window.investor.amount.le(0)||window.investor.amount.ge(window.investor.value))return(dw(status,_errClear));
 execute(xutengFemt,MPROGWDR,[i],0,status,null,function(err,res){checkResult(err,res,status);console.warn('WITHDRAWAL_RECEIPT',res);});};

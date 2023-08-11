@@ -1276,7 +1276,8 @@ const loRegex=_Regex('^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*
 const bipRegex=_Regex('^([A-Za-z0-9]{58})$');
 const hashRegex=_Regex('^0x([A-Fa-f0-9]{64})$');
 ////////////////////////////////////////////////////////////
-const numsInRange=function(n,rl,rh){return(n>rl&&n<rh);};
+const numsInRange=function(n,rl,rh,fn=null){if(fn)n=fn(n);return(n>=rl&&n<=rh);};
+const positiveStr=function(n){return(s2n(n)>0);};
 const positiveNum=function(n){return(Number(n)&&n>0);};
 const positiveInt=function(n){return(Number.isInteger(Number(n))&&n>0);};
 const twoHexEqual=function(h1,h2){return(fromHex(h1)===fromHex(h2));};
@@ -1421,6 +1422,15 @@ const bad_pennyPush=function(){if(disable()||noOwner()||badXuts(gv(_pushVal))||n
 const bad_pennyTransfer=function(){if(disable()||noOwner()||badAddr(gv(_xutTo))||badXXut(gv(_xutVal))||notTran())return(true);return(false);};
 const bad_weiTransfer=function(){if(disable()||noOwner()||badAddr(gv(_ethTo))||badXEth(gv(_ethVal))||userBan())return(true);return(false);};
 ////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////
+const confirmPositiveInt=function(elem,msg,fn=positiveInt){confirmElement(fn,true,elem,msg)};
+const checkTokenAllowed=function(elem,msg,fn=tokenAllowed){checkElement(fn,true,elem,msg)};
+const checkPositiveNum=function(elem,msg){checkPositiveInt(elem,msg,positiveStr)};
+const checkPositiveInt=function(elem,msg,fn=positiveInt){checkElement(fn,true,elem,msg)};
+const checkNumsInRange=function(elem,msg,min,max,fn=numsInRange,fp=s2n){checkElement(fn,true,elem,msg,[min,max,fp])};
+////////////////////////////////////////////////////////////
+const checkElement=function(cfunc,cbool,elem,msg,more=[],afunc=alert){if(cfunc(gv(elem),...more)!==cbool)throw(afunc(msg))};
+const confirmElement=function(cfunc,cbool,elem,msg,more=[],mfunc=confirm){if(cfunc(gv(elem),...more)!==cbool||!mfunc(msg))throw(CANCELED)};
 ////////////////////////////////////////////////////////////
 const checkLogin=function(){return(!disable());};
 const checkRole=function(r){return(!userBan()&&!noRoled(r));};
@@ -1929,26 +1939,31 @@ const Menu=function(element){self=this;
  self.onDefiHackProgJoinMine=function(){defiHackProgJoinMine('form_status','pro_token','pro_id_mine');}
  self.onDefiHackProgJoin=function(){defiHackProgJoin('form_status','pro_token','pro_id');}
  self.onDefiHackProgLoad=function(){defiHackProgLoad('form_status','pro_token','pro_amt','pro_sum');}
- self.goDefiHackProgIdno=function(){if(!positiveInt(gv('pro_id')))return(alert(_warnPrgIdno));}
- self.goDefiHackProgIdnoMine=function(){if(!positiveInt(gv('pro_id_mine')))return(alert(_warnPrgIdno));}
- self.goDefiHackProgLoad=function(){if(!tokenAllowed(gv('pro_token')))return(alert(_warnPrgCoin));self.onDefiHackProgLoad()}
+ self.goDefiHackProgIdno=function(){checkPositiveInt('pro_id',_warnPrgIdno);}
+ self.goDefiHackProgIdnoMine=function(){checkPositiveInt('pro_id_mine',_warnPrgIdno);}
+ self.goDefiHackProgLoad=function(){checkTokenAllowed('pro_token',_warnPrgCoin);self.onDefiHackProgLoad()}
  self.onDefiDigLoad=function(){defiDigLoad('dig_token','dig_amt','dig_sum','dig_mine','dig_rate');}
  self.onDefiDigJoin=function(){defiDigJoin('dig_keystore','dig_passcode','dig_address');}
  self.goDefiDigLoad=self.onDefiDigLoad;
  self.onDefiDigNonce=function(){defiDigNonce('dig_nonce');}
  self.onDefiDigMine=function(){defiDigMine('dig_wait','form_status');}
  self.onDefiDigSend=function(){defiDigSend('dig_in_nonce','form_status');}
- self.onDefiProgramProgDraw=function(){if(positiveInt(gv('pro_program_id'))&&confirm(_warnPrgDraw))return(defiProgramProgStop('form_status','pro_program_id',true));}
+ self.onDefiProgramProgDraw=function(){confirmPositiveInt('pro_program_id',_warnPrgDraw);defiProgramProgStop('form_status','pro_program_id',true)}
+ self.onDefiProgramProgDrawRaw=function(){confirmPositiveInt('pro_program_id',_warnPrgDraw);defiProgramProgStopRaw('form_status','pro_program_id',true)}
  self.onDefiProgramProgOpen=function(){defiProgramProgOpen('form_status','pro_program_id','pro_program_apr','pro_program_gemt');}
+ self.onDefiProgramProgOpenRaw=function(){defiProgramProgOpenRaw('form_status','pro_program_id','pro_program_apr','pro_program_gemt');}
  self.onDefiProgramProgRead=function(){defiProgramProgRead('form_status','pro_program_id','pro_program_apr','pro_program_gemt');}
- self.onDefiProgramProgStop=function(){if(positiveInt(gv('pro_program_id'))&&confirm(_warnPrgStop))return(defiProgramProgStop('form_status','pro_program_id',false));}
- self.goDefiProgramProgIdno=function(){if(!positiveInt(gv('pro_program_id')))return(alert(_warnPrgIdno));self.onDefiProgramProgRead()}
- self.goDefiProgramProgInit=function(){if(!positiveNum(s2n(gv('pro_program_gemt'))))return(alert(_warnPrgInit));}
- self.goDefiProgramProgRate=function(){if(!numsInRange(s2n(gv('pro_program_apr')),PROGMINRATE,PROGMAXRATE))return(alert(_warnPrgRate));}
+ self.onDefiProgramProgStop=function(){confirmPositiveInt('pro_program_id',_warnPrgStop);defiProgramProgStop('form_status','pro_program_id',false)}
+ self.onDefiProgramProgStopRaw=function(){confirmPositiveInt('pro_program_id',_warnPrgStop);defiProgramProgStopRaw('form_status','pro_program_id',false)}
+ self.goDefiProgramProgIdno=function(){checkPositiveInt('pro_program_id',_warnPrgIdno);self.onDefiProgramProgRead()}
+ self.goDefiProgramProgInit=function(){checkPositiveNum('pro_program_gemt',_warnPrgInit);}
+ self.goDefiProgramProgRate=function(){checkNumsInRange('pro_program_apr',_warnPrgRate,PROGMINRATE,PROGMAXRATE);}
  self.onDefiProgramProgReId=function(){defiProgramProgRead('form_status','pro_invest_id','pro_invest_apr','pro_invest_sum','pro_invest_age','pro_invest_own','pro_invest_amt','pro_invest_agi');}
  self.onDefiProgramProgJoin=function(){defiProgramProgJoin('form_status','pro_invest_gemt');}
+ self.onDefiProgramProgJoinRaw=function(){defiProgramProgJoinRaw('form_status','pro_invest_gemt');}
  self.onDefiProgramProgGain=function(){defiProgramProgGain('form_status','pro_invest_id');}
- self.goDefiProgramProgInst=function(){if(!positiveNum(s2n(gv('pro_invest_gemt'))))return(alert(_warnPrgInit));}
+ self.onDefiProgramProgGainRaw=function(){defiProgramProgGainRaw('form_status','pro_invest_id');}
+ self.goDefiProgramProgInst=function(){checkPositiveNum('pro_invest_gemt',_warnPrgInit);}
  self.goDefiProgramProgReId=self.onDefiProgramProgReId;
 };//////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
@@ -1974,6 +1989,11 @@ const setWasmString=function(str,pointer=0,ins,b,i){if(!ins)ins=window.wasmInsta
 const getWasmString=function(pointer,len,ins,b,i,s){if(!ins)ins=window.wasmInstance;b=(new Uint8Array(ins.exports.memory.buffer,pointer,len));s='';for(i=0;i<len;i++)s+=String.fromCharCode(b[i]);return(s);};
 const getWasmStrEnd=function(pointer,ins,b,i,s){/**/if(!ins)ins=window.wasmInstance;b=(new Uint8Array(ins.exports.memory.buffer,pointer));s='';for(i=0;b[i];i++)s+=String.fromCharCode(b[i]);return(s);};
 ////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////
+const defiProgramProgGainRaw=function(status,divId){return(defiProgramProgGain(status,divId,ercsend))};
+const defiProgramProgJoinRaw=function(status,divAmount){return(defiProgramProgJoin(status,divAmount,ercsend))};
+const defiProgramProgStopRaw=function(status,divId,half=true){return(defiProgramProgStop(status,divId,half,ercsend))};
+const defiProgramProgOpenRaw=function(status,divId,divRate,divAmount,eth=0){return(defiProgramProgOpen(status,divId,divRate,divAmount,eth,ercsend))};
 ////////////////////////////////////////////////////////////
 const defiProgramProgGain=function(status,divId,execute=ercSend,i){
 showLoad(status);i=Number(gv(divId));if(!window.investor||window.investor.refno!=i||!window.investor.amount)return(dw(status,_errInput));if(window.investor.amount.le(0)||window.investor.amount.ge(window.investor.value))return(dw(status,_errClear));

@@ -89,7 +89,8 @@ const loRegex=_Regex('^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*
 const bipRegex=_Regex('^([A-Za-z0-9]{58})$');
 const hashRegex=_Regex('^0x([A-Fa-f0-9]{64})$');
 ////////////////////////////////////////////////////////////
-const numsInRange=function(n,rl,rh){return(n>rl&&n<rh);};
+const numsInRange=function(n,rl,rh,fn=null){if(fn)n=fn(n);return(n>=rl&&n<=rh);};
+const positiveStr=function(n){return(s2n(n)>0);};
 const positiveNum=function(n){return(Number(n)&&n>0);};
 const positiveInt=function(n){return(Number.isInteger(Number(n))&&n>0);};
 const twoHexEqual=function(h1,h2){return(fromHex(h1)===fromHex(h2));};

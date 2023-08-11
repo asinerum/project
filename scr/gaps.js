@@ -1,4 +1,13 @@
 ////////////////////////////////////////////////////////////
+const confirmPositiveInt=function(elem,msg,fn=positiveInt){confirmElement(fn,true,elem,msg)};
+const checkTokenAllowed=function(elem,msg,fn=tokenAllowed){checkElement(fn,true,elem,msg)};
+const checkPositiveNum=function(elem,msg){checkPositiveInt(elem,msg,positiveStr)};
+const checkPositiveInt=function(elem,msg,fn=positiveInt){checkElement(fn,true,elem,msg)};
+const checkNumsInRange=function(elem,msg,min,max,fn=numsInRange,fp=s2n){checkElement(fn,true,elem,msg,[min,max,fp])};
+////////////////////////////////////////////////////////////
+const checkElement=function(cfunc,cbool,elem,msg,more=[],afunc=alert){if(cfunc(gv(elem),...more)!==cbool)throw(afunc(msg))};
+const confirmElement=function(cfunc,cbool,elem,msg,more=[],mfunc=confirm){if(cfunc(gv(elem),...more)!==cbool||!mfunc(msg))throw(CANCELED)};
+////////////////////////////////////////////////////////////
 const checkLogin=function(){return(!disable());};
 const checkRole=function(r){return(!userBan()&&!noRoled(r));};
 ////////////////////////////////////////////////////////////
