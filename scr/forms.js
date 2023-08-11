@@ -21,7 +21,12 @@ String.prototype.isKey=function(){return(hvalid(this)||hvalid(HEXINIT+this))};
 String.prototype.isBip=function(){return(bipRegex.test(this))};
 ////////////////////////////////////////////////////////////
 String.prototype.escape=function(){return(this.replace(/"/g,'\\"'))};
+String.prototype.same=function(as,sens=true,trim=false,c,t){c=this;t=String(as);if(trim){c=c.trim();t=t.trim()}if(!sens){c=c.toLowerCase();t=t.toLowerCase()}return(c==t)};
+String.prototype.as=function(as){return(this.same(as,false,true))};
+////////////////////////////////////////////////////////////
 Array.prototype.sum=function(){return(this.reduce((a,b)=>(Number(a)+Number(b))))};
+Object.prototype.Key=function(val){return(this.key(val,'same'))};
+Object.prototype.key=function(val,cmp='as',k=null){Object.keys(this).forEach(key=>{if(String(this[key])[cmp](val))return(k=key)});return(k)};
 const safeJSON=function(keys,vals,i=0,a=[]){if(keys.length!=vals.length)throw(null);for(;i<keys.length;i++)a.push(`"${keys[i]}":"${vals[i].toString().escape()}"`);return('{'+a.join(',')+'}');};
 ////////////////////////////////////////////////////////////
 const trim=function(s){if(s)return(s.replace(/^\s+|\s+$/g,BLANK));return(BLANK);};

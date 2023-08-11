@@ -1208,7 +1208,12 @@ String.prototype.isKey=function(){return(hvalid(this)||hvalid(HEXINIT+this))};
 String.prototype.isBip=function(){return(bipRegex.test(this))};
 ////////////////////////////////////////////////////////////
 String.prototype.escape=function(){return(this.replace(/"/g,'\\"'))};
+String.prototype.same=function(as,sens=true,trim=false,c,t){c=this;t=String(as);if(trim){c=c.trim();t=t.trim()}if(!sens){c=c.toLowerCase();t=t.toLowerCase()}return(c==t)};
+String.prototype.as=function(as){return(this.same(as,false,true))};
+////////////////////////////////////////////////////////////
 Array.prototype.sum=function(){return(this.reduce((a,b)=>(Number(a)+Number(b))))};
+Object.prototype.Key=function(val){return(this.key(val,'same'))};
+Object.prototype.key=function(val,cmp='as',k=null){Object.keys(this).forEach(key=>{if(String(this[key])[cmp](val))return(k=key)});return(k)};
 const safeJSON=function(keys,vals,i=0,a=[]){if(keys.length!=vals.length)throw(null);for(;i<keys.length;i++)a.push(`"${keys[i]}":"${vals[i].toString().escape()}"`);return('{'+a.join(',')+'}');};
 ////////////////////////////////////////////////////////////
 const trim=function(s){if(s)return(s.replace(/^\s+|\s+$/g,BLANK));return(BLANK);};
@@ -2286,6 +2291,7 @@ const xready=function(mg=200000,gw=0){$(document).ready(function(){launch(mg,gw)
 ////////////////////////////////////////////////////////////
 const createSimpleGame=function(name,fn=Out){fn({game:name},ZEROADDR,0,function(e,r){if(e)return(console.error(e));console.warn(_transactionHash,r.transactionHash)})};
 const getGemtPayTxData=function(tx,cbf=console.log,onote=true,inwei=false,o){try{txGet(tx).then(r=>{o={block:r.blockNumber,from:r.from,ref:HEXINIT+r.input.substr(10,64),to:toHex(fromHex(r.input.substr(74,64))),value:fromHex(r.input.substr(138,64)),obj:hexUtf(strCut(r.input.substr(202),'7b226f626a22','7d'))};if(onote)o.obj=JSON.parse(o.obj).obj;if(!inwei)o.value=w2s(o.value);cbf(null,o)})}catch(e){cbf(e.toString(),null)}};
+const payGemtsWithNote=function(txref,to,tokens,note='',fn=exec,cbf=console.warn){fn('pay',0,cbf,txref,to,s2w(tokens),setInput(note))};
 let LodeHnTxAddr=function(t=LodeHnTxHash()){return(t.cashier?t.cashier:UVAULT[network].addr)};
 let LodeHnTxHash=function(){return({DeHanoi:'0xa56a4e60569c1229b9f99ed4e9eb45473047db1247fd1886cab4f8609b7cfae7',LoHanoi:'0xf1f64bf01c1bd48869c430ca59899f9e785918f07a935896c040cb0048167b25',cashier:null})};
 let DeHanoiGEMT9=function(number,amount,to=LodeHnTxAddr(),fn=exec,start=startGemt){start();fn('pay',0,console.log,LodeHnTxHash().DeHanoi,to,s2w(amount),setInput(number))};
