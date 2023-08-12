@@ -83,6 +83,8 @@ const month=function(){return(_Date(0).getMonth()+1)};
 const year=function(){return(_Date(0).getFullYear())};
 const dateMark=function(mark=10){return(toDate(year(),month(),date())+mark*60*60)};
 const datePast=function(mark=10,days=1){return(toDate(year(),month(),date())+mark*60*60-days*24*60*60)};
+const Countdown=function(divTimer,mark=10,fn=db){setInterval(function(){fn(divTimer,countdown(mark))},1000)};
+const countdown=function(mark=10,n,e,d,h,m,s,M,S){n=nowDate();e=dateMark(mark);while(e<n){e+=24*60*60};d=e-n;h=parseInt(d/3600,10);d-=h*3600;m=parseInt(d/60,10);s=parseInt(d%60,10);M=m<10?ZERO+m:m;S=s<10?ZERO+s:s;return(`${h}:${M}:${S}`)};
 ////////////////////////////////////////////////////////////
 const hiRegex=_Regex('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})');
 const loRegex=_Regex('^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})');

@@ -20,7 +20,7 @@ const getGemtPayResult=function(start=datePast(10),end=dateMark(10),blocks=10000
 const getGemtPayTxData=function(tx,cbf=console.log,onote=true,inwei=false,o){try{txGet(tx).then(r=>{o={block:r.blockNumber,from:r.from,ref:HEXINIT+r.input.substr(10,64),to:toHex(fromHex(r.input.substr(74,64))),value:fromHex(r.input.substr(138,64)),obj:hexUtf(strCut(r.input.substr(202),'7b226f626a22','7d'))};if(onote)o.obj=JSON.parse(o.obj).obj;if(!inwei)o.value=w2s(o.value);cbf(null,o)})}catch(e){cbf(e.toString(),null)}};
 const payGemtsWithNote=function(txref,to,tokens,note='',fn=exec,cbf=console.warn){fn('pay',0,cbf,txref,to,s2w(tokens),setInput(note))};
 let LodeHnTxAddr=function(t=LodeHnTxHash()){return(t.cashier?t.cashier:UVAULT[network].addr)};
-let LodeHnTxHash=function(){return({DeHanoi:'0xa56a4e60569c1229b9f99ed4e9eb45473047db1247fd1886cab4f8609b7cfae7',LoHanoi:'0xf1f64bf01c1bd48869c430ca59899f9e785918f07a935896c040cb0048167b25',cashier:null})};
+let LodeHnTxHash=function(){return({DeHanoi:'0xa56a4e60569c1229b9f99ed4e9eb45473047db1247fd1886cab4f8609b7cfae7',LoHanoi:'0xf1f64bf01c1bd48869c430ca59899f9e785918f07a935896c040cb0048167b25',cashier:'0xe9d7fddf9f36bd1cd2a77b31a91cd069ef012ab0'})};
 let DeHanoiGEMT9=function(number,amount,to=LodeHnTxAddr(),fn=exec,start=startGemt){start();fn('pay',0,console.log,LodeHnTxHash().DeHanoi,to,s2w(amount),setInput(number))};
 let DeHanoiInBNB=function(number,amount,to=LodeHnTxAddr(),fn=exec,start=startGemt){start();fn('pay',amount,console.log,LodeHnTxHash().DeHanoi,to,0,setInput(number))};
 let LoHanoiGEMT9=function(number,amount,to=LodeHnTxAddr(),fn=exec,start=startGemt){start();fn('pay',0,console.log,LodeHnTxHash().LoHanoi,to,s2w(amount),setInput(number))};

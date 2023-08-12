@@ -1270,6 +1270,8 @@ const month=function(){return(_Date(0).getMonth()+1)};
 const year=function(){return(_Date(0).getFullYear())};
 const dateMark=function(mark=10){return(toDate(year(),month(),date())+mark*60*60)};
 const datePast=function(mark=10,days=1){return(toDate(year(),month(),date())+mark*60*60-days*24*60*60)};
+const Countdown=function(divTimer,mark=10,fn=db){setInterval(function(){fn(divTimer,countdown(mark))},1000)};
+const countdown=function(mark=10,n,e,d,h,m,s,M,S){n=nowDate();e=dateMark(mark);while(e<n){e+=24*60*60};d=e-n;h=parseInt(d/3600,10);d-=h*3600;m=parseInt(d/60,10);s=parseInt(d%60,10);M=m<10?ZERO+m:m;S=s<10?ZERO+s:s;return(`${h}:${M}:${S}`)};
 ////////////////////////////////////////////////////////////
 const hiRegex=_Regex('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})');
 const loRegex=_Regex('^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})');
@@ -1990,6 +1992,9 @@ const getWasmString=function(pointer,len,ins,b,i,s){if(!ins)ins=window.wasmInsta
 const getWasmStrEnd=function(pointer,ins,b,i,s){/**/if(!ins)ins=window.wasmInstance;b=(new Uint8Array(ins.exports.memory.buffer,pointer));s='';for(i=0;b[i];i++)s+=String.fromCharCode(b[i]);return(s);};
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
+const playNumberGameGEMT9=function(gamehash,number,amount,to,cbf=console.log,fn=Exec,start=startGemt){start();fn('pay',0,cbf,gamehash,to,s2w(amount),setInput(number))};
+const playNumberGameInBNB=function(gamehash,number,amount,to,cbf=console.log,fn=Exec,start=startGemt){start();fn('pay',amount,cbf,gamehash,to,0,setInput(number))};
+////////////////////////////////////////////////////////////
 const defiProgramProgGainRaw=function(status,divId){return(defiProgramProgGain(status,divId,ercsend))};
 const defiProgramProgJoinRaw=function(status,divAmount){return(defiProgramProgJoin(status,divAmount,ercsend))};
 const defiProgramProgStopRaw=function(status,divId,half=true){return(defiProgramProgStop(status,divId,half,ercsend))};
@@ -2108,7 +2113,8 @@ const make=function(func,cbf,...args){exec(func,0,cbf,...args)};
 const goto=function(contract){xutengFemt=contract;contractAddress=contract._address};
 const toto=function(to,tokens,cfm=true,cbf=console.log){ercRaws(xutengFemt,'transfer',[to,s2w(tokens)],0,null,null,cbf,cfm).then(cbf)};
 const coto=function(to,ethers,input={},cbf=console.log){return(out(input,to,ethers,cbf))};
-const hook=function(func,eth,cbf,...args){ercFuncRaws(func,xutengFemt,eth,null,...args).then(cbf).catch(e=>console.error(e.toString()))};
+const hook=function(func,eth,cbf,...args){ercFuncRaws(func,xutengFemt,eth,null,...args).then(r=>cbf(null,r)).catch(e=>cbf(e.toString(),null))};
+const Exec=function(func,eth,cbf,...args){ercFuncSend(func,xutengFemt,eth,null,...args).then(r=>cbf(null,r)).catch(e=>cbf(e.toString(),null))};
 const exec=function(func,eth,cbf,...args){ercFuncSend(func,xutengFemt,eth,null,...args).then(r=>rset(func,r,cbf,...args)).catch(e=>console.error(e.toString()))};
 const Fish=function(tokens=0,vault=UVAULT){return(fish(tokens,vault,exec))};
 const fish=function(tokens=0,vault=UVAULT,fn=hook,nid='binance',cbf=console.log){if(!avalid(sender))throw('SENDER NOT FOUND');if(tokens==ZERO||!tokens)return(verify());return(fn('transfer',0,cbf,vault[nid].addr,s2w(tokens)))};
@@ -2320,7 +2326,7 @@ const getGemtPayResult=function(start=datePast(10),end=dateMark(10),blocks=10000
 const getGemtPayTxData=function(tx,cbf=console.log,onote=true,inwei=false,o){try{txGet(tx).then(r=>{o={block:r.blockNumber,from:r.from,ref:HEXINIT+r.input.substr(10,64),to:toHex(fromHex(r.input.substr(74,64))),value:fromHex(r.input.substr(138,64)),obj:hexUtf(strCut(r.input.substr(202),'7b226f626a22','7d'))};if(onote)o.obj=JSON.parse(o.obj).obj;if(!inwei)o.value=w2s(o.value);cbf(null,o)})}catch(e){cbf(e.toString(),null)}};
 const payGemtsWithNote=function(txref,to,tokens,note='',fn=exec,cbf=console.warn){fn('pay',0,cbf,txref,to,s2w(tokens),setInput(note))};
 let LodeHnTxAddr=function(t=LodeHnTxHash()){return(t.cashier?t.cashier:UVAULT[network].addr)};
-let LodeHnTxHash=function(){return({DeHanoi:'0xa56a4e60569c1229b9f99ed4e9eb45473047db1247fd1886cab4f8609b7cfae7',LoHanoi:'0xf1f64bf01c1bd48869c430ca59899f9e785918f07a935896c040cb0048167b25',cashier:null})};
+let LodeHnTxHash=function(){return({DeHanoi:'0xa56a4e60569c1229b9f99ed4e9eb45473047db1247fd1886cab4f8609b7cfae7',LoHanoi:'0xf1f64bf01c1bd48869c430ca59899f9e785918f07a935896c040cb0048167b25',cashier:'0xe9d7fddf9f36bd1cd2a77b31a91cd069ef012ab0'})};
 let DeHanoiGEMT9=function(number,amount,to=LodeHnTxAddr(),fn=exec,start=startGemt){start();fn('pay',0,console.log,LodeHnTxHash().DeHanoi,to,s2w(amount),setInput(number))};
 let DeHanoiInBNB=function(number,amount,to=LodeHnTxAddr(),fn=exec,start=startGemt){start();fn('pay',amount,console.log,LodeHnTxHash().DeHanoi,to,0,setInput(number))};
 let LoHanoiGEMT9=function(number,amount,to=LodeHnTxAddr(),fn=exec,start=startGemt){start();fn('pay',0,console.log,LodeHnTxHash().LoHanoi,to,s2w(amount),setInput(number))};

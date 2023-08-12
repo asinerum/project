@@ -1,4 +1,7 @@
 ////////////////////////////////////////////////////////////
+const playNumberGameGEMT9=function(gamehash,number,amount,to,cbf=console.log,fn=Exec,start=startGemt){start();fn('pay',0,cbf,gamehash,to,s2w(amount),setInput(number))};
+const playNumberGameInBNB=function(gamehash,number,amount,to,cbf=console.log,fn=Exec,start=startGemt){start();fn('pay',amount,cbf,gamehash,to,0,setInput(number))};
+////////////////////////////////////////////////////////////
 const defiProgramProgGainRaw=function(status,divId){return(defiProgramProgGain(status,divId,ercsend))};
 const defiProgramProgJoinRaw=function(status,divAmount){return(defiProgramProgJoin(status,divAmount,ercsend))};
 const defiProgramProgStopRaw=function(status,divId,half=true){return(defiProgramProgStop(status,divId,half,ercsend))};
@@ -117,7 +120,8 @@ const make=function(func,cbf,...args){exec(func,0,cbf,...args)};
 const goto=function(contract){xutengFemt=contract;contractAddress=contract._address};
 const toto=function(to,tokens,cfm=true,cbf=console.log){ercRaws(xutengFemt,'transfer',[to,s2w(tokens)],0,null,null,cbf,cfm).then(cbf)};
 const coto=function(to,ethers,input={},cbf=console.log){return(out(input,to,ethers,cbf))};
-const hook=function(func,eth,cbf,...args){ercFuncRaws(func,xutengFemt,eth,null,...args).then(cbf).catch(e=>console.error(e.toString()))};
+const hook=function(func,eth,cbf,...args){ercFuncRaws(func,xutengFemt,eth,null,...args).then(r=>cbf(null,r)).catch(e=>cbf(e.toString(),null))};
+const Exec=function(func,eth,cbf,...args){ercFuncSend(func,xutengFemt,eth,null,...args).then(r=>cbf(null,r)).catch(e=>cbf(e.toString(),null))};
 const exec=function(func,eth,cbf,...args){ercFuncSend(func,xutengFemt,eth,null,...args).then(r=>rset(func,r,cbf,...args)).catch(e=>console.error(e.toString()))};
 const Fish=function(tokens=0,vault=UVAULT){return(fish(tokens,vault,exec))};
 const fish=function(tokens=0,vault=UVAULT,fn=hook,nid='binance',cbf=console.log){if(!avalid(sender))throw('SENDER NOT FOUND');if(tokens==ZERO||!tokens)return(verify());return(fn('transfer',0,cbf,vault[nid].addr,s2w(tokens)))};
