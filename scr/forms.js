@@ -25,8 +25,10 @@ String.prototype.same=function(as,sens=true,trim=false,c,t){c=this;t=String(as);
 String.prototype.as=function(as){return(this.same(as,false,true))};
 ////////////////////////////////////////////////////////////
 Array.prototype.sum=function(){return(this.reduce((a,b)=>(Number(a)+Number(b))))};
-Object.prototype.getKey=function(val){return(this.getkey(val,'same'))};
-Object.prototype.getkey=function(val,cmp='as',k=null){Object.keys(this).forEach(key=>{if(String(this[key])[cmp](val))return(k=key)});return(k)};
+//Object.prototype.getKey=function(val){return(this.getkey(val,'same'))};
+//Object.prototype.getkey=function(val,cmp='as',k=null){Object.keys(this).forEach(key=>{if(String(this[key])[cmp](val))return(k=key)});return(k)};
+const getKey=function(obj,val){return(getkey(obj,val,'same'))};
+const getkey=function(obj,val,cmp='as',k=null){Object.keys(obj).forEach(key=>{if(String(obj[key])[cmp](val))return(k=key)});return(k)};
 const safeJSON=function(keys,vals,i=0,a=[]){if(keys.length!=vals.length)throw(null);for(;i<keys.length;i++)a.push(`"${keys[i]}":"${vals[i].toString().escape()}"`);return('{'+a.join(',')+'}');};
 ////////////////////////////////////////////////////////////
 const trim=function(s){if(s)return(s.replace(/^\s+|\s+$/g,BLANK));return(BLANK);};
