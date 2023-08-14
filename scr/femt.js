@@ -241,6 +241,7 @@ const startBTSC=function(addr,nid='binance'){startXuteng(nid);return(startNTSC(a
 ////////////////////////////////////////////////////////////
 let getJSON=function(url,cbf=console.log){axiosCallback(url,cbf)};
 const axiosCallback=function(url,cbf=console.log,failcode=null){axios(url).then(r=>cbf(r.data)).catch(e=>cbf({status:failcode,message:e.toString(),result:null}))};
+const startVaultRpc=function(uv=1,nid='binance',gas=300000){startFemtRpc(nid,gas,uv===0?VAULT:UVAULT,uv===0?ABIVAULT:ABIUVAULT)};
 const startFemtRpc=function(nid='binance',gas=300000,femt=FEMT,abi=ABIFEMT){launchNid(EXCHAINS[nid].rpcs,nid,gas,femt,abi);xutengFemt=xuteng};
 const startGemtRpc=function(nid='binance',gas=300000){startFemtRpc(nid,gas,GEMT,ABIGEMT)};
 const startNemtRpc=function(nid='binance',gas=300000){startFemtRpc(nid,gas,NEMT,ABINEMT)};
