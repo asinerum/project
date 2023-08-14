@@ -43,11 +43,11 @@ const selectTokens=function(token){if(token==_progMoney)return(startGemt());if(t
 const getLogApiUrl=function(block,blocks=1000,topic=MineLogTopic,sc=xutengFemt){return(PROXIES[0].getContractPastLogs(sc._address,block-blocks,block,topic))};
 const getMinApiUrl=function(block,blocks=1000,topic=MineLogTopic,sc=xutengFemt){return(PROXIES[0].getContractLastLogs(sc._address,block-blocks,block,topic,h2t(ZEROADDR)))};
 const getAdvApiUrl=function(block,blocks=1000,topic='',afrom='',ato='',sc=xutengFemt){return(PROXIES[0].getContractLastLogs(sc._address,block-blocks,block,topic,afrom,ato))};
-const getLastMined=function(cbf=console.log,LP='lastProof',RS='rewardStamp'){try{if(Func(LP))ercFuncCall(LP).then(r=>{return(cbf(null,r))});else{if(Func(RS))ercFuncCall(RS).then(r=>{return(cbf(null,r))});else{nsBlock().then(r=>{$.getJSON(getMinApiUrl(r)).then(r=>{r=r.result;return(cbf(null,fromHex(r[r.length-1].timeStamp)))})})}}}catch(e){cbf(ERROR,null)}};
-const getTransLogs=function(cbf=console.log,blocks=1000){nsBlock().then(block=>{$.getJSON(getLogApiUrl(block,blocks),function(data){if(data.status!='1')return(cbf(UNKNOWN,null));cbf(null,data.result)})})};
-const getTSendLogs=function(addr,blocks=1000,cbf=console.log,sc=xutengFemt){nsBlock().then(block=>{$.getJSON(getAdvApiUrl(block,blocks,'',h2t(addr),'',sc),function(data){if(data.status!='1')return(cbf(UNKNOWN,null));cbf(null,data.result)})})};
-const getTRecvLogs=function(addr,blocks=1000,cbf=console.log,sc=xutengFemt){nsBlock().then(block=>{$.getJSON(getAdvApiUrl(block,blocks,'','',h2t(addr),sc),function(data){if(data.status!='1')return(cbf(UNKNOWN,null));cbf(null,data.result)})})};
-const getTxTopLogs=function(topic,afrom,ato,blocks=1000,cbf=console.log,sc=xutengFemt){nsBlock().then(block=>{$.getJSON(getAdvApiUrl(block,blocks,h2t(topic),h2t(afrom),h2t(ato),sc),function(data){if(data.status!='1')return(cbf(UNKNOWN,null));cbf(null,data.result)})})};
+const getLastMined=function(cbf=console.log,LP='lastProof',RS='rewardStamp'){try{if(Func(LP))ercFuncCall(LP).then(r=>{return(cbf(null,r))});else{if(Func(RS))ercFuncCall(RS).then(r=>{return(cbf(null,r))});else{nsBlock().then(r=>{getJSON(getMinApiUrl(r)).then(r=>{r=r.result;return(cbf(null,fromHex(r[r.length-1].timeStamp)))})})}}}catch(e){cbf(ERROR,null)}};
+const getTransLogs=function(cbf=console.log,blocks=1000){nsBlock().then(block=>{getJSON(getLogApiUrl(block,blocks),function(data){if(data.status!='1')return(cbf(UNKNOWN,null));cbf(null,data.result)})})};
+const getTSendLogs=function(addr,blocks=1000,cbf=console.log,sc=xutengFemt){nsBlock().then(block=>{getJSON(getAdvApiUrl(block,blocks,'',h2t(addr),'',sc),function(data){if(data.status!='1')return(cbf(UNKNOWN,null));cbf(null,data.result)})})};
+const getTRecvLogs=function(addr,blocks=1000,cbf=console.log,sc=xutengFemt){nsBlock().then(block=>{getJSON(getAdvApiUrl(block,blocks,'','',h2t(addr),sc),function(data){if(data.status!='1')return(cbf(UNKNOWN,null));cbf(null,data.result)})})};
+const getTxTopLogs=function(topic,afrom,ato,blocks=1000,cbf=console.log,sc=xutengFemt){nsBlock().then(block=>{getJSON(getAdvApiUrl(block,blocks,h2t(topic),h2t(afrom),h2t(ato),sc),function(data){if(data.status!='1')return(cbf(UNKNOWN,null));cbf(null,data.result)})})};
 const getPastMines=function(cbf=console.log,blocks=1000){return(getTransLogs(cbf,blocks))};
 ////////////////////////////////////////////////////////////
 const defiDigNonce=function(divNonce,pops=15,kc=kek,pf='basicRate'){showLoad(divNonce);nonce(pops,kc,pf,function(err,res){checkResult(err,res,divNonce);db(divNonce,res)})};
@@ -239,6 +239,8 @@ const startExet=function(gas=300000,abi=ABIEXET,addr=EXET[network].addr){return(
 const startNTSC=function(addr,gas=3000000,abi=ABIESTATES){return(startFemt(gas,abi,addr))};
 const startBTSC=function(addr,nid='binance'){startXuteng(nid);return(startNTSC(addr))};
 ////////////////////////////////////////////////////////////
+let getJSON=function(url,cbf=console.log){axiosCallback(url,cbf)};
+const axiosCallback=function(url,cbf=console.log,failcode=null){axios(url).then(r=>cbf(r.data)).catch(e=>cbf({status:failcode,message:e.toString(),result:null}))};
 const startFemtRpc=function(nid='binance',gas=300000,femt=FEMT,abi=ABIFEMT){launchNid(EXCHAINS[nid].rpcs,nid,gas,femt,abi);xutengFemt=xuteng};
 const startGemtRpc=function(nid='binance',gas=300000){startFemtRpc(nid,gas,GEMT,ABIGEMT)};
 const startNemtRpc=function(nid='binance',gas=300000){startFemtRpc(nid,gas,NEMT,ABINEMT)};
