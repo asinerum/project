@@ -144,6 +144,7 @@ const Menu=function(element){self=this;
  self.goDefiProgramProgReId=self.onDefiProgramProgReId;
  self.goDefiGameLodeNumStr=function(){checkLodeNumsStr('lode_numstr',_warnPrgData);}
  self.goDefiGameLodeAmount=function(){checkPositiveNum('lode_amount',_warnPrgInit);}
+ self.onDefiGameLodeLoad=function(){defiGameLodeLoad('form_status','lode_money','pro_amt');}
  self.onDefiGameLodeJoin=function(){defiGameLodeJoin('form_status','lode_type','lode_money','lode_numstr','lode_amount');}
  self.onDefiGameLodeJoinRaw=function(){defiGameLodeJoinRaw('form_status','lode_type','lode_money','lode_numstr','lode_amount');}
 };//////////////////////////////////////////////////////////

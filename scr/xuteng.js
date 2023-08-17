@@ -1981,6 +1981,7 @@ const Menu=function(element){self=this;
  self.goDefiProgramProgReId=self.onDefiProgramProgReId;
  self.goDefiGameLodeNumStr=function(){checkLodeNumsStr('lode_numstr',_warnPrgData);}
  self.goDefiGameLodeAmount=function(){checkPositiveNum('lode_amount',_warnPrgInit);}
+ self.onDefiGameLodeLoad=function(){defiGameLodeLoad('form_status','lode_money','pro_amt');}
  self.onDefiGameLodeJoin=function(){defiGameLodeJoin('form_status','lode_type','lode_money','lode_numstr','lode_amount');}
  self.onDefiGameLodeJoinRaw=function(){defiGameLodeJoinRaw('form_status','lode_type','lode_money','lode_numstr','lode_amount');}
 };//////////////////////////////////////////////////////////
@@ -2010,6 +2011,7 @@ const getWasmStrEnd=function(pointer,ins,b,i,s){/**/if(!ins)ins=window.wasmInsta
 ////////////////////////////////////////////////////////////
 const defiGameLodeJoinRaw=function(status,divGame,divMoney,divNumStr,divAmount){defiGameLodeJoin(status,divGame,divMoney,divNumStr,divAmount,hook)};
 const defiGameLodeJoin=function(status,divGame,divMoney,divNumStr,divAmount,fn=Exec,n,a){showLoad(status);n=gv(divNumStr);a=gv(divAmount);if(!n.lode()||!positiveNum(a))return(dw(status,_errInput));playLodeHanoi(n,a,gv(divGame),gv(divMoney),fn,function(err,res){checkResult(err,res,status);console.warn('PLAY_RECEIPT',res)})};
+const defiGameLodeLoad=function(status,divMoney,spanAmount){showLoad(status);(gv(divMoney).as('coin')?Ethers:Tokens)(sender,function(r){showOkay(status);db(spanAmount,r)})};
 ////////////////////////////////////////////////////////////
 const playNumberGameGEMT9=function(gamehash,number,amount,to,cbf=console.log,fn=Exec,start=startGemt){start();fn('pay',0,cbf,gamehash,to,s2w(amount),setInput(number))};
 const playNumberGameInBNB=function(gamehash,number,amount,to,cbf=console.log,fn=Exec,start=startGemt){start();fn('pay',amount,cbf,gamehash,to,0,setInput(number))};
@@ -2142,6 +2144,8 @@ const emit=function(event,from=0,to='latest',cbf=console.log){xutengFemt.getPast
 const Emit=function(event,range=5000,cbf=console.log){web3.eth.getBlockNumber().then(r=>emit(event,r-range,r,cbf))};
 const ethers=function(addr=sender,cbf=console.log){web3.eth.getBalance(addr).then(r=>rset('coinBalance',w2s(r),cbf,addr))};
 const tokens=function(addr=sender,cbf=console.log,fn='balanceOf'){ercFuncCall(fn,xutengFemt,addr).then(r=>rset(fn,w2s(r),cbf,addr))};
+const Ethers=function(addr=sender,cbf=console.log){web3.eth.getBalance(addr).then(r=>cbf(w2s(r)))};
+const Tokens=function(addr=sender,cbf=console.log,fn='balanceOf'){ercFuncCall(fn,xutengFemt,addr).then(r=>cbf(w2s(r)))};
 const verify=function(addr=sender,cbf=console.log){ercFuncCall('name',xutengFemt).then(r=>{cbf('[TOKEN]',r);return(ercFuncCall('totalSupply',xutengFemt))}).then(r=>{cbf('[SUPPLY]',w2s(r));return(ercFuncCall('balanceOf',xutengFemt,addr))}).then(r=>{cbf('[USER]',addr);cbf('[BALANCE]',w2s(r))})};
 const struct=function(func,calls=[],picks=[],cbf,...args){ercFuncCall(func,xutengFemt,...args).then(r=>{calls.forEach(t=>cbf(`${t}:`,r[t],NEWLINE));picks.forEach(n=>cbf(`${n}:`,w2s(r[n]),NEWLINE))})};
 const market=function(refno,cbf=console.log){struct('markets',['buytoken','maker'],['value','ppe'],cbf,refno)};
@@ -2354,7 +2358,7 @@ let DeHanoiGEMT9=function(number,amount,to=LodeHnTxAddr(),fn=exec,cbf=console.lo
 let DeHanoiInBNB=function(number,amount,to=LodeHnTxAddr(),fn=exec,cbf=console.log,start=startGemt){start();fn('pay',amount,cbf,LodeHnTxHash().DeHanoi,to,0,setInput(number))};
 let LoHanoiGEMT9=function(number,amount,to=LodeHnTxAddr(),fn=exec,cbf=console.log,start=startGemt){start();fn('pay',0,cbf,LodeHnTxHash().LoHanoi,to,s2w(amount),setInput(number))};
 let LoHanoiInBNB=function(number,amount,to=LodeHnTxAddr(),fn=exec,cbf=console.log,start=startGemt){start();fn('pay',amount,cbf,LodeHnTxHash().LoHanoi,to,0,setInput(number))};
-let playLodeHanoi=function(number,amount,game='DE',money=_progMoney,fn=Exec,cbf=console.log){if(game=='de'){if(money==_progMoney){DeHanoiGEMT9(number,amount,LodeHnTxAddr(),fn,cbf)}else{DeHanoiInBNB(number,amount,LodeHnTxAddr(),fn,cbf)}}else{if(money==_progMoney){LoHanoiGEMT9(number,amount,LodeHnTxAddr(),fn,cbf)}else{LoHanoiInBNB(number,amount,LodeHnTxAddr(),fn,cbf)}}};
+let playLodeHanoi=function(number,amount,game='DE',money=_progMoney,fn=Exec,cbf=console.log,f){(game.as('de')?(money.as('coin')?DeHanoiInBNB:DeHanoiGEMT9):(money.as('coin')?LoHanoiInBNB:LoHanoiGEMT9))(number,amount,LodeHnTxAddr(),fn,cbf)};
 ////////////////////////////////////////////////////////////
 ////REF:consts-author.js
 ////////////////////////////////////////////////////////////

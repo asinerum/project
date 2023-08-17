@@ -26,5 +26,5 @@ let DeHanoiGEMT9=function(number,amount,to=LodeHnTxAddr(),fn=exec,cbf=console.lo
 let DeHanoiInBNB=function(number,amount,to=LodeHnTxAddr(),fn=exec,cbf=console.log,start=startGemt){start();fn('pay',amount,cbf,LodeHnTxHash().DeHanoi,to,0,setInput(number))};
 let LoHanoiGEMT9=function(number,amount,to=LodeHnTxAddr(),fn=exec,cbf=console.log,start=startGemt){start();fn('pay',0,cbf,LodeHnTxHash().LoHanoi,to,s2w(amount),setInput(number))};
 let LoHanoiInBNB=function(number,amount,to=LodeHnTxAddr(),fn=exec,cbf=console.log,start=startGemt){start();fn('pay',amount,cbf,LodeHnTxHash().LoHanoi,to,0,setInput(number))};
-let playLodeHanoi=function(number,amount,game='DE',money=_progMoney,fn=Exec,cbf=console.log){if(game=='de'){if(money==_progMoney){DeHanoiGEMT9(number,amount,LodeHnTxAddr(),fn,cbf)}else{DeHanoiInBNB(number,amount,LodeHnTxAddr(),fn,cbf)}}else{if(money==_progMoney){LoHanoiGEMT9(number,amount,LodeHnTxAddr(),fn,cbf)}else{LoHanoiInBNB(number,amount,LodeHnTxAddr(),fn,cbf)}}};
+let playLodeHanoi=function(number,amount,game='DE',money=_progMoney,fn=Exec,cbf=console.log,f){(game.as('de')?(money.as('coin')?DeHanoiInBNB:DeHanoiGEMT9):(money.as('coin')?LoHanoiInBNB:LoHanoiGEMT9))(number,amount,LodeHnTxAddr(),fn,cbf)};
 ////////////////////////////////////////////////////////////
