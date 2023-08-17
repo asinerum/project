@@ -34,6 +34,7 @@ const getKey=function(obj,val){return(getkey(obj,val,'same'))};
 const getkey=function(obj,val,cmp='as',k=null){Object.keys(obj).forEach(key=>{if(String(obj[key])[cmp](val))return(k=key)});return(k)};
 const safeJSON=function(keys,vals,i=0,a=[]){if(keys.length!=vals.length)throw(null);for(;i<keys.length;i++)a.push(`"${keys[i]}":"${vals[i].toString().escape()}"`);return('{'+a.join(',')+'}');};
 ////////////////////////////////////////////////////////////
+const Trim=function(s){return(trim(s).replace(/\s/g,''))};
 const trim=function(s){if(s)return(s.replace(/^\s+|\s+$/g,BLANK));return(BLANK);};
 const errCode=function(e){if(e!=null){e=e.toString();if(e.indexOf(']')>0)return(hi_alert_data);if(e.indexOf(OxOO)>0)return(hi_prompt_err);if(e.indexOf(RECEIPT)>0)return(hi_prompt_rct);e=(e.substring(e.lastIndexOf(HASH)));if(e){return(e);}else{return(0);}}return(null);};
 const funcName=function(){return(funcName.caller.name);};

@@ -4,7 +4,7 @@ const showError=function(div=TEST){dw(div,ERROR);};
 const showCancel=function(div=TEST){dw(div,CANCELED);};
 const showLoad=function(div=TEST){dw(div,'<img\tsrc="https://cdn.jsdelivr.net/gh/asinerum/project/loading.gif"/>');};
 ////////////////////////////////////////////////////////////
-const checkResult=function(err,res,status){if(err){showError(status);throw(err.toString())};if(!res){showCancel(status);throw(ERROR)};};
+const checkResult=function(err,res,status,fin=false){if(err){showError(status);throw(err.toString())};if(!res){showCancel(status);throw(ERROR)};if(fin)showOkay(status);};
 const showAddress=function(addr){if(addr==ZEROADDR)return('N/D');return(addr.toLowerCase());};
 const showAddrUrl=function(addr){return('<a target="_blank" href="'+EXCHAINS[network].scan+'/address/'+addr+'">'+showAddress(addr)+'</a>');};
 const showItemAge=function(stamp,past=true,say='days'){if(stamp==0)return('N/S');return((past?1:-1)*Math.floor((nowDate()-stamp)/(3600*24))+SPACE+say);};

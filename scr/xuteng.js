@@ -1222,6 +1222,7 @@ const getKey=function(obj,val){return(getkey(obj,val,'same'))};
 const getkey=function(obj,val,cmp='as',k=null){Object.keys(obj).forEach(key=>{if(String(obj[key])[cmp](val))return(k=key)});return(k)};
 const safeJSON=function(keys,vals,i=0,a=[]){if(keys.length!=vals.length)throw(null);for(;i<keys.length;i++)a.push(`"${keys[i]}":"${vals[i].toString().escape()}"`);return('{'+a.join(',')+'}');};
 ////////////////////////////////////////////////////////////
+const Trim=function(s){return(trim(s).replace(/\s/g,''))};
 const trim=function(s){if(s)return(s.replace(/^\s+|\s+$/g,BLANK));return(BLANK);};
 const errCode=function(e){if(e!=null){e=e.toString();if(e.indexOf(']')>0)return(hi_alert_data);if(e.indexOf(OxOO)>0)return(hi_prompt_err);if(e.indexOf(RECEIPT)>0)return(hi_prompt_rct);e=(e.substring(e.lastIndexOf(HASH)));if(e){return(e);}else{return(0);}}return(null);};
 const funcName=function(){return(funcName.caller.name);};
@@ -1496,7 +1497,7 @@ const showError=function(div=TEST){dw(div,ERROR);};
 const showCancel=function(div=TEST){dw(div,CANCELED);};
 const showLoad=function(div=TEST){dw(div,'<img\tsrc="https://cdn.jsdelivr.net/gh/asinerum/project/loading.gif"/>');};
 ////////////////////////////////////////////////////////////
-const checkResult=function(err,res,status){if(err){showError(status);throw(err.toString())};if(!res){showCancel(status);throw(ERROR)};};
+const checkResult=function(err,res,status,fin=false){if(err){showError(status);throw(err.toString())};if(!res){showCancel(status);throw(ERROR)};if(fin)showOkay(status);};
 const showAddress=function(addr){if(addr==ZEROADDR)return('N/D');return(addr.toLowerCase());};
 const showAddrUrl=function(addr){return('<a target="_blank" href="'+EXCHAINS[network].scan+'/address/'+addr+'">'+showAddress(addr)+'</a>');};
 const showItemAge=function(stamp,past=true,say='days'){if(stamp==0)return('N/S');return((past?1:-1)*Math.floor((nowDate()-stamp)/(3600*24))+SPACE+say);};
@@ -2010,7 +2011,7 @@ const getWasmStrEnd=function(pointer,ins,b,i,s){/**/if(!ins)ins=window.wasmInsta
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
 const defiGameLodeJoinRaw=function(status,divGame,divMoney,divNumStr,divAmount){defiGameLodeJoin(status,divGame,divMoney,divNumStr,divAmount,hook)};
-const defiGameLodeJoin=function(status,divGame,divMoney,divNumStr,divAmount,fn=Exec,n,a){showLoad(status);n=gv(divNumStr);a=gv(divAmount);if(!n.lode()||!positiveNum(a))return(dw(status,_errInput));playLodeHanoi(n,a,gv(divGame),gv(divMoney),fn,function(err,res){checkResult(err,res,status);console.warn('PLAY_RECEIPT',res)})};
+const defiGameLodeJoin=function(status,divGame,divMoney,divNumStr,divAmount,fn=Exec,n,a){showLoad(status);n=gv(divNumStr);a=gv(divAmount);if(!n.lode()||!positiveNum(a))return(dw(status,_errInput));playLodeHanoi(n,a,gv(divGame),gv(divMoney),fn,function(err,res){checkResult(err,res,status,true);console.warn('PLAY_RECEIPT',res)})};
 const defiGameLodeLoad=function(status,divMoney,spanAmount){showLoad(status);(gv(divMoney).as('coin')?Ethers:Tokens)(sender,function(r){showOkay(status);db(spanAmount,r)})};
 ////////////////////////////////////////////////////////////
 const playNumberGameGEMT9=function(gamehash,number,amount,to,cbf=console.log,fn=Exec,start=startGemt){start();fn('pay',0,cbf,gamehash,to,s2w(amount),setInput(number))};
@@ -2354,11 +2355,11 @@ const payGemtsWithNote=function(txref,to,tokens,note='',fn=exec,cbf=console.warn
 ////////////////////////////////////////////////////////////
 let LodeHnTxAddr=function(t=LodeHnTxHash()){return(t.cashier?t.cashier:UVAULT[network].addr)};
 let LodeHnTxHash=function(){return({DeHanoi:'0xa56a4e60569c1229b9f99ed4e9eb45473047db1247fd1886cab4f8609b7cfae7',LoHanoi:'0xf1f64bf01c1bd48869c430ca59899f9e785918f07a935896c040cb0048167b25',cashier:'0xe9d7fddf9f36bd1cd2a77b31a91cd069ef012ab0'})};
-let DeHanoiGEMT9=function(number,amount,to=LodeHnTxAddr(),fn=exec,cbf=console.log,start=startGemt){start();fn('pay',0,cbf,LodeHnTxHash().DeHanoi,to,s2w(amount),setInput(number))};
-let DeHanoiInBNB=function(number,amount,to=LodeHnTxAddr(),fn=exec,cbf=console.log,start=startGemt){start();fn('pay',amount,cbf,LodeHnTxHash().DeHanoi,to,0,setInput(number))};
-let LoHanoiGEMT9=function(number,amount,to=LodeHnTxAddr(),fn=exec,cbf=console.log,start=startGemt){start();fn('pay',0,cbf,LodeHnTxHash().LoHanoi,to,s2w(amount),setInput(number))};
-let LoHanoiInBNB=function(number,amount,to=LodeHnTxAddr(),fn=exec,cbf=console.log,start=startGemt){start();fn('pay',amount,cbf,LodeHnTxHash().LoHanoi,to,0,setInput(number))};
-let playLodeHanoi=function(number,amount,game='DE',money=_progMoney,fn=Exec,cbf=console.log,f){(game.as('de')?(money.as('coin')?DeHanoiInBNB:DeHanoiGEMT9):(money.as('coin')?LoHanoiInBNB:LoHanoiGEMT9))(number,amount,LodeHnTxAddr(),fn,cbf)};
+let DeHanoiGEMT9=function(number,amount,to=LodeHnTxAddr(),fn=exec,cbf=console.log,start=startGemt){start();fn('pay',0,cbf,LodeHnTxHash().DeHanoi,to,s2w(amount),setInput(Trim(number)))};
+let DeHanoiInBNB=function(number,amount,to=LodeHnTxAddr(),fn=exec,cbf=console.log,start=startGemt){start();fn('pay',amount,cbf,LodeHnTxHash().DeHanoi,to,0,setInput(Trim(number)))};
+let LoHanoiGEMT9=function(number,amount,to=LodeHnTxAddr(),fn=exec,cbf=console.log,start=startGemt){start();fn('pay',0,cbf,LodeHnTxHash().LoHanoi,to,s2w(amount),setInput(Trim(number)))};
+let LoHanoiInBNB=function(number,amount,to=LodeHnTxAddr(),fn=exec,cbf=console.log,start=startGemt){start();fn('pay',amount,cbf,LodeHnTxHash().LoHanoi,to,0,setInput(Trim(number)))};
+let playLodeHanoi=function(number,amount,game='DE',money=_progMoney,fn=Exec,cbf=console.log){(game.as('de')?(money.as('coin')?DeHanoiInBNB:DeHanoiGEMT9):(money.as('coin')?LoHanoiInBNB:LoHanoiGEMT9))(number,amount,LodeHnTxAddr(),fn,cbf)};
 ////////////////////////////////////////////////////////////
 ////REF:consts-author.js
 ////////////////////////////////////////////////////////////
