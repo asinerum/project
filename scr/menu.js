@@ -142,5 +142,9 @@ const Menu=function(element){self=this;
  self.onDefiProgramProgGainRaw=function(){defiProgramProgGainRaw('form_status','pro_invest_id');}
  self.goDefiProgramProgInst=function(){checkPositiveNum('pro_invest_gemt',_warnPrgInit);}
  self.goDefiProgramProgReId=self.onDefiProgramProgReId;
+ self.goDefiGameLodeNumStr=function(){checkLodeNumsStr('game_numstr',_warnPrgData);}
+ self.goDefiGameLodeAmount=function(){checkPositiveNum('game_amount',_warnPrgInit);}
+ self.onDefiGameLodeJoin=function(){defiGameLodeJoin('form_status','lode_type','lode_money','lode_numstr','lode_amount');}
+ self.onDefiGameLodeJoinRaw=function(){defiGameLodeJoinRaw('form_status','lode_type','lode_money','lode_numstr','lode_amount');}
 };//////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////

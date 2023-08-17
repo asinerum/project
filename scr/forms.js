@@ -24,6 +24,9 @@ String.prototype.escape=function(){return(this.replace(/"/g,'\\"'))};
 String.prototype.same=function(as,sens=true,trim=false,c,t){c=this;t=String(as);if(trim){c=c.trim();t=t.trim()}if(!sens){c=c.toLowerCase();t=t.toLowerCase()}return(c==t)};
 String.prototype.as=function(as){return(this.same(as,false,true))};
 ////////////////////////////////////////////////////////////
+String.prototype.nums=function(vol='x',min=0,max=99,nint=true,s,r=true){this.split(COMMA).forEach(p=>{s=p.split(vol);if(isNaD(s[0])||s[0]<min||s[0]>max||(nint&&!Number.isInteger(Number(s[0]))))return(r=0);if(s[1]&&(isNaD(s[1])||s[1]<=0))return(r=null)});return(r)};
+String.prototype.lode=function(){return(this.nums()||this.nums(COLON))};
+////////////////////////////////////////////////////////////
 Array.prototype.sum=function(){return(this.reduce((a,b)=>(Number(a)+Number(b))))};
 //Object.prototype.getKey=function(val){return(this.getkey(val,'same'))};
 //Object.prototype.getkey=function(val,cmp='as',k=null){Object.keys(this).forEach(key=>{if(String(this[key])[cmp](val))return(k=key)});return(k)};
@@ -35,6 +38,7 @@ const trim=function(s){if(s)return(s.replace(/^\s+|\s+$/g,BLANK));return(BLANK);
 const errCode=function(e){if(e!=null){e=e.toString();if(e.indexOf(']')>0)return(hi_alert_data);if(e.indexOf(OxOO)>0)return(hi_prompt_err);if(e.indexOf(RECEIPT)>0)return(hi_prompt_rct);e=(e.substring(e.lastIndexOf(HASH)));if(e){return(e);}else{return(0);}}return(null);};
 const funcName=function(){return(funcName.caller.name);};
 ////////////////////////////////////////////////////////////
+const isNaD=function(n){return(isNaN(n)||hexRegex.test(n))};
 const hvalid=function(h){return(hashRegex.test(h));};
 const avalid=function(a){return(web3.utils.isAddress(a));};
 const nvalid=function(n,b){n=s2n(n);b=s2n(b);return(n>0&&n<=b);};
@@ -78,11 +82,14 @@ const long=function(dur,tun='M'){dur*=1000;return(tun=='H'?dur*60*60:(tun=='M'?d
 const mindif=function(hextime,dec=1){return(n2s((nowDate()-fromHex(hextime))/60,dec)+SPACE+'mins');};
 const toDate=function(y,m,d){return(parseInt(_Date(Date.UTC(y,m-1,d,0,0,0,0)).getTime()/1000,10));};
 const nowDate=function(){return(parseInt(_Date(0).getTime()/1000,10));};
+const FromDate=function(n){return(_Date(n*1000).toUTCString())};
 const fromDate=function(n){return(_Date(n*1000).toString());};
 const day=function(){return(_Date(0).getDay())};
 const date=function(){return(_Date(0).getDate())};
 const month=function(){return(_Date(0).getMonth()+1)};
 const year=function(){return(_Date(0).getFullYear())};
+const timezone=function(){return(parseInt(_Date(0).getTimezoneOffset()/60,10))};
+const markDate=function(mark=10){return(nowDate()+(24-mark+timezone())*60*60)};
 const dateMark=function(mark=10){return(toDate(year(),month(),date())+mark*60*60)};
 const datePast=function(mark=10,days=1){return(toDate(year(),month(),date())+mark*60*60-days*24*60*60)};
 const Countdown=function(divTimer,mark=10,fn=db){setInterval(function(){fn(divTimer,countdown(mark))},1000)};
@@ -91,6 +98,7 @@ const countdown=function(mark=10,n,e,d,h,m,s,M,S){n=nowDate();e=dateMark(mark);w
 const hiRegex=_Regex('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})');
 const loRegex=_Regex('^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})');
 const bipRegex=_Regex('^([A-Za-z0-9]{58})$');
+const hexRegex=_Regex('^0x([A-Fa-f0-9])+$');
 const hashRegex=_Regex('^0x([A-Fa-f0-9]{64})$');
 ////////////////////////////////////////////////////////////
 const numsInRange=function(n,rl,rh,fn=null){if(fn)n=fn(n);return(n>=rl&&n<=rh);};
