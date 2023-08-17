@@ -1278,7 +1278,7 @@ const date=function(){return(_Date(0).getDate())};
 const month=function(){return(_Date(0).getMonth()+1)};
 const year=function(){return(_Date(0).getFullYear())};
 const timezone=function(){return(parseInt(_Date(0).getTimezoneOffset()/60,10))};
-const MarkDate=function(mark=10){return(_Date(markDate(mark)*1000).toISOString().split('T')[0])};
+const MarkDate=function(mark=10){return(_Date(markDate(mark)*1000).toLocaleDateString('en-GB'))};
 const markDate=function(mark=10){return(nowDate()+(24-mark+timezone())*60*60)};
 const dateMark=function(mark=10){return(toDate(year(),month(),date())+mark*60*60)};
 const datePast=function(mark=10,days=1){return(toDate(year(),month(),date())+mark*60*60-days*24*60*60)};
