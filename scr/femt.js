@@ -1,4 +1,7 @@
 ////////////////////////////////////////////////////////////
+const defiGemtPayWithRefRaw=function(status,divRef,divTo,divAmount,divNote,divMoney){defiGemtPayWithRef(status,divRef,divTo,divAmount,divNote,divMoney,hook)};
+const defiGemtPayWithRef=function(status,divRef,divTo,divAmount,divNote,divMoney,fn=Exec,a,t){showLoad(status);a=s2n(gv(divAmount));t=gv(divMoney).as('coin')?false:true;(t?Tokens:Ethers)(sender,function(r){if(String(r).GE(a))return(gemtPayWithRef(gv(divRef),gv(divTo),a,gv(divNote),t,fn,function(err,res){checkResult(err,res,status,true);console.warn('PAY_RECEIPT',res)}));dw(status,_errInput)})};
+////////////////////////////////////////////////////////////
 const defiGameLodeJoinRaw=function(status,divGame,divMoney,divNumStr,divAmount){defiGameLodeJoin(status,divGame,divMoney,divNumStr,divAmount,hook)};
 const defiGameLodeJoin=function(status,divGame,divMoney,divNumStr,divAmount,fn=Exec,n,a){showLoad(status);n=gv(divNumStr);a=gv(divAmount);if(!n.lode()||!positiveNum(a))return(dw(status,_errInput));playLodeHanoi(n,a,gv(divGame),gv(divMoney),fn,function(err,res){checkResult(err,res,status,true);console.warn('PLAY_RECEIPT',res)})};
 const defiGameLodeLoad=function(status,divMoney,spanAmount){showLoad(status);(gv(divMoney).as('coin')?Ethers:Tokens)(sender,function(r){showOkay(status);db(spanAmount,r)})};
@@ -152,6 +155,7 @@ const gemtDoWithdraw=function(refno,fn=ercFuncSend){return(fn('withdraw',xutengF
 const gemtSetDeposit=function(refno,consignee,gemts,fn=ercFuncSend){return(fn('deposit',xutengFemt,0,null,Number(refno),consignee,s2w(gemts)))};
 const gemtSetRelease=function(refno,cancel=false,fn=ercFuncSend){return(fn('release',xutengFemt,0,null,Number(refno),cancel))};
 const gemtCutDeposit=function(refno,fn=ercFuncSend){return(gemtSetRelease(refno,true,fn))};
+const gemtPayWithRef=function(txref,to,amount,note='',gemt=true,fn=Exec,cbf=console.warn){if(gemt)return(fn('pay',0,cbf,txref,to,s2w(amount),setInput(note)));fn('pay',amount,cbf,txref,to,0,setInput(note))};
 ////////////////////////////////////////////////////////////[1]
 const gemtRawDeposit=function(refno,consignee,gemts){return(gemtSetDeposit(refno,consignee,gemts,ercFuncRaws))};
 const gemtRawRelease=function(refno,cancel=false){return(gemtSetRelease(refno,cancel,ercFuncRaws))};

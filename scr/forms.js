@@ -16,6 +16,12 @@ String.prototype.gt=function(bnum){return(big(this.toString()).gt(big(bnum)))};
 String.prototype.le=function(bnum){return(big(this.toString()).lte(big(bnum)))};
 String.prototype.lt=function(bnum){return(big(this.toString()).lt(big(bnum)))};
 ////////////////////////////////////////////////////////////
+String.prototype.EQ=function(num){return(s2n(this)===s2n(num))};
+String.prototype.GE=function(num){return(s2n(this)>=s2n(num))};
+String.prototype.GT=function(num){return(s2n(this)>s2n(num))};
+String.prototype.LE=function(num){return(s2n(this)<=s2n(num))};
+String.prototype.LT=function(num){return(s2n(this)<s2n(num))};
+////////////////////////////////////////////////////////////
 String.prototype.is3ks=function(){try{return(avalid(JSON.parse(this).address))}catch(e){return(false)}};
 String.prototype.isKey=function(){return(hvalid(this)||hvalid(HEXINIT+this))};
 String.prototype.isBip=function(){return(bipRegex.test(this))};

@@ -768,6 +768,9 @@ let _errValim = `"ValueExceedsLimit"`;
 let _errValue = `"ItemHasNoValue"`;
 let _errXTime = `"ActionNowImproper"`;
 ////////////////////////////////////////////////////////////
+let _warnDatAddr = `Input address is invalid`;
+let _warnDatHash = `Input TxHash is invalid`;
+////////////////////////////////////////////////////////////
 let _warnPrgCoin = `Hacked token must be ${_progMoney} or ${_martMoney} or ${_rareMoney}`;
 let _warnPrgData = `Input data is in invalid format`;
 let _warnPrgDraw = `You are about to half redeem this one`;
@@ -1204,6 +1207,12 @@ String.prototype.gt=function(bnum){return(big(this.toString()).gt(big(bnum)))};
 String.prototype.le=function(bnum){return(big(this.toString()).lte(big(bnum)))};
 String.prototype.lt=function(bnum){return(big(this.toString()).lt(big(bnum)))};
 ////////////////////////////////////////////////////////////
+String.prototype.EQ=function(num){return(s2n(this)===s2n(num))};
+String.prototype.GE=function(num){return(s2n(this)>=s2n(num))};
+String.prototype.GT=function(num){return(s2n(this)>s2n(num))};
+String.prototype.LE=function(num){return(s2n(this)<=s2n(num))};
+String.prototype.LT=function(num){return(s2n(this)<s2n(num))};
+////////////////////////////////////////////////////////////
 String.prototype.is3ks=function(){try{return(avalid(JSON.parse(this).address))}catch(e){return(false)}};
 String.prototype.isKey=function(){return(hvalid(this)||hvalid(HEXINIT+this))};
 String.prototype.isBip=function(){return(bipRegex.test(this))};
@@ -1355,6 +1364,7 @@ const mt=function(d,t){dt(d,t,DOT);};
 const db=function(d,s){dw(d,s);dv(d,s);};
 const dbm=function(md,s){md.forEach((item)=>{db(item,s)});};
 const dbh=function(indiv,param,fc=null){param=hashParam(param);if(!param)return;db(indiv,param);if(fc)fc();};
+const cso=function(oldCap,newCap){$('select').find(`option:contains("${oldCap}")`).text(newCap);};
 ////////////////////////////////////////////////////////////
 const da=function(d,w,ob){if(!ob)ob=HASH;$(ob+d).append(w);};
 const dr=function(d,r,ob){if(!ob)ob=HASH;$(ob+d).prop('href',r);};
@@ -1438,6 +1448,9 @@ const bad_pennyPush=function(){if(disable()||noOwner()||badXuts(gv(_pushVal))||n
 const bad_pennyTransfer=function(){if(disable()||noOwner()||badAddr(gv(_xutTo))||badXXut(gv(_xutVal))||notTran())return(true);return(false);};
 const bad_weiTransfer=function(){if(disable()||noOwner()||badAddr(gv(_ethTo))||badXEth(gv(_ethVal))||userBan())return(true);return(false);};
 ////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////
+const checkTxHash=function(elem,msg,fn=hvalid){checkElement(fn,true,elem,msg)};
+const checkAddress=function(elem,msg,fn=avalid){checkElement(fn,true,elem,msg)};
 ////////////////////////////////////////////////////////////
 const confirmPositiveInt=function(elem,msg,fn=positiveInt){confirmElement(fn,true,elem,msg)};
 const checkTokenAllowed=function(elem,msg,fn=tokenAllowed){checkElement(fn,true,elem,msg)};
@@ -1984,9 +1997,17 @@ const Menu=function(element){self=this;
  self.goDefiProgramProgReId=self.onDefiProgramProgReId;
  self.goDefiGameLodeNumStr=function(){checkLodeNumsStr('lode_numstr',_warnPrgData);}
  self.goDefiGameLodeAmount=function(){checkPositiveNum('lode_amount',_warnPrgInit);}
+ self.goDefiGameLodeLoad=function(){self.onDefiGameLodeLoad();}
  self.onDefiGameLodeLoad=function(){defiGameLodeLoad('form_status','lode_money','pro_amt');}
  self.onDefiGameLodeJoin=function(){defiGameLodeJoin('form_status','lode_type','lode_money','lode_numstr','lode_amount');}
  self.onDefiGameLodeJoinRaw=function(){defiGameLodeJoinRaw('form_status','lode_type','lode_money','lode_numstr','lode_amount');}
+ self.goDefiGemtPayLoad=function(){defiGameLodeLoad('form_status','pay_money','pro_amt');}
+ self.goDefiGemtPayTxhRef=function(){checkTxHash('pay_ref',_warnDatHash);}
+ self.goDefiGemtPayAddrTo=function(){checkAddress('pay_to',_warnDatAddr);}
+ self.goDefiGemtPayAmount=function(){checkPositiveNum('pay_amount',_warnPrgInit);}
+ self.onDefiGemtPayWithRef=function(){defiGemtPayWithRef('form_status','pay_ref','pay_to','pay_amount','pay_note','pay_money');}
+ self.onDefiGemtPayWithRefRaw=function(){defiGemtPayWithRefRaw('form_status','pay_ref','pay_to','pay_amount','pay_note','pay_money');}
+ self.onDefiGemtPayLoad=function(){self.goDefiGemtPayLoad();}
 };//////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////[3]
@@ -2011,6 +2032,9 @@ const setWasmString=function(str,pointer=0,ins,b,i){if(!ins)ins=window.wasmInsta
 const getWasmString=function(pointer,len,ins,b,i,s){if(!ins)ins=window.wasmInstance;b=(new Uint8Array(ins.exports.memory.buffer,pointer,len));s='';for(i=0;i<len;i++)s+=String.fromCharCode(b[i]);return(s);};
 const getWasmStrEnd=function(pointer,ins,b,i,s){/**/if(!ins)ins=window.wasmInstance;b=(new Uint8Array(ins.exports.memory.buffer,pointer));s='';for(i=0;b[i];i++)s+=String.fromCharCode(b[i]);return(s);};
 ////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////
+const defiGemtPayWithRefRaw=function(status,divRef,divTo,divAmount,divNote,divMoney){defiGemtPayWithRef(status,divRef,divTo,divAmount,divNote,divMoney,hook)};
+const defiGemtPayWithRef=function(status,divRef,divTo,divAmount,divNote,divMoney,fn=Exec,a,t){showLoad(status);a=s2n(gv(divAmount));t=gv(divMoney).as('coin')?false:true;(t?Tokens:Ethers)(sender,function(r){if(String(r).GE(a))return(gemtPayWithRef(gv(divRef),gv(divTo),a,gv(divNote),t,fn,function(err,res){checkResult(err,res,status,true);console.warn('PAY_RECEIPT',res)}));dw(status,_errInput)})};
 ////////////////////////////////////////////////////////////
 const defiGameLodeJoinRaw=function(status,divGame,divMoney,divNumStr,divAmount){defiGameLodeJoin(status,divGame,divMoney,divNumStr,divAmount,hook)};
 const defiGameLodeJoin=function(status,divGame,divMoney,divNumStr,divAmount,fn=Exec,n,a){showLoad(status);n=gv(divNumStr);a=gv(divAmount);if(!n.lode()||!positiveNum(a))return(dw(status,_errInput));playLodeHanoi(n,a,gv(divGame),gv(divMoney),fn,function(err,res){checkResult(err,res,status,true);console.warn('PLAY_RECEIPT',res)})};
@@ -2165,6 +2189,7 @@ const gemtDoWithdraw=function(refno,fn=ercFuncSend){return(fn('withdraw',xutengF
 const gemtSetDeposit=function(refno,consignee,gemts,fn=ercFuncSend){return(fn('deposit',xutengFemt,0,null,Number(refno),consignee,s2w(gemts)))};
 const gemtSetRelease=function(refno,cancel=false,fn=ercFuncSend){return(fn('release',xutengFemt,0,null,Number(refno),cancel))};
 const gemtCutDeposit=function(refno,fn=ercFuncSend){return(gemtSetRelease(refno,true,fn))};
+const gemtPayWithRef=function(txref,to,amount,note='',gemt=true,fn=Exec,cbf=console.warn){if(gemt)return(fn('pay',0,cbf,txref,to,s2w(amount),setInput(note)));fn('pay',amount,cbf,txref,to,0,setInput(note))};
 ////////////////////////////////////////////////////////////[1]
 const gemtRawDeposit=function(refno,consignee,gemts){return(gemtSetDeposit(refno,consignee,gemts,ercFuncRaws))};
 const gemtRawRelease=function(refno,cancel=false){return(gemtSetRelease(refno,cancel,ercFuncRaws))};
@@ -2353,7 +2378,7 @@ const xready=function(mg=200000,gw=0){$(document).ready(function(){launch(mg,gw)
 const createSimpleGame=function(name,fn=Out){fn({game:name},ZEROADDR,0,function(e,r){if(e)return(console.error(e));console.warn(_transactionHash,r.transactionHash)})};
 const getGemtPayResult=function(start=datePast(10),end=dateMark(10),blocks=10000,to=UVAULT[network].addr,cbf=console.log,t){startGemtRpc();getTRecvLogs(to,blocks,function(e,r){if(e)return(cbf(e.toString(),null));window.gemtPayDues=[];window.gemtPayOverdues=[];r.forEach(i=>{t=i.timeStamp*1;if(t>start&&t<=end){window.gemtPayDues.push(i)}else{window.gemtPayOverdues.push(i)}});cbf(null,{dues:window.gemtPayDues,overdues:window.gemtPayOverdues})})};
 const getGemtPayTxData=function(tx,cbf=console.log,onote=true,inwei=false,o){try{txGet(tx).then(r=>{o={block:r.blockNumber,from:r.from,ref:HEXINIT+r.input.substr(10,64),to:toHex(fromHex(r.input.substr(74,64))),coins:r.value,value:fromHex(r.input.substr(138,64)),obj:hexUtf(strCut(r.input.substr(202),'7b226f626a22','7d'))};if(onote)o.obj=JSON.parse(o.obj).obj;if(!inwei){o.value=w2s(o.value);o.coins=w2s(o.coins)}o.lode=getkey(LodeHnTxHash(),o.ref);return(web3.eth.getBlock(r.blockNumber))}).then(r=>{o.timeStamp=r.timestamp;o.localTime=fromDate(r.timestamp);cbf(null,o)})}catch(e){cbf(e.toString(),null)}};
-const payGemtsWithNote=function(txref,to,tokens,note='',fn=exec,cbf=console.warn){fn('pay',0,cbf,txref,to,s2w(tokens),setInput(note))};
+const payGemtsWithNote=function(txref,to,tokens,note='',fn=exec,cbf=console.warn){gemtPayWithRef(txref,to,tokens,note,true,fn,cbf)};
 ////////////////////////////////////////////////////////////
 let LodeHnTxAddr=function(t=LodeHnTxHash()){return(t.cashier?t.cashier:UVAULT[network].addr)};
 let LodeHnTxHash=function(){return({DeHanoi:'0xa56a4e60569c1229b9f99ed4e9eb45473047db1247fd1886cab4f8609b7cfae7',LoHanoi:'0xf1f64bf01c1bd48869c430ca59899f9e785918f07a935896c040cb0048167b25',cashier:'0xe9d7fddf9f36bd1cd2a77b31a91cd069ef012ab0'})};

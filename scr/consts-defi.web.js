@@ -19,6 +19,9 @@ let _errValim = `"ValueExceedsLimit"`;
 let _errValue = `"ItemHasNoValue"`;
 let _errXTime = `"ActionNowImproper"`;
 ////////////////////////////////////////////////////////////
+let _warnDatAddr = `Input address is invalid`;
+let _warnDatHash = `Input TxHash is invalid`;
+////////////////////////////////////////////////////////////
 let _warnPrgCoin = `Hacked token must be ${_progMoney} or ${_martMoney} or ${_rareMoney}`;
 let _warnPrgData = `Input data is in invalid format`;
 let _warnPrgDraw = `You are about to half redeem this one`;

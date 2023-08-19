@@ -1,4 +1,7 @@
 ////////////////////////////////////////////////////////////
+const checkTxHash=function(elem,msg,fn=hvalid){checkElement(fn,true,elem,msg)};
+const checkAddress=function(elem,msg,fn=avalid){checkElement(fn,true,elem,msg)};
+////////////////////////////////////////////////////////////
 const confirmPositiveInt=function(elem,msg,fn=positiveInt){confirmElement(fn,true,elem,msg)};
 const checkTokenAllowed=function(elem,msg,fn=tokenAllowed){checkElement(fn,true,elem,msg)};
 const checkPositiveNum=function(elem,msg){checkPositiveInt(elem,msg,positiveStr)};

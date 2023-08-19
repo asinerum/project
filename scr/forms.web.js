@@ -55,6 +55,7 @@ const mt=function(d,t){dt(d,t,DOT);};
 const db=function(d,s){dw(d,s);dv(d,s);};
 const dbm=function(md,s){md.forEach((item)=>{db(item,s)});};
 const dbh=function(indiv,param,fc=null){param=hashParam(param);if(!param)return;db(indiv,param);if(fc)fc();};
+const cso=function(oldCap,newCap){$('select').find(`option:contains("${oldCap}")`).text(newCap);};
 ////////////////////////////////////////////////////////////
 const da=function(d,w,ob){if(!ob)ob=HASH;$(ob+d).append(w);};
 const dr=function(d,r,ob){if(!ob)ob=HASH;$(ob+d).prop('href',r);};

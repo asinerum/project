@@ -144,8 +144,16 @@ const Menu=function(element){self=this;
  self.goDefiProgramProgReId=self.onDefiProgramProgReId;
  self.goDefiGameLodeNumStr=function(){checkLodeNumsStr('lode_numstr',_warnPrgData);}
  self.goDefiGameLodeAmount=function(){checkPositiveNum('lode_amount',_warnPrgInit);}
+ self.goDefiGameLodeLoad=function(){self.onDefiGameLodeLoad();}
  self.onDefiGameLodeLoad=function(){defiGameLodeLoad('form_status','lode_money','pro_amt');}
  self.onDefiGameLodeJoin=function(){defiGameLodeJoin('form_status','lode_type','lode_money','lode_numstr','lode_amount');}
  self.onDefiGameLodeJoinRaw=function(){defiGameLodeJoinRaw('form_status','lode_type','lode_money','lode_numstr','lode_amount');}
+ self.goDefiGemtPayLoad=function(){defiGameLodeLoad('form_status','pay_money','pro_amt');}
+ self.goDefiGemtPayTxhRef=function(){checkTxHash('pay_ref',_warnDatHash);}
+ self.goDefiGemtPayAddrTo=function(){checkAddress('pay_to',_warnDatAddr);}
+ self.goDefiGemtPayAmount=function(){checkPositiveNum('pay_amount',_warnPrgInit);}
+ self.onDefiGemtPayWithRef=function(){defiGemtPayWithRef('form_status','pay_ref','pay_to','pay_amount','pay_note','pay_money');}
+ self.onDefiGemtPayWithRefRaw=function(){defiGemtPayWithRefRaw('form_status','pay_ref','pay_to','pay_amount','pay_note','pay_money');}
+ self.onDefiGemtPayLoad=function(){self.goDefiGemtPayLoad();}
 };//////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
