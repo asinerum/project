@@ -33,6 +33,12 @@ binance:{ncid:56,addr:'0x55d398326f99059ff775485246999027b3197955',rpcs:'https:/
 classic:{ncid:61,addr:'',rpcs:'https://www.ethercluster.com/etc/',scan:'https://etcblockexplorer.com/token/'},
 };
 ////////////////////////////////////////////////////////////
+const XTOKEN={
+mainnet:{ncid:1,addr:'',hash:'',rpcs:'',bcls:'private',scan:'https://etherscan.io/token/'},
+binance:{ncid:56,addr:'0xD86c59284534f7b418b732FbC41b9aF47480045B',hash:'0x9fd56d466f3a7a77c8f663f0a75e898fc1879ab1c949233add06af31479ed1e7',rpcs:'https://bsc-dataseed.binance.org/',bcls:'private',scan:'https://www.bscscan.com/token/'},
+classic:{ncid:61,addr:'',hash:'',rpcs:'https://www.ethercluster.com/etc/',bcls:'private',scan:'https://etcblockexplorer.com/token/'},
+};
+////////////////////////////////////////////////////////////
 const REMT={
 mainnet:{ncid:1,addr:'',hash:'',rpcs:'',bcls:'private',scan:'https://etherscan.io/token/'},
 binance:{ncid:56,addr:'0x3E86E647FC2BE17266071f8047b8B1c755D589fe',hash:'0xf4afcdbb311e3402e375a0fcfb308db23c64561b1fc899664bdca208f6b84311',rpcs:'https://bsc-dataseed.binance.org/',bcls:'private',scan:'https://www.bscscan.com/token/'},
@@ -49,6 +55,14 @@ const UVAULT={
 mainnet:{ncid:1,addr:'',hash:'',rpcs:'',bcls:'private',scan:'https://etherscan.io/token/'},
 binance:{ncid:56,addr:'0x56448b2607A8f53D0db5cAb8d59975EA0A560cC3',hash:'0xf1cf7c91c273f4c69382da00d68ccc7851bcfdf39e6ed0e48856deb298c5033f',rpcs:'https://bsc-dataseed.binance.org/',bcls:'private',scan:'https://www.bscscan.com/token/'},
 classic:{ncid:61,addr:'',hash:'',rpcs:'https://www.ethercluster.com/etc/',bcls:'private',scan:'https://etcblockexplorer.com/token/'},
+};
+////////////////////////////////////////////////////////////
+const VAULTPRO={
+LODE:{
+mainnet:{ncid:1,addr:'',hash:'',rpcs:'',bcls:'private',scan:'https://etherscan.io/token/'},
+binance:{ncid:56,addr:'0xE9d7FDDF9F36BD1cD2a77B31a91cD069ef012Ab0',hash:'0x0f6962ddbbfd58ef41047e0a139d58b2bfe10665fd53afbc9677ac4db680bee6',rpcs:'https://bsc-dataseed.binance.org/',bcls:'private',scan:'https://www.bscscan.com/token/'},
+classic:{ncid:61,addr:'',hash:'',rpcs:'https://www.ethercluster.com/etc/',bcls:'private',scan:'https://etcblockexplorer.com/token/'},
+},
 };
 ////////////////////////////////////////////////////////////
 const BROKER={

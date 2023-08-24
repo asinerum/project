@@ -257,3 +257,14 @@ const startGemtRpc=function(nid='binance',gas=300000){startFemtRpc(nid,gas,GEMT,
 const startNemtRpc=function(nid='binance',gas=300000){startFemtRpc(nid,gas,NEMT,ABINEMT)};
 const startRemtRpc=function(nid='binance',gas=300000){startFemtRpc(nid,gas,REMT,ABIREMT)};
 ////////////////////////////////////////////////////////////
+const StartToken=function(gas,abi,addr){return(function(){startFemt(gas,abi,addr)})};
+const startToken=function(nid,gas,abi,femt){return(function(){startFemtRpc(nid,gas,femt,abi)})};
+let startXToken=StartToken(300000,ABIXTOKEN,XTOKEN[network].addr);
+let startUVault=StartToken(300000,ABIUVAULT,UVAULT[network].addr);
+let startBVault=StartToken(300000,ABIVAULT,VAULT[network].addr);
+let startProVault={lode:StartToken(300000,ABIVAULTPRO,VAULTPRO['LODE'][network].addr)};
+let startXTokenRpc=startToken('binance',300000,ABIXTOKEN,XTOKEN);
+let startUVaultRpc=startToken('binance',300000,ABIUVAULT,UVAULT);
+let startBVaultRpc=startToken('binance',300000,ABIVAULT,VAULT);
+let startProVaultRpc={lode:startToken('binance',300000,ABIVAULTPRO,VAULTPRO['LODE'])};
+////////////////////////////////////////////////////////////
