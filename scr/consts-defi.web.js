@@ -1,8 +1,5 @@
 ////////////////////////////////////////////////////////////
 let _days = 'days';
-let _martMoney = 'NEMT9';
-let _progMoney = 'GEMT9';
-let _rareMoney = 'REMT9';
 ////////////////////////////////////////////////////////////
 let _errClear = `"RedeemNotAllowed"`;
 let _errCoins = `"CoinsNotEnough"`;
@@ -22,7 +19,7 @@ let _errXTime = `"ActionNowImproper"`;
 let _warnDatAddr = `Input address is invalid`;
 let _warnDatHash = `Input TxHash is invalid`;
 ////////////////////////////////////////////////////////////
-let _warnPrgCoin = `Hacked token must be ${_progMoney} or ${_martMoney} or ${_rareMoney}`;
+let _warnPrgCoin = `Hacked token must be Asinerum Mineable`;
 let _warnPrgData = `Input data is in invalid format`;
 let _warnPrgDraw = `You are about to half redeem this one`;
 let _warnPrgIdno = `ID or Ref Number must be a positive integer`;

@@ -744,6 +744,13 @@ stop:-4,
 dead:-8};
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
+const MONEYS={
+GEMT9:startGemt,
+NEMT9:startNemt,
+REMT9:startRemt,
+X:startXToken,
+};
+////////////////////////////////////////////////////////////
 const MPROGRAM = 'mine';//
 const MPROHYIP = 'program';
 const MPROPOST = 'post';
@@ -769,9 +776,6 @@ const PROGMAXRATE = 200;
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
 let _days = 'days';
-let _martMoney = 'NEMT9';
-let _progMoney = 'GEMT9';
-let _rareMoney = 'REMT9';
 ////////////////////////////////////////////////////////////
 let _errClear = `"RedeemNotAllowed"`;
 let _errCoins = `"CoinsNotEnough"`;
@@ -791,7 +795,7 @@ let _errXTime = `"ActionNowImproper"`;
 let _warnDatAddr = `Input address is invalid`;
 let _warnDatHash = `Input TxHash is invalid`;
 ////////////////////////////////////////////////////////////
-let _warnPrgCoin = `Hacked token must be ${_progMoney} or ${_martMoney} or ${_rareMoney}`;
+let _warnPrgCoin = `Hacked token must be Asinerum Mineable`;
 let _warnPrgData = `Input data is in invalid format`;
 let _warnPrgDraw = `You are about to half redeem this one`;
 let _warnPrgIdno = `ID or Ref Number must be a positive integer`;
@@ -1796,6 +1800,7 @@ const help_ContentMod=function(w){ww(_help_content,w);};
 /// window.btcnet='bitcoin';
 ////////////////////////////////////////////////////////////
 var COIN='ETH';
+var TOKEN='XUT';
 var CONTRACT=XUTENG;
 var SCABI=ABIXUTENG;
 var network=MAINNET;
@@ -2099,8 +2104,8 @@ const gameUnitToPetri=function(unt){return(gamePctToPetri(unt)*100)};
 const gamePetriToUnit=function(upb){return(gamePetriToPct(upb)/100)};
 ////////////////////////////////////////////////////////////
 const MineLogTopic='0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef';
-const tokenAllowed=function(token){return([_progMoney,_martMoney,_rareMoney].includes(token))};
-const selectTokens=function(token){if(token==_progMoney)return(startGemt());if(token==_martMoney)return(startNemt());if(token==_rareMoney)return(startRemt())};
+const tokenAllowed=function(token){return(MONEYS[token]?true:false)};
+const selectTokens=function(token){if(tokenAllowed(token)){TOKEN=token;MONEYS[token]()}};
 const getLogApiUrl=function(block,blocks=1000,topic=MineLogTopic,sc=xutengFemt){return(PROXIES[0].getContractPastLogs(sc._address,block-blocks,block,topic))};
 const getMinApiUrl=function(block,blocks=1000,topic=MineLogTopic,sc=xutengFemt){return(PROXIES[0].getContractLastLogs(sc._address,block-blocks,block,topic,h2t(ZEROADDR)))};
 const getAdvApiUrl=function(block,blocks=1000,topic='',afrom='',ato='',sc=xutengFemt){return(PROXIES[0].getContractLastLogs(sc._address,block-blocks,block,topic,afrom,ato))};
@@ -2417,7 +2422,7 @@ let DeHanoiGEMT9=function(number,amount,to=LodeHnTxAddr(),fn=exec,cbf=console.lo
 let DeHanoiInBNB=function(number,amount,to=LodeHnTxAddr(),fn=exec,cbf=console.log,start=startGemt){start();fn('pay',amount,cbf,LodeHnTxHash().DeHanoi,to,0,setInput(Trim(number)))};
 let LoHanoiGEMT9=function(number,amount,to=LodeHnTxAddr(),fn=exec,cbf=console.log,start=startGemt){start();fn('pay',0,cbf,LodeHnTxHash().LoHanoi,to,s2w(amount),setInput(Trim(number)))};
 let LoHanoiInBNB=function(number,amount,to=LodeHnTxAddr(),fn=exec,cbf=console.log,start=startGemt){start();fn('pay',amount,cbf,LodeHnTxHash().LoHanoi,to,0,setInput(Trim(number)))};
-let playLodeHanoi=function(number,amount,game='DE',money=_progMoney,fn=Exec,cbf=console.log){(game.as('de')?(money.as('coin')?DeHanoiInBNB:DeHanoiGEMT9):(money.as('coin')?LoHanoiInBNB:LoHanoiGEMT9))(number,amount,LodeHnTxAddr(),fn,cbf)};
+let playLodeHanoi=function(number,amount,game='DE',money='GEMT9',fn=Exec,cbf=console.log){(game.as('de')?(money.as('coin')?DeHanoiInBNB:DeHanoiGEMT9):(money.as('coin')?LoHanoiInBNB:LoHanoiGEMT9))(number,amount,LodeHnTxAddr(),fn,cbf)};
 ////////////////////////////////////////////////////////////
 ////REF:consts-author.js
 ////////////////////////////////////////////////////////////
@@ -2496,7 +2501,7 @@ const hi_alert_nocookies = 'THERE IS NO DATA STORED IN COOKIES';
 const hi_alert_cookieset = 'THE DATA IS BEING STORED IN COOKIES';
 const hi_alert_cookiedel = 'THE DATA HAS BEEN REMOVED FROM COOKIES';
 ////////////////////////////////////////////////////////////
-﻿////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////
 const CANCELED='CANCELED\t';
 const CHECKED='CHECKED\t';
 const DONE='DONE\t';
@@ -2539,25 +2544,25 @@ dig_wait: `waiting time in minutes`,
 pro_id: `Guess the secret number`,
 pro_id_mine: `Enter the nonce number`,
 pro_buy_id: `Offer ID`,
-pro_buy_gemt: `Amount of ${_progMoney} to buy`,
+pro_buy_gemt: `Amount of TOKEN$ to buy`,
 pro_sell_id: `Order ID`,
-pro_sell_gemt: `Amount of ${_progMoney} to sell`,
+pro_sell_gemt: `Amount of TOKEN$ to sell`,
 pro_sell_conv: `Number of Coin$ to receive`,
 pro_program_id: `Program Unique ID`,
 pro_program_apr: `Annual Percentage Rate {%}`,
-pro_program_gemt: `Initial Deposit {${_progMoney}}`,
+pro_program_gemt: `Initial Deposit {GEMT9}`,
 pro_invest_id: `Program ID`,
-pro_invest_gemt: `Amount to invest {${_progMoney}}`,
+pro_invest_gemt: `Amount to invest {GEMT9}`,
 pro_offer_id: `Offer Unique ID`,
-pro_offer_apr: `Price: ${_progMoney} per one Coin$`,
-pro_offer_rev: `Price: Coin$ per one ${_progMoney}`,
+pro_offer_apr: `Price: TOKEN$ per one Coin$`,
+pro_offer_rev: `Price: Coin$ per one TOKEN$`,
 pro_offer_age: `Live sale expires in {days}`,
-pro_offer_gemt: `Amount of ${_progMoney} to offer`,
+pro_offer_gemt: `Amount of TOKEN$ to offer`,
 pro_order_id: `Order Unique ID`,
-pro_order_apr: `Price: ${_progMoney} per one Coin$`,
-pro_order_rev: `Price: Coin$ per one ${_progMoney}`,
+pro_order_apr: `Price: TOKEN$ per one Coin$`,
+pro_order_rev: `Price: Coin$ per one TOKEN$`,
 pro_order_age: `Purchase expires in {days}`,
-pro_order_gemt: `Amount of ${_progMoney} to order`,
+pro_order_gemt: `Amount of TOKEN$ to order`,
 pro_order_conv: `Number of Coin$ to deposit`,
 }}//////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
@@ -2624,7 +2629,7 @@ _button_UserTxView: `TRANSACTION HASH`,
 _button_XutXut: `SELL NOW`,
 _header_account: `CREATING OR IMPORTING A PRIVATE KEY`,
 _header_alias: `ASSIGNING AN ADDRESS ALIAS`,
-_header_allow: `XUTENG TOKEN TRANSFER PERMISSION`,
+_header_allow: `XUTENG TRANSFER PERMISSION`,
 _header_author: `USER INFORMATION AND STATS`,
 _header_BipAccount: `CREATING A PERMANENT ACCOUNT`,
 _header_BipDecrypt: `DECRYPTING AN ENCRYPTED KEY`,
@@ -2636,8 +2641,8 @@ _header_BipPrereq: `BEFORE YOU BEGIN`,
 _header_BipTarget: `APPLICATION MISSION`,
 _header_RawTxData: `GENERATING TRANSACTION DATA`,
 _header_RawTxInput: `ENTERING TRANSACTION INPUTS`,
-_header_buy: `DIRECTLY BUYING XUTENG TOKENS FROM SYSTEM FUND`,
-_header_buyfrom: `BUYING XUTENG TOKENS FROM ANOTHER USER`,
+_header_buy: `DIRECTLY BUYING XUTENG FROM SYSTEM FUND`,
+_header_buyfrom: `BUYING XUTENG FROM ANOTHER USER`,
 _header_buying: `REVIEWING A BUYING REQUEST`,
 _header_copyright: `(C)2019 ASINERUM INTERNATIONAL PROJECT`,
 _header_cost: `${CAPCLASSCOIN} TRANSACTION COST`,
@@ -2650,22 +2655,22 @@ _header_game: `GAME INFORMATION`,
 _header_gamer: `GAME OWNER INFORMATION AND STATS`,
 _header_keystore: `SELECTING NETWORK AND UNLOCKING KEYSTORE`,
 _header_profile: `PERSONAL PROFILE AND DOMAIN`,
-_header_rate: `XUTENG TOKEN OFFICIAL EXCHANGE RATE`,
+_header_rate: `XUTENG OFFICIAL EXCHANGE RATE`,
 _header_register: `REGISTERING AS A LEVELED USER`,
 _header_review: `REVIEWING A TRANSACTION`,
 _header_reviewgame: `REVIEWING A PUBLISHED GAME`,
-_header_sell: `DIRECTLY SELLING XUTENG TOKENS TO SYSTEM FUND`,
+_header_sell: `DIRECTLY SELLING XUTENG TO SYSTEM FUND`,
 _header_selling: `REVIEWING A SELLING OFFER`,
-_header_sellto: `SELLING XUTENG TOKENS TO ANOTHER USER`,
+_header_sellto: `SELLING XUTENG TO ANOTHER USER`,
 _header_sender: `PERSONAL INFORMATION AND STATS`,
 _header_sendeth: `PERSONAL ${CAPCLASSCOIN} BALANCE`,
 _header_sendBnb: `PERSONAL BNB BALANCE`,
 _header_sendEtc: `PERSONAL ETC BALANCE`,
 _header_sign: `SIGNING AND VERIFYING A MESSAGE`,
-_header_stats: `XUTENG TOKEN MARKETPLACE STATS`,
-_header_system: `XUTENG TOKEN SYSTEM OVERVIEWS`,
-_header_tobuy: `REQUESTING TO BUY XUTENG TOKENS`,
-_header_tosell: `OFFERING TO SELL XUTENG TOKENS`,
+_header_stats: `XUTENG MARKETPLACE STATS`,
+_header_system: `XUTENG SYSTEM OVERVIEWS`,
+_header_tobuy: `REQUESTING TO BUY XUTENG`,
+_header_tosell: `OFFERING TO SELL XUTENG`,
 _header_transfer: `PERSONAL XUTENG BALANCE`,
 _header_user: `ANOTHER USER INFORMATION AND STATS`,
 _header_usereth: `SENDING ${CAPCLASSCOIN} WITH NOTE`,
@@ -2768,7 +2773,7 @@ _label_RawTxNonce: `ACCOUNT ${DOCETXNONCE}`,
 _label_RawTxOpMsg: `MESSAGE: OPTIONAL`,
 _label_RawTxPrice: `${DOCGASPRICE} IN GWEI`,
 _label_RawTxRecvr: `RECIPIENT ADDRESS`,
-_label_RawTxToken: `BCYPHER API TOKEN`,
+_label_RawTxToken: `BCYPHER API KEY`,
 _label_Reqbuy0Xut: `YOUR XUT BALANCE`,
 _label_Reqbuy1Eth: `YOUR ${CAPCLASSCOIN} BALANCE`,
 _label_Reqbuy1Tpe: `EXCHANGE RATE`,
@@ -2943,33 +2948,33 @@ _label_dig_DefiSum: `Supply`,
 _label_dig_DefiLastMine: `Last mine`,
 _label_dig_DefiLastRate: `Mine depth`,
 _label_dig_DefiNonce: `Nonce`,
-_label_dig_panelHeader: `JS TOKEN MOBILE MINER`,
+_label_dig_panelHeader: `JS MOBILE MINER`,
 _label_hack_DefiProgAmt: `My balance`,
 _label_hack_DefiProgSum: `Total supply`,
-_label_hack_panelHeader: `JS TOKEN HACKING MACHINE`,
-_label_hack_panelHeaderMine: `JS TOKEN MINING MACHINE`,
+_label_hack_panelHeader: `JS HACKING MACHINE`,
+_label_hack_panelHeaderMine: `JS MINING MACHINE`,
 _label_offer_DefiProgAge: `Sale expires in`,
-_label_offer_DefiProgAPR: `${CAPCLASSCOIN}/${_progMoney} price`,
+_label_offer_DefiProgAPR: `${CAPCLASSCOIN}/TOKEN$ price`,
 _label_offer_DefiProgOwn: `Supplier`,
-_label_offer_DefiProgSum: `${_progMoney} supply`,
-_label_offer_investor: `${_progMoney} BUYER'S PURCHASE`,
-_label_offer_programer: `${_progMoney} SELLER'S OFFER`,
+_label_offer_DefiProgSum: `TOKEN$ supply`,
+_label_offer_investor: `TOKEN$ BUYER'S PURCHASE`,
+_label_offer_programer: `TOKEN$ SELLER'S OFFER`,
 _label_offers_DefiProgAge: `Sale expires in`,
-_label_offers_DefiProgAPR: `${CAPCLASSCOIN}/${_progMoney} price`,
+_label_offers_DefiProgAPR: `${CAPCLASSCOIN}/TOKEN$ price`,
 _label_offers_DefiProgOwn: `Supplier`,
-_label_offers_DefiProgSum: `${_progMoney} supply`,
-_label_offers_panelHeader: `${_progMoney} OFFER LISTINGS`,
+_label_offers_DefiProgSum: `TOKEN$ supply`,
+_label_offers_panelHeader: `TOKEN$ OFFER LISTINGS`,
 _label_order_DefiProgAge: `Purchase expires in`,
-_label_order_DefiProgAPR: `${CAPCLASSCOIN}/${_progMoney} price`,
+_label_order_DefiProgAPR: `${CAPCLASSCOIN}/TOKEN$ price`,
 _label_order_DefiProgOwn: `Depositor`,
 _label_order_DefiProgSum: `${CAPCLASSCOIN} deposit`,
-_label_order_investor: `${_progMoney} SELLER'S SALE`,
-_label_order_programer: `${_progMoney} BUYER'S ORDER`,
+_label_order_investor: `TOKEN$ SELLER'S SALE`,
+_label_order_programer: `TOKEN$ BUYER'S ORDER`,
 _label_orders_DefiProgAge: `Purchase expires in`,
-_label_orders_DefiProgAPR: `${CAPCLASSCOIN}/${_progMoney} price`,
+_label_orders_DefiProgAPR: `${CAPCLASSCOIN}/TOKEN$ price`,
 _label_orders_DefiProgOwn: `Depositor`,
 _label_orders_DefiProgSum: `${CAPCLASSCOIN} deposit`,
-_label_orders_panelHeader: `${_progMoney} ORDER LISTINGS`,
+_label_orders_panelHeader: `TOKEN$ ORDER LISTINGS`,
 _label_program_DefiProgAge: `Age`,
 _label_program_DefiProgAgi: `My investment age`,
 _label_program_DefiProgAmt: `My invested sum`,

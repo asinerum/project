@@ -1,4 +1,11 @@
 ////////////////////////////////////////////////////////////
+const MONEYS={
+GEMT9:startGemt,
+NEMT9:startNemt,
+REMT9:startRemt,
+X:startXToken,
+};
+////////////////////////////////////////////////////////////
 const MPROGRAM = 'mine';//
 const MPROHYIP = 'program';
 const MPROPOST = 'post';

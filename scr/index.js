@@ -6,6 +6,7 @@
 /// window.btcnet='bitcoin';
 ////////////////////////////////////////////////////////////
 var COIN='ETH';
+var TOKEN='XUT';
 var CONTRACT=XUTENG;
 var SCABI=ABIXUTENG;
 var network=MAINNET;
