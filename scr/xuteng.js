@@ -750,6 +750,12 @@ NEMT9:function(){startNemt()},
 REMT9:function(){startRemt()},
 X:function(){startXToken()},
 };
+const RPCMONEYS={
+GEMT9:function(){startGemtRpc()},
+NEMT9:function(){startNemtRpc()},
+REMT9:function(){startRemtRpc()},
+X:function(){startXTokenRpc()},
+};
 ////////////////////////////////////////////////////////////
 const MPROGRAM = 'mine';//
 const MPROHYIP = 'program';
@@ -1582,6 +1588,7 @@ const optnAccount=function(t=BLANK){Object.keys(ADDRESSES).forEach(function(key)
 const showCoin=function(cls='coin'){if(EXCHAINS[network])COIN=EXCHAINS[network].coin;else{if(BXCHAINS[network])COIN=BXCHAINS[network].coin;}mw(cls,COIN);};
 const showInPH=function(lang='en'){Object.keys(PLACES[lang]).forEach(function(key){dattr(key,'placeholder',PLACES[lang][key].replace(/coin\$/gi,COIN));});};
 const showCaps=function(lang='en'){Object.keys(LABELS[lang]).forEach(function(key){dw(key,LABELS[lang][key]);});};
+const capToken=function(lang='en'){Object.keys(PLACES[lang]).forEach(function(key){dattr(key,'placeholder',PLACES[lang][key].replace(/TOKEN\$/gi,TOKEN))});Object.keys(LABELS[lang]).forEach(function(key){dw(key,LABELS[lang][key].replace(/TOKEN\$/gi,TOKEN))})};
 const showRole=function(t=BLANK){Object.keys(ROLES).forEach(function(key){t+='<option\tvalue="'+ROLES[key]+'">'+key+'</option>';});console.log(t);dw(_roleVal,t);};
 const showTick=function(t=BLANK){Object.keys(TICKS).forEach(function(key){t+='<option\tvalue="'+TICKS[key]+'">'+key+'</option>';});console.log(t);dw(_tickVal,t);};
 const showDTyp=function(t=BLANK){Object.keys(TYPES).forEach(function(key){t+='<option\tvalue="'+TYPES[key]+'">'+key+'</option>';});console.log(t);dw(_refType,t);};
@@ -2105,7 +2112,8 @@ const gamePetriToUnit=function(upb){return(gamePetriToPct(upb)/100)};
 ////////////////////////////////////////////////////////////
 const MineLogTopic='0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef';
 const tokenAllowed=function(token){return(MONEYS[token]?true:false)};
-const selectTokens=function(token){if(tokenAllowed(token)){TOKEN=token;MONEYS[token]()}};
+const selectTokens=function(token){if(tokenAllowed(token)){TOKEN=token;capToken();MONEYS[token]()}};
+const rpcSelTokens=function(token){if(tokenAllowed(token)){TOKEN=token;capToken();RPCMONEYS[token]()}};
 const getLogApiUrl=function(block,blocks=1000,topic=MineLogTopic,sc=xutengFemt){return(PROXIES[0].getContractPastLogs(sc._address,block-blocks,block,topic))};
 const getMinApiUrl=function(block,blocks=1000,topic=MineLogTopic,sc=xutengFemt){return(PROXIES[0].getContractLastLogs(sc._address,block-blocks,block,topic,h2t(ZEROADDR)))};
 const getAdvApiUrl=function(block,blocks=1000,topic='',afrom='',ato='',sc=xutengFemt){return(PROXIES[0].getContractLastLogs(sc._address,block-blocks,block,topic,afrom,ato))};
@@ -2550,9 +2558,9 @@ pro_sell_gemt: `Amount of TOKEN$ to sell`,
 pro_sell_conv: `Number of Coin$ to receive`,
 pro_program_id: `Program Unique ID`,
 pro_program_apr: `Annual Percentage Rate {%}`,
-pro_program_gemt: `Initial Deposit {GEMT9}`,
+pro_program_gemt: `Initial Deposit {TOKEN$}`,
 pro_invest_id: `Program ID`,
-pro_invest_gemt: `Amount to invest {GEMT9}`,
+pro_invest_gemt: `Amount to invest {TOKEN$}`,
 pro_offer_id: `Offer Unique ID`,
 pro_offer_apr: `Price: TOKEN$ per one Coin$`,
 pro_offer_rev: `Price: Coin$ per one TOKEN$`,

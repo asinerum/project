@@ -5,6 +5,12 @@ NEMT9:function(){startNemt()},
 REMT9:function(){startRemt()},
 X:function(){startXToken()},
 };
+const RPCMONEYS={
+GEMT9:function(){startGemtRpc()},
+NEMT9:function(){startNemtRpc()},
+REMT9:function(){startRemtRpc()},
+X:function(){startXTokenRpc()},
+};
 ////////////////////////////////////////////////////////////
 const MPROGRAM = 'mine';//
 const MPROHYIP = 'program';
