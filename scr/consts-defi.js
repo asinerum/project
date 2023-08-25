@@ -1,9 +1,9 @@
 ////////////////////////////////////////////////////////////
 const MONEYS={
-GEMT9:startGemt,
-NEMT9:startNemt,
-REMT9:startRemt,
-X:startXToken,
+GEMT9:function(){startGemt()},
+NEMT9:function(){startNemt()},
+REMT9:function(){startRemt()},
+X:function(){startXToken()},
 };
 ////////////////////////////////////////////////////////////
 const MPROGRAM = 'mine';//
