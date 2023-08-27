@@ -46,8 +46,8 @@ const gamePetriToUnit=function(upb){return(gamePetriToPct(upb)/100)};
 ////////////////////////////////////////////////////////////
 const MineLogTopic='0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef';
 const tokenAllowed=function(token){return(MONEYS[token]?true:false)};
-const selectTokens=function(token){if(tokenAllowed(token)){TOKEN=token;capToken();MONEYS[token]()}};
-const rpcSelTokens=function(token){if(tokenAllowed(token)){TOKEN=token;capToken();RPCMONEYS[token]()}};
+const selectTokens=function(token){if(tokenAllowed(token)){TOKEN=token;MONEYS[token]();capToken()}};
+const rpcSelTokens=function(token){if(tokenAllowed(token)){TOKEN=token;RPCMONEYS[token]();capToken()}};
 const getLogApiUrl=function(block,blocks=1000,topic=MineLogTopic,sc=xutengFemt){return(PROXIES[0].getContractPastLogs(sc._address,block-blocks,block,topic))};
 const getMinApiUrl=function(block,blocks=1000,topic=MineLogTopic,sc=xutengFemt){return(PROXIES[0].getContractLastLogs(sc._address,block-blocks,block,topic,h2t(ZEROADDR)))};
 const getAdvApiUrl=function(block,blocks=1000,topic='',afrom='',ato='',sc=xutengFemt){return(PROXIES[0].getContractLastLogs(sc._address,block-blocks,block,topic,afrom,ato))};
