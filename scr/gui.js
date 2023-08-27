@@ -1,5 +1,6 @@
 ////////////////////////////////////////////////////////////
 const showOkay=function(div=TEST){dw(div,OK);};
+const showFail=function(div=TEST){dw(div,FAILED);};
 const showError=function(div=TEST){dw(div,ERROR);};
 const showCancel=function(div=TEST){dw(div,CANCELED);};
 const showLoad=function(div=TEST){dw(div,'<img\tsrc="https://cdn.jsdelivr.net/gh/asinerum/project/loading.gif"/>');};

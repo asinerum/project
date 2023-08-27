@@ -1538,6 +1538,7 @@ const moreSon=function(s,b,msg){return(wrong(nmidle(s,b),msg));};//0<s<b
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
 const showOkay=function(div=TEST){dw(div,OK);};
+const showFail=function(div=TEST){dw(div,FAILED);};
 const showError=function(div=TEST){dw(div,ERROR);};
 const showCancel=function(div=TEST){dw(div,CANCELED);};
 const showLoad=function(div=TEST){dw(div,'<img\tsrc="https://cdn.jsdelivr.net/gh/asinerum/project/loading.gif"/>');};
@@ -2145,7 +2146,7 @@ showLoad(status);k=gv(divToken);i=s2n(gv(divId));if(!tokenAllowed(k)||!positiveN
 execute(xutengFemt,MPROGRAM,[i],0,status,null,function(err,res){checkResult(err,res,status);wmLoad();console.warn('TRANSACTION_RECEIPT',res);});};
 ////////////////////////////////////////////////////////////
 const defiHackProgJoinMine=function(status,divToken,divId,wmLoad=window.menu.onDefiHackProgLoad,execute=ercSend,k,i){
-showLoad(status);k=gv(divToken);i=s2n(gv(divId));if(!tokenAllowed(k))return(dw(status,_errInput));if(!positiveNum(i))return(Dig(function(tokens){wmLoad()},true,20,kek));
+showLoad(status);k=gv(divToken);i=s2n(gv(divId));if(!tokenAllowed(k))return(dw(status,_errInput));if(!positiveNum(i))return(Dig(function(tokens){if(!s2n(tokens)){showFail(status)}else{wmLoad()}},true,20,kek,function(){showError(status)}));
 execute(xutengFemt,MPROGRAM,[i],0,status,null,function(err,res){checkResult(err,res,status);wmLoad();console.warn('TRANSACTION_RECEIPT',res);});};
 ////////////////////////////////////////////////////////////
 const defiHackProgLoad=function(status,divToken,outBalance,outSupply,dec=5,k){
@@ -2277,7 +2278,7 @@ const kek=function(num,nce){return(kex(num,nce,'uint256',fromHex(sender)))};
 const kec=function(num,nce){return(web3.utils.keccak256(web3.eth.abi.encodeParameters(['uint256','uint256'],[num,nce])))};
 const kex=function(num,nce,key='address',val=sender){return(web3.utils.keccak256(web3.eth.abi.encodeParameters([key,'uint256','uint256'],[val,num,nce])))};
 const b2i=function(hex,n,i){n=big(0);hex=byt(hex);for(i=0;i<hex.length;i++){n=n.add(big(hex[i]).mul(big(16).pow(big(i*2)).add(big(1))))};return(n.toString())};
-const Dig=function(cbf=console.log,cfm=true,pops=20,kc=kek){return(mint(0,cbf,xutengFemt,ercTokens,alert,mmsender(),cfm,pops,kc))};
+const Dig=function(cbf=console.log,cfm=true,pops=20,kc=kek,cbe=alert){return(mint(0,cbf,xutengFemt,ercTokens,cbe,mmsender(),cfm,pops,kc))};
 const dig=function(cbf=console.log,cfm=true,pops=20,kc=kek,pf='basicRate',b,k,i,m){xutengFemt.methods[pf]().call().then(r=>{b=r;return(xutengFemt.methods.randomKey().call())}).then(r=>{k=r;i=Nonce(b,k,kc,1,b*pops);if(i==0)return(null);return(ercRaws(xutengFemt,MPROGRAM,[i],0,null,null,console.warn,cfm))}).then(cbf)};
 const sap=function(status,reload,pops=20,cfm=false,kc=kek,disp=db){dig(function(r){if(r){disp(status,DONE);if(reload)reload()}else{disp(status,ERROR)}},cfm,pops,kc)};
 const tsap=function(dur=10,tun='M'){setTimeout(sap,long(dur,tun))};
