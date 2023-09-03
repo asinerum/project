@@ -208,7 +208,7 @@ textarea.code{
  background-color:DodgerBlue;
  border-style:none;
  border-radius:0;
- font-size:12px;
+ font-size:small;
  padding: 2px 6px;}
 .bxut{
  cursor:pointer;}
@@ -424,7 +424,7 @@ textarea.code{
  text-align:center;
  text-decoration:bold;
  font-family:GARAMOND;
- font-size:16px;/**/
+ font-size:large;/**/
  display:inline-block;
  margin:2px;
  padding:5px;}
@@ -437,7 +437,7 @@ textarea.code{
  text-align:center;
  text-decoration:bold;
  font-family:GARAMOND;
- font-size:16px;/**/
+ font-size:large;/**/
  display:inline-block;
  margin:2px;
  padding:5px;}
@@ -450,7 +450,7 @@ textarea.code{
  text-align:center;
  text-decoration:bold;
  font-family:GARAMOND;
- font-size:16px;/**/
+ font-size:large;/**/
  display:inline-block;
  margin:2px;
  padding:5px;}

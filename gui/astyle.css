@@ -85,16 +85,16 @@
  cursor:pointer;}
 /***/
 .address{
- height:26px;
+ height:1.5em;
  width:100%;}
 .long{
- height:40px;
+ height:2em;
  width:100%;}
 .longfat{
- height:70px;
+ height:4em;
  width:100%;}
 .longwide{
- height:100px;
+ height:6em;
  width:100%;}
 .cover{
  width:100%;
@@ -132,52 +132,6 @@
 .textwarn{
  color:#FF0000;
  font-size:medium;}
-/***/
-.buttoner{
- width:240px;
- margin:auto;
- padding:auto;}
-.button{
- background-color:#4D7A9F;
- border-radius:6px;
- width:220px;
- border:none;
- color:white;
- text-align:left;
- text-decoration:none;
- font-family:GARAMOND;
- display:inline-block;
- cursor:pointer;
- margin:2px;
- padding:5px;}
-.label{
- background-color:#A5AC20;
- border-radius:6px;
- width:220px;
- border:none;
- color:white;
- text-align:left;
- font-family:GARAMOND;
- display:inline-block;
- margin:2px;
- padding:5px;}
-.ltlab{
- background-color:lightblue;
- border-radius:6px;
- width:220px;
- border:none;
- color:black;
- text-align:left;
- font-family:GARAMOND;
- display:inline-block;
- margin:2px;
- padding:5px;}
-.trlab{
- color:black;
- text-align:left;
- font-family:GARAMOND;
- margin:2px;
- padding:5px;}
 /***/
 .obox{
  background-image:url(obg.gif);
@@ -293,7 +247,7 @@
  text-align:center;
  text-decoration:bold;
  font-family:GARAMOND;
- font-size:14px;
+ font-size:medium;
  display:inline-block;
  margin:2px;
  padding:5px;}
@@ -306,7 +260,7 @@
  text-align:center;
  text-decoration:bold;
  font-family:GARAMOND;
- font-size:14px;
+ font-size:medium;
  display:inline-block;
  margin:2px;
  padding:5px;}
@@ -319,7 +273,7 @@
  text-align:center;
  text-decoration:bold;
  font-family:GARAMOND;
- font-size:14px;
+ font-size:medium;
  display:inline-block;
  margin:2px;
  padding:5px;}
