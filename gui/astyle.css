@@ -297,6 +297,12 @@
  color:#2d4f37;}
 .disable{
  color:#b8b8b8;}
+.maxsize{
+ max-width:100%;
+ height:auto;}
+.fullsize{
+ width:100%;
+ height:auto;}
 input,select,textarea{
  -webkit-box-sizing:border-box;
  -moz-box-sizing:border-box;
