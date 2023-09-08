@@ -21,8 +21,7 @@ div.body{
  border-radius:10px;
  position:relative;
  width:100%;
- height:100%;
- padding:5px;}
+ height:100%;}
 div.textarea{
  border:1px;
  border-color:grey;
