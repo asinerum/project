@@ -1586,10 +1586,11 @@ const showDsModel=function(t=BLANK){Object.keys(MODELS).forEach(function(key){t+
 const showAccount=function(t=BLANK){Object.keys(ADDRESSES).forEach(function(key){t+='<option\tvalue="'+key+'">'+key+'</option>';});console.log(t);dw(_account,t);};
 const optnAccount=function(t=BLANK){Object.keys(ADDRESSES).forEach(function(key){t+='<option\tvalue="'+ADDRESSES[key]+'">'+key+':&nbsp;'+ADDRESSES[key]+'</option>';});return(t);};
 ////////////////////////////////////////////////////////////
+const showToken=function(cls='token'){mw(cls,TOKEN);};
 const showCoin=function(cls='coin'){if(EXCHAINS[network])COIN=EXCHAINS[network].coin;else{if(BXCHAINS[network])COIN=BXCHAINS[network].coin;}mw(cls,COIN);};
 const showCaps=function(lang='en'){Object.keys(LABELS[lang]).forEach(function(key){dw(key,LABELS[lang][key]);});};
 const capToken=function(lang='en'){Object.keys(PLACES[lang]).forEach(function(key){dattr(key,'placeholder',PLACES[lang][key].replace(/TOKEN\$/gi,TOKEN).replace(/coin\$/gi,COIN))});Object.keys(LABELS[lang]).forEach(function(key){dw(key,LABELS[lang][key].replace(/TOKEN\$/gi,TOKEN).replace(/coin\$/gi,COIN))})};
-const capApply=function(lang=LANGUAGE){capToken(lang);showCoin();};
+const capApply=function(lang=LANGUAGE){capToken(lang);showCoin();showToken();};
 const showRole=function(t=BLANK){Object.keys(ROLES).forEach(function(key){t+='<option\tvalue="'+ROLES[key]+'">'+key+'</option>';});console.log(t);dw(_roleVal,t);};
 const showTick=function(t=BLANK){Object.keys(TICKS).forEach(function(key){t+='<option\tvalue="'+TICKS[key]+'">'+key+'</option>';});console.log(t);dw(_tickVal,t);};
 const showDTyp=function(t=BLANK){Object.keys(TYPES).forEach(function(key){t+='<option\tvalue="'+TYPES[key]+'">'+key+'</option>';});console.log(t);dw(_refType,t);};
@@ -2563,6 +2564,7 @@ const DOCETXNONCE='<a href="https://asinerum.github.io/project/doc/ethereum/nonc
 const DOCBTCINPUT='<a href="https://asinerum.github.io/project/doc/bitcoin/inputs" target="_blank">INPUT DATA</a>';
 const DOCBTCTXFEE='<a href="https://asinerum.github.io/project/doc/bitcoin/fee" target="_blank">FEE</a>';
 ////////////////////////////////////////////////////////////
+const CAPCLASSTOKEN='<span class="token">TOKEN</span>';
 const CAPCLASSCOIN='<span class="coin">COIN</span>';
 const CAPNODISCLOS='<span class="textwarn">without disclosing</span>';
 const CAPBIP38EKEY='<span class="textwarn">bip38 encrypted key</span>';
@@ -2997,27 +2999,27 @@ _label_hack_DefiProgSum: `Total supply`,
 _label_hack_panelHeader: `JS HACKING MACHINE`,
 _label_hack_panelHeaderMine: `JS MINING MACHINE`,
 _label_offer_DefiProgAge: `Sale expires in`,
-_label_offer_DefiProgAPR: `${CAPCLASSCOIN}/TOKEN$ price`,
+_label_offer_DefiProgAPR: `${CAPCLASSCOIN}/${CAPCLASSTOKEN} price`,
 _label_offer_DefiProgOwn: `Supplier`,
-_label_offer_DefiProgSum: `TOKEN$ supply`,
-_label_offer_investor: `TOKEN$ BUYER'S PURCHASE`,
-_label_offer_programer: `TOKEN$ SELLER'S OFFER`,
+_label_offer_DefiProgSum: `${CAPCLASSTOKEN} supply`,
+_label_offer_investor: `${CAPCLASSTOKEN} BUYER'S PURCHASE`,
+_label_offer_programer: `${CAPCLASSTOKEN} SELLER'S OFFER`,
 _label_offers_DefiProgAge: `Sale expires in`,
-_label_offers_DefiProgAPR: `${CAPCLASSCOIN}/TOKEN$ price`,
+_label_offers_DefiProgAPR: `${CAPCLASSCOIN}/${CAPCLASSTOKEN} price`,
 _label_offers_DefiProgOwn: `Supplier`,
-_label_offers_DefiProgSum: `TOKEN$ supply`,
-_label_offers_panelHeader: `TOKEN$ OFFER LISTINGS`,
+_label_offers_DefiProgSum: `${CAPCLASSTOKEN} supply`,
+_label_offers_panelHeader: `${CAPCLASSTOKEN} OFFER LISTINGS`,
 _label_order_DefiProgAge: `Purchase expires in`,
-_label_order_DefiProgAPR: `${CAPCLASSCOIN}/TOKEN$ price`,
+_label_order_DefiProgAPR: `${CAPCLASSCOIN}/${CAPCLASSTOKEN} price`,
 _label_order_DefiProgOwn: `Depositor`,
 _label_order_DefiProgSum: `${CAPCLASSCOIN} deposit`,
-_label_order_investor: `TOKEN$ SELLER'S SALE`,
-_label_order_programer: `TOKEN$ BUYER'S ORDER`,
+_label_order_investor: `${CAPCLASSTOKEN} SELLER'S SALE`,
+_label_order_programer: `${CAPCLASSTOKEN} BUYER'S ORDER`,
 _label_orders_DefiProgAge: `Purchase expires in`,
-_label_orders_DefiProgAPR: `${CAPCLASSCOIN}/TOKEN$ price`,
+_label_orders_DefiProgAPR: `${CAPCLASSCOIN}/${CAPCLASSTOKEN} price`,
 _label_orders_DefiProgOwn: `Depositor`,
 _label_orders_DefiProgSum: `${CAPCLASSCOIN} deposit`,
-_label_orders_panelHeader: `TOKEN$ ORDER LISTINGS`,
+_label_orders_panelHeader: `${CAPCLASSTOKEN} ORDER LISTINGS`,
 _label_program_DefiProgAge: `Age`,
 _label_program_DefiProgAgi: `My investment age`,
 _label_program_DefiProgAmt: `My invested sum`,
