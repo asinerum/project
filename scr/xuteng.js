@@ -1634,7 +1634,7 @@ const forceXuteng=function(addr,abi){window.exContractAddress=addr;window.exSCAB
 const clearXuteng=function(){delete(window.exContractAddress);delete(window.exSCABI);resetXuteng();};
 const resetXuteng=function(){contractAddress=window.exContractAddress?window.exContractAddress:CONTRACT[network].addr;if(window.exSCABI)SCABI=window.exSCABI;window.xuteng=_Contract(SCABI,contractAddress);setPGwei();};
 const web3Mainnet=function(cbo){web3.eth.net.getNetworkType().then(function(net){if(net=='main'){switchNet(MAINNET);alert(hi_alert_ismainnet);}else{switchNet(net,MAINNET);alert(hi_alert_nomainnet);};resetXuteng();getSender();if(cbo)cbo(net)})};
-const metaMainnet=function(cbo){ethereum.request({method:'eth_requestAccounts'}).then(r=>{window.sender=r[0];ethereum.request({method:'eth_chainId'}).then(r=>{metaRefresh(fromHex(r));onAccountsChanged();onChainChanged();switchNet(network);if(cbo)cbo(r)})})};
+const metaMainnet=function(cbo){ethereum.request({method:'eth_requestAccounts'}).then(r=>{window.sender=r[0];ethereum.request({method:'eth_chainId'}).then(r=>{metaRefresh(fromHex(r));onAccountsChanged();onChainChanged();if(cbo)cbo(r)})})};
 const getProvider=function(cbo){if(window.ethereum){window.web3=_Ethereum(ethereum);metaMainnet(cbo);}else{if(window.web3){window.web3=_Ethereum(web3.currentProvider);web3Mainnet(cbo);}else{startXuteng(MAINNET);alert(hi_alert_metamasks);}}};
 const startXuteng=function(nid){if(nid){switchNet(nid);window.web3=_Ethereum(_Provider(getRpcNet()));resetXuteng();}else{getProvider();};};
 const metaRefresh=function(cid){window.network=id2network(cid);switchNet(network);resetXuteng();console.log('CHAIN',cid,network);};
@@ -2148,8 +2148,8 @@ const gamePetriToUnit=function(upb){return(gamePetriToPct(upb)/100)};
 ////////////////////////////////////////////////////////////
 const MineLogTopic='0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef';
 const tokenAllowed=function(token){return(MONEYS[token]?true:false)};
-const selectTokens=function(token){if(tokenAllowed(token)){TOKEN=token;MONEYS[token]();capToken()}};
-const rpcSelTokens=function(token){if(tokenAllowed(token)){TOKEN=token;RPCMONEYS[token]();capToken()}};
+const selectTokens=function(token){if(tokenAllowed(token)){TOKEN=token;MONEYS[token]();capApply()}};
+const rpcSelTokens=function(token){if(tokenAllowed(token)){TOKEN=token;RPCMONEYS[token]();capApply()}};
 const getLogApiUrl=function(block,blocks=1000,topic=MineLogTopic,sc=xutengFemt){return(PROXIES[0].getContractPastLogs(sc._address,block-blocks,block,topic))};
 const getMinApiUrl=function(block,blocks=1000,topic=MineLogTopic,sc=xutengFemt){return(PROXIES[0].getContractLastLogs(sc._address,block-blocks,block,topic,h2t(ZEROADDR)))};
 const getAdvApiUrl=function(block,blocks=1000,topic='',afrom='',ato='',sc=xutengFemt){return(PROXIES[0].getContractLastLogs(sc._address,block-blocks,block,topic,afrom,ato))};
