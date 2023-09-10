@@ -1557,7 +1557,7 @@ const launchNet=function(nid){if(!nid)nid=hashParam(ARGWNET);selectNet(nid);};/*
 const selectNet=function(nid){switchNet(nid);startXuteng(network);};/*LoadNetworkParamsAndConnectRPC*/
 const chooseNet=function(nid){switchNet(nid);window.web3=_Web3();};/*LoadNetworkParamsAndPureWeb3Lib*/
 const switchBtc=function(nid,dnid){if(!dnid)dnid=BITCOIN;if(BXCHAINS[nid]){window.network=nid}else{window.network=dnid};window.btcnet=network;return(network);};
-const switchNet=function(nid,dnid){if(!dnid)dnid=MAINNET;if(EXCHAINS[nid]){window.network=nid}else{window.network=dnid};netStyle();changeNet();showCoin();showInPH();return(network);};/*LoadNetworkNameAndPageLayout*/
+const switchNet=function(nid,dnid){if(!dnid)dnid=MAINNET;if(EXCHAINS[nid]){window.network=nid}else{window.network=dnid};netStyle();changeNet();capApply();return(network);};/*LoadNetworkNameAndPageLayout*/
 const changeNet=function(){contractAddress=CONTRACT[network].addr;networkChainId=CONTRACT[network].ncid;networkStyle=CONTRACT[network].bcls;contractScanner=CONTRACT[network].scan+contractAddress;mr('bgxutengscan',contractScanner);};/*LoadGlobalVarsOnly*/
 const getRpcNet=function(){window.rpcServer=gv(_rpcs);if(!window.rpcServer)window.rpcServer=CONTRACT[network].rpcs;return(rpcServer);};/*UpdateNewRPCEndpoint*/
 const getSender=function(){web3.eth.getAccounts().then((accounts)=>{sender=accounts[0];});};/*UpdateUserWalletAddress*/
@@ -1587,9 +1587,9 @@ const showAccount=function(t=BLANK){Object.keys(ADDRESSES).forEach(function(key)
 const optnAccount=function(t=BLANK){Object.keys(ADDRESSES).forEach(function(key){t+='<option\tvalue="'+ADDRESSES[key]+'">'+key+':&nbsp;'+ADDRESSES[key]+'</option>';});return(t);};
 ////////////////////////////////////////////////////////////
 const showCoin=function(cls='coin'){if(EXCHAINS[network])COIN=EXCHAINS[network].coin;else{if(BXCHAINS[network])COIN=BXCHAINS[network].coin;}mw(cls,COIN);};
-const showInPH=function(lang='en'){Object.keys(PLACES[lang]).forEach(function(key){dattr(key,'placeholder',PLACES[lang][key].replace(/coin\$/gi,COIN));});};
 const showCaps=function(lang='en'){Object.keys(LABELS[lang]).forEach(function(key){dw(key,LABELS[lang][key]);});};
-const capToken=function(lang='en'){Object.keys(PLACES[lang]).forEach(function(key){dattr(key,'placeholder',PLACES[lang][key].replace(/TOKEN\$/gi,TOKEN))});Object.keys(LABELS[lang]).forEach(function(key){dw(key,LABELS[lang][key].replace(/TOKEN\$/gi,TOKEN))})};
+const capToken=function(lang='en'){Object.keys(PLACES[lang]).forEach(function(key){dattr(key,'placeholder',PLACES[lang][key].replace(/TOKEN\$/gi,TOKEN).replace(/coin\$/gi,COIN))});Object.keys(LABELS[lang]).forEach(function(key){dw(key,LABELS[lang][key].replace(/TOKEN\$/gi,TOKEN).replace(/coin\$/gi,COIN))})};
+const capApply=function(lang=LANGUAGE){capToken(lang);showCoin();};
 const showRole=function(t=BLANK){Object.keys(ROLES).forEach(function(key){t+='<option\tvalue="'+ROLES[key]+'">'+key+'</option>';});console.log(t);dw(_roleVal,t);};
 const showTick=function(t=BLANK){Object.keys(TICKS).forEach(function(key){t+='<option\tvalue="'+TICKS[key]+'">'+key+'</option>';});console.log(t);dw(_tickVal,t);};
 const showDTyp=function(t=BLANK){Object.keys(TYPES).forEach(function(key){t+='<option\tvalue="'+TYPES[key]+'">'+key+'</option>';});console.log(t);dw(_refType,t);};
@@ -1619,7 +1619,7 @@ const userImport=function(passCode,privKey){oldAccount(passCode,0,0,0,privKey);}
 const userCreate=function(passCode){newAccount(passCode);};
 ////////////////////////////////////////////////////////////
 const showDefault=function(){$(document).ready(function(){showNetwork();showAccount();showMaxGas();showTxGwei();showRole();showTick();showDTyp();showAccs();});};
-const promoteMenu=function(){window.menu=_Menu(ACTDIV);lottimePicker('year','month','day','hour','minute','_uts','_utstring');showCaps();showCoin();showInPH();};
+const promoteMenu=function(){window.menu=_Menu(ACTDIV);lottimePicker('year','month','day','hour','minute','_uts','_utstring');showCaps();capApply();};
 const stopSession=function(mis){setInterval(function(){senderPte=BLANK;password=BLANK;window.newaccount=null;clearPwds();console.clear();web3.eth.accounts.wallet.clear();},mis);};
 const statsXuteng=function(mis){setInterval(function(){getData(sender,getDocType(0));},mis);};
 const statsEthers=function(mis){setInterval(function(){getCoin(sender,'_ethers');},mis);};
@@ -1633,7 +1633,7 @@ const forceXuteng=function(addr,abi){window.exContractAddress=addr;window.exSCAB
 const clearXuteng=function(){delete(window.exContractAddress);delete(window.exSCABI);resetXuteng();};
 const resetXuteng=function(){contractAddress=window.exContractAddress?window.exContractAddress:CONTRACT[network].addr;if(window.exSCABI)SCABI=window.exSCABI;window.xuteng=_Contract(SCABI,contractAddress);setPGwei();};
 const web3Mainnet=function(cbo){web3.eth.net.getNetworkType().then(function(net){if(net=='main'){switchNet(MAINNET);alert(hi_alert_ismainnet);}else{switchNet(net,MAINNET);alert(hi_alert_nomainnet);};resetXuteng();getSender();if(cbo)cbo(net)})};
-const metaMainnet=function(cbo){ethereum.request({method:'eth_requestAccounts'}).then(r=>{window.sender=r[0];ethereum.request({method:'eth_chainId'}).then(r=>{metaRefresh(fromHex(r));onAccountsChanged();onChainChanged();if(cbo)cbo(r)})})};
+const metaMainnet=function(cbo){ethereum.request({method:'eth_requestAccounts'}).then(r=>{window.sender=r[0];ethereum.request({method:'eth_chainId'}).then(r=>{metaRefresh(fromHex(r));onAccountsChanged();onChainChanged();switchNet(network);if(cbo)cbo(r)})})};
 const getProvider=function(cbo){if(window.ethereum){window.web3=_Ethereum(ethereum);metaMainnet(cbo);}else{if(window.web3){window.web3=_Ethereum(web3.currentProvider);web3Mainnet(cbo);}else{startXuteng(MAINNET);alert(hi_alert_metamasks);}}};
 const startXuteng=function(nid){if(nid){switchNet(nid);window.web3=_Ethereum(_Provider(getRpcNet()));resetXuteng();}else{getProvider();};};
 const metaRefresh=function(cid){window.network=id2network(cid);switchNet(network);resetXuteng();console.log('CHAIN',cid,network);};
@@ -1809,6 +1809,7 @@ const help_ContentMod=function(w){ww(_help_content,w);};
 ////////////////////////////////////////////////////////////
 var COIN='ETH';
 var TOKEN='XUT';
+var LANGUAGE='en';
 var CONTRACT=XUTENG;
 var SCABI=ABIXUTENG;
 var network=MAINNET;
@@ -1999,6 +2000,7 @@ const Menu=function(element){self=this;
  self.onAuthGetOfr=self.onGetOfr;
  self.onAuthGetReq=self.onGetReq;
  self.onClearInput=clearTags;
+ //TokenMiningDefinitions
  self.onDefiHackProgJoinMine=function(){defiHackProgJoinMine('form_status','pro_token','pro_id_mine');}
  self.onDefiHackProgJoin=function(){defiHackProgJoin('form_status','pro_token','pro_id');}
  self.onDefiHackProgLoad=function(){defiHackProgLoad('form_status','pro_token','pro_amt','pro_sum');}
@@ -2011,6 +2013,7 @@ const Menu=function(element){self=this;
  self.onDefiDigNonce=function(){defiDigNonce('dig_nonce');}
  self.onDefiDigMine=function(){defiDigMine('dig_wait','form_status');}
  self.onDefiDigSend=function(){defiDigSend('dig_in_nonce','form_status');}
+ //GemtTokenDefinitions
  self.onDefiProgramProgDraw=function(){confirmPositiveInt('pro_program_id',_warnPrgDraw);defiProgramProgStop('form_status','pro_program_id',true)}
  self.onDefiProgramProgDrawRaw=function(){confirmPositiveInt('pro_program_id',_warnPrgDraw);defiProgramProgStopRaw('form_status','pro_program_id',true)}
  self.onDefiProgramProgOpen=function(){defiProgramProgOpen('form_status','pro_program_id','pro_program_apr','pro_program_gemt');}
@@ -2041,6 +2044,12 @@ const Menu=function(element){self=this;
  self.onDefiGemtPayWithRef=function(){defiGemtPayWithRef('form_status','pay_ref','pay_to','pay_amount','pay_note','pay_money');}
  self.onDefiGemtPayWithRefRaw=function(){defiGemtPayWithRefRaw('form_status','pay_ref','pay_to','pay_amount','pay_note','pay_money');}
  self.onDefiGemtPayLoad=function(){self.goDefiGemtPayLoad();}
+ //TokenBuyingDefinitions
+ self.onDefiProgJoin=function(){defiProgJoin('form_status','pro_buy_gemt');}
+ self.onDefiProgReId=function(){defiProgRead('form_status','pro_buy_id','pro_apr','pro_age','pro_sum','pro_own');}
+ self.goDefiProgInit=function(){checkPositiveNum('pro_buy_gemt',_warnPrgInit);}
+ self.goDefiProgInst=self.goDefiProgInit;
+ self.goDefiProgReId=self.onDefiProgReId;
 };//////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////[3]
@@ -2065,6 +2074,31 @@ const setWasmString=function(str,pointer=0,ins,b,i){if(!ins)ins=window.wasmInsta
 const getWasmString=function(pointer,len,ins,b,i,s){if(!ins)ins=window.wasmInstance;b=(new Uint8Array(ins.exports.memory.buffer,pointer,len));s='';for(i=0;i<len;i++)s+=String.fromCharCode(b[i]);return(s);};
 const getWasmStrEnd=function(pointer,ins,b,i,s){/**/if(!ins)ins=window.wasmInstance;b=(new Uint8Array(ins.exports.memory.buffer,pointer));s='';for(i=0;b[i];i++)s+=String.fromCharCode(b[i]);return(s);};
 ////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////
+const defiProgJoin=function(status,divAmount,token=0,eth=0,tlim=ZERO,elim=ZERO,a){
+showLoad(status);a=s2n(gv(divAmount));if(!positiveNum(a)||!window.trader||!window.trader.ppe)return(dw(status,_errInput));if(!window.trader.ppe.gt(0)||!window.trader.value.gt(0))return(dw(status,_errValue));if(window.trader.buytoken!=BUYTOKEN)return(dw(status,_errItNon));if(window.trader.time>0&&window.trader.time<nowDate())return(dw(status,_errInvst));if(BUYTOKEN){token=a;tlim=fromWei(window.trader.value.w2p(window.trader.ppe));elim=fromWei(window.trader.value)}else{eth=a/fromWei(window.trader.ppe);tlim=fromWei(window.trader.value);elim=fromWei(window.trader.value.p2w(window.trader.ppe))};console.warn('INPUT_DATA',{token,eth,tlim,elim});if(token>tlim||eth>elim)return(dw(status,_errValim));
+ercCall(xutengFemt,MBALANCE,[sender],status,null,function(err,res){checkResult(err,res,status);console.warn('TRADER_BALANCE',w2s(res,9));if(fromWei(res)<token)return(dw(status,_errDepos));
+ercCoin(sender,status,null,function(err,res){checkResult(err,res,status);console.warn('TRADER_COIN_BALANCE_'+COIN,w2s(res,9));if(fromWei(res)<eth)return(dw(status,_errCoins));/*CoinOnly*/
+ercSend(xutengFemt,MPROGBUY,[window.trader.refno,s2w(token)],eth,status,null,function(err,res){checkResult(err,res,status);console.warn('TRADERS_TRANSACTION_RECEIPT',res);});});});};
+////////////////////////////////////////////////////////////
+const defiProgStop=function(status,divId,half=true,i){
+showLoad(status);i=Number(gv(divId));if(!positiveInt(i))return(dw(status,_errInput));
+ercCall(xutengFemt,MPROGDAT,[i],status,null,function(err,res){checkResult(err,res,status);console.warn('TRADING_DATA',res);if(res.buytoken!=BUYTOKEN)return(dw(status,_errItNon));if(res.maker==ZEROADDR)return(dw(status,_errItNot));if(!twoHexEqual(res.maker,sender))return(dw(status,_errOwner));if(res.time>=nowDate())return(dw(status,_errXTime));if(res.value===ZERO)return(dw(status,_errValue));
+ercSend(xutengFemt,MPROGCLR,[i],0,status,null,function(err,res){checkResult(err,res,status);console.warn('TRADERS_CANCELLATION_RECEIPT',res);});});};
+////////////////////////////////////////////////////////////
+const defiProgRead=function(status,divId,divRate,divAge,divAmount,divOwner,dec=5,i){
+showLoad(status);i=Number(gv(divId));if(!positiveInt(i))return(dw(status,_errInput));iniProgData(i);
+ercCall(xutengFemt,MPROGDAT,[i],status,null,function(err,res){checkResult(err,res,status);console.warn('TRADING_DATA',res);if(res.buytoken!=BUYTOKEN)return(dw(status,_errItNon));getProgData(res);dz(divRate,w2s(res.ppe,dec*2));db(divAmount,w2s(res.value,dec));db(divOwner,showAddrUrl(res.maker));db(divAge,showItemAge(res.time,false));});};
+////////////////////////////////////////////////////////////
+const defiProgOpen=function(status,divId,divRate,divAge,divAmount,token=0,eth=0,i,r,t,a){
+showLoad(status);i=Number(gv(divId));r=s2n(gv(divRate));t=s2n(gv(divAge));a=s2n(gv(divAmount));t=t<=0?0:daysToStamp(t);if(!positiveInt(i)||!positiveNum(r)||!positiveNum(a))return(dw(status,_errInput));if(BUYTOKEN){eth=a/r}else{token=a};
+ercCall(xutengFemt,MPROGDAT,[i],status,null,function(err,res){checkResult(err,res,status);console.warn('TRADING_DATA',res);if(res.maker!=ZEROADDR)return(dw(status,_errIdNot));
+ercCall(xutengFemt,MBALANCE,[sender],status,null,function(err,res){checkResult(err,res,status);console.warn('TRADER_BALANCE',w2s(res,9));if(fromWei(res)<token)return(dw(status,_errDepos));
+ercCoin(sender,status,null,function(err,res){checkResult(err,res,status);console.warn('TRADER_COIN_BALANCE_'+COIN,w2s(res,9));if(fromWei(res)<eth)return(dw(status,_errCoins));/*CoinOnly*/
+ercSend(xutengFemt,MPROPOST,[i,s2w(token),s2w(r),t],eth,status,null,function(err,res){checkResult(err,res,status);console.warn('TRADERS_CREATION_RECEIPT',res);});});});});};
+////////////////////////////////////////////////////////////
+const iniProgData=function(uint){window.trader={};window.trader.refno=uint;};
+const getProgData=function(data){window.trader.ppe=data.ppe;window.trader.time=data.time;window.trader.value=data.value;window.trader.maker=data.maker;window.trader.buytoken=data.buytoken;};
 ////////////////////////////////////////////////////////////
 const defiGemtPayWithRefRaw=function(status,divRef,divTo,divAmount,divNote,divMoney){defiGemtPayWithRef(status,divRef,divTo,divAmount,divNote,divMoney,hook)};
 const defiGemtPayWithRef=function(status,divRef,divTo,divAmount,divNote,divMoney,fn=Exec,a,t){showLoad(status);a=s2n(gv(divAmount));t=gv(divMoney).as('coin')?false:true;(t?Tokens:Ethers)(sender,function(r){if(String(r).GE(a))return(gemtPayWithRef(gv(divRef),gv(divTo),a,gv(divNote),t,fn,function(err,res){checkResult(err,res,status,true);console.warn('PAY_RECEIPT',res)}));dw(status,_errInput)})};

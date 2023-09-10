@@ -1,4 +1,29 @@
 ////////////////////////////////////////////////////////////
+const defiProgJoin=function(status,divAmount,token=0,eth=0,tlim=ZERO,elim=ZERO,a){
+showLoad(status);a=s2n(gv(divAmount));if(!positiveNum(a)||!window.trader||!window.trader.ppe)return(dw(status,_errInput));if(!window.trader.ppe.gt(0)||!window.trader.value.gt(0))return(dw(status,_errValue));if(window.trader.buytoken!=BUYTOKEN)return(dw(status,_errItNon));if(window.trader.time>0&&window.trader.time<nowDate())return(dw(status,_errInvst));if(BUYTOKEN){token=a;tlim=fromWei(window.trader.value.w2p(window.trader.ppe));elim=fromWei(window.trader.value)}else{eth=a/fromWei(window.trader.ppe);tlim=fromWei(window.trader.value);elim=fromWei(window.trader.value.p2w(window.trader.ppe))};console.warn('INPUT_DATA',{token,eth,tlim,elim});if(token>tlim||eth>elim)return(dw(status,_errValim));
+ercCall(xutengFemt,MBALANCE,[sender],status,null,function(err,res){checkResult(err,res,status);console.warn('TRADER_BALANCE',w2s(res,9));if(fromWei(res)<token)return(dw(status,_errDepos));
+ercCoin(sender,status,null,function(err,res){checkResult(err,res,status);console.warn('TRADER_COIN_BALANCE_'+COIN,w2s(res,9));if(fromWei(res)<eth)return(dw(status,_errCoins));/*CoinOnly*/
+ercSend(xutengFemt,MPROGBUY,[window.trader.refno,s2w(token)],eth,status,null,function(err,res){checkResult(err,res,status);console.warn('TRADERS_TRANSACTION_RECEIPT',res);});});});};
+////////////////////////////////////////////////////////////
+const defiProgStop=function(status,divId,half=true,i){
+showLoad(status);i=Number(gv(divId));if(!positiveInt(i))return(dw(status,_errInput));
+ercCall(xutengFemt,MPROGDAT,[i],status,null,function(err,res){checkResult(err,res,status);console.warn('TRADING_DATA',res);if(res.buytoken!=BUYTOKEN)return(dw(status,_errItNon));if(res.maker==ZEROADDR)return(dw(status,_errItNot));if(!twoHexEqual(res.maker,sender))return(dw(status,_errOwner));if(res.time>=nowDate())return(dw(status,_errXTime));if(res.value===ZERO)return(dw(status,_errValue));
+ercSend(xutengFemt,MPROGCLR,[i],0,status,null,function(err,res){checkResult(err,res,status);console.warn('TRADERS_CANCELLATION_RECEIPT',res);});});};
+////////////////////////////////////////////////////////////
+const defiProgRead=function(status,divId,divRate,divAge,divAmount,divOwner,dec=5,i){
+showLoad(status);i=Number(gv(divId));if(!positiveInt(i))return(dw(status,_errInput));iniProgData(i);
+ercCall(xutengFemt,MPROGDAT,[i],status,null,function(err,res){checkResult(err,res,status);console.warn('TRADING_DATA',res);if(res.buytoken!=BUYTOKEN)return(dw(status,_errItNon));getProgData(res);dz(divRate,w2s(res.ppe,dec*2));db(divAmount,w2s(res.value,dec));db(divOwner,showAddrUrl(res.maker));db(divAge,showItemAge(res.time,false));});};
+////////////////////////////////////////////////////////////
+const defiProgOpen=function(status,divId,divRate,divAge,divAmount,token=0,eth=0,i,r,t,a){
+showLoad(status);i=Number(gv(divId));r=s2n(gv(divRate));t=s2n(gv(divAge));a=s2n(gv(divAmount));t=t<=0?0:daysToStamp(t);if(!positiveInt(i)||!positiveNum(r)||!positiveNum(a))return(dw(status,_errInput));if(BUYTOKEN){eth=a/r}else{token=a};
+ercCall(xutengFemt,MPROGDAT,[i],status,null,function(err,res){checkResult(err,res,status);console.warn('TRADING_DATA',res);if(res.maker!=ZEROADDR)return(dw(status,_errIdNot));
+ercCall(xutengFemt,MBALANCE,[sender],status,null,function(err,res){checkResult(err,res,status);console.warn('TRADER_BALANCE',w2s(res,9));if(fromWei(res)<token)return(dw(status,_errDepos));
+ercCoin(sender,status,null,function(err,res){checkResult(err,res,status);console.warn('TRADER_COIN_BALANCE_'+COIN,w2s(res,9));if(fromWei(res)<eth)return(dw(status,_errCoins));/*CoinOnly*/
+ercSend(xutengFemt,MPROPOST,[i,s2w(token),s2w(r),t],eth,status,null,function(err,res){checkResult(err,res,status);console.warn('TRADERS_CREATION_RECEIPT',res);});});});});};
+////////////////////////////////////////////////////////////
+const iniProgData=function(uint){window.trader={};window.trader.refno=uint;};
+const getProgData=function(data){window.trader.ppe=data.ppe;window.trader.time=data.time;window.trader.value=data.value;window.trader.maker=data.maker;window.trader.buytoken=data.buytoken;};
+////////////////////////////////////////////////////////////
 const defiGemtPayWithRefRaw=function(status,divRef,divTo,divAmount,divNote,divMoney){defiGemtPayWithRef(status,divRef,divTo,divAmount,divNote,divMoney,hook)};
 const defiGemtPayWithRef=function(status,divRef,divTo,divAmount,divNote,divMoney,fn=Exec,a,t){showLoad(status);a=s2n(gv(divAmount));t=gv(divMoney).as('coin')?false:true;(t?Tokens:Ethers)(sender,function(r){if(String(r).GE(a))return(gemtPayWithRef(gv(divRef),gv(divTo),a,gv(divNote),t,fn,function(err,res){checkResult(err,res,status,true);console.warn('PAY_RECEIPT',res)}));dw(status,_errInput)})};
 ////////////////////////////////////////////////////////////

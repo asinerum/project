@@ -7,6 +7,7 @@
 ////////////////////////////////////////////////////////////
 var COIN='ETH';
 var TOKEN='XUT';
+var LANGUAGE='en';
 var CONTRACT=XUTENG;
 var SCABI=ABIXUTENG;
 var network=MAINNET;

@@ -19,7 +19,7 @@ const launchNet=function(nid){if(!nid)nid=hashParam(ARGWNET);selectNet(nid);};/*
 const selectNet=function(nid){switchNet(nid);startXuteng(network);};/*LoadNetworkParamsAndConnectRPC*/
 const chooseNet=function(nid){switchNet(nid);window.web3=_Web3();};/*LoadNetworkParamsAndPureWeb3Lib*/
 const switchBtc=function(nid,dnid){if(!dnid)dnid=BITCOIN;if(BXCHAINS[nid]){window.network=nid}else{window.network=dnid};window.btcnet=network;return(network);};
-const switchNet=function(nid,dnid){if(!dnid)dnid=MAINNET;if(EXCHAINS[nid]){window.network=nid}else{window.network=dnid};netStyle();changeNet();showCoin();showInPH();return(network);};/*LoadNetworkNameAndPageLayout*/
+const switchNet=function(nid,dnid){if(!dnid)dnid=MAINNET;if(EXCHAINS[nid]){window.network=nid}else{window.network=dnid};netStyle();changeNet();capApply();return(network);};/*LoadNetworkNameAndPageLayout*/
 const changeNet=function(){contractAddress=CONTRACT[network].addr;networkChainId=CONTRACT[network].ncid;networkStyle=CONTRACT[network].bcls;contractScanner=CONTRACT[network].scan+contractAddress;mr('bgxutengscan',contractScanner);};/*LoadGlobalVarsOnly*/
 const getRpcNet=function(){window.rpcServer=gv(_rpcs);if(!window.rpcServer)window.rpcServer=CONTRACT[network].rpcs;return(rpcServer);};/*UpdateNewRPCEndpoint*/
 const getSender=function(){web3.eth.getAccounts().then((accounts)=>{sender=accounts[0];});};/*UpdateUserWalletAddress*/
@@ -49,9 +49,9 @@ const showAccount=function(t=BLANK){Object.keys(ADDRESSES).forEach(function(key)
 const optnAccount=function(t=BLANK){Object.keys(ADDRESSES).forEach(function(key){t+='<option\tvalue="'+ADDRESSES[key]+'">'+key+':&nbsp;'+ADDRESSES[key]+'</option>';});return(t);};
 ////////////////////////////////////////////////////////////
 const showCoin=function(cls='coin'){if(EXCHAINS[network])COIN=EXCHAINS[network].coin;else{if(BXCHAINS[network])COIN=BXCHAINS[network].coin;}mw(cls,COIN);};
-const showInPH=function(lang='en'){Object.keys(PLACES[lang]).forEach(function(key){dattr(key,'placeholder',PLACES[lang][key].replace(/coin\$/gi,COIN));});};
 const showCaps=function(lang='en'){Object.keys(LABELS[lang]).forEach(function(key){dw(key,LABELS[lang][key]);});};
-const capToken=function(lang='en'){Object.keys(PLACES[lang]).forEach(function(key){dattr(key,'placeholder',PLACES[lang][key].replace(/TOKEN\$/gi,TOKEN))});Object.keys(LABELS[lang]).forEach(function(key){dw(key,LABELS[lang][key].replace(/TOKEN\$/gi,TOKEN))})};
+const capToken=function(lang='en'){Object.keys(PLACES[lang]).forEach(function(key){dattr(key,'placeholder',PLACES[lang][key].replace(/TOKEN\$/gi,TOKEN).replace(/coin\$/gi,COIN))});Object.keys(LABELS[lang]).forEach(function(key){dw(key,LABELS[lang][key].replace(/TOKEN\$/gi,TOKEN).replace(/coin\$/gi,COIN))})};
+const capApply=function(lang=LANGUAGE){capToken(lang);showCoin();};
 const showRole=function(t=BLANK){Object.keys(ROLES).forEach(function(key){t+='<option\tvalue="'+ROLES[key]+'">'+key+'</option>';});console.log(t);dw(_roleVal,t);};
 const showTick=function(t=BLANK){Object.keys(TICKS).forEach(function(key){t+='<option\tvalue="'+TICKS[key]+'">'+key+'</option>';});console.log(t);dw(_tickVal,t);};
 const showDTyp=function(t=BLANK){Object.keys(TYPES).forEach(function(key){t+='<option\tvalue="'+TYPES[key]+'">'+key+'</option>';});console.log(t);dw(_refType,t);};
@@ -81,7 +81,7 @@ const userImport=function(passCode,privKey){oldAccount(passCode,0,0,0,privKey);}
 const userCreate=function(passCode){newAccount(passCode);};
 ////////////////////////////////////////////////////////////
 const showDefault=function(){$(document).ready(function(){showNetwork();showAccount();showMaxGas();showTxGwei();showRole();showTick();showDTyp();showAccs();});};
-const promoteMenu=function(){window.menu=_Menu(ACTDIV);lottimePicker('year','month','day','hour','minute','_uts','_utstring');showCaps();showCoin();showInPH();};
+const promoteMenu=function(){window.menu=_Menu(ACTDIV);lottimePicker('year','month','day','hour','minute','_uts','_utstring');showCaps();capApply();};
 const stopSession=function(mis){setInterval(function(){senderPte=BLANK;password=BLANK;window.newaccount=null;clearPwds();console.clear();web3.eth.accounts.wallet.clear();},mis);};
 const statsXuteng=function(mis){setInterval(function(){getData(sender,getDocType(0));},mis);};
 const statsEthers=function(mis){setInterval(function(){getCoin(sender,'_ethers');},mis);};
@@ -95,7 +95,7 @@ const forceXuteng=function(addr,abi){window.exContractAddress=addr;window.exSCAB
 const clearXuteng=function(){delete(window.exContractAddress);delete(window.exSCABI);resetXuteng();};
 const resetXuteng=function(){contractAddress=window.exContractAddress?window.exContractAddress:CONTRACT[network].addr;if(window.exSCABI)SCABI=window.exSCABI;window.xuteng=_Contract(SCABI,contractAddress);setPGwei();};
 const web3Mainnet=function(cbo){web3.eth.net.getNetworkType().then(function(net){if(net=='main'){switchNet(MAINNET);alert(hi_alert_ismainnet);}else{switchNet(net,MAINNET);alert(hi_alert_nomainnet);};resetXuteng();getSender();if(cbo)cbo(net)})};
-const metaMainnet=function(cbo){ethereum.request({method:'eth_requestAccounts'}).then(r=>{window.sender=r[0];ethereum.request({method:'eth_chainId'}).then(r=>{metaRefresh(fromHex(r));onAccountsChanged();onChainChanged();if(cbo)cbo(r)})})};
+const metaMainnet=function(cbo){ethereum.request({method:'eth_requestAccounts'}).then(r=>{window.sender=r[0];ethereum.request({method:'eth_chainId'}).then(r=>{metaRefresh(fromHex(r));onAccountsChanged();onChainChanged();switchNet(network);if(cbo)cbo(r)})})};
 const getProvider=function(cbo){if(window.ethereum){window.web3=_Ethereum(ethereum);metaMainnet(cbo);}else{if(window.web3){window.web3=_Ethereum(web3.currentProvider);web3Mainnet(cbo);}else{startXuteng(MAINNET);alert(hi_alert_metamasks);}}};
 const startXuteng=function(nid){if(nid){switchNet(nid);window.web3=_Ethereum(_Provider(getRpcNet()));resetXuteng();}else{getProvider();};};
 const metaRefresh=function(cid){window.network=id2network(cid);switchNet(network);resetXuteng();console.log('CHAIN',cid,network);};

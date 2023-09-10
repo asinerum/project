@@ -113,6 +113,7 @@ const Menu=function(element){self=this;
  self.onAuthGetOfr=self.onGetOfr;
  self.onAuthGetReq=self.onGetReq;
  self.onClearInput=clearTags;
+ //TokenMiningDefinitions
  self.onDefiHackProgJoinMine=function(){defiHackProgJoinMine('form_status','pro_token','pro_id_mine');}
  self.onDefiHackProgJoin=function(){defiHackProgJoin('form_status','pro_token','pro_id');}
  self.onDefiHackProgLoad=function(){defiHackProgLoad('form_status','pro_token','pro_amt','pro_sum');}
@@ -125,6 +126,7 @@ const Menu=function(element){self=this;
  self.onDefiDigNonce=function(){defiDigNonce('dig_nonce');}
  self.onDefiDigMine=function(){defiDigMine('dig_wait','form_status');}
  self.onDefiDigSend=function(){defiDigSend('dig_in_nonce','form_status');}
+ //GemtTokenDefinitions
  self.onDefiProgramProgDraw=function(){confirmPositiveInt('pro_program_id',_warnPrgDraw);defiProgramProgStop('form_status','pro_program_id',true)}
  self.onDefiProgramProgDrawRaw=function(){confirmPositiveInt('pro_program_id',_warnPrgDraw);defiProgramProgStopRaw('form_status','pro_program_id',true)}
  self.onDefiProgramProgOpen=function(){defiProgramProgOpen('form_status','pro_program_id','pro_program_apr','pro_program_gemt');}
@@ -155,5 +157,11 @@ const Menu=function(element){self=this;
  self.onDefiGemtPayWithRef=function(){defiGemtPayWithRef('form_status','pay_ref','pay_to','pay_amount','pay_note','pay_money');}
  self.onDefiGemtPayWithRefRaw=function(){defiGemtPayWithRefRaw('form_status','pay_ref','pay_to','pay_amount','pay_note','pay_money');}
  self.onDefiGemtPayLoad=function(){self.goDefiGemtPayLoad();}
+ //TokenBuyingDefinitions
+ self.onDefiProgJoin=function(){defiProgJoin('form_status','pro_buy_gemt');}
+ self.onDefiProgReId=function(){defiProgRead('form_status','pro_buy_id','pro_apr','pro_age','pro_sum','pro_own');}
+ self.goDefiProgInit=function(){checkPositiveNum('pro_buy_gemt',_warnPrgInit);}
+ self.goDefiProgInst=self.goDefiProgInit;
+ self.goDefiProgReId=self.onDefiProgReId;
 };//////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
