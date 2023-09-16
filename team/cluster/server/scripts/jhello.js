@@ -1,0 +1,1 @@
+console.log(`{"result": "Hello Giunians from NodeJS"}`);
