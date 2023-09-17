@@ -8,16 +8,19 @@ const execApps = {
   py: 'python',
   js: 'node',
 };
+const querystring = require('querystring');
 const port = process.argv.length>2 ? process.argv[2] : htmlPort;
 const requestHandler = (request, response)=>{
-  let script = request.url.split('/').pop().split('.');
+  let reqUrl = request.url.split('?');
+  let script = reqUrl[0].split('/').pop().split('.');
   let scriptFile = `${execFolder}/${script.join('.')}`;
   let scriptType = script.pop();
+  let params = querystring.parse(reqUrl.length>1?reqUrl[1]:null);
   if(!execApps[scriptType] || !fs.existsSync(scriptFile)){
     response.writeHead(500);
     response.end('Bad request');
   }else{
-    const fileProcess = execFile(execApps[scriptType], [scriptFile]);
+    const fileProcess = execFile(execApps[scriptType], [scriptFile, JSON.stringify(params)]);
     fileProcess.stdout.on('data', (data)=>{
       response.writeHead(200, {
         'Content-Length': Buffer.byteLength(data),
