@@ -1,0 +1,11 @@
+<script src="https://cdn.jsdelivr.net/gh/asinerum/project/scr/_forest.js"></script>
+<pre>
+Usage:
+forest = new forestjs.RandomForest();
+// data is 2D array of size NxD. Labels is 1D array of length D
+forest.train(data, labels); 
+// testInstance is 1D array of length D. Returns probability
+labelProbability = forest.predictOne(testInstance);
+// testData is 2D array of size MxD. Returns array of probabilities of length M
+labelProbabilities = forest.predict(testData);
+</pre>
