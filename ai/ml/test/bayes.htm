@@ -1,0 +1,20 @@
+<script src="https://cdn.jsdelivr.net/gh/asinerum/project/scr/_bayes.js"></script>
+<pre>
+Ref:
+https://github.com/ttezel/bayes/tree/master
+
+Usage:
+var classifier = naivebayes();
+// teach it positive phrases
+await classifier.learn('amazing, awesome movie!! Yeah!! Oh boy.', 'positive');
+await classifier.learn('Sweet, this is incredibly, amazing, perfect, great!!', 'positive');
+// teach it a negative phrase
+await classifier.learn('terrible, shitty thing. Damn. Sucks!!', 'negative');
+// now ask it to categorize a document it has never seen before
+await classifier.categorize('awesome, cool, amazing!! Yay.');
+// 'positive'
+// serialize the classifier's state as a JSON string.
+var stateJson = classifier.toJson();
+// load the classifier back from its JSON representation.
+var revivedClassifier = naivebayes.fromJson(stateJson);
+</pre>
