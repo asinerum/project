@@ -1254,6 +1254,9 @@ String.prototype.as=function(as){return(this.same(as,false,true))};
 String.prototype.nums=function(vol='x',min=0,max=99,nint=true,s,r=true){this.split(COMMA).forEach(p=>{s=p.split(vol);if(isNaD(s[0])||s[0]<min||s[0]>max||(nint&&!Number.isInteger(Number(s[0]))))return(r=0);if(s[1]&&(isNaD(s[1])||s[1]<=0))return(r=null)});return(r)};
 String.prototype.lode=function(){return(this.nums()||this.nums(COLON))};
 ////////////////////////////////////////////////////////////
+String.prototype.fetch=function(){return(fetch(this,{method:'GET',headers:{'Accept':'application/json'}}).then(r=>r.json()))};/*promise*/
+Array.prototype.shuffle=function(i,j,t){for(i=this.length-1;i>0;i--){j=Math.floor(Math.random()*(i+1));t=this[i];this[i]=this[j];this[j]=t}};
+Array.prototype.tobin=function(index,value,bt=1.0,bf=0.0){this.forEach((e,i)=>{this[i][index]=(e[index]==value?bt:bf)})};
 Array.prototype.sum=function(){return(this.reduce((a,b)=>(Number(a)+Number(b))))};
 //Object.prototype.getKey=function(val){return(this.getkey(val,'same'))};
 //Object.prototype.getkey=function(val,cmp='as',k=null){Object.keys(this).forEach(key=>{if(String(this[key])[cmp](val))return(k=key)});return(k)};
