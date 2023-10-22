@@ -1,0 +1,55 @@
+<script src="https://cdn.jsdelivr.net/gh/asinerum/project/scr/_knn.js"></script>
+<pre>
+Ref:
+https://liferayui.com/building-knn-algorithm/
+https://www.30secondsofcode.org/js/s/k-nearest-neighbors/
+https://github.com/aschuch/node-nearest-neighbor/tree/master
+
+Usage:
+//[data] is a 2D array of size NxD
+var data =
+[
+ [0, 0, 0],
+ [128, 128, 128],
+ [128, 0, 0],
+ [255, 0, 0],
+ [0, 128, 0],
+ [0, 255, 0],
+ [128, 128, 0],
+ [255, 255, 0],
+ [0, 0, 128],
+ [0, 0, 255],
+ [128, 0, 128],
+ [255, 0, 255],
+ [0, 128, 128],
+ [0, 255, 255],
+ [192, 192, 192],
+ [255, 255, 255],
+];
+//[labels] is an 1D array of length D
+var labels =
+[
+ 'Black',
+ 'Gray',
+ 'Maroon',
+ 'Red',
+ 'Green',
+ 'Lime',
+ 'Olive',
+ 'Yellow',
+ 'Navy',
+ 'Blue',
+ 'Purple',
+ 'Fuchsia',
+ 'Teal',
+ 'Aqua',
+ 'Silver',
+ 'White',
+];
+//Predict using KNearestNeighbors
+var nn = knn(data, labels, 5);
+//[testInstance] is an 1D array of length N
+var testInstance = [1, 2, 3];
+nn.predict(testInstance).label; //Black
+//knnFind(data, labels, 5, testInstance);
+</pre>

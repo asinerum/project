@@ -2,4 +2,33 @@
 <pre>
 Ref:
 https://github.com/chen0040/js-regression/tree/master
+
+Usage:
+//[origin] is a 2D array of size NxD
+//that got chunked from Iris dataset
+var origin;
+var source = "./data_iris.json";
+source.fetch().then(r=>{console.log(origin=r)});
+//Need some shuffling for input data array
+origin.shuffle();
+//Load and adjust data for logistic regression
+var data = JSON.parse(JSON.stringify(origin));
+data.tobin(4,"Iris-virginica");
+//Prepare training and testing datasets
+var testingData = data.splice(0,data.length/10);
+var trainingData = data;
+//Create logistic classifier
+var lr = logistic();
+//Train data with training set
+var result = lr.fit(trainingData);
+//Test data with testing set
+testingData.forEach(e=>{console.warn("(actual)",e[4],"(predicted)",lr.transform(e))});
+//Load original data for multi-class regression
+data = JSON.parse(JSON.stringify(origin));
+var mcr = multiclass();
+testingData = data.splice(0,data.length/10);
+trainingData = data;
+result = mcr.fit(trainingData);
+//Test data with testing set
+testingData.forEach(e=>{console.warn("(actual)",e[4],"(predicted)",mcr.transform(e))});
 </pre>

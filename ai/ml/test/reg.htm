@@ -2,4 +2,14 @@
 <pre>
 Ref:
 https://github.com/Tom-Alexander/regression-js
+
+Usage:
+//[data] is a 2D array of coordinates
+var data = [[0, 1], [32, 67], [12, 79]];
+//Predict equation using LinearRegression
+var lr = linear(data);
+console.log(lr.string); //"y=1.79x+22.75"
+//Predict equation using ExponentialRegression
+lr = exponential(data);
+console.log(lr.string); //"y=74.12e^(0x)"
 </pre>

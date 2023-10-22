@@ -4,17 +4,23 @@ Ref:
 https://github.com/ttezel/bayes/tree/master
 
 Usage:
-var classifier = naivebayes();
-// teach it positive phrases
-await classifier.learn('amazing, awesome movie!! Yeah!! Oh boy.', 'positive');
-await classifier.learn('Sweet, this is incredibly, amazing, perfect, great!!', 'positive');
-// teach it a negative phrase
-await classifier.learn('terrible, shitty thing. Damn. Sucks!!', 'negative');
-// now ask it to categorize a document it has never seen before
-await classifier.categorize('awesome, cool, amazing!! Yay.');
-// 'positive'
-// serialize the classifier's state as a JSON string.
-var stateJson = classifier.toJson();
-// load the classifier back from its JSON representation.
-var revivedClassifier = naivebayes.fromJson(stateJson);
+//[data] is an 1D array of length D of strings
+var data =
+[
+ "amazing, awesome movie! yeah! oh boy",
+ "sweet, this is incredibly, amazing! perfect, great!",
+ "terrible, shitty thing! damn! sucks!",
+];
+//[labels] is an 1D array of length D of any type values
+var labels = ["positive", "positive", "negative"];
+//Start a NaiveBayes classifier
+var nb;
+naivebayes(data,labels).then(r=>console.log(nb=r));
+//Ask the classifier to predict/categorize something
+nb.predict('awesome, cool, amazing').then(console.log); //positive
+//Serialize the classifier as a JSON model
+var stateJson = nb.toJson();
+//Load the classifier back from its JSON model
+var nb2 = NB.fromJson(stateJson);
+nb2.predict('bitch, what a hell, fuck').then(console.log); //negative
 </pre>

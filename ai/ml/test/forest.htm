@@ -4,11 +4,31 @@ Ref:
 https://github.com/karpathy/forestjs/tree/master
 
 Usage:
-forest = new forestjs.RandomForest();
-// data is 2D array of size NxD. Labels is 1D array of length D
-forest.train(data, labels); 
-// testInstance is 1D array of length D. Returns probability
-labelProbability = forest.predictOne(testInstance);
-// testData is 2D array of size MxD. Returns array of probabilities of length M
-labelProbabilities = forest.predict(testData);
+//[data] is a 2D array of size NxD
+var data =
+[
+ [-0.4326, 1.1909],
+ [1.5, 3],
+ [0.1253, -0.0376],
+ [0.2877, 0.3273],
+ [-1.1465, 0.1746],
+ [1.8133, 2.1139],
+ [2.7258, 3.0668],
+ [1.4117, 2.0593],
+ [4.1832, 1.9044],
+ [1.8636, 1.1677],
+ [-0.5, -0.5],
+ [1, 2],
+ [1, -1],
+];
+//[labels] is an 1D array of length D
+var labels = [1, 1, 1, 1, 1, -1, -1, -1, -1, -1, -1, 1, 1];
+//Predict using RandomForest
+var rf = forest(data, labels);
+//[testInstance] is an 1D array of length N
+var testInstance = [1.8, 1.2];
+rf.predictOne(testInstance); //0.3864
+//[testData] is a 2D array of size MxD
+var testData = [[1.8, 1.2], [4.2, 1.9]];
+rf.predict(testData); //[0.3864, 0.2577]
 </pre>

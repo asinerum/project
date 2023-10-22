@@ -2,4 +2,32 @@
 <pre>
 Ref:
 https://github.com/lagodiuk/decision-tree-js/tree/master
+
+Usage:
+//[data] is an 1D array of length D of objects
+var data =
+[
+ {"$item":"1/10", "day":"sun", "time":"6", "air":"wind"},
+ {"$item":"2/10", "day":"mon", "time":"8", "air":"rain"},
+ {"$item":"3/10", "day":"tue", "time":"7", "air":"sun"},
+ {"$item":"3/10a", "day":"tue", "time":"14", "air":"sun"},
+ {"$item":"4/10", "day":"wed", "time":"9", "air":"sun"},
+ {"$item":"5/10", "day":"thu", "time":"13", "air":"wind"},
+ {"$item":"6/10", "day":"fri", "time":"8", "air":"wind"},
+ {"$item":"7/10", "day":"sat", "time":"7", "air":"rain"},
+ {"$item":"7/10a", "day":"sat", "time":"12", "air":"sun"},
+ {"$item":"8/10", "day":"sun", "time":"5", "air":"wind"},
+ {"$item":"9/10", "day":"mon", "time":"6", "air":"rain"},
+ {"$item":"10/10", "day":"tue", "time":"8", "air":"sun"},
+];
+//[labels] is an 1D array of length D of strings or binary/numeric values
+var labels = ["yes", "no", "no", "yes", "no", "yes", "no", "no", "yes", "yes", "no", "no"];
+//Predict using RandomForest
+var rf = forest(5, data, labels);
+rf.predict({"day":"sun", "time":"10", "air":"wind"}); //{yes: 3, no: 2}
+rf.predict({"day":"wed", "time":"15", "air":"rain"}); //{no: 4, yes: 1}
+//Predict using DecisionTree
+var dt = tree(data, labels);
+dt.predict({"day":"sun", "time":"10", "air":"wind"}); //yes
+dt.predict({"day":"wed", "time":"15", "air":"rain"}); //no
 </pre>
