@@ -1256,6 +1256,7 @@ String.prototype.lode=function(){return(this.nums()||this.nums(COLON))};
 ////////////////////////////////////////////////////////////
 String.prototype.fetch=function(){return(fetch(this,{method:'GET',headers:{'Accept':'application/json'}}).then(r=>r.json()))};/*promise*/
 Array.prototype.shuffle=function(i,j,t){for(i=this.length-1;i>0;i--){j=Math.floor(Math.random()*(i+1));t=this[i];this[i]=this[j];this[j]=t}};
+Array.prototype.label=function(index,s={data:[],labels:[]}){this.forEach((e,i)=>{s.labels.push(e.splice(index,1)[0]);s.data.push(e)});return(s)};
 Array.prototype.tobin=function(index,value,bt=1.0,bf=0.0){this.forEach((e,i)=>{this[i][index]=(e[index]==value?bt:bf)})};
 Array.prototype.sum=function(){return(this.reduce((a,b)=>(Number(a)+Number(b))))};
 //Object.prototype.getKey=function(val){return(this.getkey(val,'same'))};
