@@ -23,11 +23,11 @@ var data =
 //[labels] is an 1D array of length D of strings or binary/numeric values
 var labels = ["yes", "no", "no", "yes", "no", "yes", "no", "no", "yes", "yes", "no", "no"];
 //Predict using RandomForest
-var rf = forest(5, data, labels);
+var rf = forest(data,labels,5);
 rf.predict({"day":"sun", "time":"10", "air":"wind"}); //{yes: 3, no: 2}
 rf.predict({"day":"wed", "time":"15", "air":"rain"}); //{no: 4, yes: 1}
 //Predict using DecisionTree
-var dt = tree(data, labels);
+var dt = tree(data,labels);
 dt.predict({"day":"sun", "time":"10", "air":"wind"}); //yes
 dt.predict({"day":"wed", "time":"15", "air":"rain"}); //no
 </pre>
