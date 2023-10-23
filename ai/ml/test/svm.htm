@@ -1,0 +1,35 @@
+<script src="https://cdn.jsdelivr.net/gh/asinerum/project/scr/new.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/asinerum/project/scr/forms.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/asinerum/project/scr/_svm.js"></script>
+<pre>
+Ref:
+https://github.com/karpathy/svmjs/tree/master
+
+Usage:
+//[origin] is a 2D array of size NxD
+//that got chunked from Iris dataset
+var origin;
+var source = "./obj_irisv.json";
+source.fetch().then(r=>{console.log(origin=r)});
+//Load sample data for SVM classification
+//then prepare training and testing datasets
+var data = JSON.parse(JSON.stringify(origin)).data;
+var testingData = data.splice(0,data.length/10);
+var trainingData = data;
+var labels = JSON.parse(JSON.stringify(origin)).labels;
+var testingLabels = labels.splice(0,labels.length/10);
+var trainingLabels = labels;
+//Create SVM classifier
+//including training data
+//with default [kernel=linear]
+var vm = svm(trainingData,trainingLabels);
+//Run classifier on certain point
+var test0 = vm.predictOne(testingData[0]); //1
+var test9 = vm.predictOne(testingData[9]); //-1
+//Run classifier on testing set
+var tests = vm.predict(testingData); //[..]
+//Calculate margins
+var margin0 = vm.marginOne(testingData[0]); //1.722519598961846
+var margin9 = vm.marginOne(testingData[9]); //-0.9086820621230945
+var margins = vm.margins(testingData); //[..]
+</pre>
