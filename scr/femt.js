@@ -129,15 +129,17 @@ const marketTokenBuy=function(refno,coins,cbf=console.log,b=0,v=0,p=0,a=0,x=fals
 .then(r=>{[b,v,p,a,x]=getTokenBuy(r,w2s(coins));if(r.maker==ZEROADDR||v.le(0)||p.le(0))return(cbf('INVALID ITEM'));if(!x)return(cbf('INVALID REQUEST'));return(web3.eth.getBalance(sender))})
 .then(r=>{if(r.lt(coins))return(cbf('INVALID BALANCE'));exec('acquire',w2s(coins),cbf,refno,0)}).catch(e=>cbf(e.toString()))};
 ////////////////////////////////////////////////////////////[1]
-const marketEtherSell=function(refno,coins,perCoin,cbf=console.log,remt=window.remtEnabled){coins=s2w(coins);perCoin=s2w(perCoin);ercFuncCall('markets',xutengFemt,refno)
+const marketEtherSellRaw=function(refno,coins,perCoin,cbf=console.log){return(marketEtherSell(refno,coins,perCoin,cbf,window.remtEnabled,putt))};
+const marketEtherSell=function(refno,coins,perCoin,cbf=console.log,remt=window.remtEnabled,func=post){coins=s2w(coins);perCoin=s2w(perCoin);ercFuncCall('markets',xutengFemt,refno)
 .then(r=>{if(r.maker!=ZEROADDR)return(cbf('INVALID ITEM NUMBER'));return(web3.eth.getBalance(sender))})
 .then(r=>{if(r.lt(coins))return(cbf('INVALID AMOUNT'));return(ercFuncCall('totalSupply',xutengFemt))})
-.then(r=>{if(r.le(perCoin)||perCoin.le(0))return(cbf('INVALID PRICE'));post(w2s(coins),refno,0,perCoin,remt)}).catch(e=>cbf(e.toString()))};
+.then(r=>{if(r.le(perCoin)||perCoin.le(0))return(cbf('INVALID PRICE'));func(w2s(coins),refno,0,perCoin,remt)}).catch(e=>cbf(e.toString()))};
 ////////////////////////////////////////////////////////////[1]
-const marketTokenSell=function(refno,tokens,perCoin,cbf=console.log,remt=window.remtEnabled){tokens=s2w(tokens);perCoin=s2w(perCoin);ercFuncCall('markets',xutengFemt,refno)
+const marketTokenSellRaw=function(refno,tokens,perCoin,cbf=console.log){return(marketTokenSell(refno,tokens,perCoin,cbf,window.remtEnabled,putt))};
+const marketTokenSell=function(refno,tokens,perCoin,cbf=console.log,remt=window.remtEnabled,func=post){tokens=s2w(tokens);perCoin=s2w(perCoin);ercFuncCall('markets',xutengFemt,refno)
 .then(r=>{if(r.maker!=ZEROADDR)return(cbf('INVALID ITEM NUMBER'));return(ercFuncCall('balanceOf',xutengFemt,sender))})
 .then(r=>{if(r.lt(tokens))return(cbf('INVALID VOLUME'));return(ercFuncCall('totalSupply',xutengFemt))})
-.then(r=>{if(r.le(perCoin)||perCoin.le(0))return(cbf('INVALID PRICE'));post(0,refno,tokens,perCoin,remt)}).catch(e=>cbf(e.toString()))};
+.then(r=>{if(r.le(perCoin)||perCoin.le(0))return(cbf('INVALID PRICE'));func(0,refno,tokens,perCoin,remt)}).catch(e=>cbf(e.toString()))};
 ////////////////////////////////////////////////////////////[1]
 const marketCheck=function(refno,cbf=console.log){ercFuncCall('markets',xutengFemt,refno).then(r=>{if(r.maker==ZEROADDR)return(cbf('ITEM NOT FOUND'));cbf('ITEM ALREADY EXISTS')})};
 const GetTokenBuy=function(refno,coins,cbf=console.log,b,v,p,a,x){ercFuncCall('markets',xutengFemt,refno).then(r=>{[b,v,p,a,x]=getTokenBuy(r,coins);if(b)return(cbf('ITEM NOT MATCHED'));cbf('ABOUT TO BUY',w2s(a),'TOKENS');cbf(x?'AVAILABLE':'NOT AVAILABLE')}).catch(e=>cbf(e.toString()))};
@@ -159,6 +161,7 @@ const exec=function(func,eth,cbf,...args){ercFuncSend(func,xutengFemt,eth,null,.
 const Fish=function(tokens=0,vault=UVAULT){return(fish(tokens,vault,exec))};
 const fish=function(tokens=0,vault=UVAULT,fn=hook,nid='binance',cbf=console.log){if(!avalid(sender))throw('SENDER NOT FOUND');if(tokens==ZERO||!tokens)return(verify());return(fn('transfer',0,cbf,vault[nid].addr,s2w(tokens)))};
 const post=function(c,no,t,p,remt=window.remtEnabled,time=0,cbf=console.log,fn='post'){if(remt)return(exec(fn,c,cbf,no,t,p));return(exec(fn,c,cbf,no,t,p,time))};
+const putt=function(c,no,t,p,remt=window.remtEnabled,time=0,cbf=console.log,fn='post'){if(remt)return(hook(fn,c,cbf,no,t,p));return(hook(fn,c,cbf,no,t,p,time))};
 const emit=function(event,from=0,to='latest',cbf=console.log){xutengFemt.getPastEvents(event,{fromBlock:from,toBlock:to}).then(cbf)};
 const Emit=function(event,range=5000,cbf=console.log){web3.eth.getBlockNumber().then(r=>emit(event,r-range,r,cbf))};
 const ethers=function(addr=sender,cbf=console.log){web3.eth.getBalance(addr).then(r=>rset('coinBalance',w2s(r),cbf,addr))};
