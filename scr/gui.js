@@ -88,6 +88,9 @@ const statsXuteng=function(mis){setInterval(function(){getData(sender,getDocType
 const statsEthers=function(mis){setInterval(function(){getCoin(sender,'_ethers');},mis);};
 const statsSender=function(mis){setInterval(function(){getSenderData();},mis);};
 ////////////////////////////////////////////////////////////
+const loadParams=function(params={},func=false,...args){(async()=>{if(func)await(func(...args));await(Object.entries(params).forEach(item=>{dx(item[0],hashParam(item[1]))}))})()};
+const loadMenuAndParams=function(params={id:'id'},gwei=0,plugin=false,func=false,...args){txgwei=gwei;promoteMenu();if(plugin){plugin(function(){loadParams(params,func,...args)})}else{loadParams(params,func,...args)}};
+////////////////////////////////////////////////////////////
 const onAccountsChanged=function(){ethereum.on('accountsChanged',r=>{window.sender=r[0]});};
 const onChainChanged=function(){ethereum.on('chainChanged',r=>{r=fromHex(r);metaRefresh(r)});};
 const getMetamask=function(cbo){if(window.ethereum){window.web3=_Ethereum(ethereum);metaMainnet(cbo)}else{alert(hi_alert_metamasks)}};
