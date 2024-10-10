@@ -266,6 +266,7 @@ const Remt=function(pops=3){getMetamask(r=>{startRemt();nonce(pops);})};
 const funcMine=function(contract,nonce,method){return(method?contract.methods.mine(method,nonce):contract.methods.mine(nonce))};
 const argsMine=function(nonce,method){return(method?[method,nonce]:[nonce])};
 ////////////////////////////////////////////////////////////[7]
+const importWallet=function(privatekey){return(arouseKey(privatekey,true))};
 const arouseKey=function(key,save=true,s){key=key.slice(key.indexOf(HEXINIT)===0?2:0);s=key2wallet(key);if(save){sender=s,senderPte=key};return([s,key])};
 const ercTokens=function(sc=xutengFemt,user=sender,cbf=console.log){sc.methods.balanceOf(user).call().then(r=>cbf(w2s(r)))};
 const launchNid=function(rpc,nid,gas=1200000,scinfo=FEMT,scabi=ABIFEMT){maxgas=gas;CONTRACT=scinfo;SCABI=scabi;contractAddress=scinfo[nid].addr;launchRpc(rpc,nid)};/*using:self*/
