@@ -2061,6 +2061,12 @@ const Menu=function(element){self=this;
  self.goDefiProgInit=function(){checkPositiveNum('pro_buy_gemt',_warnPrgInit);}
  self.goDefiProgInst=self.goDefiProgInit;
  self.goDefiProgReId=self.onDefiProgReId;
+ //TokenSellingDefinitions
+ self.onDefiProsJoin=function(){defiProgJoin('form_status','pro_sell_gemt');}
+ self.onDefiProsReId=function(){defiProgRead('form_status','pro_sell_id','pro_apr','pro_age','pro_sum','pro_own');}
+ self.goDefiProsGemt=function(){checkPositiveNum('pro_sell_gemt',_warnPrgInit);db('pro_sell_conv',n2s(gv('pro_sell_gemt').t2e(gv('pro_apr')),6))}
+ self.goDefiProsConv=function(){checkPositiveNum('pro_sell_conv',_warnPrgInit);db('pro_sell_gemt',n2s(gv('pro_sell_conv').e2t(gv('pro_apr')),6))}
+ self.goDefiProsReId=self.onDefiProsReId;
 };//////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////[3]
