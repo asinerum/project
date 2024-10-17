@@ -4,6 +4,7 @@ const checkAddress=function(elem,msg,fn=avalid){checkElement(fn,true,elem,msg)};
 ////////////////////////////////////////////////////////////
 const confirmPositiveInt=function(elem,msg,fn=positiveInt){confirmElement(fn,true,elem,msg)};
 const checkTokenAllowed=function(elem,msg,fn=tokenAllowed){checkElement(fn,true,elem,msg)};
+const checkPositiveOr0=function(elem,msg){if(s2n(gv(elem))==0)return;checkPositiveNum(elem,msg)};
 const checkPositiveNum=function(elem,msg){checkPositiveInt(elem,msg,positiveStr)};
 const checkPositiveInt=function(elem,msg,fn=positiveInt){checkElement(fn,true,elem,msg)};
 const checkNumsInRange=function(elem,msg,min,max,fn=numsInRange,fp=s2n){checkElement(fn,true,elem,msg,[min,max,fp])};

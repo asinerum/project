@@ -169,5 +169,24 @@ const Menu=function(element){self=this;
  self.goDefiProsGemt=function(){checkPositiveNum('pro_sell_gemt',_warnPrgInit);db('pro_sell_conv',n2s(gv('pro_sell_gemt').t2e(gv('pro_apr')),6))}
  self.goDefiProsConv=function(){checkPositiveNum('pro_sell_conv',_warnPrgInit);db('pro_sell_gemt',n2s(gv('pro_sell_conv').e2t(gv('pro_apr')),6))}
  self.goDefiProsReId=self.onDefiProsReId;
+ //TokenOfferingDefinitions
+ self.onDefiOfferOpen=function(){defiProgOpen('form_status','pro_offer_id','pro_offer_apr','pro_offer_age','pro_offer_gemt');}
+ self.onDefiOfferRead=function(){defiProgRead('form_status','pro_offer_id','pro_offer_apr','pro_offer_age','pro_offer_gemt');}
+ self.onDefiOfferStop=function(){confirmPositiveInt('pro_offer_id',_warnPrgStop);defiProgStop('form_status','pro_offer_id')}
+ self.goDefiOfferIdno=function(){checkPositiveInt('pro_offer_id',_warnPrgIdno);self.onDefiOfferRead()}
+ self.goDefiOfferRate=function(){checkPositiveNum('pro_offer_apr',_warnPrgPrix);db('pro_offer_rev',n2s(1/s2n(gv('pro_offer_apr')),6))}
+ self.goDefiOfferRvrt=function(){checkPositiveNum('pro_offer_rev',_warnPrgPrvt);db('pro_offer_apr',n2s(1/s2n(gv('pro_offer_rev')),6))}
+ self.goDefiOfferSAge=function(){checkPositiveOr0('pro_offer_age',_warnPrgSAge);}
+ self.goDefiOfferInit=function(){checkPositiveNum('pro_offer_gemt',_warnPrgInit);}
+ //TokenOrderingDefinitions
+ self.onDefiOrderOpen=function(){defiProgOpen('form_status','pro_order_id','pro_order_apr','pro_order_age','pro_order_gemt');}
+ self.onDefiOrderRecv=function(){defiProgRead('form_status','pro_order_id','pro_order_apr','pro_order_age','pro_order_conv');}
+ self.onDefiOrderStop=function(){confirmPositiveInt('pro_order_id',_warnPrgStop);defiProgStop('form_status','pro_order_id')}
+ self.goDefiOrderIdno=function(){checkPositiveInt('pro_order_id',_warnPrgIdno);self.onDefiOrderRecv()}
+ self.goDefiOrderRate=function(){checkPositiveNum('pro_order_apr',_warnPrgPrix);db('pro_order_rev',n2s(1/s2n(gv('pro_order_apr')),6))}
+ self.goDefiOrderRvrt=function(){checkPositiveNum('pro_order_rev',_warnPrgPrvt);db('pro_order_apr',n2s(1/s2n(gv('pro_order_rev')),6))}
+ self.goDefiOrderSAge=function(){checkPositiveOr0('pro_order_age',_warnPrgSAge);}
+ self.goDefiOrderGemt=function(){checkPositiveNum('pro_order_gemt',_warnPrgInit);db('pro_order_conv',n2s(gv('pro_order_gemt').t2e(gv('pro_order_apr')),6))}
+ self.goDefiOrderConv=function(){checkPositiveNum('pro_order_conv',_warnPrgInit);db('pro_order_gemt',n2s(gv('pro_order_conv').e2t(gv('pro_order_apr')),6))}
 };//////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
