@@ -121,13 +121,15 @@ const setBroker=function(token=true,nid='binance',abi=token?ABIBROKER:ABIBROKERE
 const setTToken=function(tid=GEMT,nid='binance'){xutengFemt=_Contract(ABIERC20,tid[nid].addr);return(tid[nid].addr)};
 const setWeiArr=function(vals=[]){Object.keys(vals).forEach(i=>{vals[i]=s2w(vals[i])});return(vals)};
 ////////////////////////////////////////////////////////////[1]
-const marketEtherBuy=function(refno,tokens,cbf=console.log,b=0,v=0,p=0,a=0,x=false){tokens=s2w(tokens);ercFuncCall('markets',xutengFemt,refno)
+const marketEtherBuyRaw=function(refno,tokens,cbf=console.log){return(marketEtherBuy(refno,tokens,cbf,hook))};
+const marketEtherBuy=function(refno,tokens,cbf=console.log,func=exec,b=0,v=0,p=0,a=0,x=false){tokens=s2w(tokens);ercFuncCall('markets',xutengFemt,refno)
 .then(r=>{[b,v,p,a,x]=getEtherBuy(r,w2s(tokens));if(r.maker==ZEROADDR||v.le(0)||p.le(0))return(cbf('INVALID ITEM'));if(!x)return(cbf('INVALID REQUEST'));return(ercFuncCall('balanceOf',xutengFemt,sender))})
-.then(r=>{if(r.lt(tokens))return(cbf('INVALID BALANCE'));exec('acquire',0,cbf,refno,tokens)}).catch(e=>cbf(e.toString()))};
+.then(r=>{if(r.lt(tokens))return(cbf('INVALID BALANCE'));func('acquire',0,cbf,refno,tokens)}).catch(e=>cbf(e.toString()))};
 ////////////////////////////////////////////////////////////[1]
-const marketTokenBuy=function(refno,coins,cbf=console.log,b=0,v=0,p=0,a=0,x=false){coins=s2w(coins);ercFuncCall('markets',xutengFemt,refno)
+const marketTokenBuyRaw=function(refno,coins,cbf=console.log){return(marketTokenBuy(refno,coins,cbf,hook))};
+const marketTokenBuy=function(refno,coins,cbf=console.log,func=exec,b=0,v=0,p=0,a=0,x=false){coins=s2w(coins);ercFuncCall('markets',xutengFemt,refno)
 .then(r=>{[b,v,p,a,x]=getTokenBuy(r,w2s(coins));if(r.maker==ZEROADDR||v.le(0)||p.le(0))return(cbf('INVALID ITEM'));if(!x)return(cbf('INVALID REQUEST'));return(web3.eth.getBalance(sender))})
-.then(r=>{if(r.lt(coins))return(cbf('INVALID BALANCE'));exec('acquire',w2s(coins),cbf,refno,0)}).catch(e=>cbf(e.toString()))};
+.then(r=>{if(r.lt(coins))return(cbf('INVALID BALANCE'));func('acquire',w2s(coins),cbf,refno,0)}).catch(e=>cbf(e.toString()))};
 ////////////////////////////////////////////////////////////[1]
 const marketEtherSellRaw=function(refno,coins,perCoin,cbf=console.log){return(marketEtherSell(refno,coins,perCoin,cbf,window.remtEnabled,putt))};
 const marketEtherSell=function(refno,coins,perCoin,cbf=console.log,remt=window.remtEnabled,func=post){coins=s2w(coins);perCoin=s2w(perCoin);ercFuncCall('markets',xutengFemt,refno)
