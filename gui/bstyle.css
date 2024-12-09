@@ -236,7 +236,7 @@ img.thumbs{
  color:#333333;
  box-sizing:border-box;
  width:100%;/**/
- margin:2px;
+ margin:2px auto 2px auto;
  padding:10px 5px;}
 .ob:focus{
  outline:none;
@@ -251,7 +251,7 @@ img.thumbs{
  color:#333333;
  box-sizing:border-box;
  width:100%;/**/
- margin:2px;
+ margin:2px auto 2px auto;
  padding:12px 5px;}
 .vb:focus{
  outline:none;
@@ -260,6 +260,7 @@ img.thumbs{
 /*---------------------------------------*/
 .vbutton{
  background-color:#957ea6;
+ border-radius:6px;
  border:none;
  color:white;
  text-align:center;
@@ -269,11 +270,11 @@ img.thumbs{
  cursor:pointer;
  box-sizing:border-box;
  width:100%;/**/
- margin:2px;
+ margin:2px auto 2px auto;
  padding:15px 5px;}
 /*---------------------------------------*/
 .vhead{
- background-color:#735ea6;
+ background-color:#372757;
  border:none;
  color:white;
  text-align:center;
@@ -282,7 +283,7 @@ img.thumbs{
  display:inline-block;
  box-sizing:border-box;
  width:100%;/**/
- margin:2px;
+ margin:2px auto 2px auto;
  padding:20px 5px;}
 /*---------------------------------------*/
 /*=======================================*/
