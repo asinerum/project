@@ -37,6 +37,10 @@ const mload=function(d,html){dload(d,html,DOT);};
 const dgets=function(d,html,ob){if(!ob)ob=HASH;$.get(html,function(data){$(ob+d).html(data);htmlData.get=data;});};
 const dload=function(d,html,ob){if(!ob)ob=HASH;$(ob+d).load(html);};
 ////////////////////////////////////////////////////////////
+const gaddr=function(a){return(avalid(a)?a:gv(a))};
+const ghash=function(h){return(hvalid(h)?h:gv(h))};
+const gnum=function(n){return(n*1?n:gv(n))};
+////////////////////////////////////////////////////////////
 const ngv=function(d){return(document.getElementById(d).value)};
 const ndv=function(d,v){return(document.getElementById(d).value=v)};
 ////////////////////////////////////////////////////////////

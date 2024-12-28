@@ -16,6 +16,9 @@ var contractAddress;
 var contractScanner;
 var networkStyle;
 ////////////////////////////////////////////////////////////
+var BUYTOKEN=false;
+var DATAFORM='post';
+////////////////////////////////////////////////////////////
 var sestime=900000;
 var refresh=5000;
 var maxgas=200000;

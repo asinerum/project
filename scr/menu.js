@@ -188,5 +188,12 @@ const Menu=function(element){self=this;
  self.goDefiOrderSAge=function(){checkPositiveOr0('pro_order_age',_warnPrgSAge);}
  self.goDefiOrderGemt=function(){checkPositiveNum('pro_order_gemt',_warnPrgInit);db('pro_order_conv',n2s(gv('pro_order_gemt').t2e(gv('pro_order_apr')),6))}
  self.goDefiOrderConv=function(){checkPositiveNum('pro_order_conv',_warnPrgInit);db('pro_order_gemt',n2s(gv('pro_order_conv').e2t(gv('pro_order_apr')),6))}
+ //Mobile:Buy/Sell/Offer/Order
+ self.onDefiProgJoinRaw=function(){defiProgJoinRaw('form_status','pro_buy_gemt');}//BUYTOKEN=false
+ self.onDefiProsJoinRaw=function(){defiProgJoinRaw('form_status','pro_sell_gemt');}//BUYTOKEN=true
+ self.onDefiOfferOpenRaw=function(){defiProgOpenRaw('form_status','pro_offer_id','pro_offer_apr','pro_offer_age','pro_offer_gemt');}//BUYTOKEN=false
+ self.onDefiOfferStopRaw=function(){confirmPositiveInt('pro_offer_id',_warnPrgStop);defiProgStopRaw('form_status','pro_offer_id')}//BUYTOKEN=false
+ self.onDefiOrderOpenRaw=function(){defiProgOpenRaw('form_status','pro_order_id','pro_order_apr','pro_order_age','pro_order_gemt');}//BUYTOKEN=true
+ self.onDefiOrderStopRaw=function(){confirmPositiveInt('pro_order_id',_warnPrgStop);defiProgStopRaw('form_status','pro_order_id')}//BUYTOKEN=true
 };//////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////

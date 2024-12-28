@@ -1,25 +1,48 @@
 ////////////////////////////////////////////////////////////
-const defiProgJoin=function(status,divAmount,token=0,eth=0,tlim=ZERO,elim=ZERO,a){
+//BUYTOKEN=true||false;DATAFORM='post';window.resultpage=undefined;
+const defiProgList=function(status,divId,divList,page=1,NOS=25,i){
+showLoad(status);i=gaddr(divId);if(!i)i=ZEROADDR;if(!avalid(i))return(dw(status,_errInput));if(window.searchitem!=i){window.searchitem=i;window.resultpage=undefined};if(window.resultpage===undefined){window.resultpage=page>1?(page>>0)-1:0}else{window.resultpage+=1};db(divList,EMPTY);
+ercCall(xutengFemt,MPROGNOS,[i,DATAFORM,BUYTOKEN?'E':'T',NOS*window.resultpage],status,null,function(err,res){checkResult(err,res,status);console.warn('RESULTSET_DATA',res);window.resultsize=Number(res.size);window.resultnos=res.nos;for(let j=0;j<NOS;j++){if(window.resultnos[j]==0){db(status,_errFinds);break;}
+ercCall(xutengFemt,MPROGDAT,[window.resultnos[j]],status,null,function(err,res){checkResult(err,res,status);console.warn('ITEM',window.resultnos[j],res);if(res.value!=0&&(res.time==0||res.time>=nowDate())){da(divList,htmlItem(window.resultnos[j],res))}});}});};
+////////////////////////////////////////////////////////////
+const htmlItem=function(id,item,popup,dcls,bcls){if(!dcls)dcls=BUYTOKEN?'gb':'ob';if(!bcls)bcls=BUYTOKEN?'sell':'buy';if(!popup)popup=BUYTOKEN?'./gemtsell.html':'./gemtbuy.html';popup+='#oid='+id;return(`<div\tclass="${dcls}">#${id}<br/>${dispRate(item.ppe)}<br/>${dispAmnt(item.value)}<div\tclass="${bcls}"\tonclick="window.open('${popup}','_blank')"></div></div>`);};
+const htmlWarn=function(text){return(`<span\tclass="textwarn">${text}</span>`);};
+const dispAmnt=function(data,dec=5,lang='en'){return(`${upCoin(labelSum(lang))}\t${htmlWarn(w2s(data,dec))}`);};
+const dispRate=function(data,dec=5,lang='en'){return(`${upCoin(labelAPR(lang))}\t${htmlWarn(w2s(data,dec*2))}`);};
+const dispTime=function(data,pst=0,lang='en'){return(`${upCoin(labelAge(lang))}\t${htmlWarn(showItemAge(data,pst))}`);};
+const dispUser=function(data,xxx=0,lang='en'){return(`${upCoin(labelOwn(lang))}\t${htmlWarn(showAddrUrl(data,xxx))}`);};
+const labelSum=function(lang='en'){return(LABELS[lang][`_label_${BUYTOKEN?'orders':'offers'}_DefiProgSum`])};
+const labelAPR=function(lang='en'){return(LABELS[lang][`_label_${BUYTOKEN?'orders':'offers'}_DefiProgAPR`])};
+const labelAge=function(lang='en'){return(LABELS[lang][`_label_${BUYTOKEN?'orders':'offers'}_DefiProgAge`])};
+const labelOwn=function(lang='en'){return(LABELS[lang][`_label_${BUYTOKEN?'orders':'offers'}_DefiProgOwn`])};
+const upCoin=function(s){return(s.replace(CAPCLASSCOIN,COIN))};
+const rstart=function(){window.resultpage=undefined};
+////////////////////////////////////////////////////////////
+const defiProgJoinRaw=function(status,divAmount,token=0,eth=0,tlim=ZERO,elim=ZERO){return(defiProgJoin(status,divAmount,token,eth,tlim,elim,ercsend))};
+const defiProgStopRaw=function(status,divId,half=true){return(defiProgStop(status,divId,half,ercsend))};
+const defiProgOpenRaw=function(status,divId,divRate,divAge,divAmount,token=0,eth=0){return(defiProgOpen(status,divId,divRate,divAge,divAmount,token,eth,ercsend))};
+////////////////////////////////////////////////////////////
+const defiProgJoin=function(status,divAmount,token=0,eth=0,tlim=ZERO,elim=ZERO,execute=ercSend,a){
 showLoad(status);a=s2n(gv(divAmount));if(!positiveNum(a)||!window.trader||!window.trader.ppe)return(dw(status,_errInput));if(!window.trader.ppe.gt(0)||!window.trader.value.gt(0))return(dw(status,_errValue));if(window.trader.buytoken!=BUYTOKEN)return(dw(status,_errItNon));if(window.trader.time>0&&window.trader.time<nowDate())return(dw(status,_errInvst));if(BUYTOKEN){token=a;tlim=fromWei(window.trader.value.w2p(window.trader.ppe));elim=fromWei(window.trader.value)}else{eth=a/fromWei(window.trader.ppe);tlim=fromWei(window.trader.value);elim=fromWei(window.trader.value.p2w(window.trader.ppe))};console.warn('INPUT_DATA',{token,eth,tlim,elim});if(token>tlim||eth>elim)return(dw(status,_errValim));
 ercCall(xutengFemt,MBALANCE,[sender],status,null,function(err,res){checkResult(err,res,status);console.warn('TRADER_BALANCE',w2s(res,9));if(fromWei(res)<token)return(dw(status,_errDepos));
 ercCoin(sender,status,null,function(err,res){checkResult(err,res,status);console.warn('TRADER_COIN_BALANCE_'+COIN,w2s(res,9));if(fromWei(res)<eth)return(dw(status,_errCoins));/*CoinOnly*/
-ercSend(xutengFemt,MPROGBUY,[window.trader.refno,s2w(token)],eth,status,null,function(err,res){checkResult(err,res,status);console.warn('TRADERS_TRANSACTION_RECEIPT',res);});});});};
+execute(xutengFemt,MPROGBUY,[window.trader.refno,s2w(token)],eth,status,null,function(err,res){checkResult(err,res,status);console.warn('TRADERS_TRANSACTION_RECEIPT',res);});});});};
 ////////////////////////////////////////////////////////////
-const defiProgStop=function(status,divId,half=true,i){
+const defiProgStop=function(status,divId,half=true,execute=ercSend,i){
 showLoad(status);i=Number(gv(divId));if(!positiveInt(i))return(dw(status,_errInput));
 ercCall(xutengFemt,MPROGDAT,[i],status,null,function(err,res){checkResult(err,res,status);console.warn('TRADING_DATA',res);if(res.buytoken!=BUYTOKEN)return(dw(status,_errItNon));if(res.maker==ZEROADDR)return(dw(status,_errItNot));if(!twoHexEqual(res.maker,sender))return(dw(status,_errOwner));if(res.time>=nowDate())return(dw(status,_errXTime));if(res.value===ZERO)return(dw(status,_errValue));
-ercSend(xutengFemt,MPROGCLR,[i],0,status,null,function(err,res){checkResult(err,res,status);console.warn('TRADERS_CANCELLATION_RECEIPT',res);});});};
+execute(xutengFemt,MPROGCLR,[i],0,status,null,function(err,res){checkResult(err,res,status);console.warn('TRADERS_CANCELLATION_RECEIPT',res);});});};
 ////////////////////////////////////////////////////////////
 const defiProgRead=function(status,divId,divRate,divAge,divAmount,divOwner,dec=5,i){
 showLoad(status);i=Number(gv(divId));if(!positiveInt(i))return(dw(status,_errInput));iniProgData(i);
 ercCall(xutengFemt,MPROGDAT,[i],status,null,function(err,res){checkResult(err,res,status);console.warn('TRADING_DATA',res);if(res.buytoken!=BUYTOKEN)return(dw(status,_errItNon));getProgData(res);dz(divRate,w2s(res.ppe,dec*2));db(divAmount,w2s(res.value,dec));db(divOwner,showAddrUrl(res.maker));db(divAge,showItemAge(res.time,false));});};
 ////////////////////////////////////////////////////////////
-const defiProgOpen=function(status,divId,divRate,divAge,divAmount,token=0,eth=0,i,r,t,a){
+const defiProgOpen=function(status,divId,divRate,divAge,divAmount,token=0,eth=0,execute=ercSend,i,r,t,a){
 showLoad(status);i=Number(gv(divId));r=s2n(gv(divRate));t=s2n(gv(divAge));a=s2n(gv(divAmount));t=t<=0?0:daysToStamp(t);if(!positiveInt(i)||!positiveNum(r)||!positiveNum(a))return(dw(status,_errInput));if(BUYTOKEN){eth=a/r}else{token=a};
 ercCall(xutengFemt,MPROGDAT,[i],status,null,function(err,res){checkResult(err,res,status);console.warn('TRADING_DATA',res);if(res.maker!=ZEROADDR)return(dw(status,_errIdNot));
 ercCall(xutengFemt,MBALANCE,[sender],status,null,function(err,res){checkResult(err,res,status);console.warn('TRADER_BALANCE',w2s(res,9));if(fromWei(res)<token)return(dw(status,_errDepos));
 ercCoin(sender,status,null,function(err,res){checkResult(err,res,status);console.warn('TRADER_COIN_BALANCE_'+COIN,w2s(res,9));if(fromWei(res)<eth)return(dw(status,_errCoins));/*CoinOnly*/
-ercSend(xutengFemt,MPROPOST,[i,s2w(token),s2w(r),t],eth,status,null,function(err,res){checkResult(err,res,status);console.warn('TRADERS_CREATION_RECEIPT',res);});});});});};
+execute(xutengFemt,MPROPOST,[i,s2w(token),s2w(r),t],eth,status,null,function(err,res){checkResult(err,res,status);console.warn('TRADERS_CREATION_RECEIPT',res);});});});});};
 ////////////////////////////////////////////////////////////
 const iniProgData=function(uint){window.trader={};window.trader.refno=uint;};
 const getProgData=function(data){window.trader.ppe=data.ppe;window.trader.time=data.time;window.trader.value=data.value;window.trader.maker=data.maker;window.trader.buytoken=data.buytoken;};
