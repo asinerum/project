@@ -1,5 +1,10 @@
 ////////////////////////////////////////////////////////////
-//BUYTOKEN=true||false;DATAFORM='post';window.resultpage=undefined;
+const faceResetList=function(){rstart()};
+const faceListNext=function(...args){return(defiProgList(...args))};
+const faceListItem=function(ask=true,...args){if(ask){faceGoOffer()}else{faceGoOrder()}return(defiProgList(...args))};
+const faceGoOffer=function(form='post'){BUYTOKEN=false;DATAFORM=form;rstart()};//ask
+const faceGoOrder=function(form='post'){BUYTOKEN=true;DATAFORM=form;rstart()};//bid
+////////////////////////////////////////////////////////////
 const defiProgList=function(status,divId,divList,page=1,NOS=25,i){
 showLoad(status);i=gaddr(divId);if(!i)i=ZEROADDR;if(!avalid(i))return(dw(status,_errInput));if(window.searchitem!=i){window.searchitem=i;window.resultpage=undefined};if(window.resultpage===undefined){window.resultpage=page>1?(page>>0)-1:0}else{window.resultpage+=1};db(divList,EMPTY);
 ercCall(xutengFemt,MPROGNOS,[i,DATAFORM,BUYTOKEN?'E':'T',NOS*window.resultpage],status,null,function(err,res){checkResult(err,res,status);console.warn('RESULTSET_DATA',res);window.resultsize=Number(res.size);window.resultnos=res.nos;for(let j=0;j<NOS;j++){if(window.resultnos[j]==0){db(status,_errFinds);break;}
