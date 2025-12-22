@@ -17,4 +17,4 @@ const loadMembers = function(cbf=console.log, url=urlJsonData1){
   xhr.send();
 }
 
-loadMembers(function(err, res){if(!err){members=res}else{console.error(err)}});
+loadMembers(function(err, res){if(!err){members=res.members}else{console.error(err)}});
