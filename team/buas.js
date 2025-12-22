@@ -33,4 +33,9 @@ const loadMembersSync = function(url=urlJsonData1){
 }
 
 // loadMembers(function(err, res){if(!err){members=res.members}else{console.error(err)}});
+
 members = loadMembersSync().members;
+numIndexVip1 = members.numIndexVip1;
+numIndexVip2 = members.numIndexVip2;
+UserVIPs = members.UserVIPs;
+UserBLs = members.UserBLs;
