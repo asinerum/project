@@ -1,7 +1,5 @@
 ﻿// Web Version
 
-globalThis.members;
-
 const urlJsonData1 = 'https://cdn.jsdelivr.net/gh/asinerum/project/team/buas.json';
 const urlJsonData2 = 'https://asinerum.github.io/project/team/buas.json';
 
@@ -35,9 +33,9 @@ globalThis.loadMembersSync = function (url=urlJsonData1) {
   return {};
 }
 
-members = loadMembersSync().members;
+globalThis.members = loadMembersSync().members;
 
-numIndexVip1 = members.numIndexVip1;
-numIndexVip2 = members.numIndexVip2;
-UserVIPs = members.UserVIPs;
-UserBLs = members.UserBLs;
+globalThis.numIndexVip1 = members.numIndexVip1;
+globalThis.numIndexVip2 = members.numIndexVip2;
+globalThis.UserVIPs = members.UserVIPs;
+globalThis.UserBLs = members.UserBLs;
