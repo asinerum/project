@@ -37,7 +37,7 @@ globalThis.loadMembersSync = function (url=urlJsonData1) {
 
 members = loadMembersSync().members;
 
-globalThis.numIndexVip1 = members.numIndexVip1;
-globalThis.numIndexVip2 = members.numIndexVip2;
-globalThis.UserVIPs = members.UserVIPs;
-globalThis.UserBLs = members.UserBLs;
+numIndexVip1 = members.numIndexVip1;
+numIndexVip2 = members.numIndexVip2;
+UserVIPs = members.UserVIPs;
+UserBLs = members.UserBLs;
